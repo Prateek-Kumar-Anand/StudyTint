@@ -1,6 +1,10 @@
 package com.student.smartstudy
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -45,6 +49,31 @@ sealed interface Screen {
     data class Quiz(val s: Subject, val i: Int, val prev: Screen) : Screen
 }
 
+private fun depth(s: Screen): Int = when (s) {
+    Screen.Welcome -> 0
+    Screen.Home -> 1
+    Screen.Score, Screen.Stars, is Screen.Pick -> 2
+    is Screen.Notes, is Screen.RichNotes, is Screen.Quiz -> 3
+    is Screen.Topic -> 4
+}
+
+private fun order(s: Screen): Int = if (s is Screen.Topic) s.idx else 0
+
+private fun navTransition(from: Screen, to: Screen): ContentTransform {
+    val fwd = depth(to) > depth(from) || (depth(to) == depth(from) && order(to) >= order(from))
+    val d = if (fwd) 1 else -1
+    val spec = tween<IntOffset>(340, easing = FastOutSlowInEasing)
+    return (slideInHorizontally(spec) { it * d / 5 } + fadeIn(tween(300, delayMillis = 40))) togetherWith
+        (slideOutHorizontally(spec) { -it * d / 5 } + fadeOut(tween(180)))
+}
+
+@Composable
+fun SubjectBadge(s: Subject) {
+    Box(Modifier.size(30.dp).clip(RoundedCornerShape(10.dp)).background(s.color.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
+        Text(s.mark, color = s.color, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
 @Composable
 fun App(p: Progress) {
     var screen by remember { mutableStateOf<Screen>(Screen.Welcome) }
@@ -56,8 +85,10 @@ fun App(p: Progress) {
         else -> Screen.Home
     }
     BackHandler(screen != Screen.Welcome && screen != Screen.Home) { screen = parent(screen) }
-    Box(Modifier.fillMaxSize().background(if (screen == Screen.Welcome) Color(0xFF0B0B0B) else Bg).statusBarsPadding().navigationBarsPadding()) {
-        when (val s = screen) {
+    val bg by animateColorAsState(if (screen == Screen.Welcome) Color(0xFF0B0B0B) else Bg, tween(400), label = "bg")
+    Box(Modifier.fillMaxSize().background(bg).statusBarsPadding().navigationBarsPadding()) {
+        AnimatedContent(targetState = screen, transitionSpec = { navTransition(initialState, targetState) }, label = "nav") { s ->
+        when (s) {
             Screen.Welcome -> Welcome { screen = Screen.Home }
             Screen.Home -> Home(p) { screen = it }
             Screen.Score -> ScoreScreen(p) { screen = Screen.Home }
@@ -69,6 +100,7 @@ fun App(p: Progress) {
             is Screen.RichNotes -> RichHome(s.s, s.i, p, { screen = s.prev }) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
             is Screen.Topic -> TopicScreen(s.s, s.i, s.idx, p, { screen = Screen.RichNotes(s.s, s.i, s.prev) }) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
             is Screen.Quiz -> QuizScreen(s.s, s.i, p) { screen = s.prev }
+        }
         }
     }
 }
@@ -110,16 +142,14 @@ fun Welcome(onStart: () -> Unit) {
 }
 
 @Composable
-fun OptionCard(emoji: String, title: String, sub: String, tint: Color, modifier: Modifier, onClick: () -> Unit) {
+fun OptionCard(title: String, sub: String, tint: Color, modifier: Modifier, onClick: () -> Unit) {
     Card(
         modifier.clickable(onClick = onClick), shape = RoundedCornerShape(22.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(Modifier.padding(16.dp)) {
-            Box(Modifier.size(46.dp).clip(RoundedCornerShape(14.dp)).background(tint.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
-                Text(emoji, fontSize = 22.sp)
-            }
-            Spacer(Modifier.height(14.dp))
+            Box(Modifier.width(28.dp).height(4.dp).clip(CircleShape).background(tint))
+            Spacer(Modifier.height(18.dp))
             Text(title, fontWeight = FontWeight.Medium, fontSize = 17.sp, color = Ink)
             Text(sub, color = Color.Gray, fontSize = 13.sp)
         }
@@ -150,14 +180,14 @@ fun Home(p: Progress, go: (Screen) -> Unit) {
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OptionCard("📖", "Study", "Read unit notes", Color(0xFF7C6CF0), Modifier.weight(1f)) { go(Screen.Pick(Mode.Study)) }
-                OptionCard("✏️", "Practise", "Quiz yourself", Color(0xFFF2894E), Modifier.weight(1f)) { go(Screen.Pick(Mode.Practise)) }
+                OptionCard("Study", "Read unit notes", Color(0xFF7C6CF0), Modifier.weight(1f)) { go(Screen.Pick(Mode.Study)) }
+                OptionCard("Practise", "Quiz yourself", Color(0xFFF2894E), Modifier.weight(1f)) { go(Screen.Pick(Mode.Practise)) }
             }
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OptionCard("🏆", "Score", "Your results", Color(0xFF3B9BE0), Modifier.weight(1f)) { go(Screen.Score) }
-                OptionCard("⭐", "Highlighted", "Starred topics", Color(0xFFE0A800), Modifier.weight(1f)) { go(Screen.Stars) }
+                OptionCard("Score", "Your results", Color(0xFF3B9BE0), Modifier.weight(1f)) { go(Screen.Score) }
+                OptionCard("Highlighted", "Starred topics", Color(0xFFE0A800), Modifier.weight(1f)) { go(Screen.Stars) }
             }
         }
     }
@@ -180,11 +210,15 @@ fun PickScreen(m: Mode, p: Progress, back: () -> Unit, open: (Subject, Int) -> U
         LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             subjects.forEach { s ->
                 item(key = s.id) {
-                    Text("${s.emoji}  ${s.name}", Modifier.padding(top = 8.dp), fontSize = 18.sp, fontWeight = FontWeight.Medium, color = s.color)
+                    Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                        SubjectBadge(s)
+                        Spacer(Modifier.width(10.dp))
+                        Text(s.name, fontSize = 18.sp, fontWeight = FontWeight.Medium, color = Ink)
+                    }
                 }
                 items(s.units.indices.toList(), key = { "${s.id}:$it" }) { i ->
                     val key = "${s.id}:$i"
-                    val tag = if (m == Mode.Study) (if (key in p.done) "✅" else "›")
+                    val tag = if (m == Mode.Study) (if (key in p.done) "✓" else "›")
                     else p.scores[key]?.let { "$it%" } ?: "›"
                     Card(
                         Modifier.fillMaxWidth().clickable { open(s, i) }, shape = RoundedCornerShape(20.dp),
@@ -194,7 +228,7 @@ fun PickScreen(m: Mode, p: Progress, back: () -> Unit, open: (Subject, Int) -> U
                             Column(Modifier.weight(1f)) {
                                 Text(s.units[i].title, fontSize = 16.sp, color = Ink)
                                 val r = if (m == Mode.Study) rich["${s.id}:$i"] else null
-                                if (r != null) Text("✨ Detailed notes · ${r.sec.size} topics", fontSize = 12.sp, color = Accent)
+                                if (r != null) Text("Detailed notes · ${r.sec.size} topics", fontSize = 12.sp, color = Accent)
                             }
                             Text(tag, fontSize = 18.sp, color = Accent)
                         }
@@ -216,7 +250,7 @@ fun NotesScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(u.title, Modifier.weight(1f), fontSize = 22.sp, fontWeight = FontWeight.Medium, color = Ink)
-                    Text(if (key in p.stars) "⭐" else "☆", Modifier.clickable { p.star(key) }.padding(8.dp), fontSize = 26.sp)
+                    Text(if (key in p.stars) "★" else "☆", Modifier.clickable { p.star(key) }.padding(8.dp), fontSize = 26.sp)
                 }
             }
             items(u.notes) { n ->
@@ -273,7 +307,7 @@ fun QuizScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
             Column(Modifier.fillMaxSize().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Orb(120.dp)
                 Spacer(Modifier.height(20.dp))
-                Text("You scored $right/${qs.size}", fontSize = 26.sp, fontWeight = FontWeight.Medium, color = Ink)
+                Text(if (qs.first().a == -1) "Confident on $right of ${qs.size}" else "You scored $right/${qs.size}", fontSize = 24.sp, fontWeight = FontWeight.Medium, color = Ink)
                 Text("${right * 100 / qs.size}%", fontSize = 18.sp, color = Accent)
                 Spacer(Modifier.height(24.dp))
                 Button({ start(mode) }, Modifier.fillMaxWidth().height(54.dp), shape = CircleShape,
@@ -286,22 +320,28 @@ fun QuizScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
             Column(Modifier.fillMaxSize()) {
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text("Question ${idx + 1} of ${qs.size}" + if (q.topic.isNotEmpty()) "  ·  ${q.topic}" else "", color = Color.Gray, fontSize = 13.sp)
-                    Text(q.q, fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink)
+                    Text(q.q, fontSize = 20.sp, lineHeight = 27.sp, fontWeight = FontWeight.Medium, color = Ink)
+                    if (q.a == -1) Text("Think of your answer first, then rate yourself.", color = Color.Gray, fontSize = 13.sp)
                     q.o.forEachIndexed { n, label ->
                         val c = when {
                             sel == -1 -> Color.White
+                            q.a == -1 -> if (n == sel) (if (n == 0) Good else Bad) else Color.White
                             n == q.a -> Good
                             n == sel -> Bad
                             else -> Color.White
                         }
+                        val cc by animateColorAsState(c, tween(250), label = "opt")
                         Surface(
-                            Modifier.fillMaxWidth().clickable(enabled = sel == -1) { if (sel == -1) { sel = n; if (n == q.a) right++; p.record("${s.id}:$i", q.topic, n == q.a) } },
-                            shape = RoundedCornerShape(16.dp), color = c
+                            Modifier.fillMaxWidth().clickable(enabled = sel == -1) { if (sel == -1) { sel = n; val ok = if (q.a == -1) n == 0 else n == q.a; if (ok) right++; p.record("${s.id}:$i", q.topic, ok) } },
+                            shape = RoundedCornerShape(16.dp), color = cc
                         ) { Text(label, Modifier.padding(16.dp), color = Ink) }
                     }
-                    if (sel != -1 && q.sol.isNotEmpty()) {
+                    AnimatedVisibility(visible = sel != -1 && q.sol.isNotEmpty(), enter = fadeIn(tween(250)) + expandVertically(tween(250))) {
                         Surface(shape = RoundedCornerShape(16.dp), color = Color(0xFFE9E9FA)) {
-                            Text("💡 ${q.sol}", Modifier.fillMaxWidth().padding(14.dp), fontSize = 14.sp, color = Ink)
+                            Column(Modifier.fillMaxWidth().padding(14.dp)) {
+                                Text("Explanation", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Accent)
+                                Text(q.sol, fontSize = 14.sp, lineHeight = 20.sp, color = Ink)
+                            }
                         }
                     }
                 }
@@ -329,7 +369,7 @@ fun StarsScreen(p: Progress, back: () -> Unit, open: (Subject, Int) -> Unit) {
                 ) {
                     Column(Modifier.padding(18.dp)) {
                         Text(s.name, color = s.color, fontSize = 13.sp, fontWeight = FontWeight.Medium)
-                        Text("⭐ ${s.units[i].title}", fontSize = 16.sp, color = Ink)
+                        Text(s.units[i].title, fontSize = 16.sp, color = Ink)
                     }
                 }
             }

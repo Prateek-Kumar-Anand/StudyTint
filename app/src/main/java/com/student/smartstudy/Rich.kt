@@ -20,43 +20,55 @@ import androidx.compose.ui.unit.sp
 
 private val MathInk = Color(0xFF2B2B6B)
 private val MathBg = Color(0xFFEEF0FF)
+private val SCHEMA = Regex("^[A-Z_][A-Za-z_0-9]*\\(.*\\)$")
 
 private fun isMathLine(s: String): Boolean {
     if (s.startsWith("• ")) return false
     if (s.none { it.isLetter() }) return true
+    if (SCHEMA.matches(s.trim())) return true
     val words = s.split(" ").count { w -> w.length >= 3 && w.all { it.isLetter() } }
     return s.any { it in "=∈∉⊆⊊∪∩×→⇒≤≥≠{}[]|⌈⌊△∅" } && words < 4
 }
 
 private fun kindStyle(k: String): Pair<String, Color> = when (k) {
-    "qa" -> "🧠" to Color(0xFF3B9BE0)
-    "gl" -> "📘" to Color(0xFF7C6CF0)
-    "sum" -> "🧾" to Color(0xFFE0A800)
-    "cs" -> "💻" to Color(0xFF2E9E6B)
-    "ex" -> "✏️" to Color(0xFFF2894E)
-    "warn" -> "⚠️" to Color(0xFFD64545)
-    "fin" -> "🏁" to Color(0xFF2E9E6B)
+    "qa" -> "?" to Color(0xFF3B9BE0)
+    "gl" -> "Aa" to Color(0xFF7C6CF0)
+    "sum" -> "Σ" to Color(0xFFE0A800)
+    "cs" -> "</>" to Color(0xFF2E9E6B)
+    "ex" -> "Ex" to Color(0xFFF2894E)
+    "warn" -> "!" to Color(0xFFD64545)
+    "fin" -> "✓" to Color(0xFF2E9E6B)
     else -> "" to Accent
 }
 
 @Composable
 fun Lines(lines: List<String>, tint: Color = MathBg) {
     val groups = remember(lines) {
-        val g = mutableListOf<Pair<Boolean, MutableList<String>>>()
+        val g = mutableListOf<Pair<Int, MutableList<String>>>()
         lines.forEach { l ->
-            val m = isMathLine(l)
-            if (g.isNotEmpty() && g.last().first == m) g.last().second.add(l) else g.add(m to mutableListOf(l))
+            val kind = if (l.startsWith("\u0001")) 2 else if (isMathLine(l)) 1 else 0
+            val t = if (kind == 2) l.substring(1) else l
+            if (g.isNotEmpty() && g.last().first == kind) g.last().second.add(t) else g.add(kind to mutableListOf(t))
         }
         g
     }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        groups.forEach { (m, ls) ->
-            if (m) Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = tint) {
-                Text(
-                    ls.joinToString("\n"), Modifier.padding(12.dp).horizontalScroll(rememberScrollState()),
-                    fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 20.sp, color = MathInk, softWrap = false
-                )
-            } else Text(ls.joinToString("\n"), fontSize = 15.sp, lineHeight = 22.sp, color = Ink)
+        groups.forEach { (kind, ls) ->
+            when (kind) {
+                2 -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = Color(0xFF23233A)) {
+                    Text(
+                        ls.joinToString("\n"), Modifier.padding(12.dp).horizontalScroll(rememberScrollState()),
+                        fontFamily = FontFamily.Monospace, fontSize = 12.5.sp, lineHeight = 19.sp, color = Color(0xFFE6E6FF), softWrap = false
+                    )
+                }
+                1 -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = tint) {
+                    Text(
+                        ls.joinToString("\n"), Modifier.padding(12.dp).horizontalScroll(rememberScrollState()),
+                        fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 20.sp, color = MathInk, softWrap = false
+                    )
+                }
+                else -> Text(ls.joinToString("\n"), fontSize = 15.sp, lineHeight = 22.sp, color = Ink)
+            }
         }
     }
 }
@@ -77,9 +89,12 @@ fun QaCard(n: String, q: String, a: String) {
                 Text(q, Modifier.weight(1f), fontSize = 15.sp, lineHeight = 22.sp, color = Ink)
             }
             if (open) Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = Good) {
-                Text("✔  $a", Modifier.padding(12.dp), fontSize = 14.sp, lineHeight = 21.sp, color = Ink)
+                Column(Modifier.padding(12.dp)) {
+                    Text("Answer", fontSize = 11.sp, fontWeight = FontWeight.SemiBold, color = Color(0xFF2E7D4F))
+                    Text(a, fontSize = 14.sp, lineHeight = 21.sp, color = Ink)
+                }
             } else if (a.isNotEmpty()) Text("Tap to reveal answer", color = Accent, fontSize = 13.sp)
-            else Text("✍️ Self-check — answer in your own words", color = Color.Gray, fontSize = 13.sp)
+            else Text("Self-check: answer in your own words", color = Color.Gray, fontSize = 13.sp)
         }
     }
 }
@@ -119,20 +134,20 @@ fun BlockView(b: Blk) {
             Row(Modifier.height(IntrinsicSize.Min)) {
                 Box(Modifier.width(4.dp).fillMaxHeight().background(Color(0xFFF2894E)))
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("✏️  ${b.h}", fontWeight = FontWeight.SemiBold, color = Color(0xFFB45A12), fontSize = 14.sp)
+                    Text(b.h, fontWeight = FontWeight.SemiBold, color = Color(0xFFB45A12), fontSize = 14.sp)
                     Lines(b.x, Color(0xFFFFE6C8))
                 }
             }
         }
         is BNote -> {
-            val (bg, fg, icon) = when (b.k) {
-                "warn" -> Triple(Color(0xFFFDECEC), Color(0xFFC62828), "⚠️")
-                "key" -> Triple(Color(0xFFEEE9FF), Accent, "📌")
-                else -> Triple(Color(0xFFE8F3FD), Color(0xFF1565C0), "💡")
+            val (bg, fg, _) = when (b.k) {
+                "warn" -> Triple(Color(0xFFFDECEC), Color(0xFFC62828), "")
+                "key" -> Triple(Color(0xFFEEE9FF), Accent, "")
+                else -> Triple(Color(0xFFE8F3FD), Color(0xFF1565C0), "")
             }
             Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = bg) {
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("$icon  ${b.h}", fontWeight = FontWeight.SemiBold, color = fg, fontSize = 14.sp)
+                    Text(b.h, fontWeight = FontWeight.SemiBold, color = fg, fontSize = 14.sp)
                     Lines(b.x, Color.White.copy(alpha = 0.7f))
                 }
             }
@@ -198,7 +213,7 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, open: (Int) -> U
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Text("UNIT ${i + 1}  ·  DETAILED NOTES", color = Color.White.copy(alpha = 0.8f), fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
                                     Spacer(Modifier.weight(1f))
-                                    Text(if (key in p.stars) "⭐" else "☆", Modifier.clickable { p.star(key) }, color = Color.White, fontSize = 22.sp)
+                                    Text(if (key in p.stars) "★" else "☆", Modifier.clickable { p.star(key) }, color = Color.White, fontSize = 22.sp)
                                 }
                                 Text(r.title, color = Color.White, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.Medium)
                                 Text(r.intro, color = Color.White.copy(alpha = 0.88f), fontSize = 13.sp, lineHeight = 19.sp)
@@ -218,14 +233,14 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, open: (Int) -> U
             }
             item { Text("Topics", Modifier.padding(top = 4.dp), fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink) }
             itemsIndexed(r.sec) { idx, sec ->
-                val (emoji, tint) = kindStyle(sec.k)
+                val (glyph, tint) = kindStyle(sec.k)
                 Card(
                     Modifier.fillMaxWidth().clickable { open(idx) }, shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                         Box(Modifier.size(42.dp).clip(RoundedCornerShape(14.dp)).background(tint.copy(alpha = 0.15f)), contentAlignment = Alignment.Center) {
-                            if (emoji.isEmpty()) Text("${sec.n}", color = tint, fontWeight = FontWeight.SemiBold, fontSize = 16.sp) else Text(emoji, fontSize = 20.sp)
+                            Text(if (glyph.isEmpty()) "${sec.n}" else glyph, color = tint, fontWeight = FontWeight.SemiBold, fontSize = if (glyph.length > 1) 13.sp else 16.sp)
                         }
                         Spacer(Modifier.width(14.dp))
                         Column(Modifier.weight(1f)) {

@@ -44,7 +44,7 @@ private fun blk(o: JSONObject): Blk = when (o.getString("t")) {
 
 fun loadRich(ctx: Context) {
     val m = mutableMapOf<String, Rich>()
-    for ((key, file) in listOf("ma:0" to "rich_ma_0.json", "ma:1" to "rich_ma_1.json", "ma:2" to "rich_ma_2.json", "ma:3" to "rich_ma_3.json")) {
+    for ((key, file) in listOf("ma:0" to "rich_ma_0.json", "ma:1" to "rich_ma_1.json", "ma:2" to "rich_ma_2.json", "ma:3" to "rich_ma_3.json", "db:0" to "rich_db_0.json", "db:1" to "rich_db_1.json", "db:2" to "rich_db_2.json", "db:3" to "rich_db_3.json")) {
         try {
             val o = JSONObject(ctx.assets.open(file).bufferedReader().use { it.readText() })
             val sa = o.getJSONArray("sec")

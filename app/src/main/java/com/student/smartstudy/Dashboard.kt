@@ -53,11 +53,10 @@ fun Donut(frac: Float, dia: Dp, color: Color, label: String, sub: String) {
 }
 
 @Composable
-fun StatTile(emoji: String, value: String, label: String, modifier: Modifier) {
+fun StatTile(value: String, label: String, color: Color, modifier: Modifier) {
     Card(modifier, shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
         Column(Modifier.fillMaxWidth().padding(vertical = 14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(emoji, fontSize = 18.sp)
-            Text(value, fontSize = 22.sp, fontWeight = FontWeight.Medium, color = Accent)
+            Text(value, fontSize = 24.sp, fontWeight = FontWeight.Medium, color = color)
             Text(label, fontSize = 12.sp, color = Color.Gray)
         }
     }
@@ -110,9 +109,9 @@ fun ScoreScreen(p: Progress, back: () -> Unit) {
             }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    StatTile("✅", "$cor", "Correct", Modifier.weight(1f))
-                    StatTile("❌", "${ans - cor}", "Wrong", Modifier.weight(1f))
-                    StatTile("🔁", "$quizzes", "Quizzes done", Modifier.weight(1f))
+                    StatTile("$cor", "Correct", Color(0xFF2E9E6B), Modifier.weight(1f))
+                    StatTile("${ans - cor}", "Wrong", Color(0xFFD64545), Modifier.weight(1f))
+                    StatTile("$quizzes", "Quizzes done", Accent, Modifier.weight(1f))
                 }
             }
             if (strong.isNotEmpty() || weak.isNotEmpty() || ans > 0) item {
@@ -140,7 +139,11 @@ fun ScoreScreen(p: Progress, back: () -> Unit) {
                 Card(shape = RoundedCornerShape(22.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
                     Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("${s.emoji} ${s.name}", Modifier.weight(1f), fontWeight = FontWeight.Medium, fontSize = 16.sp, color = Ink)
+                            Row(Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
+                                SubjectBadge(s)
+                                Spacer(Modifier.width(10.dp))
+                                Text(s.name, fontWeight = FontWeight.Medium, fontSize = 16.sp, color = Ink)
+                            }
                             Text(if (sAns == 0) "—" else "${pct(sCor, sAns)}%", color = if (sAns == 0) Color.Gray else accColor(pct(sCor, sAns)), fontWeight = FontWeight.Medium)
                         }
                         MiniBar("Reading", rd / rt.toFloat(), "$rd / $rt", s.color)
@@ -153,9 +156,9 @@ fun ScoreScreen(p: Progress, back: () -> Unit) {
                             Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
                                 Text(s.units[i].title, fontSize = 13.sp, fontWeight = FontWeight.Medium, color = Ink)
                                 Text(
-                                    "📖 " + (if (t > 1) "$r/$t topics" else if (r > 0) "done" else "not read") +
-                                        "   ✅ " + (if (ua == 0) "not practised" else "$uc/$ua (${pct(uc, ua)}%)") +
-                                        (if (best != null) "   🏅 best $best%" else ""),
+                                    "Read: " + (if (t > 1) "$r/$t topics" else if (r > 0) "done" else "not yet") +
+                                        "   ·   Practice: " + (if (ua == 0) "none yet" else "$uc/$ua (${pct(uc, ua)}%)") +
+                                        (if (best != null) "   ·   Best $best%" else ""),
                                     fontSize = 12.sp, color = Color.Gray
                                 )
                             }
