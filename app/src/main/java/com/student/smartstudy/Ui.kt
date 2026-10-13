@@ -8,6 +8,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,6 +43,7 @@ sealed interface Screen {
     object Home : Screen
     object Score : Screen
     object Stars : Screen
+    data class Setup(val edit: Boolean) : Screen
     data class Pick(val m: Mode) : Screen
     data class Notes(val s: Subject, val i: Int, val prev: Screen) : Screen
     data class RichNotes(val s: Subject, val i: Int, val prev: Screen) : Screen
@@ -52,6 +54,7 @@ sealed interface Screen {
 private fun depth(s: Screen): Int = when (s) {
     Screen.Welcome -> 0
     Screen.Home -> 1
+    is Screen.Setup -> if (s.edit) 2 else 1
     Screen.Score, Screen.Stars, is Screen.Pick -> 2
     is Screen.Notes, is Screen.RichNotes, is Screen.Quiz -> 3
     is Screen.Topic -> 4
@@ -77,11 +80,14 @@ fun SubjectBadge(s: Subject) {
 @Composable
 fun App(p: Progress) {
     var screen by remember { mutableStateOf<Screen>(Screen.Welcome) }
+    val listStates = remember { mutableMapOf<String, LazyListState>() }
+    fun st(k: String): LazyListState = listStates.getOrPut(k) { LazyListState() }
     fun parent(s: Screen): Screen = when (s) {
         is Screen.Notes -> s.prev
         is Screen.RichNotes -> s.prev
         is Screen.Topic -> Screen.RichNotes(s.s, s.i, s.prev)
         is Screen.Quiz -> s.prev
+        is Screen.Setup -> if (s.edit) Screen.Home else Screen.Welcome
         else -> Screen.Home
     }
     BackHandler(screen != Screen.Welcome && screen != Screen.Home) { screen = parent(screen) }
@@ -89,15 +95,16 @@ fun App(p: Progress) {
     Box(Modifier.fillMaxSize().background(bg).statusBarsPadding().navigationBarsPadding()) {
         AnimatedContent(targetState = screen, transitionSpec = { navTransition(initialState, targetState) }, label = "nav") { s ->
         when (s) {
-            Screen.Welcome -> Welcome { screen = Screen.Home }
-            Screen.Home -> Home(p) { screen = it }
-            Screen.Score -> ScoreScreen(p) { screen = Screen.Home }
-            Screen.Stars -> StarsScreen(p, { screen = Screen.Home }) { sub, i -> screen = if (rich["${sub.id}:$i"] != null) Screen.RichNotes(sub, i, Screen.Stars) else Screen.Notes(sub, i, Screen.Stars) }
-            is Screen.Pick -> PickScreen(s.m, p, { screen = Screen.Home }) { sub, i ->
+            Screen.Welcome -> Welcome { screen = if (p.profile.isComplete) Screen.Home else Screen.Setup(false) }
+            is Screen.Setup -> SetupScreen(p, s.edit, { screen = Screen.Home }) { screen = Screen.Home }
+            Screen.Home -> Home(p, st("home")) { screen = it }
+            Screen.Score -> ScoreScreen(p, st("score")) { screen = Screen.Home }
+            Screen.Stars -> StarsScreen(p, { screen = Screen.Home }, st("stars")) { sub, i -> screen = if (rich["${sub.id}:$i"] != null) Screen.RichNotes(sub, i, Screen.Stars) else Screen.Notes(sub, i, Screen.Stars) }
+            is Screen.Pick -> PickScreen(s.m, p, { screen = Screen.Home }, st("pick:${s.m}")) { sub, i ->
                 screen = if (s.m == Mode.Study) (if (rich["${sub.id}:$i"] != null) Screen.RichNotes(sub, i, s) else Screen.Notes(sub, i, s)) else Screen.Quiz(sub, i, s)
             }
             is Screen.Notes -> NotesScreen(s.s, s.i, p) { screen = s.prev }
-            is Screen.RichNotes -> RichHome(s.s, s.i, p, { screen = s.prev }) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
+            is Screen.RichNotes -> RichHome(s.s, s.i, p, { screen = s.prev }, st("rich:${s.s.id}:${s.i}")) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
             is Screen.Topic -> TopicScreen(s.s, s.i, s.idx, p, { screen = Screen.RichNotes(s.s, s.i, s.prev) }) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
             is Screen.Quiz -> QuizScreen(s.s, s.i, p) { screen = s.prev }
         }
@@ -157,14 +164,15 @@ fun OptionCard(title: String, sub: String, tint: Color, modifier: Modifier, onCl
 }
 
 @Composable
-fun Home(p: Progress, go: (Screen) -> Unit) {
+fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
     val total = subjects.sumOf { it.units.size }
     val done = p.done.size
-    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item {
-            Text("Hi, Student", fontSize = 24.sp, fontWeight = FontWeight.Medium, color = Ink)
+            Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}", fontSize = 24.sp, fontWeight = FontWeight.Medium, color = Ink)
             Text("What shall we do today?", color = Color.Gray)
         }
+        item { ProfileCard(p.profile) { go(Screen.Setup(true)) } }
         item {
             Card(shape = RoundedCornerShape(24.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
                 Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -204,10 +212,10 @@ fun TopBar(title: String, onBack: () -> Unit) {
 }
 
 @Composable
-fun PickScreen(m: Mode, p: Progress, back: () -> Unit, open: (Subject, Int) -> Unit) {
+fun PickScreen(m: Mode, p: Progress, back: () -> Unit, listState: LazyListState, open: (Subject, Int) -> Unit) {
     Column(Modifier.fillMaxSize()) {
         TopBar(if (m == Mode.Study) "Study" else "Practise", back)
-        LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        LazyColumn(state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             subjects.forEach { s ->
                 item(key = s.id) {
                     Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -353,7 +361,7 @@ fun QuizScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
 }
 
 @Composable
-fun StarsScreen(p: Progress, back: () -> Unit, open: (Subject, Int) -> Unit) {
+fun StarsScreen(p: Progress, back: () -> Unit, listState: LazyListState, open: (Subject, Int) -> Unit) {
     val list = subjects.flatMap { s -> s.units.indices.filter { "${s.id}:$it" in p.stars }.map { s to it } }
     Column(Modifier.fillMaxSize()) {
         TopBar("Highlighted topics", back)
@@ -361,7 +369,7 @@ fun StarsScreen(p: Progress, back: () -> Unit, open: (Subject, Int) -> Unit) {
             Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                 Text("Tap ☆ on any unit while studying to highlight it here.", color = Color.Gray, textAlign = TextAlign.Center)
             }
-        } else LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        } else LazyColumn(state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(list) { (s, i) ->
                 Card(
                     Modifier.fillMaxWidth().clickable { open(s, i) }, shape = RoundedCornerShape(20.dp),

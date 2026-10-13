@@ -3,6 +3,7 @@ package com.student.smartstudy
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -193,14 +194,14 @@ fun Chip(t: String) {
 }
 
 @Composable
-fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, open: (Int) -> Unit) {
+fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyListState, open: (Int) -> Unit) {
     val r = rich["${s.id}:$i"] ?: return
     val key = "${s.id}:$i"
     val read = r.sec.indices.count { "$key:$it" in p.read }
     val mins = (r.sec.sumOf { sec -> sec.b.sumOf { blockWords(it) } } / 180).coerceAtLeast(1)
     Column(Modifier.fillMaxSize()) {
         TopBar(s.name, back)
-        LazyColumn(contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        LazyColumn(state = listState, contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 Box(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))

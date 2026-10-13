@@ -7,8 +7,20 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 
+data class Profile(val name: String = "", val father: String = "", val lurn: String = "", val roll: String = "", val course: String = "") {
+    val isComplete: Boolean
+        get() = name.isNotBlank() && father.isNotBlank() && lurn.isNotBlank() && roll.isNotBlank() && course.isNotBlank()
+}
+
 class Progress(ctx: Context) {
     private val sp = ctx.getSharedPreferences("progress", Context.MODE_PRIVATE)
+    var profile by mutableStateOf(
+        Profile(
+            sp.getString("p_name", "") ?: "", sp.getString("p_father", "") ?: "", sp.getString("p_lurn", "") ?: "",
+            sp.getString("p_roll", "") ?: "", sp.getString("p_course", "") ?: ""
+        )
+    )
+        private set
     var done by mutableStateOf(sp.getStringSet("done", emptySet())!!.toSet())
         private set
     var stars by mutableStateOf(sp.getStringSet("stars", emptySet())!!.toSet())
@@ -36,6 +48,11 @@ class Progress(ctx: Context) {
     fun star(key: String) {
         stars = if (key in stars) stars - key else stars + key
         sp.edit().putStringSet("stars", stars).apply()
+    }
+    fun saveProfile(n: Profile) {
+        profile = Profile(n.name.trim(), n.father.trim(), n.lurn.trim(), n.roll.trim(), n.course.trim())
+        sp.edit().putString("p_name", profile.name).putString("p_father", profile.father).putString("p_lurn", profile.lurn)
+            .putString("p_roll", profile.roll).putString("p_course", profile.course).apply()
     }
     private fun persist() {
         sp.edit().putStringSet("stats", stats.map { "${it.key}=${it.value.first},${it.value.second}" }.toSet()).apply()

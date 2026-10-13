@@ -3,6 +3,7 @@ package com.student.smartstudy
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -75,7 +76,7 @@ fun MiniBar(label: String, frac: Float, right: String, color: Color) {
 }
 
 @Composable
-fun ScoreScreen(p: Progress, back: () -> Unit) {
+fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
     val units = subjects.flatMap { s -> s.units.indices.map { s to it } }
     val ans = units.sumOf { (s, i) -> p.stats["${s.id}:$i"]?.first ?: 0 }
     val cor = units.sumOf { (s, i) -> p.stats["${s.id}:$i"]?.second ?: 0 }
@@ -90,7 +91,7 @@ fun ScoreScreen(p: Progress, back: () -> Unit) {
 
     Column(Modifier.fillMaxSize()) {
         TopBar("Score & Analysis", back)
-        LazyColumn(contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        LazyColumn(state = listState, contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             item {
                 Box(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))
