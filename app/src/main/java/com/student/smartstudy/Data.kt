@@ -21,10 +21,10 @@ val subjects = listOf(
         c("Unit 4: Elementary Graph Theory", "Terminology, paths, cycles, connectivity and subgraphs.", "Eulerian and Hamiltonian graphs, digraphs, weighted graphs.", "Trees, spanning trees and planar graphs.")
     )),
     Subject("ai", "Exploration in AI", "AI", Color(0xFFC2457F), listOf(
-        c("Unit 1: Introduction to AI", "AI builds systems that perceive, reason and act.", "Intelligent agents and environments.", "Applications: vision, language, robotics."),
-        c("Unit 2: Search & Problem Solving", "Uninformed search: BFS, DFS.", "Informed search: greedy, A* with heuristics.", "Adversarial search: minimax, alpha-beta."),
-        c("Unit 3: Machine Learning Basics", "Supervised, unsupervised, reinforcement learning.", "Train/test split, overfitting, evaluation metrics.", "Models: regression, decision trees, k-means."),
-        c("Unit 4: Neural Networks & Ethics", "Neurons, layers, activation, backpropagation.", "CNNs for images, transformers for language.", "Bias, privacy and responsible AI.")
+        c("Unit 1: Artificial Intelligence Foundations", "Human versus machine intelligence; defining AI and the Turing Test.", "History: Dartmouth 1956, AI winters and modern milestones.", "Narrow, general and super AI; data science, computer vision and NLP."),
+        c("Unit 2: Problem Solving & Search Basics", "AI as problem solving: states, actions, goals and path cost.", "Uninformed search: breadth-first and depth-first.", "Informed search and heuristics: greedy best-first and A*."),
+        c("Unit 3: Knowledge Representation & Expert Systems", "Data, information and knowledge; propositional logic.", "Rule-based systems, semantic networks and inference.", "Expert system architecture, applications and limits."),
+        c("Unit 4: Machine Learning & AI Ethics", "Supervised, unsupervised and reinforcement learning.", "Recommendation engines and virtual assistants.", "Bias, privacy, deepfakes and responsible AI.")
     )),
     Subject("db", "DBMS", "DB", Color(0xFF3B9BE0), listOf(
         c("Unit 1: Database Foundations & Design", "DBMS versus file systems; hierarchical, network and relational models.", "The ER model: entities, attributes, relationships and diagrams.", "Integrity constraints: primary key, foreign key, UNIQUE and CHECK."),
@@ -63,24 +63,13 @@ private val baseQuiz: Map<String, List<Q>> = mapOf(
         q(0, "Who coined 'Artificial Intelligence'?", 1, "Turing", "McCarthy", "Minsky", "Newell"),
         q(1, "A* uses?", 0, "f = g + h", "f = g", "f = h only", "random"),
         q(1, "BFS finds the path with fewest?", 1, "costs", "steps", "nodes in memory", "heuristics"),
-        q(2, "Labelled data is used in?", 1, "Unsupervised", "Supervised", "Reinforcement", "None"),
-        q(2, "Overfitting means?", 1, "Poor on training", "Good on training, poor on new", "Good on both", "Poor on both"),
+        q(3, "Labelled data is used in?", 1, "Unsupervised", "Supervised", "Reinforcement", "None"),
+        q(3, "Overfitting means?", 1, "Poor on training", "Good on training, poor on new", "Good on both", "Poor on both"),
+        q(2, "Which expert system component stores facts and rules?", 0, "Knowledge base", "User interface", "Compiler", "Scheduler"),
+        q(2, "Which component applies rules to known facts?", 1, "Knowledge base", "Inference engine", "Database index", "Explanation log"),
+        q(2, "Forward chaining starts from?", 2, "The final goal", "A random rule", "Known facts", "User feedback"),
         q(3, "Neural nets update weights using?", 0, "Backpropagation", "Sorting", "Hashing", "Pooling"),
         q(3, "CNNs are best known for?", 0, "Images", "Tables", "Sorting", "Compression")
-    ),
-    "db" to listOf(
-        q(0, "A primary key must be?", 0, "Unique and not null", "Repeated", "Nullable", "Text only"),
-        q(0, "An ER diagram shows?", 1, "Code", "Entities and relationships", "Indexes", "Queries"),
-        q(1, "Which operation picks columns?", 1, "Select", "Project", "Union", "Join"),
-        q(1, "A foreign key enforces?", 1, "Entity integrity", "Referential integrity", "Domain only", "None"),
-        q(1, "Which clause filters groups?", 1, "WHERE", "HAVING", "ORDER BY", "LIMIT"),
-        q(1, "Command to remove a table?", 2, "DELETE", "REMOVE", "DROP", "CUT"),
-        q(2, "ACID: A stands for?", 0, "Atomicity", "Accuracy", "Access", "Aggregation"),
-        q(2, "3NF removes?", 0, "Transitive dependency", "Primary key", "Joins", "Indexes"),
-        q(3, "The CIA triad stands for?", 0, "Confidentiality, Integrity, Availability", "Control, Identity, Access", "Cache, Index, Audit", "Create, Insert, Alter"),
-        q(3, "In RBAC, permissions are assigned to?", 1, "Individual rows", "Roles", "Queries", "Backups"),
-        q(3, "Which protects data moving over a network?", 2, "Encryption at rest", "Checkpoints", "TLS", "Normalization"),
-        q(3, "CAP stands for?", 0, "Consistency, Availability, Partition tolerance", "Cache, Atomicity, Performance", "Create, Alter, Permit", "Concurrency, Access, Persistence")
     )
 )
 
@@ -98,19 +87,5 @@ fun loadMathBank(ctx: android.content.Context) {
         if (list.isNotEmpty()) quiz = quiz + ("ma" to list)
     } catch (e: Exception) {
         android.util.Log.e("SmartStudy", "Maths question bank failed to load", e)
-    }
-}
-
-fun loadDbBank(ctx: android.content.Context) {
-    try {
-        val arr = org.json.JSONArray(ctx.assets.open("db_questions.json").bufferedReader().use { it.readText() })
-        val opts = listOf("I can answer this", "Need revision")
-        val list = (0 until arr.length()).map { n ->
-            val o = arr.getJSONObject(n)
-            Q(o.getInt("u"), o.getString("q"), opts, -1, "", o.getString("t"))
-        }
-        if (list.isNotEmpty()) quiz = quiz + ("db" to list)
-    } catch (e: Exception) {
-        android.util.Log.e("SmartStudy", "DBMS question bank failed to load", e)
     }
 }

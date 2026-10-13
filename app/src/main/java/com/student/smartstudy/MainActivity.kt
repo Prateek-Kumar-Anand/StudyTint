@@ -70,7 +70,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadMathBank(applicationContext)
-        loadDbBank(applicationContext)
         loadRich(applicationContext)
         setContent { MaterialTheme { App(remember { Progress(applicationContext) }) } }
     }
