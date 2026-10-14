@@ -1,0 +1,1408 @@
+{
+  "title": "Knowledge Representation & Expert Systems",
+  "intro": "Logic, rules, semantic networks and how expert systems reason.",
+  "sec": [
+    {
+      "n": 1,
+      "t": "Introduction",
+      "k": "th",
+      "s": "Artificial intelligence (AI) is not only about training a model on large amounts of data.",
+      "b": [
+        {
+          "t": "p",
+          "x": "Artificial intelligence (AI) is not only about training a model on large amounts of data. A major part of AI is representing facts about the world in a form a computer can use to reason, draw conclusions, answer questions, or make decisions. This area is often called knowledge representation and reasoning."
+        },
+        {
+          "t": "p",
+          "x": "Consider a simple situation: a computer receives the values “39.2°C,” “cough,” and “sore throat.” These are initially data items. If the system organizes them into a meaningful description—“the person has a high temperature and respiratory symptoms”—it has produced information. If it applies medical knowledge such as “fever and cough can occur in respiratory infections,” it is using knowledge to reason about the situation. A safe system would not automatically conclude that one particular disease is definitely present; it would treat the result as a possibility and recommend appropriate professional evaluation."
+        },
+        {
+          "t": "h",
+          "x": "This example introduces several connected ideas"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Data, information, and knowledge are related but not identical.",
+            "Knowledge representation describes how facts, concepts, relationships, and rules are stored in a machine-usable form.",
+            "Propositional logic provides a formal way to represent statements that can be true or false.",
+            "Rule-based systems apply IF–THEN rules to known facts.",
+            "Semantic networks represent concepts and their relationships as connected nodes.",
+            "Expert systems use a knowledge base and reasoning mechanism to provide advice in a specialized domain."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These methods are especially important in symbolic AI, an approach in which knowledge is represented explicitly through symbols, facts, rules, and relationships. Modern AI also includes machine learning and neural networks, which often learn patterns from examples. Symbolic methods and learning-based methods are different approaches, but they can also be combined."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "t": "The Hierarchy of Data, Information, and Knowledge",
+      "k": "th",
+      "s": "Data consists of recorded values, observations, symbols, or measurements.",
+      "b": [
+        {
+          "t": "h",
+          "x": "2.1 Data"
+        },
+        {
+          "t": "p",
+          "x": "Data consists of recorded values, observations, symbols, or measurements. By itself, a data item may have little meaning unless its context is known."
+        },
+        {
+          "t": "h",
+          "x": "Examples include"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "28",
+            "101101",
+            "39.2",
+            "“Asha”",
+            "2026-10-14",
+            "A temperature reading from a sensor",
+            "The number of customers who visited a shop"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Data can be numerical, textual, visual, audio-based, or stored in another format. A database might contain a student’s name, age, course, and marks as separate data values."
+        },
+        {
+          "t": "p",
+          "x": "Data quality matters. Data may be incomplete, inaccurate, duplicated, outdated, or recorded in an inconsistent format. If a system reasons from poor data, its conclusions can also be poor. Therefore, data validation, cleaning, and context are important parts of building reliable AI systems."
+        },
+        {
+          "t": "h",
+          "x": "2.2 Information"
+        },
+        {
+          "t": "p",
+          "x": "Information is data organized or interpreted in a way that gives it meaning. Context allows a person or computer system to understand what the data describes."
+        },
+        {
+          "t": "h",
+          "x": "For example"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Data: 39.2",
+            "Information: A patient’s measured body temperature is 39.2°C.",
+            "Data: 82, 91, 76",
+            "Information: A student’s marks in three subjects are 82, 91, and 76.",
+            "Data: 120, 145, 170",
+            "Information: A shop sold 120 items on Monday, 145 on Tuesday, and 170 on Wednesday."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Information may answer questions such as who, what, when, where, or how much. It often results from organizing, summarizing, labeling, comparing, or processing data."
+        },
+        {
+          "t": "p",
+          "x": "The same value can mean different things in different contexts. The number 37 could refer to a temperature in degrees Celsius, a student’s score, an age, or the number of products in stock. A system needs the relevant labels, units, and context to interpret it correctly."
+        },
+        {
+          "t": "h",
+          "x": "2.3 Knowledge"
+        },
+        {
+          "t": "p",
+          "x": "Knowledge involves understanding facts, concepts, relationships, rules, or patterns and knowing how to use them in a situation. In AI, knowledge may be represented as facts, logical statements, rules, object descriptions, graphs, or learned model parameters."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Fact: Water freezes at approximately 0°C under standard atmospheric pressure.",
+            "Rule: If a valid account balance is below the required amount, a payment may be rejected.",
+            "Relationship: A sparrow is a type of bird.",
+            "Procedure: To calculate an average, add the values and divide by the number of values.",
+            "Diagnostic knowledge: Certain combinations of symptoms may be associated with particular conditions, although they do not prove a diagnosis."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Knowledge can help a system interpret information and infer something that was not explicitly stated. If a knowledge base says “all mammals are animals” and “a whale is a mammal,” a reasoning system can infer “a whale is an animal.”"
+        },
+        {
+          "t": "p",
+          "x": "Knowledge should not be confused with certainty. A rule may be incomplete, a fact may be outdated, and a conclusion may depend on assumptions. Reliable systems record limitations and uncertainty when appropriate."
+        },
+        {
+          "t": "h",
+          "x": "2.4 The DIK hierarchy"
+        },
+        {
+          "t": "p",
+          "x": "The sequence Data → Information → Knowledge is a useful introductory model: 1. Data: raw recorded values. 2. Information: data organized in context. 3. Knowledge: facts and relationships that can guide interpretation or action."
+        },
+        {
+          "t": "p",
+          "x": "A common extension is DIKW: Data, Information, Knowledge, and Wisdom. Wisdom concerns choosing sound actions by considering goals, consequences, experience, and values. It is a useful conceptual framework, not a strict scientific law that every system follows in exactly the same way."
+        },
+        {
+          "t": "h",
+          "x": "Example from education"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Data: 72, 85, 91.",
+            "Information: These are a student’s marks in three programming tests.",
+            "Knowledge: The student performs better on later tests and may be improving, although the tests’ difficulty should also be considered.",
+            "Wisdom: Decide whether the student needs additional practice, a more challenging task, or a different kind of support."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Example from a shop"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Data: Daily sales numbers.",
+            "Information: Sales rise on weekends.",
+            "Knowledge: Weekend demand is usually higher for certain products.",
+            "Wisdom: Plan stock levels carefully while considering storage costs, uncertainty, and the risk of unsold goods."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "2.5 Why the hierarchy matters in AI"
+        },
+        {
+          "t": "p",
+          "x": "An AI application often processes data, produces information, and uses knowledge to support a decision. The stages may overlap, and modern machine-learning systems do not always store knowledge as readable rules. Nevertheless, the hierarchy helps explain why raw data alone is not equivalent to understanding."
+        },
+        {
+          "t": "p",
+          "x": "A medical system needs more than a list of symptoms. It needs context, medical relationships, and a way to reason cautiously. A route-planning system needs more than a list of road names; it needs connections between locations, travel costs, restrictions, and a method for comparing possible routes."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "t": "Knowledge Representation in Artificial Intelligence",
+      "k": "th",
+      "s": "Knowledge representation (KR) is the process of encoding facts, concepts, objects, events, relationships,…",
+      "b": [
+        {
+          "t": "h",
+          "x": "3.1 Meaning"
+        },
+        {
+          "t": "p",
+          "x": "Knowledge representation (KR) is the process of encoding facts, concepts, objects, events, relationships, constraints, and rules in a form that an AI system can store and use for reasoning or problem-solving."
+        },
+        {
+          "t": "p",
+          "x": "A human may understand that a bicycle has wheels, that a wheel is a part of a bicycle, and that a bicycle is a kind of vehicle. A computer needs a representation of these concepts and relations if it is expected to answer questions about them through symbolic reasoning."
+        },
+        {
+          "t": "p",
+          "x": "A representation is not the real world itself. It is a simplified model of selected aspects of the world. Its usefulness depends on whether it captures the information needed for the task."
+        },
+        {
+          "t": "h",
+          "x": "3.2 Why AI needs knowledge representation"
+        },
+        {
+          "t": "h",
+          "x": "Knowledge representation helps AI systems"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Store facts in an organized structure.",
+            "Describe objects and categories.",
+            "Represent relationships among concepts.",
+            "Apply rules to known facts.",
+            "Derive conclusions from existing information.",
+            "Explain how a conclusion was reached, when the system is designed to track its reasoning.",
+            "Answer queries about a domain.",
+            "Separate domain knowledge from the software that applies it.",
+            "Update facts and rules when the domain changes."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For example, a university advising system could represent courses, prerequisites, student grades, and degree requirements. It could then check whether a student has completed the prerequisites for a course. It would need accurate, current rules and should explain which requirement is or is not satisfied."
+        },
+        {
+          "t": "h",
+          "x": "3.3 Important characteristics of a good representation"
+        },
+        {
+          "t": "p",
+          "x": "A useful knowledge representation should support several qualities:"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Representational adequacy",
+              "It should be capable of expressing the important knowledge needed for the task."
+            ],
+            [
+              "Inferential adequacy",
+              "It should allow the system to derive useful conclusions from the knowledge it contains."
+            ],
+            [
+              "Inferential efficiency",
+              "It should help the system reach relevant conclusions without unnecessary work."
+            ],
+            [
+              "Acquisitional efficiency",
+              "It should be practical to add, revise, and maintain knowledge."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These are traditional criteria used to discuss knowledge representation. No representation is best for every problem. A simple rule list may suit a small eligibility checker, while a graph may better suit a network of relationships."
+        },
+        {
+          "t": "h",
+          "x": "3.4 Common forms of knowledge representation"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Logical representation",
+              "Facts are written as logical statements. For example, “If a person is a student, then that person is enrolled in a course” can be represented using predicates or rules in a suitable logic."
+            ],
+            [
+              "Rule-based representation",
+              "Knowledge is written as IF–THEN rules. For example, IF a user enters an invalid password repeatedly, THEN temporarily lock the account, subject to the system’s security policy."
+            ],
+            [
+              "Semantic networks",
+              "Concepts are nodes and relationships are links. For example, “sparrow” —is-a→ “bird.”"
+            ],
+            [
+              "Frames",
+              "A frame describes an object or concept using slots and values. A “Car” frame might have slots for manufacturer, model, fuel type, and number of wheels."
+            ],
+            [
+              "Ontologies",
+              "An ontology defines concepts, categories, properties, and relationships in a domain, often with formal constraints. It can help different systems use shared terminology."
+            ],
+            [
+              "Probabilistic representations",
+              "These represent uncertain relationships or beliefs, for example through Bayesian networks."
+            ],
+            [
+              "Knowledge graphs",
+              "These represent entities and relationships as connected data, often using triples such as (Paris, capital-of, France)."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Different representations may be combined. A system could store entities in a graph, apply rules to them, and use probabilities to handle uncertain evidence."
+        },
+        {
+          "t": "h",
+          "x": "3.5 Knowledge base versus database"
+        },
+        {
+          "t": "p",
+          "x": "A database primarily stores and retrieves structured records. A knowledge base stores domain facts, rules, relationships, or other representations intended to support interpretation and reasoning. In practice, the distinction is not absolute: databases can store knowledge graphs and rules, and knowledge-based systems often rely on databases for raw records."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "- Database record: Student ID 104, course “BCA,” semester 1. - Knowledge rule: A student must pass the required prerequisite course before enrolling in a dependent course. - Inference: The system checks the record against the rule and determines whether the student appears eligible."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "3.6 Knowledge acquisition and maintenance"
+        },
+        {
+          "t": "p",
+          "x": "Knowledge may be collected from subject-matter experts, documents, databases, observation, or learned patterns. Turning expert experience into precise rules is called knowledge acquisition or knowledge engineering in many symbolic-AI settings."
+        },
+        {
+          "t": "p",
+          "x": "Knowledge must be maintained. A rule that was correct last year may become outdated after a policy change. A medical rule may require expert review as clinical guidance changes. Versioning, testing, source tracking, and review procedures help prevent stale knowledge from causing harmful recommendations."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "t": "Propositional Logic and Boolean Logic",
+      "k": "th",
+      "s": "Logic is the study of valid reasoning.",
+      "b": [
+        {
+          "t": "h",
+          "x": "4.1 What is logic?"
+        },
+        {
+          "t": "p",
+          "x": "Logic is the study of valid reasoning. In AI, formal logic allows statements and relationships between statements to be represented precisely so that a system can evaluate them according to defined rules."
+        },
+        {
+          "t": "p",
+          "x": "Propositional logic, also called sentential logic, treats complete statements as propositions that are either true or false. Classical propositional logic does not assign an ordinary proposition both values at once, and it does not directly represent degrees of uncertainty."
+        },
+        {
+          "t": "h",
+          "x": "Examples of propositions"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "P: “The door is open.”",
+            "Q: “The alarm is active.”",
+            "R: “The number 8 is even.”"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "In classical logic, each proposition has a truth value: True or False. Questions such as “Is the door open?” are not themselves declarative propositions, although an answer can establish a proposition."
+        },
+        {
+          "t": "h",
+          "x": "4.2 Boolean values"
+        },
+        {
+          "t": "h",
+          "x": "Boolean logic uses two basic values"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "True, often written as 1.",
+            "False, often written as 0."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These values are widely used in programming, digital circuits, database filters, and rule evaluation. A Boolean expression evaluates to true or false according to its operators and inputs."
+        },
+        {
+          "t": "h",
+          "x": "4.3 Logical operators"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "NOT (¬P)",
+              "Negation reverses the truth value. If P is true, NOT P is false; if P is false, NOT P is true."
+            ],
+            [
+              "AND (P ∧ Q)",
+              "Conjunction is true only when both P and Q are true."
+            ],
+            [
+              "OR (P ∨ Q)",
+              "In standard inclusive logic, disjunction is true when at least one of P and Q is true. It is false only when both are false."
+            ],
+            [
+              "IMPLIES (P → Q)",
+              "The implication is false only when P is true and Q is false. It is often read as “if P, then Q.” An implication does not necessarily mean that P causes Q."
+            ],
+            [
+              "EQUIVALENCE (P ↔ Q)",
+              "This is true when P and Q have the same truth value. It is often read as “P if and only if Q.”"
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "4.4 Truth tables"
+        },
+        {
+          "t": "p",
+          "x": "A truth table lists all possible combinations of input truth values and the resulting output."
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "NOT",
+              "P | NOT P True | False False | True"
+            ],
+            [
+              "AND",
+              "P | Q | P AND Q False | False | False False | True | False True | False | False True | True | True"
+            ],
+            [
+              "OR",
+              "P | Q | P OR Q False | False | False False | True | True True | False | True True | True | True"
+            ],
+            [
+              "IMPLICATION",
+              "P | Q | P implies Q False | False | True False | True | True True | False | False True | True | True"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The implication table may initially seem strange. In formal logic, P → Q asserts that there is no case where P is true and Q is false. When P is false, the implication is true under the standard truth-functional definition. This does not mean that a real-world rule should always be applied without considering context; it is a precise mathematical operator."
+        },
+        {
+          "t": "h",
+          "x": "4.5 Simple example"
+        },
+        {
+          "t": "p",
+          "x": "Suppose: P = “The user has entered the correct password.” Q = “The account is active.”"
+        },
+        {
+          "t": "p",
+          "x": "A system might define access as P AND Q. Access is allowed only if both conditions are true. If the password is correct but the account is inactive, the conjunction is false. If the account is active but the password is incorrect, it is also false."
+        },
+        {
+          "t": "p",
+          "x": "This illustrates a key point: the logic evaluates the conditions encoded by the designer. It does not independently verify whether the facts supplied to it are correct."
+        },
+        {
+          "t": "h",
+          "x": "4.6 Logical reasoning in AI"
+        },
+        {
+          "t": "p",
+          "x": "Suppose a knowledge base contains: P: “All registered students have a student ID” — as a general rule expressed in an appropriate formalism. Q: “Mina is a registered student.” Conclusion: “Mina has a student ID.”"
+        },
+        {
+          "t": "p",
+          "x": "A simple propositional variable alone cannot express the full “all students” structure. More expressive systems, such as predicate logic, are needed for quantified statements about individuals and categories. Propositional logic remains useful for simple conditions and combinations of complete statements."
+        },
+        {
+          "t": "p",
+          "x": "A rule engine may use Boolean conditions such as: IF (password_correct AND account_active) THEN allow_login."
+        },
+        {
+          "t": "p",
+          "x": "Logic can support consistency checking, access control, configuration systems, simple diagnosis, and planning. However, logic is only as reliable as its knowledge, definitions, and assumptions."
+        },
+        {
+          "t": "h",
+          "x": "4.7 Limits of propositional logic"
+        },
+        {
+          "t": "h",
+          "x": "Propositional logic does not naturally express"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Objects and their properties in detail.",
+            "Relationships such as “Asha is older than Ravi.”",
+            "Statements about all or some members of a category.",
+            "Degrees of confidence.",
+            "Changing knowledge over time without additional modeling."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Predicate logic, temporal logic, probabilistic models, and other formalisms extend the available expressive power for different purposes."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "t": "Rule-Based Systems and If–Then Rules",
+      "k": "th",
+      "s": "A rule-based system represents some of its knowledge as a collection of rules.",
+      "b": [
+        {
+          "t": "h",
+          "x": "5.1 Meaning"
+        },
+        {
+          "t": "p",
+          "x": "A rule-based system represents some of its knowledge as a collection of rules. A common rule has the form:"
+        },
+        {
+          "t": "p",
+          "x": "IF condition is satisfied, THEN perform an action or infer a conclusion."
+        },
+        {
+          "t": "p",
+          "x": "The IF part is called the condition, premise, or antecedent. The THEN part is called the action, conclusion, or consequent, depending on the system."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "IF a student’s marks meet the passing requirement, THEN mark the result as passed.",
+            "IF an item is out of stock, THEN show an unavailable message.",
+            "IF the temperature sensor reports a value above a defined threshold, THEN issue an alert.",
+            "IF a user has the required role and permission, THEN allow the requested operation."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The exact rule must be designed for its context. For instance, a high sensor reading may require checking sensor reliability before triggering an emergency action."
+        },
+        {
+          "t": "h",
+          "x": "5.2 Components of a rule-based system"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Rule base",
+              "The collection of IF–THEN rules."
+            ],
+            [
+              "Working memory or fact base",
+              "The facts currently known about the case being processed."
+            ],
+            [
+              "Inference engine",
+              "The mechanism that compares facts with rules and determines which rules can be applied."
+            ],
+            [
+              "Conflict-resolution strategy",
+              "When several rules are applicable, the system may need a policy for choosing the order of application."
+            ],
+            [
+              "User interface",
+              "The part through which users enter information and receive results, if the system is user-facing."
+            ],
+            [
+              "Explanation facility",
+              "Some systems record which rules fired and which facts supported a conclusion, allowing them to explain their output."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "5.3 Forward chaining"
+        },
+        {
+          "t": "p",
+          "x": "Forward chaining is a data-driven reasoning method. The system starts with known facts and applies rules whose conditions match those facts. Each application may add a new fact, which can trigger additional rules."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Facts: - A student has submitted all required assignments. - The student has obtained the minimum passing score."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Rules"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "IF all required assignments are submitted, THEN assignment requirement is satisfied.",
+            "IF the minimum passing score is obtained, THEN score requirement is satisfied.",
+            "IF assignment requirement is satisfied AND score requirement is satisfied, THEN course requirements are satisfied."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The system starts with the facts, derives the two requirement facts, and then derives the overall conclusion."
+        },
+        {
+          "t": "p",
+          "x": "Forward chaining is useful when the system has incoming facts and wants to discover what follows from them."
+        },
+        {
+          "t": "h",
+          "x": "5.4 Backward chaining"
+        },
+        {
+          "t": "p",
+          "x": "Backward chaining is goal-driven. The system starts with a goal or question and looks for rules that could establish it. It then checks whether the rule conditions are known or can be proved."
+        },
+        {
+          "t": "p",
+          "x": "Suppose the goal is “Is the student eligible for the course?” The system finds a rule that says eligibility requires passing a prerequisite and meeting a grade condition. It checks those conditions and seeks evidence for each."
+        },
+        {
+          "t": "p",
+          "x": "Backward chaining can be efficient when a user asks a specific question because the system focuses on the facts needed to answer it."
+        },
+        {
+          "t": "h",
+          "x": "5.5 Rule priority and conflicts"
+        },
+        {
+          "t": "p",
+          "x": "Two rules may match the same facts but suggest different actions. A rule-based system therefore needs a strategy for resolving conflicts. Possible strategies include: - Giving priority to rules with greater specificity. - Assigning explicit priorities. - Applying rules in a documented order. - Preferring more recent or more authoritative facts, if the domain supports that policy. - Asking for more information when rules conflict."
+        },
+        {
+          "t": "p",
+          "x": "Poorly designed rules can cause loops, contradictory outputs, or inappropriate actions. Testing with typical cases, edge cases, missing information, and conflicting facts is essential."
+        },
+        {
+          "t": "h",
+          "x": "5.6 Advantages of rule-based systems"
+        },
+        {
+          "t": "p",
+          "x": "Rules are often understandable to humans. They are useful when a domain can be expressed as clear conditions, policies, or procedures. Individual rules can sometimes be changed without rebuilding the entire system. Rule traces can help explain a conclusion."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "t": "Semantic Networks",
+      "k": "th",
+      "s": "A semantic network represents knowledge as a graph.",
+      "b": [
+        {
+          "t": "h",
+          "x": "6.1 Meaning"
+        },
+        {
+          "t": "p",
+          "x": "A semantic network represents knowledge as a graph. Concepts or entities are represented by nodes, and relationships between them are represented by labeled links or edges."
+        },
+        {
+          "t": "h",
+          "x": "For example"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Sparrow —is-a→ Bird",
+            "Bird —is-a→ Animal",
+            "Bird —has-part→ Wings",
+            "Sparrow —can→ Fly (with appropriate exceptions for injured or otherwise unable birds)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The diagram-like structure makes relationships visible and can support inheritance of properties. The exact meaning of each relation should be defined carefully."
+        },
+        {
+          "t": "h",
+          "x": "6.2 Nodes and links"
+        },
+        {
+          "t": "p",
+          "x": "A node can represent a person, object, category, event, place, or abstract concept. A link expresses a relationship, such as: - is-a - instance-of - part-of - has-property - located-in - owns - causes - related-to"
+        },
+        {
+          "t": "p",
+          "x": "For instance, a knowledge graph could contain nodes for a student, a university, and a course. Edges might state that the student studies at the university and is enrolled in the course."
+        },
+        {
+          "t": "h",
+          "x": "6.3 Inheritance"
+        },
+        {
+          "t": "p",
+          "x": "Inheritance means that a more specific concept can acquire properties from a broader category. If “sparrow is a bird” and “birds have wings,” a system may infer that sparrows have wings."
+        },
+        {
+          "t": "p",
+          "x": "Inheritance must allow for exceptions and distinctions. “Birds can fly” is not universally true of all birds, because penguins and ostriches are counterexamples. A carefully designed knowledge representation should not treat every typical property as an exception-free law."
+        },
+        {
+          "t": "h",
+          "x": "6.4 Semantic networks versus ordinary lists"
+        },
+        {
+          "t": "p",
+          "x": "A list might store “sparrow, bird, animal” without explicitly recording how the terms are related. A semantic network labels the connections. This makes it easier to query relationships, such as “What kind of animal is a sparrow?” or “Which category contains birds?”"
+        },
+        {
+          "t": "p",
+          "x": "Graphs are especially useful when the central information concerns relationships. Search engines, recommendation systems, knowledge graphs, and linked-data applications may use graph-like structures, although their technical implementations can be much more complex than introductory semantic networks."
+        },
+        {
+          "t": "h",
+          "x": "6.5 Strengths and limitations"
+        },
+        {
+          "t": "h",
+          "x": "Strengths"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Relationships are easy to visualize.",
+            "Related facts can be connected and explored.",
+            "Hierarchies and inheritance can reduce repeated information.",
+            "Graph structures suit domains with many interconnected entities."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Limitations"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "The meaning of links may be ambiguous unless formally defined.",
+            "Large graphs can become difficult to maintain.",
+            "Exceptions and uncertain relationships require additional mechanisms.",
+            "A graph alone does not automatically specify every valid reasoning procedure."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "t": "Expert Systems: Meaning and Purpose",
+      "k": "th",
+      "s": "An expert system is an AI program designed to solve problems or provide recommendations in a specific…",
+      "b": [
+        {
+          "t": "h",
+          "x": "7.1 Definition"
+        },
+        {
+          "t": "p",
+          "x": "An expert system is an AI program designed to solve problems or provide recommendations in a specific domain by using a collection of expert knowledge and a reasoning mechanism. Traditional expert systems often rely on explicit facts and IF–THEN rules supplied by human specialists."
+        },
+        {
+          "t": "p",
+          "x": "An expert system does not necessarily possess human understanding or general intelligence. It is usually built to perform a limited task, such as checking equipment faults, helping interpret symptoms, or evaluating eligibility according to policy."
+        },
+        {
+          "t": "h",
+          "x": "7.2 Why expert systems were developed"
+        },
+        {
+          "t": "p",
+          "x": "Human experts acquire specialized knowledge through education and experience. Organizations may want to make some of this knowledge available consistently to more users. An expert system attempts to encode the relevant expertise so it can be applied repeatedly."
+        },
+        {
+          "t": "h",
+          "x": "Examples of potential uses include"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Helping technicians diagnose machinery faults.",
+            "Checking whether an application satisfies a set of requirements.",
+            "Assisting with troubleshooting computer networks.",
+            "Supporting medical professionals with structured decision aids.",
+            "Evaluating a configuration against technical rules."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Expert systems should be treated as decision-support tools when the domain is high stakes. A medical expert system, for example, must not be assumed to replace a qualified clinician."
+        },
+        {
+          "t": "h",
+          "x": "7.3 Characteristics"
+        },
+        {
+          "t": "h",
+          "x": "Traditional expert systems often have"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A defined domain of expertise.",
+            "A knowledge base containing facts and rules.",
+            "An inference engine that applies the knowledge.",
+            "A way for the user to provide case-specific facts.",
+            "An output such as a recommendation, classification, explanation, or request for more information."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Some systems also include uncertainty handling, explanations, external databases, or mechanisms for maintaining the knowledge base."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "t": "Basic Architecture of an Expert System",
+      "k": "th",
+      "s": "The knowledge base stores domain knowledge.",
+      "b": [
+        {
+          "t": "h",
+          "x": "8.1 Knowledge base"
+        },
+        {
+          "t": "p",
+          "x": "The knowledge base stores domain knowledge. It may contain rules, facts, relationships, constraints, or other structured information collected from specialists and reliable sources."
+        },
+        {
+          "t": "h",
+          "x": "Example rules in a simple equipment troubleshooting system"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "IF the device does not power on AND the power cable is disconnected, THEN advise checking the cable connection.",
+            "IF the device powers on BUT no display appears, THEN check display connections and the display itself.",
+            "IF the device reports a specific documented error code, THEN consult the corresponding troubleshooting procedure."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These are illustrative rules, not universal instructions for every device. Real systems need device-specific documentation and safety constraints."
+        },
+        {
+          "t": "h",
+          "x": "8.2 Inference engine"
+        },
+        {
+          "t": "p",
+          "x": "The inference engine applies reasoning procedures to the knowledge base and current case facts. It determines which rules match, what can be inferred, and whether the system has enough evidence to provide an output."
+        },
+        {
+          "t": "p",
+          "x": "An inference engine may use forward chaining, backward chaining, or other methods. It should manage conflicting rules and may track the evidence supporting a conclusion."
+        },
+        {
+          "t": "p",
+          "x": "The knowledge base and inference engine are separate in many traditional designs. This separation allows domain rules to be updated without rewriting all of the reasoning code, although actual system architectures vary."
+        },
+        {
+          "t": "h",
+          "x": "8.3 User interface"
+        },
+        {
+          "t": "p",
+          "x": "The user interface allows users to interact with the system. It might ask questions, accept observations, display recommendations, and request missing information."
+        },
+        {
+          "t": "p",
+          "x": "A clear interface should avoid confusing language and should distinguish between confirmed facts, assumptions, possibilities, and final recommendations. In high-stakes contexts, it should communicate uncertainty and relevant safety guidance."
+        },
+        {
+          "t": "h",
+          "x": "8.4 Explanation facility"
+        },
+        {
+          "t": "p",
+          "x": "An explanation facility can tell the user why the system reached a result. For example: “The system recommended checking the power cable because the device was reported as not powering on and the cable was reported as disconnected.”"
+        },
+        {
+          "t": "p",
+          "x": "An explanation is useful only if it faithfully reflects the system’s actual reasoning. A plausible-sounding explanation that does not correspond to the real process can mislead users."
+        },
+        {
+          "t": "h",
+          "x": "8.5 Knowledge acquisition module"
+        },
+        {
+          "t": "p",
+          "x": "Knowledge acquisition is the process of collecting, formalizing, testing, and updating expert knowledge. Domain experts may describe common cases, exceptions, and diagnostic procedures. A knowledge engineer or developer translates that material into rules or other representations."
+        },
+        {
+          "t": "p",
+          "x": "This stage can be difficult because experts may rely on intuition that is hard to express as precise rules. Experts can also disagree, and knowledge may change over time."
+        },
+        {
+          "t": "h",
+          "x": "8.6 Basic architecture flow"
+        },
+        {
+          "t": "h",
+          "x": "A simplified flow is"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "The user supplies facts through the interface.",
+            "The system places the facts into working memory.",
+            "The inference engine compares the facts with the knowledge base.",
+            "Matching rules produce conclusions or additional questions.",
+            "The system checks whether enough information exists.",
+            "It returns a result, recommendation, or request for more information.",
+            "If supported, the explanation facility describes the reasoning."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "t": "How an Expert System Works: a Medical Diagnosis Example",
+      "k": "th",
+      "s": "Medical diagnosis is a familiar illustration of expert-system reasoning, but real medicine is complex.",
+      "b": [
+        {
+          "t": "p",
+          "x": "Medical diagnosis is a familiar illustration of expert-system reasoning, but real medicine is complex. Symptoms overlap, patients may have multiple conditions, and information may be incomplete. A simple rule-based example is educational only and must not be used to diagnose or treat a real person."
+        },
+        {
+          "t": "h",
+          "x": "Suppose a training system receives"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "The patient reports a cough.",
+            "The patient reports a fever.",
+            "The patient reports a sore throat."
+          ]
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "A simplified illustrative rule might be",
+              "IF cough is present AND fever is present, THEN consider whether a respiratory infection is among the possibilities."
+            ],
+            [
+              "Another rule might be",
+              "IF severe breathing difficulty is reported, THEN advise urgent medical assessment."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The first rule produces a possibility, not a confirmed diagnosis. The second is a safety-oriented example that would need to be reviewed and implemented according to authoritative clinical guidance."
+        },
+        {
+          "t": "p",
+          "x": "A system may ask follow-up questions, such as how long symptoms have lasted, whether there are additional symptoms, or whether the person has risk factors. In a real clinical setting, decisions require appropriate professional judgment, examination, and potentially tests."
+        },
+        {
+          "t": "h",
+          "x": "The example illustrates"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Knowledge base: Contains medically reviewed relationships and rules.",
+            "User interface: Collects reported symptoms.",
+            "Working memory: Stores facts for the current case.",
+            "Inference engine: Applies relevant rules.",
+            "Explanation facility: Shows which findings led to a suggestion.",
+            "Output: Provides cautious decision support rather than claiming certainty."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A safe design should identify the system’s intended use, disclose its limitations, protect sensitive health data, and direct users to professional care when appropriate."
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "t": "Classic and Modern Applications",
+      "k": "th",
+      "s": "Medical decision-support systems may help organize patient information, flag possible risks, or remind…",
+      "b": [
+        {
+          "t": "h",
+          "x": "10.1 Medical decision support"
+        },
+        {
+          "t": "p",
+          "x": "Medical decision-support systems may help organize patient information, flag possible risks, or remind clinicians about guidelines. Their quality depends on clinical validity, data quality, oversight, and appropriate integration into healthcare workflows. A traditional rule-based medical expert system is different from a modern model trained on medical data, though systems can combine both."
+        },
+        {
+          "t": "h",
+          "x": "10.2 Equipment troubleshooting"
+        },
+        {
+          "t": "p",
+          "x": "A system can use a decision tree or rules to guide technicians through checks. It may ask whether power is available, whether an indicator is lit, or whether an error code appears. Rules can narrow the possible causes and suggest safe next steps."
+        },
+        {
+          "t": "h",
+          "x": "10.3 Finance and compliance"
+        },
+        {
+          "t": "p",
+          "x": "Rule-based systems can check whether a transaction meets predefined conditions, whether a form is complete, or whether a request satisfies a policy. These systems must be maintained when regulations or organizational policies change. Rules should also be checked for bias, inconsistency, and unintended effects."
+        },
+        {
+          "t": "h",
+          "x": "10.4 Education"
+        },
+        {
+          "t": "p",
+          "x": "An educational system can check prerequisites, provide feedback based on answer patterns, or suggest practice topics. It should not confuse a limited test result with a complete assessment of a learner’s ability."
+        },
+        {
+          "t": "h",
+          "x": "10.5 Configuration and planning"
+        },
+        {
+          "t": "p",
+          "x": "Rules can verify whether a software configuration satisfies requirements, whether a product combination is compatible, or whether a planned process violates a constraint. Such applications can benefit from explicit knowledge because constraints and reasons may be inspectable."
+        },
+        {
+          "t": "h",
+          "x": "10.6 Relationship-based applications"
+        },
+        {
+          "t": "p",
+          "x": "Semantic networks and knowledge graphs can connect people, products, locations, concepts, and documents. They can support search, recommendations, question answering, and data integration. Their usefulness depends on clear relationship definitions, accurate source data, and suitable reasoning or query methods."
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "t": "Advantages and Limitations",
+      "k": "th",
+      "s": "",
+      "b": [
+        {
+          "t": "h",
+          "x": "11.1 Advantages of knowledge-based and rule-based methods"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Interpretability",
+              "Rules and facts can often be inspected by developers and domain experts."
+            ],
+            [
+              "Consistency",
+              "Given the same facts, rules, and execution policy, a deterministic system can apply the same reasoning consistently."
+            ],
+            [
+              "Modularity",
+              "Individual rules may be added, tested, or revised separately."
+            ],
+            [
+              "Domain focus",
+              "A system can preserve a body of specialized knowledge for a well-defined task."
+            ],
+            [
+              "Auditability",
+              "Some systems can record which facts and rules supported a result."
+            ],
+            [
+              "No large training dataset is always required",
+              "A small rule-based system may be built from explicit domain knowledge, although acquiring and validating that knowledge can be difficult."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "11.2 Limitations"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Knowledge acquisition bottleneck",
+              "Experts may find it difficult to express their knowledge completely and precisely. Capturing exceptions can take substantial time."
+            ],
+            [
+              "Brittleness",
+              "A system may perform well on cases covered by its rules but fail when faced with unfamiliar circumstances."
+            ],
+            [
+              "Maintenance",
+              "Rules can become outdated or contradictory as the domain changes."
+            ],
+            [
+              "Uncertainty",
+              "Classical Boolean rules generally do not represent degrees of confidence without extensions."
+            ],
+            [
+              "Context sensitivity",
+              "A rule that works in one context may be inappropriate in another."
+            ],
+            [
+              "Scalability",
+              "A large number of interacting rules can be difficult to test and manage."
+            ],
+            [
+              "Limited learning",
+              "Traditional rule-based systems do not automatically learn new rules from experience unless additional learning components are included."
+            ],
+            [
+              "False confidence",
+              "A system may present a precise conclusion even when its knowledge is incomplete. Good design must communicate uncertainty and request more evidence when necessary."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "t": "Comparing the Main Concepts",
+      "k": "sum",
+      "s": "Quick reference",
+      "b": [
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Data",
+              "Raw observations or recorded values. Example: 82."
+            ],
+            [
+              "Information",
+              "Data organized in context. Example: 82 is a student’s score on a programming test."
+            ],
+            [
+              "Knowledge",
+              "Facts and relationships that support interpretation or action. Example: A score at or above the published pass mark satisfies the score requirement."
+            ],
+            [
+              "Knowledge representation",
+              "The form used to encode knowledge for a computer. Example: a logical statement, rule, graph, or frame."
+            ],
+            [
+              "Propositional logic",
+              "A formal system for combining true-or-false propositions. Example: “account active AND password correct.”"
+            ],
+            [
+              "Rule-based system",
+              "A system that applies IF–THEN rules to facts. Example: if the required conditions are met, mark an application as eligible."
+            ],
+            [
+              "Semantic network",
+              "A graph of concepts and labeled relationships. Example: “sparrow is-a bird.”"
+            ],
+            [
+              "Expert system",
+              "An application that uses domain knowledge and reasoning to provide specialized advice or conclusions. Example: a carefully validated troubleshooting assistant."
+            ],
+            [
+              "Knowledge base",
+              "The store of domain facts and rules."
+            ],
+            [
+              "Inference engine",
+              "The component that applies reasoning procedures to those facts and rules."
+            ],
+            [
+              "User interface",
+              "The mechanism through which users provide input and receive output."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "t": "Common Misunderstandings",
+      "k": "warn",
+      "s": "Common pitfalls and corrections",
+      "b": [
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Data and knowledge are the same. Correction: Data is",
+          "x": [
+            "recorded material. Knowledge includes interpreted facts, relationships,",
+            "or rules that can support reasoning."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "A computer using Boolean logic understands the world",
+          "x": [
+            "like a human. Correction: Boolean logic evaluates formal truth values.",
+            "The system depends on how propositions are defined and whether the input",
+            "facts are reliable."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Every IF–THEN rule expresses causation. Correction:",
+          "x": [
+            "A rule may encode a policy, condition, association, or inference. It",
+            "does not automatically prove that the IF condition causes the THEN",
+            "outcome."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "A semantic network is only a drawing. Correction:",
+          "x": [
+            "The drawing expresses a structured graph. Its nodes and edges can be",
+            "stored and queried by software, although visual diagrams are one way to",
+            "inspect them."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "An expert system is always correct because it uses",
+          "x": [
+            "expert knowledge. Correction: Rules may be incomplete, outdated,",
+            "inconsistent, or applied to a case outside the system’s intended domain."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Expert systems are the same as modern generative AI.",
+          "x": [
+            "Correction: Traditional expert systems primarily apply explicit rules",
+            "and knowledge. Generative AI models often learn statistical patterns",
+            "from large datasets and generate new content. Hybrid systems may combine",
+            "both approaches."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "If a rule fires, its conclusion must be true in the",
+          "x": [
+            "real world. Correction: A rule’s conclusion follows only under the",
+            "system’s representation and assumptions. Incorrect input or unsuitable",
+            "rules can produce incorrect outputs."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "t": "A Worked Example: University Course Eligibility",
+      "k": "ex",
+      "s": "Imagine a university wants to build a simple system that checks whether a student satisfies the…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Imagine a university wants to build a simple system that checks whether a student satisfies the prerequisites for an advanced course."
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Step 1",
+              "Collect data. The database records the student’s completed courses and grades."
+            ],
+            [
+              "Step 2",
+              "Turn data into information. The system identifies that the student completed the introductory course and earned a grade of 74."
+            ],
+            [
+              "Step 3",
+              "Represent knowledge. The university’s official policy says that students must pass the introductory course and earn at least 60 marks to enroll in the advanced course. These requirements are represented as explicit conditions."
+            ],
+            [
+              "Step 4",
+              "Define Boolean propositions. P = “The introductory course has been passed.” Q = “The grade is at least 60.”"
+            ],
+            [
+              "Step 5",
+              "Combine the conditions. Eligibility = P AND Q."
+            ],
+            [
+              "Step 6",
+              "Apply a rule. IF P is true AND Q is true, THEN conclude that the stated prerequisite requirements are satisfied."
+            ],
+            [
+              "Step 7",
+              "Use the interface. The system displays “Prerequisite requirements satisfied,” and may list the policy conditions used."
+            ],
+            [
+              "Step 8",
+              "Check limitations. The system must also check whether other requirements exist, such as seat availability, registration deadlines, or program-specific restrictions. It should not claim full enrollment eligibility if it only checks two conditions."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This example combines data, information, knowledge representation, Boolean logic, rule-based reasoning, and a user interface. It also shows why the scope of a system’s conclusion must be clear."
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "t": "Summary and Key Terms",
+      "k": "fin",
+      "s": "Revision recap",
+      "b": [
+        {
+          "t": "p",
+          "x": "The hierarchy of data, information, and knowledge explains how raw observations can be organized and used for reasoning. Knowledge representation gives AI systems structured ways to store facts, concepts, relationships, and rules. Propositional logic represents statements with true-or-false values and combines them through operators such as NOT, AND, OR, and implication. Rule-based systems apply IF–THEN rules, often through forward or backward chaining. Semantic networks represent concepts as nodes connected by labeled relationships. Expert systems combine domain knowledge with an inference mechanism and usually provide a user interface for entering case details and receiving results."
+        },
+        {
+          "t": "p",
+          "x": "These methods are important foundations of symbolic AI. They can be transparent and useful for clearly defined domains, but they depend on accurate knowledge, careful rule design, maintenance, and an understanding of their limitations. They should not be treated as universally intelligent or infallible."
+        },
+        {
+          "t": "p",
+          "x": "KEY TERMS - Data: Recorded values, symbols, or observations. - Information: Data organized in a meaningful context. - Knowledge: Facts, relationships, and rules that can guide interpretation or action. - Knowledge representation: Encoding knowledge in a form a computer can use. - Propositional logic: Logic based on propositions that are true or false. - Boolean value: One of two values, commonly True/False or 1/0. - Conjunction: Logical AND. - Disjunction: Logical OR. - Negation: Logical NOT. - Implication: A logical “if P, then Q” relationship. - Rule base: Collection of IF–THEN rules. - Working memory: Facts for the current reasoning task. - Inference engine: Component that applies reasoning procedures. - Forward chaining: Reasoning from known facts toward conclusions. - Backward chaining: Reasoning from a goal toward the facts needed to establish it. - Semantic network: Graph of concepts and labeled relationships. - Node: An entity or concept in a graph. - Edge: A relationship connecting graph nodes. - Inheritance: Passing properties from a broader category to a more specific category, subject to the representation’s rules and exceptions. - Expert system: AI program that uses domain knowledge and reasoning for a specialized task. - Knowledge base: Store of domain facts, rules, and relationships. - Knowledge acquisition: Collecting and formalizing domain expertise. - Explanation facility: Component that describes why a system reached a conclusion."
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "t": "Review Questions",
+      "k": "qa",
+      "s": "Practice and self-check",
+      "b": [
+        {
+          "t": "h",
+          "x": "Short-answer questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "What is the difference between data, information, and knowledge?",
+            "What is knowledge representation, and why is it useful in AI?",
+            "Name four forms of knowledge representation.",
+            "What is a proposition in propositional logic?",
+            "What are the truth conditions for AND and OR?",
+            "How does implication differ from causation?",
+            "What is an IF–THEN rule?",
+            "What is the difference between forward chaining and backward chaining?",
+            "What are nodes and edges in a semantic network?",
+            "What is inheritance in a semantic network?",
+            "Define an expert system.",
+            "What is the role of the knowledge base?",
+            "What is the role of the inference engine?",
+            "Why does an expert system need a user interface?",
+            "What is the knowledge acquisition bottleneck?"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Long-answer questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Explain the hierarchy of data, information, and knowledge with examples from education and business.",
+            "Discuss the meaning, purpose, and important characteristics of knowledge representation.",
+            "Explain propositional logic and its main operators with truth tables.",
+            "Describe the components and working of a rule-based system.",
+            "Compare forward chaining and backward chaining with examples.",
+            "Explain semantic networks, inheritance, strengths, and limitations.",
+            "Describe the architecture of a traditional expert system.",
+            "Explain how a medical decision-support expert system might reason, and why its output should not be treated as a guaranteed diagnosis.",
+            "Discuss the advantages and limitations of traditional expert systems.",
+            "Compare rule-based symbolic AI with modern machine-learning approaches."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Practical thinking questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Design three IF–THEN rules for a library book-lending system.",
+            "Create a small semantic network for a university, students, courses, and instructors.",
+            "Write a Boolean expression that allows login only when the password is correct, the account is active, and the account is not locked.",
+            "Describe how a troubleshooting expert system could diagnose a laptop that will not turn on.",
+            "Identify one case where a rule-based system is suitable and another where its limitations would make a different approach necessary."
+          ]
+        }
+      ]
+    }
+  ]
+}

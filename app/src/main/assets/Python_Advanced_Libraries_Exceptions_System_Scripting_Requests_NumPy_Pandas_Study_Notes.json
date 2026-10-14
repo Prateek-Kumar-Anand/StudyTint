@@ -1,0 +1,2531 @@
+{
+  "title": "Advanced Libraries & Exceptions",
+  "intro": "Exceptions, system scripting, HTTP requests, NumPy and pandas.",
+  "sec": [
+    {
+      "n": 1,
+      "t": "Learning Objectives",
+      "k": "th",
+      "s": "Python is used for automation, web communication, data processing, machine learning, and defensive…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Python is used for automation, web communication, data processing, machine learning, and defensive security analysis. This chapter covers four connected areas:"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Exception handling with try, except, else, finally, raise, and custom exceptions.",
+            "System scripting with os, sys, and subprocess.",
+            "Web and network communication using the third-party requests library.",
+            "Numerical and tabular data processing using NumPy and pandas."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "By the end, you should understand how to handle expected failures, work with files and operating-system information, run trusted external programs, communicate with HTTP APIs, and analyze a small dataset of fictional security events."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "t": "Understanding Exceptions",
+      "k": "th",
+      "s": "An exception is an event that interrupts the normal flow of a program because an operation cannot be…",
+      "b": [
+        {
+          "t": "p",
+          "x": "An exception is an event that interrupts the normal flow of a program because an operation cannot be completed as requested."
+        },
+        {
+          "t": "code",
+          "x": [
+            "number = int(\"hello\")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This raises ValueError: the string cannot be converted to an integer."
+        },
+        {
+          "t": "p",
+          "x": "A syntax error means Python cannot parse the source code, such as a missing colon after an if statement. A runtime exception usually occurs after syntactically valid code begins executing, such as 10 / 0, which raises ZeroDivisionError."
+        },
+        {
+          "t": "h",
+          "x": "Common built-in exceptions"
+        },
+        {
+          "t": "kv",
+          "x": [
+            [
+              "ValueError",
+              "Value is unsuitable, e.g. int(\"abc\")"
+            ],
+            [
+              "TypeError",
+              "An operation receives an incompatible type"
+            ],
+            [
+              "ZeroDivisionError",
+              "Division by zero"
+            ],
+            [
+              "FileNotFoundError",
+              "A requested file does not exist"
+            ],
+            [
+              "PermissionError",
+              "Operation lacks permission"
+            ],
+            [
+              "IndexError",
+              "List index is outside the valid range"
+            ],
+            [
+              "KeyError",
+              "Dictionary key is absent"
+            ],
+            [
+              "ImportError",
+              "An import cannot be completed"
+            ],
+            [
+              "ModuleNotFoundError",
+              "Module cannot be found"
+            ],
+            [
+              "TimeoutError",
+              "Operation exceeds a time limit"
+            ],
+            [
+              "ConnectionError",
+              "Connection cannot be established"
+            ],
+            [
+              "JSONDecodeError",
+              "Text is not valid JSON"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A traceback tells you which exception occurred and where. Read its final line to identify the exception type and message, then inspect the relevant line in your own code."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "t": "Try and except",
+      "k": "th",
+      "s": "Place code that might fail in a try block.",
+      "b": [
+        {
+          "t": "p",
+          "x": "Place code that might fail in a try block. Add an except block to handle a specific expected problem."
+        },
+        {
+          "t": "code",
+          "x": [
+            "try:",
+            "    age = int(input(\"Enter your age: \"))",
+            "except ValueError:",
+            "    print(\"Please enter a whole number.\")",
+            "else:",
+            "    print(\"Your age is\", age)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "If conversion succeeds, the else block runs. If conversion raises ValueError, the matching except block runs."
+        },
+        {
+          "t": "h",
+          "x": "Catch specific exceptions"
+        },
+        {
+          "t": "h",
+          "x": "Prefer"
+        },
+        {
+          "t": "code",
+          "x": [
+            "try:",
+            "    number = int(\"abc\")",
+            "except ValueError:",
+            "    print(\"That was not a valid integer.\")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Avoid routinely using a bare except:. It can hide programming bugs and catch errors you did not intend to handle. If a broad handler is necessary at an application boundary, except Exception as error: is more controlled. Report or log the problem rather than silently ignoring it."
+        },
+        {
+          "t": "h",
+          "x": "Capture an exception message"
+        },
+        {
+          "t": "code",
+          "x": [
+            "try:",
+            "    result = 100 / 0",
+            "except ZeroDivisionError as error:",
+            "    print(\"Calculation failed:\", error)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The variable error refers to the exception object. Its message can help with diagnosis, but do not expose private paths, API tokens, passwords, or sensitive user data in messages or logs."
+        },
+        {
+          "t": "h",
+          "x": "Multiple exception types"
+        },
+        {
+          "t": "code",
+          "x": [
+            "try:",
+            "    value = int(input(\"Enter a number: \"))",
+            "    result = 100 / value",
+            "except ValueError:",
+            "    print(\"Enter a valid integer.\")",
+            "except ZeroDivisionError:",
+            "    print(\"The number cannot be zero.\")",
+            "else:",
+            "    print(\"Result:\", result)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "You can also handle related types together:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "try:",
+            "    value = int(\"unknown\")",
+            "except (ValueError, TypeError) as error:",
+            "    print(\"Input problem:\", error)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Keep try blocks focused. If one block contains many unrelated operations, it becomes difficult to determine which operation failed."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "t": "Else and finally",
+      "k": "th",
+      "s": "The else block runs only when the try block completes without an exception being handled by its associated…",
+      "b": [
+        {
+          "t": "p",
+          "x": "The else block runs only when the try block completes without an exception being handled by its associated handlers. Use it for logic that should happen after success."
+        },
+        {
+          "t": "p",
+          "x": "The finally block runs whether the operation succeeds or an exception occurs. It is commonly used for cleanup."
+        },
+        {
+          "t": "code",
+          "x": [
+            "file = None",
+            "try:",
+            "    file = open(\"notes.txt\", \"r\", encoding=\"utf-8\")",
+            "    content = file.read()",
+            "except FileNotFoundError:",
+            "    print(\"File not found.\")",
+            "else:",
+            "    print(content)",
+            "finally:",
+            "    if file is not None:",
+            "        file.close()"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For ordinary file operations, a context manager is simpler because it closes the file automatically:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "try:",
+            "    with open(\"notes.txt\", \"r\", encoding=\"utf-8\") as file:",
+            "        content = file.read()",
+            "except FileNotFoundError:",
+            "    print(\"File not found.\")",
+            "else:",
+            "    print(content)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Use finally when cleanup must occur regardless of success or failure. Avoid returning from finally, because it can override a return value or suppress an exception."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "t": "Raising Exceptions",
+      "k": "th",
+      "s": "Use raise when your code detects an invalid value or a violated rule.",
+      "b": [
+        {
+          "t": "p",
+          "x": "Use raise when your code detects an invalid value or a violated rule."
+        },
+        {
+          "t": "code",
+          "x": [
+            "def validate_percentage(value):",
+            "    if not 0 <= value <= 100:",
+            "        raise ValueError(\"Percentage must be between 0 and 100.\")",
+            "    return value"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Calling validate_percentage(150) raises ValueError. Raising an exception prevents a function from silently returning a result that violates its contract."
+        },
+        {
+          "t": "h",
+          "x": "Re-raising and exception chaining"
+        },
+        {
+          "t": "p",
+          "x": "A bare raise inside an exception handler re-raises the same exception:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "try:",
+            "    number = int(\"abc\")",
+            "except ValueError:",
+            "    print(\"Recording an input problem.\")",
+            "    raise"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "When converting a low-level error into a more meaningful one, use exception chaining:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "def parse_port(text):",
+            "    try:",
+            "        port = int(text)",
+            "    except ValueError as error:",
+            "        raise ValueError(\"Port must be a whole number.\") from error",
+            "",
+            "    if not 1 <= port <= 65535:",
+            "        raise ValueError(\"Port must be between 1 and 65535.\")",
+            "    return port"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "raise ... from ... preserves the original cause in the traceback, making debugging easier."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "t": "Custom Exceptions",
+      "k": "th",
+      "s": "A custom exception gives a clear name to a problem specific to your application.",
+      "b": [
+        {
+          "t": "p",
+          "x": "A custom exception gives a clear name to a problem specific to your application. Define it by inheriting from Exception."
+        },
+        {
+          "t": "code",
+          "x": [
+            "class InvalidRecordError(Exception):",
+            "    \"\"\"Raised when a record does not meet application requirements.\"\"\"",
+            "",
+            "def validate_record(record):",
+            "    if \"username\" not in record:",
+            "        raise InvalidRecordError(\"Record is missing username.\")",
+            "    if not record[\"username\"]:",
+            "        raise InvalidRecordError(\"Username cannot be empty.\")",
+            "    return True",
+            "",
+            "try:",
+            "    validate_record({\"age\": 20})",
+            "except InvalidRecordError as error:",
+            "    print(\"Invalid record:\", error)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Custom types let callers distinguish application-specific failures from unrelated problems. Examples include ConfigurationError, DatasetFormatError, and ServiceUnavailableError."
+        },
+        {
+          "t": "p",
+          "x": "A custom exception can inherit from a built-in type when appropriate:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "class InvalidScoreError(ValueError):",
+            "    def __init__(self, score):",
+            "        self.score = score",
+            "        super().__init__(",
+            "            f\"Score must be between 0 and 100; got {score!r}\"",
+            "        )"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Do not create custom exception classes for every tiny issue. Their purpose is to improve clarity."
+        },
+        {
+          "t": "h",
+          "x": "Three broad categories of failure"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Expected input errors: allow the user to correct the input.",
+            "Environmental failures: missing files or unavailable services may require a clear message or controlled retry.",
+            "Programming bugs: should not be hidden by broad exception handling."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "t": "Useful Exception Patterns",
+      "k": "th",
+      "s": "The logging module is usually better than scattered print() calls in larger scripts.",
+      "b": [
+        {
+          "t": "h",
+          "x": "Retry invalid input"
+        },
+        {
+          "t": "code",
+          "x": [
+            "while True:",
+            "    try:",
+            "        number = int(input(\"Enter a positive integer: \"))",
+            "        if number <= 0:",
+            "            raise ValueError(\"The number must be positive.\")",
+            "    except ValueError as error:",
+            "        print(\"Invalid input:\", error)",
+            "    else:",
+            "        print(\"Accepted:\", number)",
+            "        break"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Validate assumptions early"
+        },
+        {
+          "t": "code",
+          "x": [
+            "def average(numbers):",
+            "    if not numbers:",
+            "        raise ValueError(\"Cannot average an empty collection.\")",
+            "    return sum(numbers) / len(numbers)"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Log exceptions"
+        },
+        {
+          "t": "p",
+          "x": "The logging module is usually better than scattered print() calls in larger scripts."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import logging",
+            "",
+            "logging.basicConfig(level=logging.INFO)",
+            "try:",
+            "    total = 10 / 0",
+            "except ZeroDivisionError:",
+            "    logging.exception(\"Could not calculate total\")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "logging.exception() includes traceback information and should be called inside an exception handler. Logs must not unnecessarily include passwords, API keys, or private records."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "t": "System Scripting",
+      "k": "th",
+      "s": "System scripting means automating routine work involving the operating system.",
+      "b": [
+        {
+          "t": "p",
+          "x": "System scripting means automating routine work involving the operating system. Examples include checking files, creating folders, reading configuration, accepting command-line arguments, and running trusted external programs."
+        },
+        {
+          "t": "p",
+          "x": "os, sys, and subprocess are standard-library modules, so they normally do not need a separate pip install."
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "t": "The os Module",
+      "k": "th",
+      "s": "The os module provides interfaces for operating-system features.",
+      "b": [
+        {
+          "t": "p",
+          "x": "The os module provides interfaces for operating-system features."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import os",
+            "",
+            "print(os.name)",
+            "print(os.getcwd())"
+          ]
+        },
+        {
+          "t": "ul",
+          "x": [
+            "os.name gives a short identifier for the operating-system family.",
+            "os.getcwd() returns the current working directory.",
+            "Relative paths are resolved from the working directory, which may differ from the directory containing your script."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Build paths and inspect files"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import os",
+            "",
+            "folder = \"reports\"",
+            "filename = \"summary.txt\"",
+            "path = os.path.join(folder, filename)",
+            "",
+            "print(path)",
+            "print(os.path.exists(path))",
+            "print(os.path.isfile(path))",
+            "print(os.path.isdir(folder))"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "os.path.join() uses the appropriate path separator for the platform. In many new projects, pathlib offers a clear alternative:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "from pathlib import Path",
+            "",
+            "folder = Path(\"reports\")",
+            "folder.mkdir(exist_ok=True)",
+            "file_path = folder / \"summary.txt\"",
+            "file_path.write_text(\"Report created.\\\\n\", encoding=\"utf-8\")",
+            "print(file_path.read_text(encoding=\"utf-8\"))"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Create and list directories"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import os",
+            "",
+            "os.makedirs(\"output/logs\", exist_ok=True)",
+            "for name in os.listdir(\".\"):",
+            "    print(name)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "os.makedirs() can create nested directories. exist_ok=True avoids an error if the directory already exists. os.listdir(\".\") lists names in the current directory; entries can be files or folders."
+        },
+        {
+          "t": "h",
+          "x": "Environment variables"
+        },
+        {
+          "t": "p",
+          "x": "Environment variables provide configuration to a process."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import os",
+            "",
+            "mode = os.getenv(\"APP_MODE\", \"development\")",
+            "print(\"Mode:\", mode)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "They are not automatically secret. Avoid printing sensitive values or committing credentials to source control."
+        },
+        {
+          "t": "code",
+          "x": [
+            "api_key = os.getenv(\"SERVICE_API_KEY\")",
+            "if not api_key:",
+            "    raise RuntimeError(\"SERVICE_API_KEY is not configured.\")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "How an API expects its key to be supplied depends on its documentation. Never place real credentials into public code or screenshots."
+        },
+        {
+          "t": "h",
+          "x": "File metadata"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import os",
+            "",
+            "path = \"summary.txt\"",
+            "if os.path.exists(path):",
+            "    print(\"Size in bytes:\", os.path.getsize(path))",
+            "    print(\"Is a file:\", os.path.isfile(path))",
+            "else:",
+            "    print(\"Path does not exist.\")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "File size is measured in bytes, not characters. Unicode characters may use more than one byte."
+        },
+        {
+          "t": "h",
+          "x": "Common mistakes"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Assuming the current working directory is the script’s directory.",
+            "Hard-coding separators for one operating system.",
+            "Assuming every existing path is a regular file.",
+            "Assuming a script has permission to access every location.",
+            "Printing environment variables that contain secrets."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "t": "The sys Module",
+      "k": "th",
+      "s": "sys provides information and controls related to the Python interpreter.",
+      "b": [
+        {
+          "t": "p",
+          "x": "sys provides information and controls related to the Python interpreter."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import sys",
+            "",
+            "print(sys.version)",
+            "print(sys.platform)",
+            "print(sys.executable)"
+          ]
+        },
+        {
+          "t": "ul",
+          "x": [
+            "sys.version describes the Python version.",
+            "sys.platform identifies the platform.",
+            "sys.executable gives the path to the interpreter running the script, when available."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Command-line arguments"
+        },
+        {
+          "t": "p",
+          "x": "sys.argv is a list of command-line arguments. The first element is normally the script filename."
+        },
+        {
+          "t": "h",
+          "x": "Save as greet.py"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import sys",
+            "",
+            "if len(sys.argv) < 2:",
+            "    print(\"Usage: python greet.py NAME\")",
+            "    raise SystemExit(2)",
+            "",
+            "name = sys.argv[1]",
+            "print(f\"Hello, {name}!\")"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Run it"
+        },
+        {
+          "t": "code",
+          "x": [
+            "python greet.py Priya"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For more complex command-line interfaces, argparse is usually better than manually parsing sys.argv, because it supports options, help messages, type conversion, and validation."
+        },
+        {
+          "t": "h",
+          "x": "Exit status and standard streams"
+        },
+        {
+          "t": "p",
+          "x": "A process commonly uses exit status 0 for success and a nonzero status for failure."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import sys",
+            "",
+            "print(\"Normal output\")",
+            "print(\"Diagnostic message\", file=sys.stderr)"
+          ]
+        },
+        {
+          "t": "ul",
+          "x": [
+            "sys.stdin: standard input.",
+            "sys.stdout: normal output.",
+            "sys.stderr: diagnostics and errors."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "sys.path lists locations Python searches when importing modules. It can help diagnose ModuleNotFoundError, but routinely changing it is usually not a substitute for organizing packages correctly."
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "t": "The subprocess Module",
+      "k": "th",
+      "s": "Use subprocess when Python needs to run another program, such as a compiler, version-control tool, or…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Use subprocess when Python needs to run another program, such as a compiler, version-control tool, or diagnostic utility."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import subprocess",
+            "",
+            "result = subprocess.run(",
+            "    [\"python\", \"--version\"],",
+            "    capture_output=True,",
+            "    text=True,",
+            "    check=False,",
+            ")",
+            "",
+            "print(\"Return code:\", result.returncode)",
+            "print(\"Output:\", result.stdout)",
+            "print(\"Errors:\", result.stderr)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Important attributes: - returncode: child process exit status. - stdout: captured standard output. - stderr: captured standard error."
+        },
+        {
+          "t": "h",
+          "x": "Prefer argument lists"
+        },
+        {
+          "t": "h",
+          "x": "Recommended"
+        },
+        {
+          "t": "code",
+          "x": [
+            "subprocess.run([\"python\", \"--version\"], check=True)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Avoid building shell commands by concatenating untrusted input. With shell=True, a shell interprets the command; attacker-controlled text can cause shell injection. Prefer a list of arguments and the default shell=False. Still validate arguments and restrict which commands can run."
+        },
+        {
+          "t": "h",
+          "x": "Check failures and timeouts"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import subprocess",
+            "",
+            "try:",
+            "    result = subprocess.run(",
+            "        [\"python\", \"--version\"],",
+            "        capture_output=True,",
+            "        text=True,",
+            "        check=True,",
+            "        timeout=10,",
+            "    )",
+            "except subprocess.TimeoutExpired:",
+            "    print(\"Command took too long.\")",
+            "except subprocess.CalledProcessError as error:",
+            "    print(\"Command failed:\", error.returncode)",
+            "except FileNotFoundError:",
+            "    print(\"The executable was not found.\")",
+            "else:",
+            "    print(result.stdout or result.stderr)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "check=True raises CalledProcessError for a nonzero status. timeout=10 limits how long Python waits, in seconds. Some commands print version information to standard error, which is why the example checks both streams."
+        },
+        {
+          "t": "p",
+          "x": "Use subprocess.run() for most simple tasks. Popen() gives more control for long-running processes, streaming output, and pipes, but is more advanced."
+        },
+        {
+          "t": "p",
+          "x": "Commands differ between Android Termux, Linux, and Windows. Do not assume a utility exists everywhere. Understand commands before automating them, especially commands that delete files, change permissions, or run with elevated privileges."
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "t": "Combining System Modules",
+      "k": "th",
+      "s": "This creates a folder, reports interpreter information, runs the same Python interpreter, handles common…",
+      "b": [
+        {
+          "t": "code",
+          "x": [
+            "from pathlib import Path",
+            "import subprocess",
+            "import sys",
+            "",
+            "def main():",
+            "    folder = Path(\"reports\")",
+            "    folder.mkdir(exist_ok=True)",
+            "    print(\"Report directory:\", folder.resolve())",
+            "    print(\"Python:\", sys.version.split()[0])",
+            "",
+            "    try:",
+            "        result = subprocess.run(",
+            "            [sys.executable, \"--version\"],",
+            "            capture_output=True,",
+            "            text=True,",
+            "            check=True,",
+            "            timeout=10,",
+            "        )",
+            "    except (subprocess.CalledProcessError, subprocess.TimeoutExpired,",
+            "            FileNotFoundError) as error:",
+            "        print(\"Could not check Python version:\", error, file=sys.stderr)",
+            "        return 1",
+            "",
+            "    print((result.stdout or result.stderr).strip())",
+            "    return 0",
+            "",
+            "if __name__ == \"__main__\":",
+            "    raise SystemExit(main())"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This creates a folder, reports interpreter information, runs the same Python interpreter, handles common failures, and returns an exit status. The if __name__ == \"__main__\": guard runs main() when the file is executed directly, not merely imported."
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "t": "Web and Network Basics",
+      "k": "th",
+      "s": "HTTP is a protocol for client-server requests and responses.",
+      "b": [
+        {
+          "t": "p",
+          "x": "HTTP is a protocol for client-server requests and responses. A Python script can act as a client. A request may include a method, URL, headers, and body. A response contains a status code, headers, and possibly a body. HTTPS protects HTTP communication with TLS when correctly configured and validated."
+        },
+        {
+          "t": "h",
+          "x": "Common HTTP methods"
+        },
+        {
+          "t": "kv",
+          "x": [
+            [
+              "GET",
+              "Retrieve a resource"
+            ],
+            [
+              "POST",
+              "Submit data or request an operation"
+            ],
+            [
+              "PUT",
+              "Replace a resource or representation"
+            ],
+            [
+              "PATCH",
+              "Partially update a resource"
+            ],
+            [
+              "DELETE",
+              "Request deletion"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Actual behavior depends on the API contract. A GET request should not normally change server state."
+        },
+        {
+          "t": "h",
+          "x": "Status codes"
+        },
+        {
+          "t": "kv",
+          "x": [
+            [
+              "200 OK",
+              "Request succeeded"
+            ],
+            [
+              "201 Created",
+              "Resource created"
+            ],
+            [
+              "204 No Content",
+              "Success without response body"
+            ],
+            [
+              "301 / 302",
+              "Redirect"
+            ],
+            [
+              "400 Bad Request",
+              "Request is invalid"
+            ],
+            [
+              "401 Unauthorized",
+              "Authentication missing or invalid"
+            ],
+            [
+              "403 Forbidden",
+              "Access refused"
+            ],
+            [
+              "404 Not Found",
+              "Resource not found"
+            ],
+            [
+              "429 Too Many Requests",
+              "Rate limit may be exceeded"
+            ],
+            [
+              "500–599",
+              "Server-error category"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Status codes are useful clues, but the API documentation and response body may be needed to understand the exact issue."
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "t": "Installing requests",
+      "k": "th",
+      "s": "requests is a popular third-party HTTP library.",
+      "b": [
+        {
+          "t": "p",
+          "x": "requests is a popular third-party HTTP library. Unlike os and sys, it is not part of the standard library."
+        },
+        {
+          "t": "p",
+          "x": "Install it into the environment where your script will run:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "python -m pip install requests"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Some systems use python3 -m pip install requests. Using python -m pip helps target the package installer associated with that interpreter. Virtual environments keep dependencies separate between projects."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import requests"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "t": "Making HTTP Requests",
+      "k": "th",
+      "s": "api.example.org is illustrative, not a functioning endpoint for this exercise.",
+      "b": [
+        {
+          "t": "h",
+          "x": "GET with error handling"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import requests",
+            "",
+            "url = \"https://api.example.org/status\"  # Placeholder; replace with documented endpoint.",
+            "",
+            "try:",
+            "    response = requests.get(url, timeout=10)",
+            "    response.raise_for_status()",
+            "except requests.exceptions.Timeout:",
+            "    print(\"The request timed out.\")",
+            "except requests.exceptions.ConnectionError:",
+            "    print(\"Could not connect to the server.\")",
+            "except requests.exceptions.RequestException as error:",
+            "    print(\"Request failed:\", error)",
+            "else:",
+            "    print(\"Status:\", response.status_code)",
+            "    print(\"Content type:\", response.headers.get(\"Content-Type\"))",
+            "    print(response.text[:500])"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "api.example.org is illustrative, not a functioning endpoint for this exercise. Replace it with an API you are authorized to access. The timeout avoids waiting indefinitely. raise_for_status() raises an HTTP error for unsuccessful response status codes."
+        },
+        {
+          "t": "h",
+          "x": "Parse JSON"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import requests",
+            "",
+            "response = requests.get(\"https://api.example.org/items\", timeout=10)",
+            "response.raise_for_status()",
+            "data = response.json()",
+            "print(type(data))",
+            "print(data)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The URL is a placeholder. response.json() parses JSON and can fail if the response body is not valid JSON."
+        },
+        {
+          "t": "h",
+          "x": "Typical JSON-to-Python mappings"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "JSON object → dict",
+            "JSON array → list",
+            "JSON string → str",
+            "JSON number → int or float",
+            "JSON true / false → True / False",
+            "JSON null → None"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Query parameters"
+        },
+        {
+          "t": "code",
+          "x": [
+            "params = {\"q\": \"python\", \"page\": 1}",
+            "response = requests.get(",
+            "    \"https://api.example.org/search\",",
+            "    params=params,",
+            "    timeout=10,",
+            ")",
+            "print(response.url)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Using params lets Requests encode query parameters correctly. Parameter names must match the API documentation."
+        },
+        {
+          "t": "h",
+          "x": "Headers"
+        },
+        {
+          "t": "code",
+          "x": [
+            "headers = {",
+            "    \"Accept\": \"application/json\",",
+            "    \"User-Agent\": \"LearningPythonScript/1.0\",",
+            "}"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Pass headers using requests.get(url, headers=headers, timeout=10). Follow the API’s authentication rules, terms, and rate limits."
+        },
+        {
+          "t": "h",
+          "x": "POST with JSON"
+        },
+        {
+          "t": "code",
+          "x": [
+            "payload = {\"name\": \"Example\", \"active\": True}",
+            "response = requests.post(",
+            "    \"https://api.example.org/items\",",
+            "    json=payload,",
+            "    timeout=10,",
+            ")",
+            "response.raise_for_status()",
+            "print(response.status_code)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This is a template only. Use a real documented endpoint and send only data permitted by the API contract. The json= argument serializes the Python object and sets an appropriate content type."
+        },
+        {
+          "t": "h",
+          "x": "Sessions"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import requests",
+            "",
+            "with requests.Session() as session:",
+            "    session.headers.update({\"Accept\": \"application/json\"})",
+            "    response = session.get(",
+            "        \"https://api.example.org/status\",",
+            "        timeout=10,",
+            "    )",
+            "    print(response.status_code)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A Session can reuse connection settings and cookies. Be careful with cookies and authentication headers, which may carry credentials."
+        },
+        {
+          "t": "h",
+          "x": "API safety and reliability"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Read official API documentation.",
+            "Set timeouts and check status codes.",
+            "Handle network failures and invalid JSON.",
+            "Respect rate limits, privacy, and terms of service.",
+            "Use only authorized endpoints.",
+            "Send only necessary data.",
+            "Keep credentials out of source code and logs.",
+            "Do not assume every response has the expected structure.",
+            "Avoid tight retry loops; use sensible backoff for transient failures."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "t": "Introduction to NumPy",
+      "k": "th",
+      "s": "NumPy is a library for numerical computing.",
+      "b": [
+        {
+          "t": "p",
+          "x": "NumPy is a library for numerical computing. Its central structure is the multidimensional ndarray, which efficiently stores and processes numerical values."
+        },
+        {
+          "t": "h",
+          "x": "Install it"
+        },
+        {
+          "t": "code",
+          "x": [
+            "python -m pip install numpy"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Import it"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import numpy as np"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Python list versus NumPy array"
+        },
+        {
+          "t": "code",
+          "x": [
+            "values = [10, 20, 30]"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A Python list is a general-purpose collection. With NumPy:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import numpy as np",
+            "",
+            "values = np.array([10, 20, 30])",
+            "print(values * 2)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The multiplication applies to each element. In contrast, [10, 20, 30] * 2 repeats the Python list twice. This elementwise behavior is a major reason NumPy is useful."
+        },
+        {
+          "t": "h",
+          "x": "Create arrays"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import numpy as np",
+            "",
+            "zeros = np.zeros(5)",
+            "ones = np.ones(4)",
+            "sequence = np.arange(0, 10, 2)",
+            "points = np.linspace(0, 1, 5)",
+            "",
+            "print(zeros)",
+            "print(ones)",
+            "print(sequence)",
+            "print(points)"
+          ]
+        },
+        {
+          "t": "ul",
+          "x": [
+            "zeros(5) creates five zeros.",
+            "ones(4) creates four ones.",
+            "arange(0, 10, 2) produces values from zero up to, but excluding, ten in steps of two.",
+            "linspace(0, 1, 5) creates five evenly spaced values including the endpoints."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Dimensions, shape, and size"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import numpy as np",
+            "",
+            "matrix = np.array([[1, 2, 3], [4, 5, 6]])",
+            "print(matrix.ndim)",
+            "print(matrix.shape)",
+            "print(matrix.size)",
+            "print(matrix.dtype)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This array has two dimensions, shape (2, 3), and six elements. dtype tells you the element type."
+        },
+        {
+          "t": "h",
+          "x": "Indexing and slicing"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import numpy as np",
+            "",
+            "values = np.array([10, 20, 30, 40, 50])",
+            "print(values[0])",
+            "print(values[-1])",
+            "print(values[1:4])",
+            "",
+            "matrix = np.array([[1, 2, 3], [4, 5, 6]])",
+            "print(matrix[0, 1])",
+            "print(matrix[:, 0])"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Indexing starts at zero. In a two-dimensional array, matrix[0, 1] selects the first row and second column; matrix[:, 0] selects the first column."
+        },
+        {
+          "t": "h",
+          "x": "Vectorized operations and Boolean filters"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import numpy as np",
+            "",
+            "scores = np.array([50, 65, 80, 95])",
+            "print(scores + 5)",
+            "print(scores >= 70)",
+            "print(scores.mean())",
+            "print(scores.max())",
+            "print(scores.min())",
+            "",
+            "passed = scores[scores >= 70]",
+            "print(passed)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Arithmetic and comparisons apply elementwise. A comparison creates a Boolean array, which can select values. This is useful for numerical preprocessing and machine learning."
+        },
+        {
+          "t": "h",
+          "x": "Missing values and broadcasting"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import numpy as np",
+            "",
+            "values = np.array([10.0, 20.0, np.nan, 40.0])",
+            "print(np.isnan(values))",
+            "print(np.nanmean(values))"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "np.nanmean() ignores NaN values. Do not use it blindly: determine why values are missing and whether ignoring them is appropriate."
+        },
+        {
+          "t": "p",
+          "x": "Broadcasting allows operations between compatible array shapes:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "matrix = np.array([[1, 2, 3], [4, 5, 6]])",
+            "offset = np.array([10, 20, 30])",
+            "print(matrix + offset)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The offset is added to each row. Incompatible shapes cause an error. Check .shape when debugging."
+        },
+        {
+          "t": "p",
+          "x": "NumPy is useful for statistics, linear algebra, matrix calculations, numerical experiments, and efficient array operations. It is not always the most convenient tool for mixed-type tables with timestamps, usernames, IP addresses, and event descriptions."
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "t": "Introduction to pandas",
+      "k": "th",
+      "s": "Inspect the data before transforming it.",
+      "b": [
+        {
+          "t": "h",
+          "x": "pandas is designed for labelled tabular data and time series. Its main structures are"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Series: one-dimensional labelled data.",
+            "DataFrame: two-dimensional labelled data with rows and columns."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Install and import"
+        },
+        {
+          "t": "code",
+          "x": [
+            "python -m pip install pandas",
+            "",
+            "import pandas as pd"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Create and inspect a DataFrame"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import pandas as pd",
+            "",
+            "data = {",
+            "    \"username\": [\"asha\", \"rahul\", \"meera\"],",
+            "    \"failed_logins\": [1, 4, 0],",
+            "    \"department\": [\"IT\", \"Sales\", \"IT\"],",
+            "}",
+            "df = pd.DataFrame(data)",
+            "",
+            "print(df.head())",
+            "print(df.shape)",
+            "print(df.columns)",
+            "print(df.dtypes)",
+            "print(df.info())",
+            "print(df.describe(numeric_only=True))"
+          ]
+        },
+        {
+          "t": "ul",
+          "x": [
+            "head() previews rows.",
+            "shape returns row and column counts.",
+            "columns lists names.",
+            "dtypes shows column types.",
+            "info() summarizes structure.",
+            "describe() provides numerical summaries."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Inspect the data before transforming it. Imported columns may not have the expected type."
+        },
+        {
+          "t": "h",
+          "x": "Select and filter"
+        },
+        {
+          "t": "code",
+          "x": [
+            "print(df[\"username\"])",
+            "print(df[[\"username\", \"failed_logins\"]])",
+            "",
+            "high_failures = df[df[\"failed_logins\"] >= 3]",
+            "print(high_failures)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Selecting one column normally returns a Series; selecting several columns returns a DataFrame. Boolean filtering selects rows where the condition is true."
+        },
+        {
+          "t": "p",
+          "x": "loc and iloc"
+        },
+        {
+          "t": "p",
+          "x": "loc selects by labels, while iloc selects by integer position."
+        },
+        {
+          "t": "code",
+          "x": [
+            "print(df.loc[0, \"username\"])",
+            "print(df.iloc[0, 1])"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "They happen to refer to the same value in this simple DataFrame, but can differ when index labels are not consecutive integers."
+        },
+        {
+          "t": "h",
+          "x": "Sorting and adding columns"
+        },
+        {
+          "t": "code",
+          "x": [
+            "sorted_df = df.sort_values(\"failed_logins\", ascending=False)",
+            "df[\"high_failure_count\"] = df[\"failed_logins\"] >= 3",
+            "print(sorted_df)",
+            "print(df)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Sorting changes row order; filtering changes which rows remain. The new column stores a Boolean condition for each row."
+        },
+        {
+          "t": "h",
+          "x": "Grouping and aggregation"
+        },
+        {
+          "t": "code",
+          "x": [
+            "summary = df.groupby(\"department\")[\"failed_logins\"].sum()",
+            "print(summary)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "groupby() divides records into groups, then calculates a summary. Common aggregations include .sum(), .mean(), .count(), .min(), .max(), and .agg()."
+        },
+        {
+          "t": "h",
+          "x": "Missing values and type conversion"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import pandas as pd",
+            "",
+            "df = pd.DataFrame({",
+            "    \"user\": [\"asha\", \"rahul\", \"meera\"],",
+            "    \"failed_logins\": [1, None, 4],",
+            "})",
+            "print(df.isna().sum())"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "isna() identifies missing values, dropna() removes rows or columns with missing values, and fillna() replaces them. A missing count does not always mean zero; decide based on what the source data means."
+        },
+        {
+          "t": "code",
+          "x": [
+            "df[\"failed_logins\"] = pd.to_numeric(",
+            "    df[\"failed_logins\"],",
+            "    errors=\"coerce\",",
+            ")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "errors=\"coerce\" turns unparseable values into missing values. Inspect and report those values rather than silently assuming they were valid."
+        },
+        {
+          "t": "h",
+          "x": "Parse timestamps"
+        },
+        {
+          "t": "code",
+          "x": [
+            "df = pd.DataFrame({",
+            "    \"timestamp\": [\"2026-10-14 10:00:00\", \"2026-10-14 10:05:00\"]",
+            "})",
+            "df[\"timestamp\"] = pd.to_datetime(df[\"timestamp\"], errors=\"coerce\")",
+            "print(df.dtypes)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Time zones matter when comparing events from different systems. A timestamp without a time zone does not identify a unique global instant. Determine whether the source uses UTC or local time."
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "t": "Reading and Writing Data with pandas",
+      "k": "th",
+      "s": "The input file must exist at the supplied path.",
+      "b": [
+        {
+          "t": "h",
+          "x": "CSV"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import pandas as pd",
+            "",
+            "df = pd.read_csv(\"security_events.csv\")",
+            "print(df.head())",
+            "df.to_csv(\"cleaned_events.csv\", index=False)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The input file must exist at the supplied path. index=False prevents pandas from writing the row index as an extra column unless you specifically need it."
+        },
+        {
+          "t": "h",
+          "x": "JSON and JSON Lines"
+        },
+        {
+          "t": "code",
+          "x": [
+            "df = pd.read_json(\"events.json\")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Nested JSON may need normalization. JSON Lines (JSONL) stores one JSON object per line:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "df = pd.read_json(\"events.jsonl\", lines=True)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Use the correct format for the file. Changing options randomly will not fix malformed input."
+        },
+        {
+          "t": "h",
+          "x": "Protect sensitive data"
+        },
+        {
+          "t": "p",
+          "x": "Security records can contain usernames, IP addresses, device identifiers, URLs, and other sensitive details. Before sharing data, remove or mask unnecessary fields, check whether it may be uploaded to external services, restrict access to originals, and avoid including secrets in public notebooks."
+        }
+      ]
+    },
+    {
+      "n": 19,
+      "t": "Security-Log Data Basics",
+      "k": "th",
+      "s": "Security events may originate from operating-system logs, authentication records, applications,…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Security events may originate from operating-system logs, authentication records, applications, network-monitoring systems, or authorized security products."
+        },
+        {
+          "t": "kv",
+          "x": [
+            [
+              "timestamp",
+              "When the event was recorded"
+            ],
+            [
+              "source",
+              "System or component recording it"
+            ],
+            [
+              "event_type",
+              "Login, logout, warning, or another event"
+            ],
+            [
+              "username",
+              "Account associated with the event"
+            ],
+            [
+              "source_ip",
+              "Address reported in the event"
+            ],
+            [
+              "status",
+              "Success, failure, or another outcome"
+            ],
+            [
+              "message",
+              "Human-readable event description"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Schemas differ by platform. Do not assume all logs use the same field names or timestamp formats."
+        },
+        {
+          "t": "h",
+          "x": "A synthetic dataset"
+        },
+        {
+          "t": "p",
+          "x": "This example uses fictional records and does not access real systems."
+        },
+        {
+          "t": "code",
+          "x": [
+            "import pandas as pd",
+            "",
+            "events = pd.DataFrame({",
+            "    \"timestamp\": [",
+            "        \"2026-10-14 09:00:00\",",
+            "        \"2026-10-14 09:02:00\",",
+            "        \"2026-10-14 09:04:00\",",
+            "        \"2026-10-14 09:06:00\",",
+            "        \"2026-10-14 09:08:00\",",
+            "    ],",
+            "    \"username\": [\"asha\", \"asha\", \"rahul\", \"asha\", \"rahul\"],",
+            "    \"source_ip\": [",
+            "        \"192.0.2.10\", \"192.0.2.10\", \"198.51.100.8\",",
+            "        \"192.0.2.10\", \"198.51.100.8\"",
+            "    ],",
+            "    \"event_type\": [\"login\", \"login\", \"login\", \"login\", \"login\"],",
+            "    \"status\": [\"success\", \"failure\", \"failure\", \"failure\", \"success\"],",
+            "})",
+            "",
+            "events[\"timestamp\"] = pd.to_datetime(events[\"timestamp\"], errors=\"coerce\")",
+            "events[\"status\"] = events[\"status\"].str.strip().str.lower()",
+            "print(events)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The IP addresses are from documentation/example ranges and are sample data, not claims about real hosts."
+        },
+        {
+          "t": "h",
+          "x": "Count failures"
+        },
+        {
+          "t": "code",
+          "x": [
+            "failed = events[events[\"status\"] == \"failure\"]",
+            "print(failed)",
+            "print(\"Failed events:\", len(failed))"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This counts records labelled as failures. It does not prove an attack occurred."
+        },
+        {
+          "t": "h",
+          "x": "Group by account and source address"
+        },
+        {
+          "t": "code",
+          "x": [
+            "failed_by_user = (",
+            "    events[events[\"status\"] == \"failure\"]",
+            "    .groupby(\"username\")",
+            "    .size()",
+            "    .sort_values(ascending=False)",
+            ")",
+            "print(failed_by_user)",
+            "",
+            "failed_by_ip = (",
+            "    events[events[\"status\"] == \"failure\"]",
+            "    .groupby(\"source_ip\")",
+            "    .size()",
+            "    .sort_values(ascending=False)",
+            ")",
+            "print(failed_by_ip)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These summaries show how many failures are associated with each account or reported address. A high count is a signal for review, not proof of malicious activity. Shared networks, proxies, legitimate mistakes, and incomplete logging can complicate interpretation."
+        },
+        {
+          "t": "h",
+          "x": "Simple threshold"
+        },
+        {
+          "t": "code",
+          "x": [
+            "threshold = 3",
+            "counts = (",
+            "    events[events[\"status\"] == \"failure\"]",
+            "    .groupby(\"username\")",
+            "    .size()",
+            ")",
+            "accounts_to_review = counts[counts >= threshold]",
+            "print(accounts_to_review)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A real detection rule should consider a time window, baseline behavior, account policies, context, and false positives. Do not label a person or account compromised based on one field alone."
+        },
+        {
+          "t": "h",
+          "x": "Time-based grouping"
+        },
+        {
+          "t": "code",
+          "x": [
+            "events = events.sort_values(\"timestamp\")",
+            "events[\"minute\"] = events[\"timestamp\"].dt.floor(\"min\")",
+            "failed_per_minute = (",
+            "    events[events[\"status\"] == \"failure\"]",
+            "    .groupby(\"minute\")",
+            "    .size()",
+            ")",
+            "print(failed_per_minute)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For larger datasets, choose the time window based on the question. Some analyses require rolling windows rather than fixed minute bins."
+        }
+      ]
+    },
+    {
+      "n": 20,
+      "t": "NumPy and pandas Compared",
+      "k": "sum",
+      "s": "Quick reference",
+      "b": [
+        {
+          "t": "p",
+          "x": "----------------------------------------------------------------------- Feature                 NumPy                   pandas ----------------------- ----------------------- ----------------------- Main structure          ndarray                 Series, DataFrame"
+        },
+        {
+          "t": "p",
+          "x": "Best suited for         Numerical arrays and    Labelled tables and mathematics             time series"
+        },
+        {
+          "t": "p",
+          "x": "Column names            Not core to plain       Built in arrays"
+        },
+        {
+          "t": "p",
+          "x": "CSV tools               Often needs additional  read_csv() and to_csv() parsing"
+        },
+        {
+          "t": "p",
+          "x": "Grouped summaries       More manual             groupby()"
+        },
+        {
+          "t": "p",
+          "x": "Missing data            Often np.nan for        Richer missing-data floating-point arrays   tools"
+        },
+        {
+          "t": "p",
+          "x": "Machine learning        Numerical calculations  Tabular preprocessing -----------------------------------------------------------------------"
+        },
+        {
+          "t": "p",
+          "x": "Use pandas for mixed-type tables with named columns and NumPy for efficient numerical operations. Many workflows use both because pandas uses NumPy extensively."
+        }
+      ]
+    },
+    {
+      "n": 21,
+      "t": "Performance and Large Files",
+      "k": "th",
+      "s": "Reading fewer columns can reduce memory use.",
+      "b": [
+        {
+          "t": "h",
+          "x": "Inspect a sample"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import pandas as pd",
+            "",
+            "sample = pd.read_csv(\"security_events.csv\", nrows=100)",
+            "print(sample.head())",
+            "print(sample.dtypes)"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Select only needed columns"
+        },
+        {
+          "t": "code",
+          "x": [
+            "df = pd.read_csv(",
+            "    \"security_events.csv\",",
+            "    usecols=[\"timestamp\", \"username\", \"status\"],",
+            ")"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Reading fewer columns can reduce memory use."
+        },
+        {
+          "t": "h",
+          "x": "Process in chunks"
+        },
+        {
+          "t": "code",
+          "x": [
+            "import pandas as pd",
+            "",
+            "total_failed = 0",
+            "for chunk in pd.read_csv(\"security_events.csv\", chunksize=50_000):",
+            "    if \"status\" not in chunk.columns:",
+            "        raise ValueError(\"CSV is missing the status column.\")",
+            "    statuses = chunk[\"status\"].astype(\"string\").str.strip().str.lower()",
+            "    total_failed += int((statuses == \"failure\").sum())",
+            "",
+            "print(\"Total failed records:\", total_failed)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "chunksize yields smaller DataFrames instead of loading the entire file at once. The example assumes the CSV has a status column and uses \"failure\" as its label. Real data may require different normalization."
+        },
+        {
+          "t": "p",
+          "x": "Large-data performance includes memory use, parsing time, network transfer, recoverability, and correctness. A fast but inaccurate report is not useful."
+        }
+      ]
+    },
+    {
+      "n": 22,
+      "t": "Integrated Mini-Project: Summarize a CSV",
+      "k": "ex",
+      "s": "This project creates counts for further investigation; it does not conclude that an account is compromised.",
+      "b": [
+        {
+          "t": "h",
+          "x": "Create security_events.csv"
+        },
+        {
+          "t": "code",
+          "x": [
+            "timestamp,username,source_ip,status",
+            "2026-10-14 09:00:00,asha,192.0.2.10,success",
+            "2026-10-14 09:02:00,asha,192.0.2.10,failure",
+            "2026-10-14 09:04:00,rahul,198.51.100.8,failure",
+            "2026-10-14 09:06:00,asha,192.0.2.10,failure"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Program"
+        },
+        {
+          "t": "code",
+          "x": [
+            "from pathlib import Path",
+            "import sys",
+            "import pandas as pd",
+            "",
+            "INPUT_FILE = Path(\"security_events.csv\")",
+            "OUTPUT_FILE = Path(\"failed_login_summary.csv\")",
+            "REQUIRED_COLUMNS = {\"timestamp\", \"username\", \"source_ip\", \"status\"}",
+            "",
+            "class DatasetFormatError(Exception):",
+            "    \"\"\"Raised when the input dataset has an unexpected structure.\"\"\"",
+            "",
+            "def main():",
+            "    if not INPUT_FILE.is_file():",
+            "        print(f\"Input file not found: {INPUT_FILE}\", file=sys.stderr)",
+            "        return 2",
+            "",
+            "    try:",
+            "        df = pd.read_csv(INPUT_FILE)",
+            "    except (OSError, pd.errors.ParserError, UnicodeDecodeError) as error:",
+            "        print(f\"Could not read input file: {error}\", file=sys.stderr)",
+            "        return 2",
+            "",
+            "    missing = REQUIRED_COLUMNS - set(df.columns)",
+            "    if missing:",
+            "        raise DatasetFormatError(f\"Missing columns: {sorted(missing)}\")",
+            "",
+            "    df[\"timestamp\"] = pd.to_datetime(df[\"timestamp\"], errors=\"coerce\")",
+            "    df[\"status\"] = df[\"status\"].astype(\"string\").str.strip().str.lower()",
+            "    invalid_timestamps = int(df[\"timestamp\"].isna().sum())",
+            "",
+            "    failed = df[df[\"status\"] == \"failure\"]",
+            "    summary = (",
+            "        failed.groupby(\"username\")",
+            "        .size()",
+            "        .rename(\"failed_login_count\")",
+            "        .reset_index()",
+            "        .sort_values(\"failed_login_count\", ascending=False)",
+            "    )",
+            "",
+            "    try:",
+            "        summary.to_csv(OUTPUT_FILE, index=False)",
+            "    except OSError as error:",
+            "        print(f\"Could not write report: {error}\", file=sys.stderr)",
+            "        return 3",
+            "",
+            "    print(\"Rows loaded:\", len(df))",
+            "    print(\"Invalid timestamps:\", invalid_timestamps)",
+            "    print(\"Failed events:\", len(failed))",
+            "    print(\"Report saved to:\", OUTPUT_FILE)",
+            "    print(summary.to_string(index=False))",
+            "    return 0",
+            "",
+            "if __name__ == \"__main__\":",
+            "    try:",
+            "        raise SystemExit(main())",
+            "    except DatasetFormatError as error:",
+            "        print(f\"Input format error: {error}\", file=sys.stderr)",
+            "        raise SystemExit(2)"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Walkthrough"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Path.is_file() checks the input file.",
+            "pandas loads the CSV.",
+            "A custom exception reports missing required columns.",
+            "Timestamps are parsed; invalid values become missing.",
+            "The status field is normalized.",
+            "Filtering selects failed records.",
+            "groupby() and size() count failures by username.",
+            "to_csv() writes the report.",
+            "Exceptions report read and write failures.",
+            "The exit status communicates success or failure to the shell."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This project creates counts for further investigation; it does not conclude that an account is compromised. Production tools need additional schema validation, file-size limits, time-zone rules, privacy controls, and data-quality checks."
+        }
+      ]
+    },
+    {
+      "n": 23,
+      "t": "Troubleshooting",
+      "k": "warn",
+      "s": "Pitfalls and fixes",
+      "b": [
+        {
+          "t": "h",
+          "x": "ModuleNotFoundError"
+        },
+        {
+          "t": "p",
+          "x": "The library may be installed into a different Python environment. Try:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "python -m pip install requests numpy pandas",
+            "python -c \"import requests, numpy, pandas; print('Imports successful')\"",
+            "python -c \"import sys; print(sys.executable)\""
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Activate your virtual environment if you use one. Some systems use python3."
+        },
+        {
+          "t": "h",
+          "x": "FileNotFoundError"
+        },
+        {
+          "t": "p",
+          "x": "Check the current directory and resolved path:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "from pathlib import Path",
+            "print(Path.cwd())",
+            "print(Path(\"security_events.csv\").resolve())"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Confirm the file exists there and the filename’s capitalization matches."
+        },
+        {
+          "t": "h",
+          "x": "PermissionError"
+        },
+        {
+          "t": "p",
+          "x": "Choose a directory the program is allowed to use. Do not try to bypass access controls."
+        },
+        {
+          "t": "h",
+          "x": "JSON decoding error"
+        },
+        {
+          "t": "p",
+          "x": "The body may be malformed JSON or an HTML error page. Check the HTTP status and content type. Avoid printing full responses if they might contain sensitive information."
+        },
+        {
+          "t": "h",
+          "x": "Requests timeout or connection error"
+        },
+        {
+          "t": "p",
+          "x": "Check the URL, connectivity, DNS, TLS configuration, server status, and timeout. Retry only when appropriate and respect rate limits."
+        },
+        {
+          "t": "h",
+          "x": "CalledProcessError"
+        },
+        {
+          "t": "p",
+          "x": "With check=True, a nonzero child-process status raises this exception. Inspect the return code and captured error output. The executable may be missing or its arguments may be incorrect."
+        },
+        {
+          "t": "h",
+          "x": "NumPy shape error"
+        },
+        {
+          "t": "p",
+          "x": "Print .shape for the arrays. Verify that the dimensions are compatible and correspond to the intended data; do not reshape arrays randomly just to suppress an error."
+        },
+        {
+          "t": "p",
+          "x": "pandas KeyError"
+        },
+        {
+          "t": "h",
+          "x": "Inspect exact column names"
+        },
+        {
+          "t": "code",
+          "x": [
+            "print(df.columns.tolist())"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "If accidental surrounding spaces are present, normalize them:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "df.columns = df.columns.str.strip()"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This fixes only one possible cause, not every schema mismatch."
+        }
+      ]
+    },
+    {
+      "n": 24,
+      "t": "Best-Practice Checklists",
+      "k": "fin",
+      "s": "Recap and checklist",
+      "b": [
+        {
+          "t": "h",
+          "x": "Exception handling"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Catch specific exceptions.",
+            "Keep try blocks focused.",
+            "Use else for success-only code.",
+            "Use finally or context managers for cleanup.",
+            "Raise meaningful exceptions when assumptions are violated.",
+            "Do not silently ignore exceptions.",
+            "Avoid leaking secrets through logs."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "System scripting"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Use pathlib or os.path for paths.",
+            "Check paths and permissions.",
+            "Use environment variables for configuration.",
+            "Keep credentials out of source control and terminal output.",
+            "Use argparse for complex command-line options.",
+            "Use subprocess.run() with an argument list, timeout, and error checks.",
+            "Avoid shell=True with user-controlled text."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "HTTP APIs"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Follow official documentation.",
+            "Set timeouts and check status codes.",
+            "Handle invalid JSON and network failures.",
+            "Respect authentication, rate limits, privacy, and terms.",
+            "Send only necessary data.",
+            "Keep credentials out of source code and logs."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "NumPy and pandas"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Inspect data before changing it.",
+            "Check shapes, types, and column names.",
+            "Decide what missing values mean.",
+            "Validate timestamps.",
+            "Prefer vectorized operations where appropriate.",
+            "Use chunks or selected columns for large files.",
+            "Preserve original records where possible.",
+            "Verify findings before drawing conclusions."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 25,
+      "t": "Quick Reference",
+      "k": "sum",
+      "s": "Quick reference",
+      "b": [
+        {
+          "t": "kv",
+          "x": [
+            [
+              "Handle an error",
+              "try: ... except ValueError: ..."
+            ],
+            [
+              "Run after success",
+              "else:"
+            ],
+            [
+              "Cleanup",
+              "finally: or with ..."
+            ],
+            [
+              "Raise an error",
+              "raise ValueError(\"message\")"
+            ],
+            [
+              "Custom exception",
+              "class MyError(Exception): ..."
+            ],
+            [
+              "Current directory",
+              "os.getcwd()"
+            ],
+            [
+              "Join path parts",
+              "os.path.join(a, b)"
+            ],
+            [
+              "Create nested folders",
+              "os.makedirs(path, exist_ok=True)"
+            ],
+            [
+              "Read environment variable",
+              "os.getenv(\"NAME\")"
+            ],
+            [
+              "Python version",
+              "sys.version"
+            ],
+            [
+              "Command-line arguments",
+              "sys.argv"
+            ],
+            [
+              "Run a program",
+              "subprocess.run([...], check=True, timeout=10)"
+            ],
+            [
+              "Install Requests",
+              "python -m pip install requests"
+            ],
+            [
+              "HTTP GET",
+              "requests.get(url, timeout=10)"
+            ],
+            [
+              "Check HTTP status",
+              "response.raise_for_status()"
+            ],
+            [
+              "Parse JSON",
+              "response.json()"
+            ],
+            [
+              "Create NumPy array",
+              "np.array([...])"
+            ],
+            [
+              "Array shape",
+              "array.shape"
+            ],
+            [
+              "Boolean array filter",
+              "array[array > threshold]"
+            ],
+            [
+              "Create DataFrame",
+              "pd.DataFrame(data)"
+            ],
+            [
+              "Read CSV",
+              "pd.read_csv(path)"
+            ],
+            [
+              "Preview data",
+              "df.head()"
+            ],
+            [
+              "Filter rows",
+              "df[df[\"status\"] == \"failure\"]"
+            ],
+            [
+              "Group and count",
+              "df.groupby(\"username\").size()"
+            ],
+            [
+              "Sort rows",
+              "df.sort_values(\"column\")"
+            ],
+            [
+              "Export CSV",
+              "df.to_csv(path, index=False)"
+            ],
+            [
+              "Read JSON Lines",
+              "pd.read_json(path, lines=True)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 26,
+      "t": "Glossary",
+      "k": "gl",
+      "s": "Key terms at a glance",
+      "b": [
+        {
+          "t": "gl",
+          "x": [
+            [
+              "API",
+              "An interface through which software systems request data or operations."
+            ],
+            [
+              "Array",
+              "A collection of elements often optimized for numerical operations."
+            ],
+            [
+              "Broadcasting",
+              "NumPy rules for operations on compatible array shapes."
+            ],
+            [
+              "Child process",
+              "A process launched by another process."
+            ],
+            [
+              "DataFrame",
+              "A labelled two-dimensional table in pandas."
+            ],
+            [
+              "Environment variable",
+              "A named configuration value supplied to a process."
+            ],
+            [
+              "Exception",
+              "A runtime event that interrupts ordinary execution."
+            ],
+            [
+              "Exception chaining",
+              "Preserving the cause of a higher-level exception."
+            ],
+            [
+              "HTTP",
+              "A request-response protocol used by clients and servers."
+            ],
+            [
+              "JSON",
+              "A text format for structured data."
+            ],
+            [
+              "Log",
+              "A record of events produced by a system or program."
+            ],
+            [
+              "Missing value",
+              "Data that is absent, unknown, or unrecorded."
+            ],
+            [
+              "NumPy",
+              "A library for numerical arrays and computation."
+            ],
+            [
+              "pandas",
+              "A library for tabular and time-series data."
+            ],
+            [
+              "Request timeout",
+              "A limit on waiting for a network operation."
+            ],
+            [
+              "Status code",
+              "An HTTP response number indicating a broad outcome."
+            ],
+            [
+              "Standard error",
+              "A stream for diagnostic output."
+            ],
+            [
+              "Standard output",
+              "A stream for normal output."
+            ],
+            [
+              "Subprocess",
+              "A child program started and controlled by another program."
+            ],
+            [
+              "Vectorization",
+              "Applying an operation to an array or column rather than manually looping through every value."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 27,
+      "t": "Review Questions",
+      "k": "qa",
+      "s": "Practice and self-check",
+      "b": [
+        {
+          "t": "ol",
+          "x": [
+            "What is an exception?",
+            "How is a syntax error different from a runtime exception?",
+            "Why is a specific exception handler better than bare except?",
+            "When does else run?",
+            "What is finally used for?",
+            "Why is with open(...) usually safer than manually closing a file?",
+            "What does raise do?",
+            "When would you create a custom exception?",
+            "What are the roles of os, sys, and subprocess?",
+            "What does os.getcwd() return?",
+            "Why use os.path.join()?",
+            "What is stored in sys.argv?",
+            "What does a subprocess return code indicate?",
+            "Why can shell=True be dangerous with untrusted input?",
+            "Why should HTTP requests have timeouts?",
+            "What does raise_for_status() do?",
+            "How does JSON map to Python data structures?",
+            "How does NumPy array multiplication differ from Python list multiplication?",
+            "What do NumPy ndim, shape, and size represent?",
+            "What is a pandas DataFrame?",
+            "How does sorting differ from filtering?",
+            "What does groupby() do?",
+            "Why should missing values not automatically become zero?",
+            "How can pandas read a large CSV in chunks?",
+            "Why is a high failed-login count not proof of an attack?"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 28,
+      "t": "Practice Exercises",
+      "k": "qa",
+      "s": "Practice and self-check",
+      "b": [
+        {
+          "t": "ol",
+          "x": [
+            "Accept an integer and handle invalid input.",
+            "Write a function that raises ValueError for negative values.",
+            "Define a custom exception for invalid configuration.",
+            "Use pathlib to create a directory and write a text file.",
+            "Print the current Python executable and version.",
+            "Write a script that accepts a filename through sys.argv.",
+            "Run a harmless trusted command with subprocess.run() and capture output.",
+            "Write a GET-request template with timeout and status handling.",
+            "Create a NumPy array and select values above a threshold.",
+            "Create a DataFrame and inspect its types and shape.",
+            "Read a CSV, clean a text column, and export the result.",
+            "Group fictional events by status and count them.",
+            "Modify the security project to count failures by source address.",
+            "Report how many timestamps fail to parse.",
+            "Adapt the analysis to read the CSV in chunks."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Suggested reasoning"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Put int(input(...)) inside try and catch ValueError.",
+            "Check the value and raise an exception before processing.",
+            "Inherit from Exception and use a meaningful name.",
+            "Use Path.mkdir() and Path.write_text(..., encoding=\"utf-8\").",
+            "Inspect sys.executable and sys.version.",
+            "Check len(sys.argv) before accessing the argument.",
+            "Pass an argument list, set a timeout, and inspect returncode.",
+            "Use requests.get(url, timeout=10), then raise_for_status() and handle RequestException.",
+            "Use Boolean indexing such as array[array > threshold].",
+            "Use pd.DataFrame(...), .shape, .dtypes, and .head().",
+            "Use pd.read_csv(), an appropriate string transformation, and to_csv(index=False).",
+            "Use df.groupby(\"status\").size().",
+            "Filter failures and group by source_ip.",
+            "Parse with pd.to_datetime(..., errors=\"coerce\") and count missing parsed values.",
+            "Use pd.read_csv(..., chunksize=...) and accumulate counts."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 29,
+      "t": "Recommended Learning Sequence",
+      "k": "th",
+      "s": "Do not rush into massive datasets before you can explain each transformation.",
+      "b": [
+        {
+          "t": "ol",
+          "x": [
+            "Practise try and except with input conversion and file reading.",
+            "Add else and finally; learn when context managers are simpler.",
+            "Write custom exceptions and validate function inputs.",
+            "Use pathlib and os to work with local paths.",
+            "Accept command-line input with sys.argv, then explore argparse.",
+            "Run a harmless trusted command with subprocess.run().",
+            "Install Requests in a virtual environment and use a documented API.",
+            "Learn status codes, JSON parsing, timeouts, and safe credential handling.",
+            "Practise NumPy arrays, indexing, vectorized arithmetic, and Boolean filtering.",
+            "Practise pandas DataFrames, CSV files, missing values, sorting, grouping, and exporting.",
+            "Complete the synthetic security-event project.",
+            "Test missing files, malformed CSVs, missing columns, invalid timestamps, and empty datasets."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Do not rush into massive datasets before you can explain each transformation. Start with a handful of rows, verify the output, and then scale up."
+        },
+        {
+          "t": "h",
+          "x": "Conclusion"
+        },
+        {
+          "t": "p",
+          "x": "Exception handling makes failures explicit and recoverable. The os, sys, and subprocess modules connect Python to the operating environment. Requests lets a script communicate with HTTP services. NumPy supports efficient numerical work, while pandas makes labelled tables and event records easier to inspect and summarize."
+        },
+        {
+          "t": "p",
+          "x": "Together, these skills support automation, backend development, data engineering, machine learning, and defensive security analytics. Build the habit of testing failure cases, inspecting inputs, protecting credentials, validating results, and avoiding conclusions that the data does not support."
+        }
+      ]
+    }
+  ]
+}

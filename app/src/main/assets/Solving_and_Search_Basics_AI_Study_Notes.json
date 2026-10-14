@@ -1,0 +1,1112 @@
+{
+  "title": "Problem Solving & Search Basics",
+  "intro": "State spaces, BFS, DFS, heuristics and informed search with real examples.",
+  "sec": [
+    {
+      "n": 1,
+      "t": "Introduction",
+      "k": "th",
+      "s": "Artificial Intelligence (AI) is often described as the field of building systems that can perform tasks…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Artificial Intelligence (AI) is often described as the field of building systems that can perform tasks that normally require aspects of human intelligence. These tasks include recognizing patterns, understanding language, planning actions, solving puzzles, making predictions, and choosing among alternatives. One of the oldest and most influential approaches to AI is to represent a task as a problem and then search for a sequence of actions that leads from the current situation to a desired goal."
+        },
+        {
+          "t": "p",
+          "x": "Search is important because many problems do not have a single direct calculation that immediately produces an answer. A route planner, for example, may need to consider several roads and intersections before selecting a route. A game-playing program may examine possible moves and the replies those moves could invite. A robot may need to consider which sequence of movements will take it around obstacles. In each case, the system explores possible situations and uses rules or knowledge to decide which possibilities deserve attention."
+        },
+        {
+          "t": "p",
+          "x": "These notes introduce AI as a problem-solving tool, state-space representation, uninformed search, Breadth-First Search (BFS), Depth-First Search (DFS), informed search, heuristics, and practical examples involving maps and Tic-Tac-Toe. The emphasis is on conceptual understanding rather than complicated mathematical notation or advanced code."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "t": "Artificial Intelligence as a Problem-Solving Tool",
+      "k": "th",
+      "s": "In everyday life, problem-solving means identifying a goal, understanding the present situation,…",
+      "b": [
+        {
+          "t": "h",
+          "x": "1.1 What does problem-solving mean?"
+        },
+        {
+          "t": "p",
+          "x": "In everyday life, problem-solving means identifying a goal, understanding the present situation, considering available actions, and choosing actions that can achieve the goal. A student preparing for an examination might identify the topics to learn, divide them into manageable units, arrange a study schedule, and monitor progress. A person travelling to a new place might compare routes, transport options, travel times, and costs before choosing a journey."
+        },
+        {
+          "t": "p",
+          "x": "AI problem-solving follows a similar broad pattern. An AI system receives a description of a situation, represents relevant information in a form it can process, identifies the desired outcome, and evaluates possible actions. Depending on the problem, it may search for a solution, apply logical rules, optimize a score, use learned patterns, or combine several methods."
+        },
+        {
+          "t": "p",
+          "x": "A classical AI problem-solving system commonly includes:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "An initial state: the situation in which the system begins.",
+            "A set of possible actions: the choices available from a state.",
+            "A transition model: a description of what happens when an action is performed.",
+            "A goal test: a method for checking whether the desired result has been reached.",
+            "A path-cost function, when relevant: a way to measure the cost of a sequence of actions."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For example, in a maze, the initial state is the starting cell, the actions may be moving up, down, left, or right, and the transition model tells the system which cell each legal movement reaches. The goal test checks whether the exit has been reached. If some paths are longer than others, path cost can measure distance or the number of steps."
+        },
+        {
+          "t": "h",
+          "x": "1.2 Why is search needed?"
+        },
+        {
+          "t": "p",
+          "x": "A problem may offer many possible actions, and each action may lead to more choices. Even a small puzzle can have multiple possible sequences of moves. The number of possibilities can grow rapidly as the problem becomes larger. Search provides a systematic way to explore these alternatives rather than relying on random trial and error."
+        },
+        {
+          "t": "p",
+          "x": "Search can help answer questions such as:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Is there a sequence of actions that reaches the goal?",
+            "Which sequence reaches the goal with the fewest steps?",
+            "Which route has the lowest estimated travel cost?",
+            "Which move is most promising in a game?",
+            "Which actions avoid obstacles or invalid states?"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Search does not automatically make a system intelligent in every sense. A search algorithm can only work with the representation, rules, and information it has been given. If the model of the world is inaccurate, the resulting solution may also be unsuitable. Likewise, searching every possible option can be too expensive for large problems. The design of the state representation and the choice of search strategy are therefore essential."
+        },
+        {
+          "t": "h",
+          "x": "1.3 Search versus learning"
+        },
+        {
+          "t": "p",
+          "x": "Search and machine learning are related but different ideas. Search explores possible states or action sequences within a problem representation. Machine learning uses data or experience to discover patterns, estimate outcomes, or improve performance. A system can use search without learning, such as a simple program that finds a path through a fixed maze. A system can also combine learning and search, such as a game-playing system that uses a learned model to estimate the strength of a position and search to examine future moves."
+        },
+        {
+          "t": "p",
+          "x": "This distinction matters because AI is not one single technique. Search is one family of methods among many. It is especially useful when the system can describe its options and the consequences of actions clearly enough to explore them."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "t": "Representing a Problem as a State-Space Search",
+      "k": "th",
+      "s": "A state is a representation of the relevant features of a situation at a particular moment.",
+      "b": [
+        {
+          "t": "h",
+          "x": "2.1 What is a state?"
+        },
+        {
+          "t": "p",
+          "x": "A state is a representation of the relevant features of a situation at a particular moment. It is not necessarily a complete description of everything in the world. Instead, it records the information required to solve the problem."
+        },
+        {
+          "t": "p",
+          "x": "In a maze, a state might simply be the current position of the agent. In a board game, a state includes the arrangement of pieces and whose turn it is. In a route-planning problem, a state may be the current intersection. In a more complex navigation system, a state might also include direction, remaining battery, or road conditions."
+        },
+        {
+          "t": "p",
+          "x": "A good state representation includes enough information to determine which actions are available and what their results will be. If important information is omitted, two situations that require different decisions might mistakenly be treated as identical."
+        },
+        {
+          "t": "p",
+          "x": "For example, suppose a delivery robot can reach the same location while carrying a parcel or while carrying nothing. If the goal is to deliver the parcel, location alone may not be enough to describe the state. The state may need to include both location and whether the parcel has been delivered."
+        },
+        {
+          "t": "h",
+          "x": "2.2 State space"
+        },
+        {
+          "t": "p",
+          "x": "The state space is the collection of states that can arise in a problem under its rules. Connections between states represent actions or transitions. The search process begins at an initial state and explores these connections in an attempt to reach a goal state."
+        },
+        {
+          "t": "p",
+          "x": "A state space can be pictured as a graph:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Each node represents a state.",
+            "Each edge represents an action or transition.",
+            "A path is a sequence of connected nodes.",
+            "The initial node represents the starting state.",
+            "A goal node represents a state satisfying the goal condition."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The graph may be small and finite, like the legal arrangements in a simple puzzle, or extremely large, like possible positions in a complex board game. Some real-world state spaces may be effectively infinite because the number of possible positions, times, or configurations is unlimited or continuous. Practical systems often simplify such problems or restrict the range of states they explore."
+        },
+        {
+          "t": "h",
+          "x": "2.3 The initial state and goal state"
+        },
+        {
+          "t": "p",
+          "x": "The initial state describes where the search starts. The goal state describes a situation that satisfies the objective. A problem may have one goal state or many possible goal states."
+        },
+        {
+          "t": "p",
+          "x": "For example, a navigation problem might begin at a user's current location and have a goal of reaching a particular building. There may be several goal states if any entrance to the building is acceptable. In a puzzle, the goal might be a specific arrangement of pieces. In a game, the goal might be a winning board position."
+        },
+        {
+          "t": "p",
+          "x": "The goal test is important because the algorithm needs a clear condition for recognizing success. Vague goals such as “find a good route” must be translated into measurable criteria, such as reaching the destination while minimizing travel time or avoiding toll roads."
+        },
+        {
+          "t": "h",
+          "x": "2.4 Actions and the transition model"
+        },
+        {
+          "t": "p",
+          "x": "Actions describe what the agent can do. A transition model describes the result of an action in a particular state. In a simple grid maze, an action may move the agent one cell in a chosen direction. If a wall blocks that cell, the action may be illegal."
+        },
+        {
+          "t": "p",
+          "x": "The available actions can depend on the current state. In Tic-Tac-Toe, for instance, a player can place a mark only in an empty square. Once a square is occupied, that action is no longer available. The transition model updates the board after a legal move and changes whose turn it is."
+        },
+        {
+          "t": "p",
+          "x": "In real environments, actions may have uncertain outcomes. A robot may not move exactly as commanded, and a journey may be affected by traffic. Basic search examples often assume a deterministic environment in which an action has a known result. This assumption makes the concepts easier to understand. More advanced AI methods handle uncertainty, partial observability, and changing environments."
+        },
+        {
+          "t": "h",
+          "x": "2.5 Path cost"
+        },
+        {
+          "t": "p",
+          "x": "A path is a sequence of actions connecting the initial state to another state. Path cost assigns a numerical cost to that sequence. The cost might represent distance, time, money, energy use, risk, or the number of moves."
+        },
+        {
+          "t": "p",
+          "x": "If every action has the same cost, counting steps may be sufficient. If different actions have different costs, simply counting steps can produce a poor solution. For example, a route with fewer roads might take longer if it contains heavy traffic, while a longer motorway route may take less time. A route planner must optimize the cost that matters to the user."
+        },
+        {
+          "t": "p",
+          "x": "It is useful to distinguish between finding any solution and finding an optimal solution. A solution is a path that reaches the goal. An optimal solution has the lowest cost according to the specified cost function. Not every search algorithm guarantees optimality."
+        },
+        {
+          "t": "h",
+          "x": "2.6 A simple state-space example: a maze"
+        },
+        {
+          "t": "p",
+          "x": "Imagine a small maze with a start cell S and an exit G. The agent may move one cell at a time, but it cannot pass through walls. Each open cell is a possible state. A legal movement connects one cell to a neighboring cell."
+        },
+        {
+          "t": "p",
+          "x": "The search algorithm begins at S. It checks the possible neighboring cells and continues exploring according to its strategy. If it reaches G, it has found a path. If it records how each cell was reached, it can reconstruct the route by tracing back from G to S."
+        },
+        {
+          "t": "p",
+          "x": "This example shows that search is not the same as physically trying every route in the real world. The algorithm explores a model of possible states. It can examine a route computationally before a robot or person actually follows it. This is useful whenever testing every option in reality would be expensive, slow, or dangerous."
+        },
+        {
+          "t": "h",
+          "x": "2.7 Avoiding repeated states"
+        },
+        {
+          "t": "p",
+          "x": "A search may encounter the same state through different paths. A map, for example, may allow a traveler to reach an intersection by several different roads. In a maze, an agent may be able to move around a loop and return to a cell it has already visited."
+        },
+        {
+          "t": "p",
+          "x": "If the algorithm repeatedly expands the same states without recognizing them, it can waste time or even continue indefinitely in a cyclic search space. Many search implementations therefore maintain a record of visited or explored states. This record helps prevent unnecessary repetition."
+        },
+        {
+          "t": "p",
+          "x": "However, marking a state as visited must be done appropriately for the chosen algorithm. In problems with different path costs, reaching the same state by a cheaper route may matter. Advanced cost-based algorithms may need to update the best-known route rather than simply ignoring every later visit. For introductory BFS and DFS on ordinary graphs, a visited set is a standard way to prevent cycles."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "t": "Uninformed Search",
+      "k": "th",
+      "s": "Uninformed search is also called blind search.",
+      "b": [
+        {
+          "t": "h",
+          "x": "3.1 Meaning of uninformed search"
+        },
+        {
+          "t": "p",
+          "x": "Uninformed search is also called blind search. It uses the problem definition—such as the initial state, legal actions, transition model, and goal test—but does not use an estimate of how close a state is to the goal."
+        },
+        {
+          "t": "p",
+          "x": "“Blind” does not mean that the algorithm has no information at all. It knows the rules of the problem and can recognize a goal. It simply lacks additional guidance about which non-goal state is likely to lead most directly to success."
+        },
+        {
+          "t": "p",
+          "x": "Breadth-First Search and Depth-First Search are two well-known uninformed search strategies. They differ mainly in the order in which they explore states."
+        },
+        {
+          "t": "h",
+          "x": "3.2 Breadth-First Search (BFS)"
+        },
+        {
+          "t": "p",
+          "x": "Breadth-First Search explores states in layers. Starting from the initial state, it first examines the states one action away, then states two actions away, then states three actions away, and so on. It gives priority to states that are closest to the start in terms of the number of edges."
+        },
+        {
+          "t": "p",
+          "x": "BFS commonly uses a queue. A queue follows the First In, First Out (FIFO) principle: the item that enters first is removed first. When the algorithm discovers a new state, it adds that state to the end of the queue. It then removes the oldest waiting state and explores its unvisited neighbors."
+        },
+        {
+          "t": "h",
+          "x": "Conceptual process"
+        },
+        {
+          "t": "p",
+          "x": "1. Put the initial state in the queue."
+        },
+        {
+          "t": "p",
+          "x": "2. Mark it as discovered."
+        },
+        {
+          "t": "p",
+          "x": "3. Remove the first state from the queue."
+        },
+        {
+          "t": "p",
+          "x": "4. Check whether it satisfies the goal test."
+        },
+        {
+          "t": "p",
+          "x": "5. If it is not the goal, discover its unvisited neighboring states and add them to the queue."
+        },
+        {
+          "t": "p",
+          "x": "6. Repeat until a goal is found or no states remain."
+        },
+        {
+          "t": "p",
+          "x": "7. If parent information has been recorded, reconstruct the path from the goal back to the start."
+        },
+        {
+          "t": "p",
+          "x": "The exact order among neighbors depends on how the problem lists them. This can affect which solution BFS finds when several solutions have the same length, but it does not change the central layer-by-layer principle."
+        },
+        {
+          "t": "h",
+          "x": "3.3 An intuitive BFS example"
+        },
+        {
+          "t": "p",
+          "x": "Suppose you are searching for a friend in a large organization and you can ask people to identify their direct contacts. One strategy is to check everyone at the first level of connection before moving to the second level. You examine direct contacts first, then contacts of those people, then the next layer. This resembles BFS."
+        },
+        {
+          "t": "p",
+          "x": "In a maze, BFS checks every reachable cell one move from the start before checking cells two moves away. If every move has equal cost, BFS finds a path with the fewest moves whenever a path exists and the graph is finite or the search reaches the goal at a finite depth."
+        },
+        {
+          "t": "p",
+          "x": "BFS does not know which direction points toward the exit. It systematically expands all shallower possibilities before deeper ones. This can be reliable, but it may use substantial memory because it must keep many discovered states waiting in the queue."
+        },
+        {
+          "t": "h",
+          "x": "3.4 Strengths of BFS"
+        },
+        {
+          "t": "p",
+          "x": "The main advantage of BFS is that it finds a shallowest goal in an unweighted graph. If every action has equal cost, the first goal reached by a standard BFS has the fewest actions. This makes BFS useful when the objective is to minimize the number of steps."
+        },
+        {
+          "t": "p",
+          "x": "BFS is also conceptually straightforward. Its layer-by-layer order makes it relatively easy to understand and debug. It can be used to find shortest paths in unweighted graphs, determine the minimum number of moves in some puzzles, explore social networks by degree of separation, and calculate the minimum number of transitions between states."
+        },
+        {
+          "t": "h",
+          "x": "3.5 Limitations of BFS"
+        },
+        {
+          "t": "p",
+          "x": "BFS can consume a large amount of memory because it stores a frontier of states that have been discovered but not yet expanded. If each state produces many successors, the number of states at each layer can grow rapidly."
+        },
+        {
+          "t": "p",
+          "x": "BFS can also perform poorly when the goal is very deep in a large search space. It may spend considerable time exploring every shallower state even if the correct route lies along one particular branch. It does not naturally prioritize promising directions because it has no heuristic estimate."
+        },
+        {
+          "t": "p",
+          "x": "BFS is not automatically the right choice when actions have different costs. A path with fewer edges might be more expensive than a longer path. In such cases, a cost-aware method such as Uniform-Cost Search is more appropriate, assuming its conditions are satisfied."
+        },
+        {
+          "t": "h",
+          "x": "3.6 Depth-First Search (DFS)"
+        },
+        {
+          "t": "p",
+          "x": "Depth-First Search explores one branch as deeply as possible before returning to explore alternatives. It follows a path forward until it reaches a state with no unexplored successors, reaches a goal, or hits a specified limit. It then backtracks to an earlier state and tries another branch."
+        },
+        {
+          "t": "p",
+          "x": "DFS can be implemented using a stack or recursion. A stack follows the Last In, First Out (LIFO) principle: the most recently added item is removed first. This encourages the algorithm to continue down the latest branch."
+        },
+        {
+          "t": "h",
+          "x": "Conceptual process"
+        },
+        {
+          "t": "p",
+          "x": "1. Start at the initial state."
+        },
+        {
+          "t": "p",
+          "x": "2. Check whether the current state is the goal."
+        },
+        {
+          "t": "p",
+          "x": "3. If it is not, choose an unvisited successor."
+        },
+        {
+          "t": "p",
+          "x": "4. Continue exploring that successor before trying other alternatives."
+        },
+        {
+          "t": "p",
+          "x": "5. If no unexplored successor remains, backtrack to a previous state."
+        },
+        {
+          "t": "p",
+          "x": "6. Continue until a goal is found or all reachable alternatives have been exhausted."
+        },
+        {
+          "t": "p",
+          "x": "The order in which successors are considered can influence the route DFS explores first. Therefore, two DFS implementations may visit states in different orders even when they use the same graph."
+        },
+        {
+          "t": "h",
+          "x": "3.7 An intuitive DFS example"
+        },
+        {
+          "t": "p",
+          "x": "Imagine exploring a building with many corridors. You enter one corridor and keep following it until it ends. If it does not lead to the destination, you return to the last junction and try another corridor. You do not necessarily inspect every corridor close to the entrance before going farther away. This resembles DFS."
+        },
+        {
+          "t": "p",
+          "x": "In a puzzle, DFS may follow one sequence of moves deeply, then undo moves when it reaches a dead end. This approach can be effective when solutions are deep and the search can backtrack efficiently. It may find a solution quickly if the first branch happens to lead to the goal, but it may spend a long time exploring an unhelpful branch."
+        },
+        {
+          "t": "h",
+          "x": "3.8 Strengths of DFS"
+        },
+        {
+          "t": "p",
+          "x": "DFS often requires less memory than BFS because it can store the current path and a relatively small set of alternatives, rather than retaining an entire broad frontier. Its memory use can be advantageous when the search tree is wide."
+        },
+        {
+          "t": "p",
+          "x": "DFS is also useful when the task naturally involves exploring possibilities and undoing decisions. Examples include maze exploration, traversing dependency structures, exploring game states under a depth limit, and backtracking in puzzles."
+        },
+        {
+          "t": "h",
+          "x": "3.9 Limitations of DFS"
+        },
+        {
+          "t": "p",
+          "x": "DFS does not generally guarantee the shortest path. It may find a goal far away even when a much shorter solution exists in another branch. If successor choices are unfortunate, the algorithm can spend considerable time in a deep but unproductive part of the search space."
+        },
+        {
+          "t": "p",
+          "x": "In a graph with cycles, a naive DFS can revisit states repeatedly. In an infinite-depth search space, it may follow an endless branch and never return to alternatives. A visited set can prevent repeated exploration of states in a finite graph, while depth limits or iterative deepening can help in other settings."
+        },
+        {
+          "t": "p",
+          "x": "DFS is therefore not universally better than BFS. The right strategy depends on the structure of the problem, available memory, the expected depth of a solution, and whether the shortest solution is required."
+        },
+        {
+          "t": "h",
+          "x": "3.10 BFS and DFS compared"
+        },
+        {
+          "t": "h",
+          "x": "Breadth-First Search"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Exploration pattern: explores layer by layer.",
+            "Common data structure: queue (FIFO).",
+            "Memory: can be high because many frontier states may be stored.",
+            "Shortest path: finds a path with the fewest edges in an unweighted graph.",
+            "Main risk: broad searches can become expensive in memory and time."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Depth-First Search"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Exploration pattern: follows one branch deeply, then backtracks.",
+            "Common data structure: stack (LIFO) or recursion.",
+            "Memory: often lower than BFS for tree search, though graph implementations also store visited states.",
+            "Shortest path: not guaranteed to find the path with the fewest edges.",
+            "Main risk: can follow a deep, unproductive branch or struggle with cycles if implemented carelessly."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Neither method uses a heuristic estimate of distance to the goal. Both can be useful when the state space is clearly defined and the available information is limited."
+        },
+        {
+          "t": "h",
+          "x": "3.11 Complexity in simple terms"
+        },
+        {
+          "t": "p",
+          "x": "Search performance is often discussed using time complexity and space complexity. Time complexity describes how the amount of work grows as the search problem grows. Space complexity describes how much memory is needed."
+        },
+        {
+          "t": "p",
+          "x": "In a search tree, let b represent the average number of successors per state and d represent the depth of the shallowest goal. BFS may examine a number of nodes that grows roughly exponentially with d, and it may store a similarly large frontier. This is why BFS can become memory-intensive."
+        },
+        {
+          "t": "p",
+          "x": "DFS can use much less memory in a tree when it stores a single path and alternatives along that path. However, its running time can still be very large, and its behavior depends on how deep the search goes. If a maximum depth m is used, the search may explore up to a number of nodes on the order of b raised to m. These are simplified descriptions: exact complexity depends on the graph, implementation, duplicate handling, and stopping conditions."
+        },
+        {
+          "t": "p",
+          "x": "For a first introduction, the most important lesson is not memorizing formulas. It is understanding the trade-off: BFS prioritizes shallow solutions and can use much memory; DFS uses a deep-first strategy and can be memory-efficient, but may miss a short solution or get trapped in an unproductive branch."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "t": "Informed Search and Heuristics",
+      "k": "th",
+      "s": "Informed search uses additional problem-specific knowledge to decide which states to explore first.",
+      "b": [
+        {
+          "t": "h",
+          "x": "4.1 What is informed search?"
+        },
+        {
+          "t": "p",
+          "x": "Informed search uses additional problem-specific knowledge to decide which states to explore first. This extra guidance is often represented by a heuristic function. Unlike uninformed search, which follows a fixed exploration rule without estimating closeness to the goal, informed search tries to prioritize states that appear promising."
+        },
+        {
+          "t": "p",
+          "x": "For example, a route planner can estimate the straight-line distance from each location to the destination. If the destination is north-east of the current position, locations that move the traveler generally closer may receive more attention than locations that lead in the opposite direction. The estimate does not need to be the final answer; it is guidance for the search process."
+        },
+        {
+          "t": "p",
+          "x": "Informed search can reduce unnecessary exploration, but it depends on the quality of its guidance. A poor heuristic can lead the search toward an unhelpful area. Some informed algorithms can still guarantee an optimal solution when their heuristic satisfies specific conditions; others prioritize speed or a plausible answer without such a guarantee."
+        },
+        {
+          "t": "h",
+          "x": "4.2 What is a heuristic?"
+        },
+        {
+          "t": "p",
+          "x": "A heuristic is a practical estimate or rule of thumb that helps guide problem-solving. It is an informed guess based on features of the problem. It does not necessarily produce a perfect answer, and it is not the same as random guessing."
+        },
+        {
+          "t": "p",
+          "x": "In a map problem, straight-line distance to the destination is a common heuristic. In the sliding-tile puzzle, a heuristic might count how many tiles are not in their goal positions. In a board game, a heuristic might evaluate the number of possible winning lines available to a player. In scheduling, a heuristic might prioritize tasks with urgent deadlines or long processing times."
+        },
+        {
+          "t": "p",
+          "x": "A heuristic can be written as h(n), where n represents a state and h(n) estimates the remaining cost from that state to a goal. The notation is simply a compact way of expressing the idea. A lower estimate may indicate that a state appears closer to the goal, depending on how the heuristic is defined."
+        },
+        {
+          "t": "h",
+          "x": "4.3 Heuristics are estimates, not guarantees"
+        },
+        {
+          "t": "p",
+          "x": "A heuristic is useful only to the extent that it reflects something important about the actual problem. Straight-line distance is a useful estimate of road distance, but roads may bend around rivers or mountains. The closest-looking route may contain traffic, tolls, closures, or restricted turns. Thus, a heuristic should not be mistaken for a guaranteed prediction of the final cost."
+        },
+        {
+          "t": "h",
+          "x": "A heuristic can be"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Accurate: it closely estimates the true remaining cost.",
+            "Inaccurate: it differs substantially from the actual cost.",
+            "Optimistic: it never overestimates the true minimum remaining cost, under the relevant definition.",
+            "Misleading: it consistently directs the search toward costly or impossible options."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Some algorithms have formal requirements for heuristics. For example, A* can guarantee an optimal solution under appropriate conditions, such as a suitable admissible heuristic and correct handling of path costs. These conditions matter; merely using a heuristic does not make a search optimal."
+        },
+        {
+          "t": "h",
+          "x": "4.4 Greedy Best-First Search"
+        },
+        {
+          "t": "p",
+          "x": "Greedy Best-First Search chooses which state to expand mainly by the heuristic estimate of how close it appears to the goal. It prioritizes the state with the lowest h(n) value. This can make it fast when the heuristic is useful, because the algorithm concentrates on states that seem promising."
+        },
+        {
+          "t": "p",
+          "x": "However, greedy search can be misled. A state may appear close to the destination according to the heuristic while leading to a long or expensive route. Greedy Best-First Search does not generally guarantee the least-cost solution. It is a useful conceptual example of how a heuristic can guide search, but the estimate alone does not account fully for the cost already paid to reach the current state."
+        },
+        {
+          "t": "h",
+          "x": "4.5 A* Search: combining past cost and estimated future cost"
+        },
+        {
+          "t": "p",
+          "x": "A* Search combines two pieces of information:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "g(n): the actual cost of the path from the start to the current state.",
+            "h(n): the estimated cost from the current state to a goal."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "It calculates a priority score commonly written as f(n) = g(n) + h(n). States with lower estimated total cost receive higher priority for exploration."
+        },
+        {
+          "t": "p",
+          "x": "The distinction between g and h is important. The g value records what the search has already spent. The h value estimates what remains. Using only h can favor a state that looks close to the goal but has been expensive to reach. Using g + h balances past cost and estimated future cost."
+        },
+        {
+          "t": "p",
+          "x": "Under appropriate conditions, including a suitable heuristic and correct implementation, A* can find a least-cost path. A common sufficient condition for tree search is an admissible heuristic, which does not overestimate the true minimum remaining cost. Graph search has additional implementation considerations, including whether states can be revisited when a better path is discovered."
+        },
+        {
+          "t": "p",
+          "x": "A* is widely taught because it clearly demonstrates how search can combine exact information about the route so far with an estimate of the remaining work. It is not always cheap: memory use can become substantial, and the quality of the heuristic strongly affects performance."
+        },
+        {
+          "t": "h",
+          "x": "4.6 What makes a good heuristic?"
+        },
+        {
+          "t": "p",
+          "x": "A good heuristic is relevant to the goal, inexpensive to calculate, and useful for distinguishing promising states from unpromising ones. If calculating the heuristic takes more time than it saves, the search may not benefit. If it gives nearly identical estimates for every state, it provides little guidance. If it is badly misleading, it may waste work."
+        },
+        {
+          "t": "p",
+          "x": "For map routing, straight-line distance is easy to calculate and often provides useful direction. For Tic-Tac-Toe, a simple evaluation can count potential winning lines that remain open to each player. For a puzzle, the number of misplaced pieces can indicate progress, although more sophisticated estimates may provide stronger guidance."
+        },
+        {
+          "t": "p",
+          "x": "Heuristic design is often a balance between informativeness and computational expense. A more detailed estimate may be more accurate but require extra calculation. The best choice depends on the problem and the available resources."
+        },
+        {
+          "t": "h",
+          "x": "4.7 Uninformed versus informed search"
+        },
+        {
+          "t": "p",
+          "x": "Uninformed search relies on the formal problem description without estimating how promising each state is. BFS orders states by depth, while DFS follows a branch deeply. Informed search adds an estimate that helps prioritize states. Greedy Best-First Search prioritizes the heuristic estimate, and A* combines the path cost so far with the estimated remaining cost."
+        },
+        {
+          "t": "p",
+          "x": "Informed search can be more efficient when a good heuristic is available. However, a heuristic is not a substitute for a correct model or a clearly defined goal. Search quality depends on all of these components."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "t": "Real-World Application: Map Routing",
+      "k": "ex",
+      "s": "A digital map can be represented as a graph.",
+      "b": [
+        {
+          "t": "h",
+          "x": "5.1 Representing a map as a graph"
+        },
+        {
+          "t": "p",
+          "x": "A digital map can be represented as a graph. Intersections, landmarks, or road junctions can be nodes, while roads connecting them can be edges. If roads have different lengths or travel times, the edges can have weights that represent those costs."
+        },
+        {
+          "t": "p",
+          "x": "The starting node is the current location, and the goal node is the destination. The route-planning system searches for a path between them. The best route depends on the objective: shortest distance, minimum travel time, lowest toll cost, avoiding highways, or a combination of factors."
+        },
+        {
+          "t": "p",
+          "x": "A simplified map can use BFS when every edge represents an equal-cost step and the aim is to minimize the number of edges. Real road networks are usually weighted, so a cost-aware algorithm is generally more suitable. Dijkstra's algorithm is commonly used for non-negative edge costs, while A* can use a heuristic such as straight-line distance to guide the search."
+        },
+        {
+          "t": "h",
+          "x": "5.2 A small illustrative example"
+        },
+        {
+          "t": "p",
+          "x": "Imagine a traveler needs to go from Town A to Town D. There are two possible routes:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Route 1: A to B, B to C, and C to D.",
+            "Route 2: A to D through a direct express road, represented as one edge."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "If every edge is treated as equal, BFS would find the direct edge because it reaches the goal in one step. But real journeys do not always have equal costs. Suppose the direct road has a high toll or heavy congestion, while the three-road route is cheap and fast. A system that optimizes travel time or total cost must represent those differences. Counting edges alone would not solve the intended problem."
+        },
+        {
+          "t": "p",
+          "x": "This example illustrates a general rule: the algorithm can optimize only the objective that the model expresses. If the cost function represents distance, it seeks a short-distance route; if it represents time, it seeks a quick route. A system cannot correctly optimize an unstated preference."
+        },
+        {
+          "t": "h",
+          "x": "5.3 Why heuristics help in routing"
+        },
+        {
+          "t": "p",
+          "x": "A route planner may use straight-line distance from a road junction to the destination as a heuristic. It gives an approximate sense of progress toward the goal without having to calculate every possible road route first. A* uses this estimate alongside the known cost of reaching the junction."
+        },
+        {
+          "t": "p",
+          "x": "The straight-line estimate is usually no greater than the road distance when travel follows roads and distance is measured consistently, making it a useful optimistic heuristic for distance-based routing. However, this reasoning depends on the chosen cost definition. If the cost is time, a distance estimate needs an appropriate conversion or may not be a valid lower bound on travel time."
+        },
+        {
+          "t": "p",
+          "x": "Modern navigation services also use information beyond basic graph search, such as traffic data, road closures, turn restrictions, travel modes, and changing conditions. The search model may be updated as the environment changes. The basic graph representation remains a useful foundation even when the production system is more sophisticated."
+        },
+        {
+          "t": "h",
+          "x": "5.4 Limitations in real-world routing"
+        },
+        {
+          "t": "p",
+          "x": "A road map is not always a simple static graph. Traffic changes over time; a road may be closed; a turn may be prohibited; and a route that is fastest at one time may be slow later. Some systems model time-dependent edge costs or update route estimates using live data."
+        },
+        {
+          "t": "p",
+          "x": "A practical navigation service may also optimize several criteria. A user may prefer a slightly longer route with fewer turns, avoid tolls, or select a route accessible to a particular vehicle. Such preferences need to be incorporated into the cost model or treated as constraints."
+        },
+        {
+          "t": "p",
+          "x": "Search algorithms supply a systematic way to explore routes, but they do not replace accurate map data, reliable traffic estimates, or sensible user preferences. The real quality of the route depends on the entire system."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "t": "Real-World Application: Tic-Tac-Toe",
+      "k": "ex",
+      "s": "Tic-Tac-Toe is a simple two-player game played on a three-by-three board.",
+      "b": [
+        {
+          "t": "h",
+          "x": "6.1 Understanding the game as a search problem"
+        },
+        {
+          "t": "p",
+          "x": "Tic-Tac-Toe is a simple two-player game played on a three-by-three board. One player uses X and the other uses O. Players take turns placing their mark in an empty square. A player wins by placing three of their marks in a row, column, or diagonal. The game ends in a draw if the board fills without either player winning."
+        },
+        {
+          "t": "p",
+          "x": "Tic-Tac-Toe is a useful AI example because its rules are clear and the number of possible board configurations is limited enough for a simple program to explore. Each board arrangement, together with whose turn it is, can be treated as a state. Each legal placement is an action. The transition model updates the board, and the goal or terminal test determines whether X has won, O has won, or the game is a draw."
+        },
+        {
+          "t": "p",
+          "x": "The search tree begins with an empty board. Each possible first move creates a child state. Each possible reply creates another level, and the process continues until the game ends or a chosen depth limit is reached."
+        },
+        {
+          "t": "h",
+          "x": "6.2 How search can select a move"
+        },
+        {
+          "t": "p",
+          "x": "An AI player can examine possible moves by exploring the game tree. If it searches all the way to terminal states, it can evaluate outcomes as wins, losses, or draws. It can then choose a move that leads to the most favorable outcome, assuming the opponent also responds according to the model."
+        },
+        {
+          "t": "p",
+          "x": "A classic method for this is Minimax. It assumes that one player tries to maximize the score while the opponent tries to minimize it. For example, a terminal win for the AI might receive a positive score, a loss a negative score, and a draw zero. The algorithm evaluates the consequences of moves and backs up the scores through the game tree to choose a move."
+        },
+        {
+          "t": "p",
+          "x": "Minimax is not itself an uninformed traversal method in exactly the same sense as BFS or DFS; it is a decision procedure for adversarial games. It can use depth-first exploration of the game tree, and it evaluates moves according to the competing objectives of two players. This distinction helps explain how search concepts combine in practical AI."
+        },
+        {
+          "t": "h",
+          "x": "6.3 Example of tactical reasoning"
+        },
+        {
+          "t": "p",
+          "x": "Suppose the AI has two X marks in the same row and the third square is empty. Placing X in that square wins immediately. A good move-selection system should recognize this winning move. Similarly, if the opponent has two O marks in a row and can win on the next turn, the AI should consider blocking that square if it cannot win immediately itself."
+        },
+        {
+          "t": "p",
+          "x": "These decisions can be handled through game rules and search. A simple rule-based program might check for immediate wins and threats. A search-based program can examine future sequences of moves and identify consequences that are not obvious from the current board alone."
+        },
+        {
+          "t": "p",
+          "x": "Search makes it possible to evaluate a move by considering not only the immediate result but also the possible replies. For instance, a move may appear strong but allow the opponent to create a forced win. Exploring the game tree helps reveal such consequences."
+        },
+        {
+          "t": "h",
+          "x": "6.4 Heuristics in Tic-Tac-Toe"
+        },
+        {
+          "t": "p",
+          "x": "If a game tree is too large to explore fully, a program can stop at a certain depth and use a heuristic evaluation function. A simple heuristic might reward the AI for having open rows, columns, or diagonals in which it could still form three marks, while penalizing the opponent's similar opportunities."
+        },
+        {
+          "t": "p",
+          "x": "The evaluation function is an estimate of how favorable a non-terminal board position is. It is not the same as knowing the eventual result. Two positions with similar heuristic scores may have different outcomes after deeper analysis. Better search or a stronger evaluation function can improve decision quality."
+        },
+        {
+          "t": "p",
+          "x": "Tic-Tac-Toe is small enough that a simple AI can often examine the game tree to the end. Larger games, such as chess, have far more possible positions, so complete search is generally infeasible. Such systems use depth limits, pruning, heuristics, and other techniques to focus computation on promising lines of play."
+        },
+        {
+          "t": "h",
+          "x": "6.5 Why Tic-Tac-Toe matters"
+        },
+        {
+          "t": "p",
+          "x": "Tic-Tac-Toe provides a clear introduction to state representation, legal actions, terminal states, game trees, search, and evaluation. It also demonstrates that AI problem-solving often requires modeling another agent's possible actions, rather than treating the environment as passive."
+        },
+        {
+          "t": "p",
+          "x": "The same general idea extends to board games, strategy games, automated planning, and other settings where decisions have consequences that unfold over several steps. The complexity varies, but the foundational question remains: which action is best when future possibilities are considered?"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "t": "Comparing Search Methods in Practice",
+      "k": "sum",
+      "s": "Quick reference",
+      "b": [
+        {
+          "t": "h",
+          "x": "7.1 Choosing a strategy"
+        },
+        {
+          "t": "p",
+          "x": "There is no single search algorithm that is best for every problem. The appropriate method depends on the objective, the structure of the state space, the cost of actions, the quality of available estimates, and the limits on time and memory."
+        },
+        {
+          "t": "p",
+          "x": "BFS is suitable when all actions have equal cost and a shallowest solution is important. DFS is useful when memory is limited or when exploring deep possibilities with backtracking is appropriate, but it does not guarantee the shortest solution. Informed methods can reduce exploration when a meaningful heuristic is available. Cost-aware methods are important when actions have different costs."
+        },
+        {
+          "t": "h",
+          "x": "7.2 Important questions before choosing"
+        },
+        {
+          "t": "h",
+          "x": "Before choosing a search algorithm, ask"
+        },
+        {
+          "t": "p",
+          "x": "1. What is the initial state?"
+        },
+        {
+          "t": "p",
+          "x": "2. What exactly counts as a goal?"
+        },
+        {
+          "t": "p",
+          "x": "3. What actions are legal in each state?"
+        },
+        {
+          "t": "p",
+          "x": "4. Can the same state be reached by different paths?"
+        },
+        {
+          "t": "p",
+          "x": "5. Do all actions have equal cost?"
+        },
+        {
+          "t": "p",
+          "x": "6. Is the shortest path required, or is any valid solution acceptable?"
+        },
+        {
+          "t": "p",
+          "x": "7. Is there a useful heuristic estimate?"
+        },
+        {
+          "t": "p",
+          "x": "8. How much memory and time are available?"
+        },
+        {
+          "t": "p",
+          "x": "9. Can the environment change while the search is running?"
+        },
+        {
+          "t": "p",
+          "x": "10. Does the system need to account for an opponent or uncertain outcomes?"
+        },
+        {
+          "t": "p",
+          "x": "Answering these questions clarifies what the algorithm must accomplish. It also prevents a common mistake: selecting an algorithm before defining the actual problem."
+        },
+        {
+          "t": "h",
+          "x": "7.3 Optimality, completeness, and efficiency"
+        },
+        {
+          "t": "p",
+          "x": "Three terms are useful when evaluating search algorithms."
+        },
+        {
+          "t": "p",
+          "x": "Completeness asks whether the algorithm is guaranteed to find a solution if one exists, under the relevant assumptions. For example, BFS is complete in a finite graph when implemented appropriately. Basic DFS can fail to find a solution in an infinite-depth space if it follows an endless branch."
+        },
+        {
+          "t": "p",
+          "x": "Optimality asks whether the algorithm is guaranteed to find the least-cost solution. BFS is optimal for equal-cost edges in the usual setting, but not for arbitrary unequal costs. DFS is not generally optimal. A* can be optimal when its heuristic and implementation satisfy the necessary conditions."
+        },
+        {
+          "t": "p",
+          "x": "Efficiency concerns the resources required, especially computation time and memory. An algorithm that is complete and optimal may still be impractical for a huge state space. A useful AI design balances reliability and solution quality against resource limits."
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "t": "Common Misunderstandings",
+      "k": "warn",
+      "s": "Common pitfalls and corrections",
+      "b": [
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Search means randomly trying options.",
+          "x": [
+            "Correction: Search is a systematic exploration process guided by a defined strategy. Randomized methods exist, but BFS and DFS follow specific rules."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "BFS always finds the cheapest route.",
+          "x": [
+            "Correction: BFS finds the path with the fewest edges when edges are treated as equal-cost. If costs differ, the fewest-edge path may not be the cheapest."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "DFS is always faster because it uses less memory.",
+          "x": [
+            "Correction: DFS may use less memory in many tree-search settings, but it can spend a long time on an unproductive branch. Lower memory use does not guarantee lower running time."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "A heuristic is always correct.",
+          "x": [
+            "Correction: A heuristic is an estimate. It may be useful or misleading, and its properties affect whether an algorithm can guarantee an optimal answer."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Informed search always finds the best answer.",
+          "x": [
+            "Correction: Some informed algorithms, such as A* under suitable conditions, can guarantee optimality. Others, such as Greedy Best-First Search, generally do not."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "The algorithm alone defines the solution.",
+          "x": [
+            "Correction: The problem representation and cost function matter just as much. A route planner cannot optimize travel time if its model only counts roads, and a game AI cannot reason correctly if its state omits whose turn it is."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Search and machine learning are the same.",
+          "x": [
+            "Correction: Search explores a defined space of possibilities. Machine learning uses data or experience to learn patterns or parameters. They can be combined, but they are not identical."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "t": "A Conceptual Walk-Through",
+      "k": "ex",
+      "s": "Imagine a robot must move through a grid from its starting cell to a charging station.",
+      "b": [
+        {
+          "t": "p",
+          "x": "Imagine a robot must move through a grid from its starting cell to a charging station. Some cells are blocked. The robot can move up, down, left, or right."
+        },
+        {
+          "t": "p",
+          "x": "First, the problem is defined. The current cell is the state, the starting cell is the initial state, and the charging station is the goal. Legal moves form the transition model. If every move costs one unit, the number of moves can serve as path cost."
+        },
+        {
+          "t": "p",
+          "x": "If the robot uses BFS, it explores cells one move from the start, then two moves away, and continues outward. This guarantees a minimum-move path in an unweighted grid when the goal is reached. The cost is that many cells may be explored."
+        },
+        {
+          "t": "p",
+          "x": "If it uses DFS, it follows one direction or branch until it reaches a dead end or goal, then backtracks as necessary. It may find a route quickly, but the route may not be shortest."
+        },
+        {
+          "t": "p",
+          "x": "If it uses A*, it may estimate the remaining distance to the charging station using Manhattan distance: the number of horizontal grid steps plus the number of vertical grid steps, ignoring obstacles. It combines this estimate with the path cost already incurred. This often directs the search toward the goal more efficiently than uninformed exploration. Under appropriate conditions, the heuristic can support an optimal solution."
+        },
+        {
+          "t": "p",
+          "x": "Finally, the robot must follow the route in the real world. If a new obstacle appears, the original route may no longer work, and the robot may need to update its map and search again. This demonstrates the difference between planning with a model and acting in a changing environment."
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "t": "Summary",
+      "k": "fin",
+      "s": "Revision recap",
+      "b": [
+        {
+          "t": "p",
+          "x": "Artificial Intelligence can be viewed as a problem-solving tool that represents situations, actions, and goals, then searches for a sequence of actions that reaches a desired outcome. A state-space model defines the possible states and the transitions between them. Its central components include an initial state, legal actions, a transition model, a goal test, and sometimes a path-cost function."
+        },
+        {
+          "t": "p",
+          "x": "Uninformed search explores without estimating which states are closer to the goal. Breadth-First Search explores level by level and can find the path with the fewest edges when all edges have equal cost. Depth-First Search explores a branch deeply before backtracking; it can save memory in many settings but does not guarantee the shortest path and can be vulnerable to unproductive deep branches or cycles if implemented poorly."
+        },
+        {
+          "t": "p",
+          "x": "Informed search uses extra knowledge to prioritize promising states. A heuristic is an estimate of the remaining cost or the desirability of a state. Greedy Best-First Search prioritizes the heuristic estimate, while A* combines the actual path cost so far with the estimated remaining cost. The quality and properties of the heuristic influence both efficiency and solution guarantees."
+        },
+        {
+          "t": "p",
+          "x": "Map routing illustrates how locations and roads form a graph, while Tic-Tac-Toe illustrates how legal moves form a game tree. These examples show how search can be applied to navigation and strategic decision-making. In real systems, success depends not only on the algorithm but also on accurate models, appropriate costs, useful heuristics, and awareness of changing conditions."
+        },
+        {
+          "t": "h",
+          "x": "Key Terms"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Artificial Intelligence",
+              "The field of creating systems that perform tasks associated with intelligent behavior."
+            ],
+            [
+              "Problem-solving",
+              "Identifying a goal and selecting actions that can achieve it."
+            ],
+            [
+              "State",
+              "A representation of the relevant features of a situation at a particular moment."
+            ],
+            [
+              "State space",
+              "The collection of possible states and transitions in a problem."
+            ],
+            [
+              "Initial state",
+              "The state where the search begins."
+            ],
+            [
+              "Goal state",
+              "A state that satisfies the problem's objective."
+            ],
+            [
+              "Action",
+              "A legal choice available in a state."
+            ],
+            [
+              "Transition model",
+              "A description of the state that results from an action."
+            ],
+            [
+              "Path",
+              "A sequence of connected states or actions."
+            ],
+            [
+              "Path cost",
+              "The total cost associated with a path."
+            ],
+            [
+              "Uninformed search",
+              "Search that does not use a heuristic estimate of closeness to the goal."
+            ],
+            [
+              "Breadth-First Search",
+              "A search strategy that explores states level by level using a queue."
+            ],
+            [
+              "Depth-First Search",
+              "A search strategy that follows a branch deeply before backtracking."
+            ],
+            [
+              "Queue",
+              "A First In, First Out data structure."
+            ],
+            [
+              "Stack",
+              "A Last In, First Out data structure."
+            ],
+            [
+              "Informed search",
+              "Search that uses additional knowledge to prioritize states."
+            ],
+            [
+              "Heuristic",
+              "An estimate or rule of thumb used to guide search."
+            ],
+            [
+              "Greedy Best-First Search",
+              "A method that prioritizes states using the heuristic estimate."
+            ],
+            [
+              "A* Search",
+              "A method that combines the cost so far with an estimated remaining cost."
+            ],
+            [
+              "Completeness",
+              "The property of finding a solution whenever one exists under specified assumptions."
+            ],
+            [
+              "Optimality",
+              "The property of finding the least-cost solution under specified assumptions."
+            ],
+            [
+              "Game tree",
+              "A tree of possible states and moves in a game."
+            ],
+            [
+              "Minimax",
+              "A decision method that chooses moves by considering the best play of an opponent."
+            ],
+            [
+              "Evaluation function",
+              "A function that estimates the value of a state, often when full search is not practical."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "End of Notes"
+        }
+      ]
+    }
+  ]
+}

@@ -42,9 +42,28 @@ private fun blk(o: JSONObject): Blk = when (o.getString("t")) {
     else -> BP(o.optString("x"))
 }
 
+private val NOTE_FILES = listOf(
+    "ma:0" to "sets_relations_functions_detailed_notes.json",
+    "ma:1" to "counting_and_recurrence_relations_detailed_notes.json",
+    "ma:2" to "matrix_algebra_comprehensive_detailed_notes.json",
+    "ma:3" to "elementary_graph_theory_detailed_notes.json",
+    "db:0" to "Database_Foundations_and_Design_Detailed_Study_Notes.json",
+    "db:1" to "Relational_Algebra_and_SQL_Mastery_Detailed_Study_Notes.json",
+    "db:2" to "Normalization_and_Transaction_Management_Detailed_Study_Notes.json",
+    "db:3" to "Database_Security_and_Emerging_Trends_Detailed_Study_Notes.json",
+    "ai:0" to "Artificial_Intelligence_Foundations_Study_Notes.json",
+    "ai:1" to "Solving_and_Search_Basics_AI_Study_Notes.json",
+    "ai:2" to "Knowledge_Representation_and_Expert_Systems_Study_Notes.json",
+    "ai:3" to "Introduction_to_Machine_Learning_and_AI_Ethics_Study_Notes.json",
+    "py:0" to "Python_Programming_Fundamentals_Detailed_Study_Notes.json",
+    "py:1" to "Python_Data_Structures_and_Functions_Detailed_Study_Notes.json",
+    "py:2" to "Python_OOP_Modules_File_IO_and_Log_Analysis_Study_Notes.json",
+    "py:3" to "Python_Advanced_Libraries_Exceptions_System_Scripting_Requests_NumPy_Pandas_Study_Notes.json"
+)
+
 fun loadRich(ctx: Context) {
     val m = mutableMapOf<String, Rich>()
-    for ((key, file) in listOf("ma:0" to "rich_ma_0.json", "ma:1" to "rich_ma_1.json", "ma:2" to "rich_ma_2.json", "ma:3" to "rich_ma_3.json", "db:0" to "rich_db_0.json", "db:1" to "rich_db_1.json", "db:2" to "rich_db_2.json", "db:3" to "rich_db_3.json", "ai:0" to "rich_ai_0.json", "ai:1" to "rich_ai_1.json", "ai:2" to "rich_ai_2.json", "ai:3" to "rich_ai_3.json")) {
+    for ((key, file) in NOTE_FILES) {
         try {
             val o = JSONObject(ctx.assets.open(file).bufferedReader().use { it.readText() })
             val sa = o.getJSONArray("sec")

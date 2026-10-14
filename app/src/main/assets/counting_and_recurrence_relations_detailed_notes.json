@@ -1,0 +1,1810 @@
+{
+  "title": "Counting and Recurrence Relations",
+  "intro": "Counting rules, binomial coefficients and recurrences, from Pascal to Tower of Hanoi.",
+  "sec": [
+    {
+      "n": 1,
+      "t": "Fundamental Principles of Counting",
+      "k": "th",
+      "s": "Combinatorics is the branch of mathematics concerned with counting arrangements, selections, and possible…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Combinatorics is the branch of mathematics concerned with counting arrangements, selections, and possible outcomes. It is useful when listing every possibility would be too slow or impractical."
+        },
+        {
+          "t": "h",
+          "x": "A counting problem normally asks one of the following"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "How many outcomes are possible?",
+            "How many ways can objects be arranged?",
+            "How many ways can a group be selected?",
+            "How many possibilities satisfy a condition?",
+            "How many operations or calls are required by a recursive algorithm?"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Before choosing a formula, identify what is being counted. Ask:"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Are we selecting objects or arranging them?",
+            "Does order matter?",
+            "Can an object be used more than once?",
+            "Are objects distinct or repeated?",
+            "Are there restrictions?",
+            "Is the problem asking for “and” choices or “or” alternatives?"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A common mistake is memorising formulas without identifying the situation. For example, choosing three students for a committee is a combination because the order of names does not matter. Assigning a president, secretary, and treasurer is a permutation-style problem because the roles make the assignments distinct."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "t": "The Addition and Multiplication Principles",
+      "k": "th",
+      "s": "If one task can be performed in m ways and a different, mutually exclusive alternative can be performed in…",
+      "b": [
+        {
+          "t": "h",
+          "x": "2.1 Addition principle (sum rule)"
+        },
+        {
+          "t": "p",
+          "x": "If one task can be performed in m ways and a different, mutually exclusive alternative can be performed in n ways, then choosing one alternative can be done in m+n ways."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "A student may choose one programming elective from 4 web-development electives or 3 database electives. If the two groups are disjoint and exactly one elective is chosen, there are 4+3=7 choices."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The key condition is that the alternatives must not overlap, or overlap must be handled separately. If one course appears in both lists, simply adding the list sizes double-counts that course."
+        },
+        {
+          "t": "h",
+          "x": "2.2 Multiplication principle (product rule)"
+        },
+        {
+          "t": "p",
+          "x": "If a process has successive stages, with m choices for stage one and n choices for stage two for each first-stage choice, then the complete process has mn outcomes. For k stages with fixed numbers of choices, multiply the numbers of choices."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "A username consists of one letter followed by two digits. If there are 26 letters and 10 possible digits at each position, and repetition is allowed, there are:",
+            "26 × 10 × 10 = 2600 usernames."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "If the digits cannot repeat, the count becomes 26 × 10 × 9 = 2340. The available choices change after a digit is used."
+        },
+        {
+          "t": "h",
+          "x": "2.3 Decision-tree interpretation"
+        },
+        {
+          "t": "p",
+          "x": "A tree can represent choices stage by stage. Each path from the root to a leaf is one complete outcome. The sum rule counts separate branches; the product rule counts choices along successive levels."
+        },
+        {
+          "t": "h",
+          "x": "2.4 Counting strings"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "For an alphabet of q symbols, the number of strings of length n with repetition allowed is qⁿ. Each position has q choices, giving q multiplied by itself n times.",
+            "If repetition is forbidden and q ≥ n, the number is:",
+            "q(q−1)(q−2)...(q−n+1) = q!/(q−n)!."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Four-character strings made from A, B, C, D, E, with no repeated characters:",
+            "5 × 4 × 3 × 2 = 120."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "2.5 Counting passwords carefully"
+        },
+        {
+          "t": "p",
+          "x": "If a password has exactly 6 digits and leading zeroes are allowed, there are 10⁶ possibilities. If it must be a six-digit positive integer, the first digit has only 9 choices (1 through 9), giving 9 × 10⁵ possibilities. If certain symbols are required, split into cases or count the complement."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "t": "Counting with Complements and Inclusion–Exclusion",
+      "k": "th",
+      "s": "Sometimes it is easier to count all possible outcomes and subtract those that are not allowed:",
+      "b": [
+        {
+          "t": "h",
+          "x": "3.1 Complement method"
+        },
+        {
+          "t": "p",
+          "x": "Sometimes it is easier to count all possible outcomes and subtract those that are not allowed:"
+        },
+        {
+          "t": "p",
+          "x": "Number wanted = total outcomes − unwanted outcomes."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Among all 4-digit strings using digits 0–9, how many contain at least one zero? There are 10⁴ total strings. Strings with no zero have 9 choices per position, so 9⁴. Therefore the answer is 10⁴−9⁴ = 3439."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The phrase “at least one” often suggests the complement method. Count “none” and subtract from the total."
+        },
+        {
+          "t": "h",
+          "x": "3.2 Inclusion–exclusion for two sets"
+        },
+        {
+          "t": "h",
+          "x": "For finite sets A and B"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "|A ∪ B| = |A| + |B| − |A ∩ B|.",
+            "The intersection is subtracted because it was counted once in |A| and again in |B|."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "In a group, 25 students know Python, 18 know SQL, and 10 know both. Then 25+18−10=33 know at least one, assuming all counts refer to the same group."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "3.3 Inclusion–exclusion for three sets"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "|A ∪ B ∪ C| = |A|+|B|+|C|",
+            "−|A∩B|−|A∩C|−|B∩C|",
+            "+|A∩B∩C|.",
+            "First subtract pairwise overlaps; the triple overlap was then subtracted too many times, so add it back once."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "3.4 Counting by cases"
+        },
+        {
+          "t": "p",
+          "x": "When cases are disjoint, count each case and add. For example, to count 5-digit strings with exactly one letter chosen from a given set and the remaining positions digits, first decide the position of the letter and then choose the letter and digits. Ensure the cases do not overlap."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "t": "The Pigeonhole Principle",
+      "k": "th",
+      "s": "The pigeonhole principle is a simple but powerful theorem: if more objects are placed into fewer boxes, at…",
+      "b": [
+        {
+          "t": "p",
+          "x": "The pigeonhole principle is a simple but powerful theorem: if more objects are placed into fewer boxes, at least one box must contain at least two objects."
+        },
+        {
+          "t": "h",
+          "x": "Basic form"
+        },
+        {
+          "t": "p",
+          "x": "If n+1 objects are distributed among n boxes, some box contains at least two objects."
+        },
+        {
+          "t": "h",
+          "x": "Generalized form"
+        },
+        {
+          "t": "p",
+          "x": "If N objects are distributed among k boxes, at least one box contains at least ceil(N/k) objects."
+        },
+        {
+          "t": "p",
+          "x": "Equivalently, if N objects are placed in k boxes, one box contains at least ⌈N/k⌉ objects. This follows because if every box contained fewer than that number, the total capacity would be too small for N objects."
+        },
+        {
+          "t": "ex",
+          "h": "Example 1 · Birth months",
+          "x": [
+            "Among 13 people, at least two share a birth month because there are 12 months and 13 people."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example 2 · Socks",
+          "x": [
+            "A drawer contains socks in 4 colours. If you pick 5 socks, at least two must be the same colour, assuming every sock has one of those four colours. The “boxes” are the four colours."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example 3 · Remainders",
+          "x": [
+            "Take any 6 integers. When divided by 5, each has one of 5 possible remainders: 0, 1, 2, 3, or 4. By the pigeonhole principle, two integers have the same remainder, so their difference is divisible by 5."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example 4 · At least how many students share a group?",
+          "x": [
+            "If 29 students are assigned to 6 tutorial groups, at least one group contains at least ⌈29/6⌉ = 5 students."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "why",
+          "h": "Why it matters",
+          "x": [
+            "The principle proves that something must happen without identifying exactly which objects share a box. It is used in number theory, hashing, data structures, collision arguments, and existence proofs."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Common mistake",
+          "x": [
+            "The basic principle does not say every box has two objects. It says at least one box must have two or more. Some boxes may be empty."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "t": "Permutations",
+      "k": "th",
+      "s": "A permutation is an arrangement in which order matters.",
+      "b": [
+        {
+          "t": "p",
+          "x": "A permutation is an arrangement in which order matters."
+        },
+        {
+          "t": "h",
+          "x": "5.1 Factorial"
+        },
+        {
+          "t": "h",
+          "x": "For a positive integer n"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "n! = n(n−1)(n−2)...3·2·1.",
+            "By convention, 0! = 1.",
+            "Examples: 4! = 24; 5! = 120."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The factorial counts the ways to arrange n distinct objects in a row. There are n choices for the first position, n−1 for the next, and so on, so the product is n!."
+        },
+        {
+          "t": "h",
+          "x": "5.2 Arranging all n distinct objects"
+        },
+        {
+          "t": "p",
+          "x": "The number of permutations of n distinct objects is n!."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Five different books placed on a shelf can be arranged in 5! = 120 orders."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "5.3 Arranging r of n distinct objects"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "If r positions are filled from n distinct objects without repetition, order matters and the number is:",
+            "P(n,r) = n!/(n−r)!.",
+            "Some books use nPr."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "From 8 students, choose a captain, vice-captain, and secretary. The roles differ, so:",
+            "P(8,3)=8×7×6=336."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "5.4 Repetition allowed"
+        },
+        {
+          "t": "p",
+          "x": "If each of r ordered positions can be filled by any of n symbols and repetition is allowed, there are nʳ strings."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "a 4-digit code, with 10 choices at each position, has 10⁴ = 10,000 possible codes if leading zeroes and repeated digits are allowed."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "5.5 Circular permutations"
+        },
+        {
+          "t": "p",
+          "x": "For n distinct objects arranged around a circular table, where rotations count as the same arrangement, there are (n−1)! arrangements. Fix one object in place, then arrange the remaining n−1 objects."
+        },
+        {
+          "t": "p",
+          "x": "If mirror-image arrangements are also treated as identical, an additional adjustment may be needed; this is a different convention and should be stated."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Six people seated around a circular table have (6−1)! = 120 arrangements when rotations are considered equivalent but clockwise and anticlockwise orders remain different."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "t": "Combinations",
+      "k": "th",
+      "s": "A combination is a selection in which order does not matter.",
+      "b": [
+        {
+          "t": "p",
+          "x": "A combination is a selection in which order does not matter."
+        },
+        {
+          "t": "ln",
+          "x": [
+            "The number of ways to choose r objects from n distinct objects, without repetition, is:",
+            "C(n,r) = n!/[r!(n−r)!].",
+            "This is also written nCr or binomial coefficient “n choose r.”"
+          ]
+        },
+        {
+          "t": "ln",
+          "x": [
+            "Why divide by r!?",
+            "If r selected objects were first arranged, each group would be counted r! times, once for every possible ordering. Dividing the permutation count P(n,r) by r! removes those repeated orderings:",
+            "C(n,r) = P(n,r)/r! = n!/[r!(n−r)!]."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example 1",
+          "x": [
+            "Choose 3 students from 8 for a committee:",
+            "C(8,3)=8!/(3!5!)=(8×7×6)/(3×2×1)=56."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example 2",
+          "x": [
+            "A pizza shop offers 7 toppings. If a customer chooses 2 different toppings and order does not matter, there are C(7,2)=21 choices."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Permutation versus combination"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "President and vice-president from 10 people: P(10,2)=90.",
+            "A two-person committee from 10 people: C(10,2)=45."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The first assignment distinguishes roles; the second does not."
+        },
+        {
+          "t": "h",
+          "x": "Useful identities"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "C(n,0)=1 because there is one way to choose nothing.",
+            "C(n,n)=1 because there is one way to choose all objects.",
+            "C(n,1)=n.",
+            "C(n,r)=C(n,n−r), because choosing r objects is equivalent to deciding which n−r objects are left out."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Selections with repetition"
+        },
+        {
+          "t": "p",
+          "x": "If choosing r objects from n types where a type may be chosen repeatedly and order does not matter, the number is C(n+r−1,r). This is sometimes called stars and bars. For example, choosing 4 identical sweets from 3 flavours is C(3+4−1,4)=C(6,4)=15, if there is no limit per flavour."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "t": "Permutations with Repeated Objects",
+      "k": "th",
+      "s": "If n objects include repeated indistinguishable groups of sizes n1, n2, ..., nk, with n1+...+nk=n, the…",
+      "b": [
+        {
+          "t": "p",
+          "x": "If n objects include repeated indistinguishable groups of sizes n1, n2, ..., nk, with n1+...+nk=n, the number of distinct arrangements is:"
+        },
+        {
+          "t": "p",
+          "x": "n!/(n1! n2! ... nk!)."
+        },
+        {
+          "t": "p",
+          "x": "The numerator counts arrangements as if every object were distinct. Each group of identical objects can be rearranged internally without changing the visible arrangement, so divide by the factorial of each repeated group."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "The word LEVEL has 5 letters: L appears twice, E appears twice, and V once. The number of distinct arrangements is:",
+            "5!/(2!2!) = 120/4 = 30."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "The letters of BANANA contain 6 letters, with A repeated 3 times and N repeated 2 times. Distinct arrangements:",
+            "6!/(3!2!) = 720/12 = 60."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "If restrictions apply, such as repeated letters not being adjacent, use casework, gap methods, or inclusion–exclusion. Do not use the simple repeated-object formula alone when additional restrictions change which arrangements are allowed."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "t": "Binomial Coefficients",
+      "k": "th",
+      "s": "A binomial coefficient is a number, not a variable expression.",
+      "b": [
+        {
+          "t": "ln",
+          "x": [
+            "The binomial coefficient C(n,r), often written (n choose r), counts the number of ways to choose r objects from n distinct objects. It is defined for integers n≥0 and 0≤r≤n by:",
+            "C(n,r) = n!/[r!(n−r)!]."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "C(5,2)=5!/(2!3!)=10.",
+            "C(6,0)=1 and C(6,6)=1.",
+            "C(6,1)=6 and C(6,5)=6."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A binomial coefficient is a number, not a variable expression. In the expansion of (a+b)ⁿ, it gives the coefficient of a corresponding term."
+        },
+        {
+          "t": "h",
+          "x": "Pascal's identity"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "C(n,r)=C(n−1,r−1)+C(n−1,r), for 1≤r≤n−1.",
+            "Reason: when selecting r people from n, choose a particular person. Either that person is selected (then choose r−1 from the remaining n−1), or not selected (then choose all r from the remaining n−1). The cases are disjoint and cover every selection."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Pascal's triangle begins"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "n=0:                 1",
+            "n=1:               1   1",
+            "n=2:             1   2   1",
+            "n=3:           1   3   3   1",
+            "n=4:         1   4   6   4   1",
+            "n=5:       1   5  10  10   5   1",
+            "Each interior number is the sum of the two numbers directly above it. Row n contains C(n,0), C(n,1), ..., C(n,n)."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Other useful identities"
+        },
+        {
+          "t": "h",
+          "x": "Sum of a row"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "C(n,0)+C(n,1)+...+C(n,n)=2ⁿ.",
+            "This follows from setting a=b=1 in the binomial theorem.",
+            "Alternating sum for n≥1:",
+            "C(n,0)−C(n,1)+C(n,2)−...+(-1)ⁿ C(n,n)=0.",
+            "This follows from (1−1)ⁿ=0.",
+            "Weighted identity:",
+            "r C(n,r)=n C(n−1,r−1), useful in algebraic manipulations."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "t": "Pascal's Identity and Pascal's Triangle",
+      "k": "th",
+      "s": "Pascal's triangle gives a visual method for finding binomial coefficients.",
+      "b": [
+        {
+          "t": "p",
+          "x": "Pascal's triangle gives a visual method for finding binomial coefficients. Begin with 1 at the top. Each new row starts and ends with 1; each interior entry is the sum of the two entries above it."
+        },
+        {
+          "t": "h",
+          "x": "For example, row 4 is 1, 4, 6, 4, 1, so"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "(a+b)⁴ = a⁴ + 4a³b + 6a²b² + 4ab³ + b⁴."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The row index starts at zero. The entry in row n and position r is C(n,r), with the leftmost position labelled r=0. This indexing avoids confusion in formulas."
+        },
+        {
+          "t": "p",
+          "x": "Pascal's triangle is useful when n is small. For large n, factorial formulas, recurrence formulas, or software may be more efficient. Exact arithmetic matters because binomial coefficients are integers even if the factorial expression appears as a fraction."
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "t": "The Binomial Theorem",
+      "k": "th",
+      "s": "The sign alternates here because the second term is negative and its exponent changes.",
+      "b": [
+        {
+          "t": "ln",
+          "x": [
+            "The binomial theorem states that for any nonnegative integer n:",
+            "(a+b)ⁿ = sum from k=0 to n of C(n,k) aⁿ⁻ᵏ bᵏ."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Expanded"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "(a+b)ⁿ = C(n,0)aⁿ + C(n,1)aⁿ⁻¹b + C(n,2)aⁿ⁻²b² + ... + C(n,n)bⁿ."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Patterns"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "There are n+1 terms.",
+            "The exponent of a begins at n and decreases by 1 each term.",
+            "The exponent of b begins at 0 and increases by 1 each term.",
+            "The exponents in each term add to n.",
+            "The coefficients are row n of Pascal's triangle.",
+            "The first and last coefficients are 1."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example 1 · Expand (x+2)³",
+          "x": [
+            "Using coefficients 1,3,3,1:",
+            "(x+2)³ = x³ + 3x²(2) + 3x(2²) + 2³",
+            "= x³ + 6x² + 12x + 8."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example 2 · Expand (2x−y)⁴",
+          "x": [
+            "Treat it as (2x + (−y))⁴:",
+            "(2x)⁴ + 4(2x)³(−y) + 6(2x)²(−y)² + 4(2x)(−y)³ + (−y)⁴",
+            "= 16x⁴ − 32x³y + 24x²y² − 8xy³ + y⁴."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The sign alternates here because the second term is negative and its exponent changes."
+        },
+        {
+          "t": "h",
+          "x": "General term"
+        },
+        {
+          "t": "h",
+          "x": "The term with index k, starting k=0, is"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "Tₖ₊₁ = C(n,k) aⁿ⁻ᵏbᵏ.",
+            "Some questions ask for a particular term. Identify the correct k carefully because the first term is k=0 but is often called the first term."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Find the term containing x³ in (x+2)⁵.",
+            "The general term is C(5,k)x⁵⁻ᵏ2ᵏ. Set 5−k=3, so k=2. The term is C(5,2)x³·4 = 10·4x³ = 40x³."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Sum of coefficients"
+        },
+        {
+          "t": "p",
+          "x": "Set x=1 in a polynomial expansion, or use the binomial theorem directly. The sum of coefficients of (x+2)⁴ is (1+2)⁴=81."
+        },
+        {
+          "t": "p",
+          "x": "The alternating sum of coefficients of (x−1)ⁿ at x=1 is zero for n>0, reflecting (1−1)ⁿ=0."
+        },
+        {
+          "t": "p",
+          "x": "The binomial theorem is used in algebra, probability, approximation, and combinatorial proofs."
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "t": "General Counting Strategies and Common Mistakes",
+      "k": "warn",
+      "s": "Pitfalls to avoid",
+      "b": [
+        {
+          "t": "h",
+          "x": "A reliable strategy"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Define the objects being counted.",
+            "Decide whether order matters.",
+            "Decide whether repetition is allowed.",
+            "Identify restrictions.",
+            "Choose sum rule, product rule, permutation, combination, complement, or inclusion–exclusion.",
+            "Check small cases or reason whether the answer is plausible."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Common errors",
+          "x": [
+            "• Using permutations when order does not matter.",
+            "• Using combinations when roles or positions make order matter.",
+            "• Forgetting whether zero can be the first digit.",
+            "• Forgetting repeated objects in a word.",
+            "• Adding overlapping cases without correcting double-counting.",
+            "• Confusing “at least one” with “exactly one.”",
+            "• Treating a binomial coefficient as though it were an exponent.",
+            "• Starting the binomial general-term index at 1 while using a formula indexed from 0.",
+            "• Assuming the pigeonhole principle identifies which box has extra objects; it only guarantees existence."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "t": "Recurrence Relations: Meaning and Notation",
+      "k": "th",
+      "s": "A recurrence relation defines terms of a sequence using one or more earlier terms.",
+      "b": [
+        {
+          "t": "p",
+          "x": "A recurrence relation defines terms of a sequence using one or more earlier terms. It is a rule that refers back to earlier values instead of directly giving every term as a formula in n."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "aₙ = aₙ₋₁ + 2, with a₀=1.",
+            "Then a₁=3, a₂=5, a₃=7, and the sequence is 1,3,5,7,...",
+            "The recurrence rule alone is often insufficient; initial conditions are also required to determine a unique sequence."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "A recurrence relation can depend on"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "One previous term: aₙ = 3aₙ₋₁.",
+            "Two previous terms: aₙ = aₙ₋₁+aₙ₋₂.",
+            "Several previous terms.",
+            "Terms with a non-recursive input, such as aₙ = 2aₙ₋₁+n."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The order of a recurrence is commonly the number of previous terms needed, or more formally the greatest index gap, when the recurrence is written in standard form. For example, aₙ = 4aₙ₋₁−4aₙ₋₂ is second order."
+        },
+        {
+          "t": "p",
+          "x": "Initial conditions provide the starting values, such as a₀ and a₁ for a second-order recurrence. Without them, the general solution may contain arbitrary constants."
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "t": "Modelling Recurrence Relations",
+      "k": "th",
+      "s": "Suppose a 1×n strip is tiled using 1×1 squares and 1×2 dominoes.",
+      "b": [
+        {
+          "t": "h",
+          "x": "To model a situation"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Define aₙ clearly (what does it count or measure?).",
+            "Determine how the current value depends on earlier values.",
+            "Translate the verbal rule into an equation.",
+            "Specify initial conditions.",
+            "Calculate initial terms to check that the model matches the story.",
+            "State assumptions, such as whether costs or objects are counted once or repeatedly."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "13.1 Simple growth"
+        },
+        {
+          "t": "h",
+          "x": "A bank balance increases by a fixed amount c each period"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ = aₙ₋₁+c, with a₀ known.",
+            "If it grows by a fixed percentage r, ignoring deposits and fees:",
+            "aₙ=(1+r)aₙ₋₁.",
+            "This produces geometric growth."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "13.2 Tiling a strip"
+        },
+        {
+          "t": "p",
+          "x": "Suppose a 1×n strip is tiled using 1×1 squares and 1×2 dominoes. Let aₙ be the number of tilings."
+        },
+        {
+          "t": "p",
+          "x": "The first tile is either:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "a square, leaving a strip of length n−1, with aₙ₋₁ completions; or",
+            "a domino, leaving length n−2, with aₙ₋₂ completions."
+          ]
+        },
+        {
+          "t": "ln",
+          "x": [
+            "The cases are disjoint, so:",
+            "aₙ=aₙ₋₁+aₙ₋₂.",
+            "With a₀=1 (one way to tile an empty strip) and a₁=1, the sequence is 1,1,2,3,5,8,..., the Fibonacci pattern with shifted indexing."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "13.3 Recursive algorithm cost"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "If an algorithm solves one problem of size n by making two subproblems of size n−1 and doing constant extra work, a simple model is:",
+            "T(n)=2T(n−1)+c.",
+            "This recurrence grows exponentially, roughly proportional to 2ⁿ under common constant initial conditions.",
+            "Real algorithm analysis often uses recurrences where subproblem sizes are smaller fractions, such as T(n)=2T(n/2)+n, which requires different methods."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "13.4 Divide into cases"
+        },
+        {
+          "t": "p",
+          "x": "The Fibonacci and tiling recurrence works because every valid arrangement belongs to exactly one of two cases, and each case maps to a smaller problem. This “first move” or “last move” strategy is common in combinatorial modelling."
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "t": "Fibonacci Numbers",
+      "k": "th",
+      "s": "Each term after the first two is the sum of the previous two.",
+      "b": [
+        {
+          "t": "h",
+          "x": "The Fibonacci sequence is defined by"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "F₀=0, F₁=1,",
+            "Fₙ=Fₙ₋₁+Fₙ₋₂ for n≥2.",
+            "The first terms are:",
+            "0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ..."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Each term after the first two is the sum of the previous two."
+        },
+        {
+          "t": "note",
+          "k": "why",
+          "h": "Why it appears",
+          "x": [
+            "Fibonacci numbers arise when a process has two possible ways to end and those ways reduce to problems of sizes n−1 and n−2. The tiling model is one example. Fibonacci-style recurrences also appear in certain counting problems and algorithm analyses."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Recursive computation"
+        },
+        {
+          "t": "h",
+          "x": "A direct recursive program may call itself repeatedly"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "fib(n) = fib(n−1)+fib(n−2).",
+            "This repeats calculations. Its time can grow exponentially, commonly described as O(φⁿ) or O(2ⁿ) as a looser upper bound for the naive recursion, where φ=(1+√5)/2. Using memoization or an iterative loop computes the first n terms in O(n) time. Fast-doubling methods can compute Fₙ in O(log n) arithmetic steps, though the cost of large-integer arithmetic must also be considered."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Closed form (Binet's formula)"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "Fₙ = (φⁿ − ψⁿ)/√5,",
+            "where φ=(1+√5)/2 and ψ=(1−√5)/2.",
+            "Although this is an exact mathematical formula, direct floating-point calculation may introduce rounding error for large n. For programming, integer-based recurrence or fast doubling is generally safer."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Deriving the characteristic equation"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "Assume a solution has form Fₙ=rⁿ for the recurrence aₙ=aₙ₋₁+aₙ₋₂. Substitute:",
+            "rⁿ=rⁿ⁻¹+rⁿ⁻².",
+            "For r≠0, divide by rⁿ⁻²:",
+            "r²−r−1=0.",
+            "The roots are φ=(1+√5)/2 and ψ=(1−√5)/2.",
+            "Therefore the general solution is:",
+            "Fₙ=Aφⁿ+Bψⁿ.",
+            "Use F₀=0 and F₁=1 to find A=1/√5 and B=−1/√5, giving Binet's formula."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "t": "The Tower of Hanoi",
+      "k": "th",
+      "s": "The Tower of Hanoi is a puzzle with three pegs and n disks of different sizes.",
+      "b": [
+        {
+          "t": "p",
+          "x": "The Tower of Hanoi is a puzzle with three pegs and n disks of different sizes. Initially all disks are stacked on one peg, largest at the bottom and smallest at the top. The goal is to move the full stack to another peg under three rules:"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Move only one disk at a time.",
+            "Only the top disk of a peg may be moved.",
+            "A larger disk may never be placed on a smaller disk."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Let Hₙ be the minimum number of moves required to transfer n disks."
+        },
+        {
+          "t": "h",
+          "x": "To move n disks"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Move the top n−1 disks from the source peg to the spare peg: Hₙ₋₁ moves.",
+            "Move the largest disk to the destination: 1 move.",
+            "Move the n−1 disks from the spare peg onto the largest disk: Hₙ₋₁ moves."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Therefore"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "Hₙ = 2Hₙ₋₁+1, with H₀=0.",
+            "The first values are:",
+            "H₀=0",
+            "H₁=1",
+            "H₂=3",
+            "H₃=7",
+            "H₄=15",
+            "H₅=31.",
+            "Solving gives:",
+            "Hₙ=2ⁿ−1."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Proof by induction"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "Base case n=0: H₀=0=2⁰−1.",
+            "Assume Hₙ₋₁=2ⁿ⁻¹−1. Then:",
+            "Hₙ=2Hₙ₋₁+1",
+            "=2(2ⁿ⁻¹−1)+1",
+            "=2ⁿ−2+1",
+            "=2ⁿ−1.",
+            "So the formula holds for all n≥0."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The minimum-move claim follows from the required structure: before the largest disk can move, every smaller disk must be moved away; after the largest disk moves, all smaller disks must be moved onto it. Each smaller stack transfer requires at least Hₙ₋₁ moves, so the recurrence gives a lower bound achieved by the described strategy."
+        },
+        {
+          "t": "h",
+          "x": "Complexity"
+        },
+        {
+          "t": "p",
+          "x": "The number of moves is 2ⁿ−1, so the algorithm requires exponential time in the number of disks. Even a modest increase in n roughly doubles the number of moves. This is a classic example of exponential algorithm growth."
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "t": "Linear Recurrence Relations with Constant Coefficients",
+      "k": "th",
+      "s": "“Homogeneous” means there is no separate forcing term such as +n or +5.",
+      "b": [
+        {
+          "t": "ln",
+          "x": [
+            "A linear recurrence relation has terms that appear linearly, without powers or products of sequence terms. A homogeneous linear recurrence with constant coefficients has a form such as:",
+            "aₙ = c₁ aₙ₋₁+c₂ aₙ₋₂+...+cₖ aₙ₋ₖ,",
+            "where c₁,...,cₖ are constants independent of n."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ=3aₙ₋₁ (first order)",
+            "aₙ=5aₙ₋₁−6aₙ₋₂ (second order)",
+            "aₙ=2aₙ₋₁+aₙ₋₂−4aₙ₋₃ (third order)."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "“Homogeneous” means there is no separate forcing term such as +n or +5. A recurrence like aₙ=2aₙ₋₁+3 is non-homogeneous. “Constant coefficients” means the coefficients do not depend on n. A relation aₙ=n aₙ₋₁ has a variable coefficient and is not covered directly by the standard characteristic-root method described here."
+        },
+        {
+          "t": "h",
+          "x": "For a second-order homogeneous recurrence"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ = p aₙ₋₁+q aₙ₋₂,",
+            "rewrite it as:",
+            "aₙ − p aₙ₋₁ − q aₙ₋₂=0."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "t": "The Characteristic Equation and Root Method",
+      "k": "th",
+      "s": "The characteristic-root method solves homogeneous linear recurrences with constant coefficients.",
+      "b": [
+        {
+          "t": "p",
+          "x": "The characteristic-root method solves homogeneous linear recurrences with constant coefficients."
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Step 1",
+              "Assume a trial solution aₙ=rⁿ."
+            ],
+            [
+              "Step 2",
+              "Substitute into the recurrence."
+            ],
+            [
+              "Step 3",
+              "Divide by the appropriate power of r and obtain a polynomial equation in r, called the characteristic equation."
+            ],
+            [
+              "Step 4",
+              "Find the roots."
+            ],
+            [
+              "Step 5",
+              "Write the general solution according to the roots."
+            ],
+            [
+              "Step 6",
+              "Use initial conditions to determine the constants."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "17.1 Distinct real roots"
+        },
+        {
+          "t": "h",
+          "x": "Consider"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ=5aₙ₋₁−6aₙ₋₂.",
+            "Assume aₙ=rⁿ:",
+            "rⁿ=5rⁿ⁻¹−6rⁿ⁻².",
+            "Divide by rⁿ⁻²:",
+            "r²−5r+6=0.",
+            "Factor:",
+            "(r−2)(r−3)=0.",
+            "Roots are 2 and 3, distinct. Therefore:",
+            "aₙ=A·2ⁿ+B·3ⁿ.",
+            "Use initial conditions to determine A and B."
+          ]
+        },
+        {
+          "t": "ln",
+          "x": [
+            "Suppose a₀=1 and a₁=4.",
+            "At n=0:",
+            "A+B=1.",
+            "At n=1:",
+            "2A+3B=4.",
+            "Subtract twice the first equation from the second:",
+            "B=2, so A=−1.",
+            "Thus:",
+            "aₙ=−2ⁿ+2·3ⁿ.",
+            "Check: a₀=−1+2=1 and a₁=−2+6=4."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "17.2 First-order example"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ=3aₙ₋₁, a₀=2.",
+            "Characteristic equation r−3=0, so aₙ=A·3ⁿ. Since a₀=A=2:",
+            "aₙ=2·3ⁿ.",
+            "This is also obvious by repeated substitution, but it demonstrates the method."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "17.3 A second-order example with a negative root"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ=aₙ₋₁+2aₙ₋₂.",
+            "Characteristic equation:",
+            "r²−r−2=0=(r−2)(r+1).",
+            "Thus aₙ=A·2ⁿ+B·(−1)ⁿ.",
+            "The initial values determine A and B."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "t": "Repeated Roots and Complex Roots",
+      "k": "th",
+      "s": "For a root r with multiplicity m, the corresponding terms are:",
+      "b": [
+        {
+          "t": "h",
+          "x": "18.1 Repeated characteristic root"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "For a second-order recurrence with repeated root r, the general solution is:",
+            "aₙ=(A+Bn)rⁿ.",
+            "The extra factor n is essential; simply writing A rⁿ+B rⁿ would not give two independent solutions."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "aₙ=4aₙ₋₁−4aₙ₋₂.",
+            "Characteristic equation:",
+            "r²−4r+4=0=(r−2)².",
+            "Repeated root r=2, so:",
+            "aₙ=(A+Bn)2ⁿ.",
+            "If a₀=1, then A=1. If a₁=4, then (1+B)2=4, giving B=1. Therefore:",
+            "aₙ=(1+n)2ⁿ.",
+            "Check: a₀=1 and a₁=4."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For a root r with multiplicity m, the corresponding terms are:"
+        },
+        {
+          "t": "p",
+          "x": "rⁿ, n rⁿ, n² rⁿ, ..., nᵐ⁻¹rⁿ."
+        },
+        {
+          "t": "p",
+          "x": "The full general solution combines terms associated with all roots, respecting their multiplicities."
+        },
+        {
+          "t": "h",
+          "x": "18.2 Complex roots"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "If a real-coefficient characteristic polynomial has complex roots, they occur in conjugate pairs. For roots r=ρ(cos θ ± i sin θ), real solutions can be written as:",
+            "aₙ=ρⁿ[C cos(nθ)+D sin(nθ)].",
+            "This form is real-valued and avoids leaving the final answer as a complex expression."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For many introductory courses, distinct real roots and repeated real roots are the main cases. If complex roots are included, ensure you can identify conjugate roots and apply initial conditions."
+        }
+      ]
+    },
+    {
+      "n": 19,
+      "t": "Non-Homogeneous Recurrence Relations",
+      "k": "th",
+      "s": "general solution = homogeneous solution + one particular solution.",
+      "b": [
+        {
+          "t": "h",
+          "x": "A non-homogeneous recurrence includes a separate term"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ = c₁ aₙ₋₁+...+cₖ aₙ₋ₖ+g(n),",
+            "where g(n) is not identically zero."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "The solution is generally"
+        },
+        {
+          "t": "p",
+          "x": "general solution = homogeneous solution + one particular solution."
+        },
+        {
+          "t": "p",
+          "x": "The homogeneous part solves the same recurrence with g(n)=0. The particular solution accounts for the forcing term."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "aₙ=aₙ₋₁+1, with a₀=0.",
+            "The homogeneous equation aₙ=aₙ₋₁ has constant solution aₙ=C. A particular solution is aₙ=n. Thus the general form is C+n. Applying a₀=0 gives C=0, so aₙ=n."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Another example"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "aₙ=2aₙ₋₁+1, a₀=0.",
+            "Try a constant particular solution p: p=2p+1, so p=−1.",
+            "The homogeneous solution is C·2ⁿ, so aₙ=C·2ⁿ−1. Using a₀=0 gives C=1, hence aₙ=2ⁿ−1."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The method of undetermined coefficients often suggests a particular solution based on g(n):"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Constant g(n): try a constant, unless that conflicts with a homogeneous root 1.",
+            "Polynomial g(n): try a polynomial of matching degree, adjusting if necessary.",
+            "Exponential g(n)=cⁿ: try Kcⁿ, adjusting if c is a characteristic root."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The exact rule depends on overlap with the homogeneous solution and on the recurrence's form."
+        },
+        {
+          "t": "p",
+          "x": "The syllabus focus is often homogeneous constant-coefficient recurrences solved with characteristic roots, but recognising a non-homogeneous term helps avoid applying that method incorrectly."
+        }
+      ]
+    },
+    {
+      "n": 20,
+      "t": "Worked Examples and Verification",
+      "k": "ex",
+      "s": "Verification is important: substitute the formula into the recurrence and check the initial conditions.",
+      "b": [
+        {
+          "t": "ex",
+          "h": "Example A · Permutation or combination?",
+          "x": [
+            "A team of 3 is selected from 7 students.",
+            "Order does not matter:",
+            "C(7,3)=7!/(3!4!)=35."
+          ]
+        },
+        {
+          "t": "ln",
+          "x": [
+            "If the same 3 students receive the roles of leader, designer, and tester:",
+            "P(7,3)=7×6×5=210."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example B · Pigeonhole",
+          "x": [
+            "There are 50 files distributed into 9 folders. At least one folder contains at least:",
+            "ceil(50/9)=ceil(5.555...)=6 files."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example C · Binomial expansion",
+          "x": [
+            "Expand (x−3)³:",
+            "x³+3x²(−3)+3x(9)+(−27)",
+            "=x³−9x²+27x−27."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example D · Fibonacci recurrence",
+          "x": [
+            "Given F₀=0, F₁=1, calculate F₂ through F₆:",
+            "F₂=1, F₃=2, F₄=3, F₅=5, F₆=8."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example E · Tower of Hanoi",
+          "x": [
+            "For 4 disks:",
+            "H₄=2H₃+1=2(7)+1=15.",
+            "Formula check: 2⁴−1=15."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example F · Characteristic roots",
+          "x": [
+            "Solve aₙ=7aₙ₋₁−12aₙ₋₂, with a₀=2 and a₁=7.",
+            "Characteristic equation:",
+            "r²−7r+12=0=(r−3)(r−4).",
+            "General solution:",
+            "aₙ=A·3ⁿ+B·4ⁿ.",
+            "Initial conditions:",
+            "A+B=2",
+            "3A+4B=7.",
+            "Subtract 3 times the first equation from the second: B=1, so A=1.",
+            "Answer:",
+            "aₙ=3ⁿ+4ⁿ.",
+            "Check: a₀=1+1=2 and a₁=3+4=7."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example G · Repeated root",
+          "x": [
+            "Solve aₙ=6aₙ₋₁−9aₙ₋₂, a₀=1, a₁=6.",
+            "Characteristic equation:",
+            "r²−6r+9=(r−3)².",
+            "General solution:",
+            "aₙ=(A+Bn)3ⁿ.",
+            "From a₀=1, A=1.",
+            "From a₁=6, (1+B)3=6, so B=1.",
+            "Answer: aₙ=(1+n)3ⁿ."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example H · Non-homogeneous recurrence",
+          "x": [
+            "Solve aₙ=2aₙ₋₁+3, a₀=1.",
+            "A constant particular solution p satisfies p=2p+3, giving p=−3.",
+            "Homogeneous solution is C2ⁿ, so aₙ=C2ⁿ−3.",
+            "Use a₀=1: C−3=1, C=4.",
+            "Answer: aₙ=4·2ⁿ−3.",
+            "Check a₁=5; recurrence gives 2(1)+3=5."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Verification is important: substitute the formula into the recurrence and check the initial conditions. A formula that satisfies the recurrence but not the initial conditions is not the required sequence."
+        }
+      ]
+    },
+    {
+      "n": 21,
+      "t": "Computer Science Applications",
+      "k": "cs",
+      "s": "Counting principles estimate the number of passwords, test cases, configurations, and possible inputs.",
+      "b": [
+        {
+          "t": "h",
+          "x": "Counting"
+        },
+        {
+          "t": "p",
+          "x": "Counting principles estimate the number of passwords, test cases, configurations, and possible inputs. If there are n independent binary choices, there are 2ⁿ configurations. This explains why exhaustive search can become impractical quickly."
+        },
+        {
+          "t": "h",
+          "x": "Pigeonhole principle"
+        },
+        {
+          "t": "p",
+          "x": "Hash functions map many possible keys into a finite number of buckets. If there are more keys than buckets, at least one bucket must contain multiple keys. This guarantees a collision, although it does not identify which keys collide."
+        },
+        {
+          "t": "h",
+          "x": "Permutations and combinations"
+        },
+        {
+          "t": "p",
+          "x": "Permutations count ordered schedules, rankings, and assignments to different roles. Combinations count unordered subsets, such as selecting features or forming teams."
+        },
+        {
+          "t": "h",
+          "x": "Binomial coefficients"
+        },
+        {
+          "t": "p",
+          "x": "They count subsets of a fixed size and appear in probability distributions, combinatorial proofs, and polynomial expansion. Pascal's identity is also a dynamic-programming recurrence for computing coefficients."
+        },
+        {
+          "t": "h",
+          "x": "Recurrence relations"
+        },
+        {
+          "t": "p",
+          "x": "Recursive algorithms often yield recurrences for runtime or output size. A recurrence helps describe how work grows with input size. The solution can reveal whether an algorithm grows linearly, polynomially, or exponentially."
+        },
+        {
+          "t": "h",
+          "x": "Fibonacci"
+        },
+        {
+          "t": "p",
+          "x": "Naive recursion repeats the same subproblems. Memoization stores results to avoid duplicate computation, illustrating a central dynamic-programming idea."
+        },
+        {
+          "t": "h",
+          "x": "Tower of Hanoi"
+        },
+        {
+          "t": "p",
+          "x": "The recurrence T(n)=2T(n−1)+1 gives exponential work. It demonstrates that a clean recursive algorithm can still be computationally expensive."
+        },
+        {
+          "t": "h",
+          "x": "Characteristic roots"
+        },
+        {
+          "t": "p",
+          "x": "The roots indicate the growth patterns of homogeneous constant-coefficient recurrences. A largest root in absolute value often determines the dominant exponential growth, while repeated roots introduce polynomial factors such as n rⁿ."
+        }
+      ]
+    },
+    {
+      "n": 22,
+      "t": "Formula Summary",
+      "k": "sum",
+      "s": "Quick reference sheet",
+      "b": [
+        {
+          "t": "h",
+          "x": "Counting"
+        },
+        {
+          "t": "kv",
+          "x": [
+            [
+              "Sum rule for disjoint alternatives",
+              "m+n."
+            ],
+            [
+              "Product rule for successive choices",
+              "mn."
+            ],
+            [
+              "Strings of length r over q symbols with repetition",
+              "qʳ."
+            ],
+            [
+              "Ordered selections without repetition",
+              "P(n,r)=n!/(n−r)!."
+            ],
+            [
+              "Arrangements of n distinct objects",
+              "n!."
+            ],
+            [
+              "Circular arrangements up to rotation",
+              "(n−1)!."
+            ],
+            [
+              "Selections without order",
+              "C(n,r)=n!/[r!(n−r)!]."
+            ],
+            [
+              "Arrangements with repeated groups",
+              "n!/(n1!n2!...nk!)."
+            ],
+            [
+              "Selections with repetition",
+              "C(n+r−1,r)."
+            ],
+            [
+              "Complement",
+              "wanted = total − unwanted."
+            ],
+            [
+              "Inclusion–exclusion",
+              "|A∪B|=|A|+|B|−|A∩B|."
+            ],
+            [
+              "Generalized pigeonhole bound",
+              "at least ceil(N/k) objects in one of k boxes."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Binomial"
+        },
+        {
+          "t": "kv",
+          "x": [
+            [
+              "",
+              "C(n,r)=n!/[r!(n−r)!]."
+            ],
+            [
+              "",
+              "C(n,r)=C(n,n−r)."
+            ],
+            [
+              "",
+              "C(n,r)=C(n−1,r−1)+C(n−1,r)."
+            ],
+            [
+              "(a+b)ⁿ",
+              "sum[k=0..n] C(n,k)aⁿ⁻ᵏbᵏ."
+            ],
+            [
+              "Sum of coefficients in row n",
+              "2ⁿ."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Recurrences"
+        },
+        {
+          "t": "kv",
+          "x": [
+            [
+              "Fibonacci",
+              "F₀=0, F₁=1, Fₙ=Fₙ₋₁+Fₙ₋₂."
+            ],
+            [
+              "Tower of Hanoi",
+              "H₀=0, Hₙ=2Hₙ₋₁+1, Hₙ=2ⁿ−1."
+            ],
+            [
+              "Characteristic method",
+              "try aₙ=rⁿ."
+            ],
+            [
+              "Distinct roots r1,...,rk",
+              "combine Aᵢ rᵢⁿ."
+            ],
+            [
+              "Repeated root r of multiplicity m",
+              "include rⁿ, nrⁿ,...,nᵐ⁻¹rⁿ."
+            ],
+            [
+              "Non-homogeneous solution",
+              "homogeneous solution plus a particular solution."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 23,
+      "t": "Practice Questions with Answers",
+      "k": "qa",
+      "s": "20 questions with answers",
+      "b": [
+        {
+          "t": "qa",
+          "x": [
+            [
+              "A menu offers 5 starters and 4 main courses. How many meals consist of one starter and one main course?",
+              "5×4=20."
+            ],
+            [
+              "How many 3-character strings can be made from 8 symbols if repetition is allowed?",
+              "8³=512."
+            ],
+            [
+              "How many ways can 4 of 9 people be selected for a committee?",
+              "C(9,4)=126."
+            ],
+            [
+              "How many ways can a president and secretary be chosen from 9 people?",
+              "P(9,2)=9×8=72."
+            ],
+            [
+              "How many distinct arrangements of the letters in “MOM” are there?",
+              "3!/2≠3."
+            ],
+            [
+              "Among 25 people, show that at least three share a birth month.",
+              "There are 12 months; ceil(25/12)=3."
+            ],
+            [
+              "Evaluate C(7,2).",
+              "21."
+            ],
+            [
+              "Expand (x+1)⁴.",
+              "x⁴+4x³+6x²+4x+1."
+            ],
+            [
+              "Find the coefficient of x² in (x+3)⁴.",
+              "The general term is C(4,k)x⁴⁻ᵏ3ᵏ. Set 4−k=2, so k=2. Coefficient = C(4,2)3²=6×9=54."
+            ],
+            [
+              "Find the first six Fibonacci terms starting with F₀=0, F₁=1.",
+              "0,1,1,2,3,5."
+            ],
+            [
+              "Write the recurrence for Tower of Hanoi with n disks.",
+              "Hₙ=2Hₙ₋₁+1, H₀=0."
+            ],
+            [
+              "How many moves are needed for 6 disks in Tower of Hanoi?",
+              "2⁶−1=63."
+            ],
+            [
+              "Solve aₙ=3aₙ₋₁, a₀=4.",
+              "aₙ=4·3ⁿ."
+            ],
+            [
+              "Solve aₙ=5aₙ₋₁−6aₙ₋₂, with a₀=1, a₁=4.",
+              "Characteristic roots 2 and 3. aₙ=A2ⁿ+B3ⁿ. A+B=1, 2A+3B=4 gives A=−1, B=2. Thus aₙ=−2ⁿ+2·3ⁿ."
+            ],
+            [
+              "Solve aₙ=4aₙ₋₁−4aₙ₋₂, a₀=1, a₁=4.",
+              "Repeated root 2. aₙ=(A+Bn)2ⁿ. A=1, B=1, so aₙ=(n+1)2ⁿ."
+            ],
+            [
+              "What is the difference between a homogeneous and non-homogeneous recurrence?",
+              "A homogeneous linear recurrence has no separate forcing term; a non-homogeneous one includes a term such as +1, +n, or another function of n."
+            ],
+            [
+              "Why are initial conditions necessary?",
+              "The recurrence often allows a family of solutions. Initial values determine the constants and select the required sequence."
+            ],
+            [
+              "What is the time complexity of naive recursive Fibonacci computation?",
+              "Exponential time in n; memoization reduces computation of the first n values to O(n) time."
+            ],
+            [
+              "How many terms appear in the expansion of (a+b)¹⁰?",
+              "11 terms, before combining any special zero or equal terms."
+            ],
+            [
+              "What is the first step in the characteristic-root method?",
+              "Assume a trial solution aₙ=rⁿ and substitute it into the homogeneous recurrence."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 24,
+      "t": "Glossary and Study Plan",
+      "k": "gl",
+      "s": "Key terms at a glance",
+      "b": [
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Combinatorics",
+              "mathematics of counting and arrangements."
+            ],
+            [
+              "Sum rule",
+              "add counts for mutually exclusive alternatives."
+            ],
+            [
+              "Product rule",
+              "multiply counts for successive independent choice stages."
+            ],
+            [
+              "Factorial",
+              "n! = n(n−1)...1, with 0≠1."
+            ],
+            [
+              "Permutation",
+              "ordered arrangement or selection."
+            ],
+            [
+              "Combination",
+              "unordered selection."
+            ],
+            [
+              "Binomial coefficient",
+              "C(n,r), the number of r-element subsets of an n-element set."
+            ],
+            [
+              "Pigeonhole principle",
+              "more objects than boxes forces at least one box to contain multiple objects."
+            ],
+            [
+              "Recurrence relation",
+              "equation defining sequence terms from earlier terms."
+            ],
+            [
+              "Initial condition",
+              "starting value used to determine a sequence."
+            ],
+            [
+              "Homogeneous recurrence",
+              "recurrence without a separate forcing term."
+            ],
+            [
+              "Characteristic equation",
+              "polynomial obtained by trying a solution rⁿ."
+            ],
+            [
+              "Particular solution",
+              "one solution accounting for a non-homogeneous forcing term."
+            ],
+            [
+              "Multiplicity",
+              "number of times a root occurs in a polynomial."
+            ],
+            [
+              "Exponential growth",
+              "growth proportional to a fixed factor per step."
+            ]
+          ]
+        },
+        {
+          "t": "note",
+          "k": "key",
+          "h": "Study plan",
+          "x": [
+            "1. Master sum and product rules before learning advanced formulas.",
+            "2. Practise deciding whether order matters; this separates permutations from combinations.",
+            "3. Learn factorials and binomial coefficients, then use Pascal's triangle to verify small expansions.",
+            "4. For recurrence modelling, define the sequence in words before writing an equation.",
+            "5. Practise deriving Fibonacci and Tower of Hanoi recurrences from the first move or last move.",
+            "6. For characteristic roots, always write the characteristic polynomial, factor it, choose the correct general-solution form, and then apply initial conditions.",
+            "7. Verify every closed-form answer by checking both the recurrence and initial values."
+          ]
+        }
+      ]
+    }
+  ]
+}
