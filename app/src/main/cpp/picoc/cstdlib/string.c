@@ -52,14 +52,14 @@ void StringStrncat(struct ParseState *Parser, struct Value *ReturnValue,
 void StringIndex(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
-    ReturnValue->Val->Pointer = index(Param[0]->Val->Pointer,
+    ReturnValue->Val->Pointer = strchr(Param[0]->Val->Pointer,
         Param[1]->Val->Integer);
 }
 
 void StringRindex(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
-    ReturnValue->Val->Pointer = rindex(Param[0]->Val->Pointer,
+    ReturnValue->Val->Pointer = strrchr(Param[0]->Val->Pointer,
         Param[1]->Val->Integer);
 }
 #endif
