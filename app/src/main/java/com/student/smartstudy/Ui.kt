@@ -43,6 +43,7 @@ sealed interface Screen {
     object Home : Screen
     object Score : Screen
     object Stars : Screen
+    object CLab : Screen
     data class Setup(val edit: Boolean) : Screen
     data class Pick(val m: Mode) : Screen
     data class Notes(val s: Subject, val i: Int, val prev: Screen) : Screen
@@ -55,7 +56,7 @@ private fun depth(s: Screen): Int = when (s) {
     Screen.Welcome -> 0
     Screen.Home -> 1
     is Screen.Setup -> if (s.edit) 2 else 1
-    Screen.Score, Screen.Stars, is Screen.Pick -> 2
+    Screen.Score, Screen.Stars, Screen.CLab, is Screen.Pick -> 2
     is Screen.Notes, is Screen.RichNotes, is Screen.Quiz -> 3
     is Screen.Topic -> 4
 }
@@ -107,6 +108,7 @@ fun App(p: Progress) {
             is Screen.RichNotes -> RichHome(s.s, s.i, p, { screen = s.prev }, st("rich:${s.s.id}:${s.i}")) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
             is Screen.Topic -> TopicScreen(s.s, s.i, s.idx, p, { screen = Screen.RichNotes(s.s, s.i, s.prev) }) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
             is Screen.Quiz -> QuizScreen(s.s, s.i, p) { screen = s.prev }
+            Screen.CLab -> CLabScreen { screen = Screen.Home }
         }
         }
     }
@@ -139,7 +141,7 @@ fun Welcome(onStart: () -> Unit) {
         Spacer(Modifier.height(12.dp))
         Text("Your smart study companion", color = Color(0xFFB4B4BE), fontSize = 15.sp)
         Spacer(Modifier.weight(1f))
-        Text("Python  •  Maths  •  Exploration in AI  •  DBMS", color = Color(0xFF8A8A94), textAlign = TextAlign.Center, fontSize = 13.sp)
+        Text("Python  •  Maths  •  C  •  Exploration in AI  •  DBMS", color = Color(0xFF8A8A94), textAlign = TextAlign.Center, fontSize = 13.sp)
         Spacer(Modifier.height(16.dp))
         Button(
             onStart, Modifier.fillMaxWidth().height(60.dp), shape = CircleShape,
@@ -196,6 +198,12 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OptionCard("Score", "Your results", Color(0xFF3B9BE0), Modifier.weight(1f)) { go(Screen.Score) }
                 OptionCard("Highlighted", "Starred topics", Color(0xFFE0A800), Modifier.weight(1f)) { go(Screen.Stars) }
+            }
+        }
+        item {
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                OptionCard("C Lab", "Write & run C code", Color(0xFF2FA37A), Modifier.weight(1f)) { go(Screen.CLab) }
+                Spacer(Modifier.weight(1f))
             }
         }
     }

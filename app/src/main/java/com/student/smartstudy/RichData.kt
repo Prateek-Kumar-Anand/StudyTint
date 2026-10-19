@@ -58,7 +58,11 @@ private val NOTE_FILES = listOf(
     "py:0" to "Python_Programming_Fundamentals_Detailed_Study_Notes.json",
     "py:1" to "Python_Data_Structures_and_Functions_Detailed_Study_Notes.json",
     "py:2" to "Python_OOP_Modules_File_IO_and_Log_Analysis_Study_Notes.json",
-    "py:3" to "Python_Advanced_Libraries_Exceptions_System_Scripting_Requests_NumPy_Pandas_Study_Notes.json"
+    "py:3" to "Python_Advanced_Libraries_Exceptions_System_Scripting_Requests_NumPy_Pandas_Study_Notes.json",
+    "c:0" to "Introduction_to_Problem_Solving_and_C_Fundamentals_Detailed_Study_Notes.json",
+    "c:1" to "C_Operators_Control_Flow_Type_Conversion_Notes.json",
+    "c:2" to "C_Arrays_Strings_Functions_Recursion_Notes.json",
+    "c:3" to "C_Pointers_Structures_Memory_Files_Preprocessor_Notes.json"
 )
 
 fun loadRich(ctx: Context) {

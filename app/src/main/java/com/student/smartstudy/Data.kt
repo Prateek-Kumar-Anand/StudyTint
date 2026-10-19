@@ -60,6 +60,32 @@ val subjects = listOf(
             "Trees, spanning trees and planar graphs."
         )
     )),
+    Subject("c", "C", "C", Color(0xFF2FA37A), listOf(
+        c(
+            "Unit 1: Problem Solving & C Fundamentals",
+            "Algorithms, flowcharts and pseudocode; history, features and structure of a C program.",
+            "Compilation, tokens, keywords, identifiers, variables, constants and data types.",
+            "Standard input and output: printf, scanf, getchar and putchar."
+        ),
+        c(
+            "Unit 2: Operators, Control Flow & Type Conversion",
+            "Arithmetic, relational, logical, assignment, bitwise and conditional operators.",
+            "if, if-else, else-if ladders, switch; while, do-while and for loops; break, continue and goto.",
+            "Expressions, side effects, implicit and explicit type conversion."
+        ),
+        c(
+            "Unit 3: Arrays, Strings, Functions & Recursion",
+            "One- and two-dimensional arrays, character arrays and string functions.",
+            "Functions, prototypes, scope, call by value and pointer-based modification.",
+            "Recursion: factorial, Fibonacci, base cases and trace tables."
+        ),
+        c(
+            "Unit 4: Pointers, Structures, Memory & Files",
+            "Pointers, pointer arithmetic, arrays and const correctness.",
+            "Structures, unions, malloc, calloc, realloc and free.",
+            "File handling and the preprocessor: macros, include guards and conditional compilation."
+        )
+    )),
     Subject("ai", "Exploration in AI", "AI", Color(0xFFC2457F), listOf(
         c(
             "Unit 1: Artificial Intelligence Foundations",
