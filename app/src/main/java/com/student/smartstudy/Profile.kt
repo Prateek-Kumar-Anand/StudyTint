@@ -32,7 +32,7 @@ fun ProfileField(label: String, value: String, modifier: Modifier) {
 fun ProfileCard(pf: Profile, onEdit: () -> Unit) {
     val initials = pf.name.trim().split(" ").filter { it.isNotEmpty() }.take(2).joinToString("") { it.first().uppercase() }
     Card(
-        Modifier.fillMaxWidth().clickable(onClick = onEdit), shape = RoundedCornerShape(24.dp),
+        Modifier.fillMaxWidth().tap(RoundedCornerShape(24.dp), onEdit), shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {

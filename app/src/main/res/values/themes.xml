@@ -1,1 +1,7 @@
-<resources><style name="Theme.SmartStudy" parent="android:Theme.Material.Light.NoActionBar"/></resources>
+<resources>
+    <style name="Theme.SmartStudy" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/ic_bg</item>
+        <item name="android:statusBarColor">@color/ic_bg</item>
+        <item name="android:navigationBarColor">@color/ic_bg</item>
+    </style>
+</resources>

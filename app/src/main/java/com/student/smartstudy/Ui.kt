@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -44,6 +45,7 @@ sealed interface Screen {
     object Score : Screen
     object Stars : Screen
     object CLab : Screen
+    object PyLab : Screen
     data class Setup(val edit: Boolean) : Screen
     data class Pick(val m: Mode) : Screen
     data class Notes(val s: Subject, val i: Int, val prev: Screen) : Screen
@@ -56,7 +58,7 @@ private fun depth(s: Screen): Int = when (s) {
     Screen.Welcome -> 0
     Screen.Home -> 1
     is Screen.Setup -> if (s.edit) 2 else 1
-    Screen.Score, Screen.Stars, Screen.CLab, is Screen.Pick -> 2
+    Screen.Score, Screen.Stars, Screen.CLab, Screen.PyLab, is Screen.Pick -> 2
     is Screen.Notes, is Screen.RichNotes, is Screen.Quiz -> 3
     is Screen.Topic -> 4
 }
@@ -66,9 +68,9 @@ private fun order(s: Screen): Int = if (s is Screen.Topic) s.idx else 0
 private fun navTransition(from: Screen, to: Screen): ContentTransform {
     val fwd = depth(to) > depth(from) || (depth(to) == depth(from) && order(to) >= order(from))
     val d = if (fwd) 1 else -1
-    val spec = tween<IntOffset>(340, easing = FastOutSlowInEasing)
-    return (slideInHorizontally(spec) { it * d / 5 } + fadeIn(tween(300, delayMillis = 40))) togetherWith
-        (slideOutHorizontally(spec) { -it * d / 5 } + fadeOut(tween(180)))
+    val spec = tween<IntOffset>(300, easing = FastOutSlowInEasing)
+    return (slideInHorizontally(spec) { it * d / 8 } + fadeIn(tween(260, delayMillis = 30))) togetherWith
+        (slideOutHorizontally(spec) { -it * d / 8 } + fadeOut(tween(140))) using SizeTransform(clip = false)
 }
 
 @Composable
@@ -92,6 +94,17 @@ fun App(p: Progress) {
         else -> Screen.Home
     }
     BackHandler(screen != Screen.Welcome && screen != Screen.Home) { screen = parent(screen) }
+    val appCtx = androidx.compose.ui.platform.LocalContext.current
+    var whatsNew by remember { mutableStateOf(Updates.pendingRelease(appCtx)) }
+    val notes = whatsNew
+    if (notes != null && screen == Screen.Home) {
+        AlertDialog(
+            onDismissRequest = { Updates.markSeen(appCtx); whatsNew = null },
+            title = { Text("What's new in ${notes.name}") },
+            text = { Column(verticalArrangement = Arrangement.spacedBy(6.dp)) { notes.notes.forEach { Text("•  $it", fontSize = 14.sp) } } },
+            confirmButton = { TextButton(onClick = { Updates.markSeen(appCtx); whatsNew = null }) { Text("Got it") } }
+        )
+    }
     val bg by animateColorAsState(if (screen == Screen.Welcome) Color(0xFF0B0B0B) else Bg, tween(400), label = "bg")
     Box(Modifier.fillMaxSize().background(bg).statusBarsPadding().navigationBarsPadding()) {
         AnimatedContent(targetState = screen, transitionSpec = { navTransition(initialState, targetState) }, label = "nav") { s ->
@@ -109,6 +122,7 @@ fun App(p: Progress) {
             is Screen.Topic -> TopicScreen(s.s, s.i, s.idx, p, { screen = Screen.RichNotes(s.s, s.i, s.prev) }) { screen = Screen.Topic(s.s, s.i, it, s.prev) }
             is Screen.Quiz -> QuizScreen(s.s, s.i, p) { screen = s.prev }
             Screen.CLab -> CLabScreen { screen = Screen.Home }
+            Screen.PyLab -> PyLabScreen { screen = Screen.Home }
         }
         }
     }
@@ -153,7 +167,7 @@ fun Welcome(onStart: () -> Unit) {
 @Composable
 fun OptionCard(title: String, sub: String, tint: Color, modifier: Modifier, onClick: () -> Unit) {
     Card(
-        modifier.clickable(onClick = onClick), shape = RoundedCornerShape(22.dp),
+        modifier.tap(RoundedCornerShape(22.dp), onClick), shape = RoundedCornerShape(22.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(Modifier.padding(16.dp)) {
@@ -170,11 +184,11 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
     val total = subjects.sumOf { it.units.size }
     val done = p.done.size
     LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        item {
+        item(key = "greeting") {
             Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}", fontSize = 24.sp, fontWeight = FontWeight.Medium, color = Ink)
             Text("What shall we do today?", color = Color.Gray)
         }
-        item { ProfileCard(p.profile) { go(Screen.Setup(true)) } }
+        item(key = "profile") { ProfileCard(p.profile) { go(Screen.Setup(true)) } }
         item {
             Card(shape = RoundedCornerShape(24.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
                 Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -183,7 +197,8 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
                     Column {
                         Text("$done of $total units done", fontWeight = FontWeight.Medium, fontSize = 18.sp, color = Ink)
                         Spacer(Modifier.height(8.dp))
-                        LinearProgressIndicator(progress = { done / total.toFloat() }, color = Accent, modifier = Modifier.fillMaxWidth())
+                        val hp by animateFloatAsState(done / total.toFloat(), tween(450), label = "hp")
+                        LinearProgressIndicator(progress = { hp }, color = Accent, trackColor = Color(0xFFE9E9F2), modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape))
                     }
                 }
             }
@@ -203,8 +218,12 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OptionCard("C Lab", "Write & run C code", Color(0xFF2FA37A), Modifier.weight(1f)) { go(Screen.CLab) }
-                Spacer(Modifier.weight(1f))
+                OptionCard("Python Lab", "Write & run Python", Color(0xFF3776AB), Modifier.weight(1f)) { go(Screen.PyLab) }
             }
+        }
+        item(key = "version") {
+            val vctx = androidx.compose.ui.platform.LocalContext.current
+            Text("StudyTint v${Updates.versionName(vctx)}", Modifier.fillMaxWidth().padding(top = 4.dp), color = Color.Gray, fontSize = 12.sp, textAlign = TextAlign.Center)
         }
     }
 }
@@ -212,7 +231,7 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
 @Composable
 fun TopBar(title: String, onBack: () -> Unit) {
     Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-        Surface(shape = CircleShape, color = Color.White, modifier = Modifier.size(42.dp).clickable(onClick = onBack)) {
+        Surface(shape = CircleShape, color = Color.White, modifier = Modifier.size(42.dp).tap(CircleShape, onBack)) {
             Box(contentAlignment = Alignment.Center) { Text("←", fontSize = 20.sp) }
         }
         Text(title, Modifier.weight(1f).padding(end = 42.dp), textAlign = TextAlign.Center, fontSize = 18.sp, fontWeight = FontWeight.Medium, color = Ink)
@@ -237,7 +256,7 @@ fun PickScreen(m: Mode, p: Progress, back: () -> Unit, listState: LazyListState,
                     val tag = if (m == Mode.Study) (if (key in p.done) "✓" else "›")
                     else p.scores[key]?.let { "$it%" } ?: "›"
                     Card(
-                        Modifier.fillMaxWidth().clickable { open(s, i) }, shape = RoundedCornerShape(20.dp),
+                        Modifier.fillMaxWidth().tap(RoundedCornerShape(20.dp)) { open(s, i) }, shape = RoundedCornerShape(20.dp),
                         colors = CardDefaults.cardColors(containerColor = if (m == Mode.Study && rich["${s.id}:$i"] != null) Color(0xFFEDEBFF) else Color.White)
                     ) {
                         Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -305,13 +324,13 @@ fun QuizScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
         } else if (mode == null) {
             LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 item {
-                    Card(Modifier.fillMaxWidth().clickable { start("") }, shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = Accent)) {
+                    Card(Modifier.fillMaxWidth().tap(RoundedCornerShape(20.dp)) { start("") }, shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = Accent)) {
                         Text("All questions in order · ${unitQs.size}", Modifier.padding(18.dp), color = Color.White, fontWeight = FontWeight.Medium, fontSize = 16.sp)
                     }
                 }
                 item { Text("Topics", Modifier.padding(top = 6.dp), fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Ink) }
                 items(topics) { t ->
-                    Card(Modifier.fillMaxWidth().clickable { start(t) }, shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                    Card(Modifier.fillMaxWidth().tap(RoundedCornerShape(18.dp)) { start(t) }, shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                             Text(t, Modifier.weight(1f), color = Ink)
                             Text("${unitQs.count { it.topic == t }}", color = Accent, fontWeight = FontWeight.Medium)
@@ -378,9 +397,9 @@ fun StarsScreen(p: Progress, back: () -> Unit, listState: LazyListState, open: (
                 Text("Tap ☆ on any unit while studying to highlight it here.", color = Color.Gray, textAlign = TextAlign.Center)
             }
         } else LazyColumn(state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            items(list) { (s, i) ->
+            items(list, key = { (s, i) -> "${s.id}:$i" }) { (s, i) ->
                 Card(
-                    Modifier.fillMaxWidth().clickable { open(s, i) }, shape = RoundedCornerShape(20.dp),
+                    Modifier.fillMaxWidth().tap(RoundedCornerShape(20.dp)) { open(s, i) }, shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Column(Modifier.padding(18.dp)) {

@@ -35,6 +35,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -276,7 +277,13 @@ fun CLabScreen(back: () -> Unit) {
                 Pair("", "Could not run: " + (e.message ?: "error"))
             }
             output = res.first
-            status = res.second
+            val errs = Regex("(?m)^\\S+:\\d+:\\d+: error:").findAll(res.first).count()
+            val warns = Regex("(?m)^\\S+:\\d+:\\d+: warning:").findAll(res.first).count()
+            status = when {
+                errs > 0 -> "build failed: $errs error${if (errs > 1) "s" else ""}" + (if (warns > 0) ", $warns warning${if (warns > 1) "s" else ""}" else "")
+                warns > 0 && res.second.endsWith("code 0") -> res.second + " ($warns warning${if (warns > 1) "s" else ""})"
+                else -> res.second
+            }
             running = false
         }, "clab-run", 64L * 1024 * 1024).start()
     }
@@ -349,11 +356,11 @@ fun CLabScreen(back: () -> Unit) {
                 Text("Output", fontSize = 12.sp, color = Color(0xFF8A8A94))
                 Spacer(Modifier.padding(top = 6.dp))
                 SelectionContainer {
-                    Text(output, fontFamily = mono, fontSize = 13.sp, color = Color(0xFFE6E6F0), lineHeight = 19.sp)
+                    Text(remember(output) { colorDiagnostics(output) }, fontFamily = mono, fontSize = 13.sp, color = Color(0xFFE6E6F0), lineHeight = 19.sp)
                 }
                 if (status.isNotEmpty()) {
                     Spacer(Modifier.padding(top = 8.dp))
-                    val ok = status.endsWith("code 0") || status == "Running…"
+                    val ok = (status.endsWith("code 0") || status.contains("code 0 (") || status == "Running…")
                     Text(status, fontFamily = mono, fontSize = 12.sp, color = if (ok) Color(0xFF7EE0A8) else Color(0xFFFFB86C))
                 }
             }
@@ -361,3 +368,22 @@ fun CLabScreen(back: () -> Unit) {
         }
     }
 }
+
+private val diagError = Regex("^\\S+:\\d+:\\d+: error:.*")
+private val diagWarn = Regex("^\\S+:\\d+:\\d+: warning:.*")
+private val diagCaret = Regex("^\\s*\\|\\s*\\^.*")
+
+private fun colorDiagnostics(out: String): androidx.compose.ui.text.AnnotatedString =
+    androidx.compose.ui.text.buildAnnotatedString {
+        val lines = out.split("\n")
+        lines.forEachIndexed { i, l ->
+            val style = when {
+                diagError.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFF6B6B), fontWeight = FontWeight.Bold)
+                diagWarn.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFFD166), fontWeight = FontWeight.Bold)
+                diagCaret.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFF7EE0A8), fontWeight = FontWeight.Bold)
+                else -> null
+            }
+            if (style != null) withStyle(style) { append(l) } else append(l)
+            if (i < lines.lastIndex) append("\n")
+        }
+    }

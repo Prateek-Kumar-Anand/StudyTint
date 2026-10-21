@@ -1,8 +1,11 @@
 package com.student.smartstudy
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
+@Immutable
 data class Chap(val title: String, val notes: List<String>)
+@Immutable
 data class Subject(val id: String, val name: String, val mark: String, val color: Color, val units: List<Chap>)
 
 private fun c(t: String, vararg n: String) = Chap(t, n.toList())
@@ -140,6 +143,7 @@ val subjects = listOf(
     ))
 )
 
+@Immutable
 data class Q(val unit: Int, val q: String, val o: List<String>, val a: Int, val sol: String = "", val topic: String = "")
 private fun q(u: Int, t: String, a: Int, vararg o: String) = Q(u, t, o.toList(), a)
 

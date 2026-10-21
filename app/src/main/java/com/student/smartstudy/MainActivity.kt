@@ -12,6 +12,7 @@ data class Profile(val name: String = "", val father: String = "", val lurn: Str
         get() = name.isNotBlank() && father.isNotBlank() && lurn.isNotBlank() && roll.isNotBlank() && course.isNotBlank()
 }
 
+@Stable
 class Progress(ctx: Context) {
     private val sp = ctx.getSharedPreferences("progress", Context.MODE_PRIVATE)
     var profile by mutableStateOf(
@@ -86,6 +87,7 @@ class Progress(ctx: Context) {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Updates.migrate(applicationContext)
         loadMathBank(applicationContext)
         loadRich(applicationContext)
         setContent { MaterialTheme { App(remember { Progress(applicationContext) }) } }

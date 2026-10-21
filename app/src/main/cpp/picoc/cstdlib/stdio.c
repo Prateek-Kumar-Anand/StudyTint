@@ -471,14 +471,57 @@ int StdioBaseScanf(struct ParseState *Parser, FILE *Stream, char *StrIn,
         Format = Fixed;
     }
 
-    if (Stream != NULL)
-        return fscanf(Stream, Format, ScanfArg[0], ScanfArg[1], ScanfArg[2],
-            ScanfArg[3], ScanfArg[4], ScanfArg[5], ScanfArg[6], ScanfArg[7],
-            ScanfArg[8], ScanfArg[9]);
-    else
-        return sscanf(StrIn, Format, ScanfArg[0], ScanfArg[1], ScanfArg[2],
-            ScanfArg[3], ScanfArg[4], ScanfArg[5], ScanfArg[6], ScanfArg[7],
-            ScanfArg[8], ScanfArg[9]);
+    {
+        int Result, Expected = 0;
+        char Spec[40][8];
+        const char *q;
+        for (q = Format; *q; q++) {
+            int k = 0, skip = 0;
+            if (*q != '%') continue;
+            q++;
+            if (*q == '%') continue;
+            if (*q == '*') { skip = 1; q++; }
+            while (*q && !strchr("diouxXcsfeEgGpn[", *q) && k < 6) {
+                if (Expected < 40 && !skip) Spec[Expected][k] = *q;
+                k++; q++;
+            }
+            if (!*q) break;
+            if (skip || *q == 'n') continue;
+            if (Expected < 40) { Spec[Expected][k < 6 ? k : 6] = *q; Spec[Expected][(k < 6 ? k : 6) + 1] = 0; }
+            Expected++;
+        }
+        if (Stream != NULL)
+            Result = fscanf(Stream, Format, ScanfArg[0], ScanfArg[1], ScanfArg[2],
+                ScanfArg[3], ScanfArg[4], ScanfArg[5], ScanfArg[6], ScanfArg[7],
+                ScanfArg[8], ScanfArg[9]);
+        else
+            Result = sscanf(StrIn, Format, ScanfArg[0], ScanfArg[1], ScanfArg[2],
+                ScanfArg[3], ScanfArg[4], ScanfArg[5], ScanfArg[6], ScanfArg[7],
+                ScanfArg[8], ScanfArg[9]);
+        if (Expected > 0 && Result < Expected) {
+            const char *fn = Parser->FileName ? Parser->FileName : "main.c";
+            char want[12];
+            fflush(stdout);
+            snprintf(want, sizeof(want), "%%%s", (Result >= 0 && Result < 40) ? Spec[Result] : "d");
+            if (Result == EOF) {
+                fprintf(stderr, "%s:%d:%d: warning: scanf() reached end of input before reading a value for '%s'; "
+                    "the variable keeps its previous (uninitialized) value\n",
+                    fn, Parser->Line, Parser->CharacterPos + 1, want);
+            } else {
+                int Bad = (Stream != NULL) ? fgetc(Stream) : EOF;
+                if (Stream != NULL && Bad != EOF) ungetc(Bad, Stream);
+                if (Bad == '\n' || Bad == EOF)
+                    fprintf(stderr, "%s:%d:%d: warning: scanf() matched %d of %d items: input is missing a value for '%s'\n",
+                        fn, Parser->Line, Parser->CharacterPos + 1, Result, Expected, want);
+                else
+                    fprintf(stderr, "%s:%d:%d: warning: scanf() matched %d of %d items: input '%c' does not match '%s'; "
+                        "unread variables keep their previous (uninitialized) values\n",
+                        fn, Parser->Line, Parser->CharacterPos + 1, Result, Expected, (char)Bad, want);
+            }
+            fflush(stderr);
+        }
+        return Result;
+    }
 }
 
 /* stdio calls */

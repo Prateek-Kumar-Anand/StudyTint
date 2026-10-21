@@ -77,7 +77,7 @@ Java_com_student_smartstudy_CEngine_run(JNIEnv *env, jobject thiz,
         rl.rlim_cur = rl.rlim_max = 20 * 1024 * 1024;
         setrlimit(RLIMIT_FSIZE, &rl);
         signal(SIGPIPE, SIG_DFL);
-        setvbuf(stdout, NULL, _IOLBF, 0);
+        { static char obuf[1 << 17]; setvbuf(stdout, obuf, _IOFBF, sizeof(obuf)); }
         code = clab_run_program(src);
         fflush(NULL);
         _exit(code & 0xff);

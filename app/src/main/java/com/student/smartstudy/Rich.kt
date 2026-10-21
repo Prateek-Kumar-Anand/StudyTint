@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -21,6 +25,7 @@ import androidx.compose.ui.unit.sp
 
 private val MathInk = Color(0xFF2B2B6B)
 private val MathBg = Color(0xFFEEF0FF)
+private val QA_NUM = Regex("^(\\d+)\\. ")
 private val SCHEMA = Regex("^[A-Z_][A-Za-z_0-9]*\\(.*\\)$")
 
 private fun isMathLine(s: String): Boolean {
@@ -78,7 +83,7 @@ fun Lines(lines: List<String>, tint: Color = MathBg) {
 fun QaCard(n: String, q: String, a: String) {
     var open by remember { mutableStateOf(false) }
     Card(
-        Modifier.fillMaxWidth().clickable(enabled = a.isNotEmpty()) { open = !open }, shape = RoundedCornerShape(18.dp),
+        Modifier.fillMaxWidth().animateContentSize(tween(220)).tap(RoundedCornerShape(18.dp)) { if (a.isNotEmpty()) open = !open }, shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -103,7 +108,7 @@ fun QaCard(n: String, q: String, a: String) {
 @Composable
 fun BlockView(b: Blk) {
     when (b) {
-        is BP -> Text(b.x, fontSize = 15.sp, lineHeight = 23.sp, color = Ink)
+        is BP -> Text(b.x, fontSize = 15.sp, lineHeight = 24.sp, color = Ink)
         is BH -> Text(b.x, Modifier.padding(top = 8.dp), fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Accent)
         is BUl -> Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
             b.x.forEach {
@@ -161,7 +166,7 @@ fun BlockView(b: Blk) {
                         if (l.isNotEmpty()) Text(l, Modifier.weight(0.4f), fontWeight = FontWeight.Medium, color = Accent, fontSize = 14.sp)
                         Text(
                             r, Modifier.weight(if (l.isEmpty()) 1f else 0.6f), fontSize = 14.sp, lineHeight = 20.sp, color = Ink,
-                            fontFamily = if (isMathLine(r)) FontFamily.Monospace else FontFamily.Default
+                            fontFamily = if (remember(r) { isMathLine(r) }) FontFamily.Monospace else FontFamily.Default
                         )
                     }
                 }
@@ -179,7 +184,7 @@ fun BlockView(b: Blk) {
         }
         is BQa -> Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             b.x.forEachIndexed { n, (q, a) ->
-                val m = Regex("^(\\d+)\\. ").find(q)
+                val m = QA_NUM.find(q)
                 QaCard(m?.groupValues?.get(1) ?: "${n + 1}", q.removePrefix(m?.value ?: ""), a)
             }
         }
@@ -198,11 +203,12 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
     val r = rich["${s.id}:$i"] ?: return
     val key = "${s.id}:$i"
     val read = r.sec.indices.count { "$key:$it" in p.read }
-    val mins = (r.sec.sumOf { sec -> sec.b.sumOf { blockWords(it) } } / 180).coerceAtLeast(1)
+    val mins = remember(r) { (r.sec.sumOf { sec -> sec.b.sumOf { blockWords(it) } } / 180).coerceAtLeast(1) }
+    val prog by animateFloatAsState(read / r.sec.size.toFloat(), tween(450), label = "read")
     Column(Modifier.fillMaxSize()) {
         TopBar(s.name, back)
         LazyColumn(state = listState, contentPadding = PaddingValues(start = 20.dp, end = 20.dp, bottom = 28.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            item {
+            item(key = "hero", contentType = "hero") {
                 Box(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))
                         .background(Brush.linearGradient(listOf(Color(0xFF5B5BD6), Color(0xFF9B59D0), Color(0xFFE0568B))))
@@ -225,18 +231,18 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
                             Chip("~$mins min read")
                         }
                         LinearProgressIndicator(
-                            progress = { read / r.sec.size.toFloat() }, color = Color.White, trackColor = Color.White.copy(alpha = 0.3f),
+                            progress = { prog }, color = Color.White, trackColor = Color.White.copy(alpha = 0.3f),
                             modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape)
                         )
                         Text("$read of ${r.sec.size} topics read", color = Color.White.copy(alpha = 0.85f), fontSize = 12.sp)
                     }
                 }
             }
-            item { Text("Topics", Modifier.padding(top = 4.dp), fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink) }
-            itemsIndexed(r.sec) { idx, sec ->
+            item(key = "topics", contentType = "title") { Text("Topics", Modifier.padding(top = 4.dp), fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink) }
+            itemsIndexed(r.sec, key = { _, sec -> sec.n }, contentType = { _, _ -> "topic" }) { idx, sec ->
                 val (glyph, tint) = kindStyle(sec.k)
                 Card(
-                    Modifier.fillMaxWidth().clickable { open(idx) }, shape = RoundedCornerShape(20.dp),
+                    Modifier.fillMaxWidth().tap(RoundedCornerShape(20.dp)) { open(idx) }, shape = RoundedCornerShape(20.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -275,15 +281,22 @@ fun TopicScreen(s: Subject, i: Int, idx: Int, p: Progress, back: () -> Unit, go:
     val r = rich["${s.id}:$i"] ?: return
     val sec = r.sec[idx]
     val n = r.sec.size
-    val scroll = rememberScrollState()
-    LaunchedEffect(idx) { p.markRead("${s.id}:$i:$idx"); scroll.scrollTo(0) }
+    val listState = rememberLazyListState()
+    LaunchedEffect(idx) { p.markRead("${s.id}:$i:$idx") }
     Column(Modifier.fillMaxSize()) {
         TopBar("Unit ${i + 1}", back)
-        Column(Modifier.weight(1f).verticalScroll(scroll).padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            Text("TOPIC ${idx + 1} OF $n", color = Accent, fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
-            Text(sec.t, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.Medium, color = Ink)
-            key(idx) { sec.b.forEach { BlockView(it) } }
-            Spacer(Modifier.height(8.dp))
+        LazyColumn(
+            Modifier.weight(1f), state = listState,
+            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            item(key = "head", contentType = "head") {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("TOPIC ${idx + 1} OF $n", color = Accent, fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
+                    Text(sec.t, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.Medium, color = Ink)
+                }
+            }
+            itemsIndexed(sec.b, key = { k, _ -> k }, contentType = { _, b -> b::class }) { _, b -> BlockView(b) }
         }
         Row(Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             OutlinedButton({ go(idx - 1) }, Modifier.weight(1f).height(50.dp), enabled = idx > 0, shape = CircleShape) { Text("‹ Previous", color = Accent) }
