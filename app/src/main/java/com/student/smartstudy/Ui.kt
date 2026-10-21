@@ -65,7 +65,8 @@ private fun depth(s: Screen): Int = when (s) {
 
 private fun order(s: Screen): Int = if (s is Screen.Topic) s.idx else 0
 
-private fun navTransition(from: Screen, to: Screen): ContentTransform {
+// `using` is a member of AnimatedContentTransitionScope, so this must be an extension on it.
+private fun AnimatedContentTransitionScope<Screen>.navTransition(from: Screen, to: Screen): ContentTransform {
     val fwd = depth(to) > depth(from) || (depth(to) == depth(from) && order(to) >= order(from))
     val d = if (fwd) 1 else -1
     val spec = tween<IntOffset>(300, easing = FastOutSlowInEasing)

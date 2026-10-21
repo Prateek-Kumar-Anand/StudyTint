@@ -151,7 +151,7 @@ object PyLibs {
                     while (true) {
                         val n = input.read(buf)
                         if (n < 0) break
-                        total[0] += n
+                        total[0] += n.toLong()
                         if (total[0] > MAX_BYTES) throw IOException("That is larger than 150 MB")
                         out.write(buf, 0, n)
                     }
@@ -196,7 +196,7 @@ object PyLibs {
                         while (true) {
                             val n = input.read(buf)
                             if (n < 0) break
-                            total[0] += n
+                            total[0] += n.toLong()
                             if (total[0] > MAX_BYTES) throw IOException("That is larger than 150 MB")
                             out.write(buf, 0, n)
                         }
