@@ -18,7 +18,9 @@ android {
         minSdk = 24; targetSdk = 34
         versionCode = versionProps.getProperty("VERSION_CODE").trim().toInt() * 10000 + ciBuild
         versionName = versionProps.getProperty("VERSION_NAME").trim()
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }
+        // Chaquopy 17 / Python 3.12 only ships arm64-v8a and x86_64 (32-bit ARM was dropped),
+        // so armeabi-v7a must not be listed or Gradle fails at configuration time.
+        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
     }
     // A fixed signing key keeps every build installable over the previous one (updates keep your data).
     signingConfigs {

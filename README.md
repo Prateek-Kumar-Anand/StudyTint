@@ -56,7 +56,7 @@ connection and your progress never leaves the device.
 | Content | JSON notes and question banks in `app/src/main/assets` |
 | Persistence | `SharedPreferences` |
 | Build | Gradle 8.7, Android Gradle Plugin 8.5, JDK 17 |
-| Target | `minSdk 24`, `targetSdk 34`, ABIs `arm64-v8a`, `armeabi-v7a`, `x86_64` |
+| Target | `minSdk 24`, `targetSdk 34`, ABIs `arm64-v8a`, `x86_64` (Chaquopy Python 3.12 has no 32-bit ARM) |
 
 ## Project structure
 
