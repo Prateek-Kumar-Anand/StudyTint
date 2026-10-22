@@ -5,6 +5,12 @@
 
 #include "../interpreter.h"
 
+/* C Lab reads the program's stdin through a stream it controls, so it can pause the
+ * program and ask the user for a line of input (see clab_proc.c). */
+extern FILE *clab_stdin_file;
+#undef stdin
+#define stdin clab_stdin_file
+
 #define MAX_FORMAT (80)
 #define MAX_SCANF_ARGS (10)
 
@@ -732,7 +738,7 @@ void StdioGets(struct ParseState *Parser, struct Value *ReturnValue,
 void StdioGetchar(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
-    ReturnValue->Val->Integer = getchar();
+    ReturnValue->Val->Integer = getc(stdin);
 }
 
 void StdioPrintf(struct ParseState *Parser, struct Value *ReturnValue,

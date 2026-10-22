@@ -228,15 +228,54 @@ object PyEngine {
         runner().callAttr("version").toString()
     } catch (e: Throwable) { "" }
 
-    /** Returns (program output, status line). */
-    fun run(ctx: Context, code: String, stdin: String, root: File, timeoutSec: Int): Pair<String, String> = try {
+    /**
+     * Runs the program and blocks until it ends, returning the status line. Output is streamed to [onText] while it
+     * runs and [onWaiting] says whether it is waiting for a line to be typed (send / eof answer it).
+     */
+    fun run(
+        ctx: Context, code: String, root: File, timeoutSec: Int,
+        onText: (String) -> Unit, onWaiting: (Boolean) -> Unit
+    ): String = try {
         ensure(ctx)
+        val mod = runner()
         val paths = PyLibs.sysPath(PyStorage.libs(root)).joinToString("\n")
         val work = PyStorage.work(root).absolutePath
-        val r = runner().callAttr("run", code, stdin, work, paths, timeoutSec).asList()
-        Pair(r[0].toString(), r[1].toString())
+        val done = java.util.concurrent.atomic.AtomicBoolean(false)
+        val poller = Thread {
+            var wasWaiting = false
+            while (!done.get()) {
+                try { Thread.sleep(40) } catch (e: InterruptedException) { }
+                try {
+                    val r = mod.callAttr("poll").asList()
+                    val text = r[0].toString()
+                    if (text.isNotEmpty()) onText(text)
+                    val w = r[1].toBoolean()
+                    if (w != wasWaiting) { wasWaiting = w; onWaiting(w) }
+                } catch (e: Throwable) { }
+            }
+        }
+        poller.start()
+        val r = try {
+            mod.callAttr("run", code, work, paths, timeoutSec).asList()
+        } finally {
+            done.set(true)
+            try { poller.join(1000) } catch (e: InterruptedException) { }
+        }
+        val rest = r[0].toString()
+        if (rest.isNotEmpty()) onText(rest)
+        onWaiting(false)
+        r[1].toString()
     } catch (e: Throwable) {
-        Pair("", "Python could not start: ${e.message}")
+        onWaiting(false)
+        "Python could not start: ${e.message}"
+    }
+
+    fun send(line: String) {
+        try { runner().callAttr("send", line) } catch (e: Throwable) { }
+    }
+
+    fun eof() {
+        try { runner().callAttr("close_input") } catch (e: Throwable) { }
     }
 
     fun stop() {
@@ -357,11 +396,13 @@ fun PyLabScreen(back: () -> Unit) {
     val ctx = LocalContext.current
     val prefs = remember { ctx.getSharedPreferences("pylab_prefs", Context.MODE_PRIVATE) }
     var code by remember { mutableStateOf(TextFieldValue(prefs.getString("code", pySamples["Hello"]) ?: "")) }
-    var input by remember { mutableStateOf(prefs.getString("input", "") ?: "") }
     var timeout by remember { mutableStateOf(prefs.getInt("timeout", 15)) }
     var output by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }
     var running by remember { mutableStateOf(false) }
+    var waiting by remember { mutableStateOf(false) }
+    val outLock = remember { Any() }
+    val scroll = rememberScrollState()
     var panel by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
     var refresh by remember { mutableStateOf(0) }
@@ -379,6 +420,20 @@ fun PyLabScreen(back: () -> Unit) {
 
     androidx.compose.runtime.LaunchedEffect(Unit) {
         pyVersion = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { PyEngine.version(ctx) }
+    }
+
+    // leaving the screen stops a program that is still running
+    androidx.compose.runtime.DisposableEffect(Unit) { onDispose { if (running) PyEngine.stop() } }
+    // keep the prompt in view when the program asks for input
+    androidx.compose.runtime.LaunchedEffect(waiting) {
+        if (waiting) {
+            kotlinx.coroutines.delay(150)
+            scroll.animateScrollTo(scroll.maxValue)
+        }
+    }
+
+    fun appendOut(t: String) {
+        synchronized(outLock) { output += t }
     }
 
     fun setCode(v: TextFieldValue) {
@@ -410,17 +465,17 @@ fun PyLabScreen(back: () -> Unit) {
     fun runCode() {
         if (running) return
         running = true
+        waiting = false
         output = ""
         status = "Running…"
         val src = code.text
-        val stdin = input
         val limit = timeout
         val r = root
-        prefs.edit().putString("code", src).putString("input", stdin).putInt("timeout", limit).apply()
+        prefs.edit().putString("code", src).putInt("timeout", limit).apply()
         Thread(null, Runnable {
-            val res = PyEngine.run(ctx.applicationContext, src, stdin, r, limit)
-            output = res.first
-            status = res.second
+            val st = PyEngine.run(ctx.applicationContext, src, r, limit, { appendOut(it) }, { waiting = it })
+            status = st
+            waiting = false
             running = false
         }, "pylab-run", 32L * 1024 * 1024).start()
     }
@@ -428,7 +483,7 @@ fun PyLabScreen(back: () -> Unit) {
     Column(Modifier.fillMaxSize()) {
         TopBar("Python Lab", back)
         Column(
-            Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 4.dp),
+            Modifier.weight(1f).verticalScroll(scroll).padding(horizontal = 16.dp, vertical = 4.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
@@ -469,15 +524,6 @@ fun PyLabScreen(back: () -> Unit) {
                 }
             }
 
-            Text("Input for input() (one line per call, optional)", fontSize = 13.sp, color = Color.Gray)
-            BasicTextField(
-                value = input,
-                onValueChange = { input = it; prefs.edit().putString("input", it).apply() },
-                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
-                    .background(Color.White, RoundedCornerShape(14.dp)).padding(14.dp),
-                textStyle = TextStyle(fontFamily = mono, fontSize = 14.sp, color = Ink)
-            )
-
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text("Time limit", Modifier.padding(top = 8.dp, end = 4.dp), fontSize = 13.sp, color = Color.Gray)
                 listOf(5, 15, 30, 60).forEach { sec ->
@@ -502,27 +548,24 @@ fun PyLabScreen(back: () -> Unit) {
                     shape = RoundedCornerShape(16.dp)
                 ) { Text("Stop") }
                 Button(
-                    onClick = { output = ""; status = "" },
+                    onClick = { output = ""; status = "" }, enabled = !running,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Ink)
                 ) { Text("Clear") }
             }
 
-            Column(
-                Modifier.fillMaxWidth().heightIn(min = 120.dp)
-                    .background(Color(0xFF111118), RoundedCornerShape(16.dp)).padding(14.dp)
-            ) {
-                Text("Output", fontSize = 12.sp, color = Color(0xFF8A8A94))
-                Spacer(Modifier.padding(top = 6.dp))
-                SelectionContainer {
-                    Text(remember(output) { colorPython(output) }, fontFamily = mono, fontSize = 13.sp, color = Color(0xFFE6E6F0), lineHeight = 19.sp)
-                }
-                if (status.isNotEmpty()) {
-                    Spacer(Modifier.padding(top = 8.dp))
-                    val ok = status.endsWith("code 0") || status == "Running…"
-                    Text(status, fontFamily = mono, fontSize = 12.sp, color = if (ok) Color(0xFF7EE0A8) else Color(0xFFFFB86C))
-                }
-            }
+            ConsoleBox(
+                output = remember(output) { colorPython(output) },
+                status = status,
+                statusOk = status.endsWith("code 0") || status == "Running…",
+                running = running,
+                waiting = waiting,
+                onSubmit = { line ->
+                    appendOut(line + "\n")        // echo what was typed, like a terminal
+                    PyEngine.send(line)
+                },
+                onEof = { PyEngine.eof() }
+            )
 
             // ---- storage, libraries, scripts
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {

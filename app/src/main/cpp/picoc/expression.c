@@ -1943,6 +1943,12 @@ void ExpressionParseFunctionCall(struct ParseState *Parser,
 
             if (RunIt) {
                 if (FuncParser.Mode == RunModeRun &&
+                        FuncValue->Val->FuncDef.ReturnType != &Parser->pc->VoidType &&
+                        FuncName != NULL && strcmp(FuncName, "main") == 0) {
+                    /* C99: reaching the end of main() returns 0 */
+                    if (ReturnValue != NULL && ReturnValue->Val != NULL)
+                        ReturnValue->Val->Integer = 0;
+                } else if (FuncParser.Mode == RunModeRun &&
                         FuncValue->Val->FuncDef.ReturnType != &Parser->pc->VoidType)
                     ProgramFail(&FuncParser,
                         "no value returned from a function returning %t",

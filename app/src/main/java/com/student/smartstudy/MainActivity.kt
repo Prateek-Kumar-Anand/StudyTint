@@ -1,11 +1,13 @@
 package com.student.smartstudy
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.ImageBitmap
 
 data class Profile(val name: String = "", val father: String = "", val lurn: String = "", val roll: String = "", val course: String = "") {
     val isComplete: Boolean
@@ -14,7 +16,10 @@ data class Profile(val name: String = "", val father: String = "", val lurn: Str
 
 @Stable
 class Progress(ctx: Context) {
+    private val appCtx = ctx.applicationContext
     private val sp = ctx.getSharedPreferences("progress", Context.MODE_PRIVATE)
+    var photo by mutableStateOf<ImageBitmap?>(ProfilePhoto.load(ctx))
+        private set
     var profile by mutableStateOf(
         Profile(
             sp.getString("p_name", "") ?: "", sp.getString("p_father", "") ?: "", sp.getString("p_lurn", "") ?: "",
@@ -54,6 +59,13 @@ class Progress(ctx: Context) {
         profile = Profile(n.name.trim(), n.father.trim(), n.lurn.trim(), n.roll.trim(), n.course.trim())
         sp.edit().putString("p_name", profile.name).putString("p_father", profile.father).putString("p_lurn", profile.lurn)
             .putString("p_roll", profile.roll).putString("p_course", profile.course).apply()
+    }
+    /** Saves the profile picture (null removes it). */
+    fun savePhoto(bmp: Bitmap?) {
+        try {
+            if (bmp == null) ProfilePhoto.delete(appCtx) else ProfilePhoto.write(appCtx, bmp)
+        } catch (e: Exception) { }
+        photo = ProfilePhoto.load(appCtx)
     }
     private fun persist() {
         sp.edit().putStringSet("stats", stats.map { "${it.key}=${it.value.first},${it.value.second}" }.toSet()).apply()

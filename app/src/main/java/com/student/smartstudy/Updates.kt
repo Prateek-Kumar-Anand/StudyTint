@@ -19,6 +19,15 @@ object Updates {
 
     val changelog = listOf(
         Release(
+            "1.2.0",
+            listOf(
+                "C Lab and Python Lab: type input right in the output box, like a terminal",
+                "C Lab: programs run without #include lines (printf, scanf, sqrt, bool and more are added for you)",
+                "C Lab: main() without a return type or return statement now works",
+                "Profile: add, change or remove a profile photo; it is saved on your device"
+            )
+        ),
+        Release(
             "1.1.0",
             listOf(
                 "New Python Lab: write and run Python with real error messages",

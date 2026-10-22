@@ -1,5 +1,6 @@
 """Runs user code for the Python Lab with real CPython behaviour and tracebacks."""
 import builtins
+import collections
 import ctypes
 import importlib
 import io
@@ -21,10 +22,14 @@ class _Stop(BaseException):
 
 
 class _Out(io.TextIOBase):
+    """Collects the program's output; take() hands the new part to the screen while the program runs."""
+
     def __init__(self):
         self.parts = []
         self.size = 0
+        self.taken = 0
         self.truncated = False
+        self.lock = threading.Lock()
 
     def writable(self):
         return True
@@ -35,29 +40,124 @@ class _Out(io.TextIOBase):
     def write(self, s):
         if not isinstance(s, str):
             raise TypeError("write() argument must be str, not %s" % type(s).__name__)
-        if self.truncated:
-            return len(s)
-        room = MAX_OUT - self.size
-        if len(s) > room:
-            self.parts.append(s[:max(room, 0)])
-            self.parts.append("\n[output truncated]\n")
-            self.size = MAX_OUT
-            self.truncated = True
+        with self.lock:
+            if self.truncated:
+                return len(s)
+            room = MAX_OUT - self.size
+            if len(s) > room:
+                self.parts.append(s[:max(room, 0)])
+                self.parts.append("\n[output truncated]\n")
+                self.size = MAX_OUT
+                self.truncated = True
+                over = True
+            else:
+                self.parts.append(s)
+                self.size += len(s)
+                over = False
+        if over:
             _raise_in(threading.get_ident(), _Stop)
-            return len(s)
-        self.parts.append(s)
-        self.size += len(s)
         return len(s)
 
     def flush(self):
         pass
 
-    def getvalue(self):
-        return "".join(self.parts)
+    def take(self):
+        with self.lock:
+            text = "".join(self.parts[self.taken:])
+            self.taken = len(self.parts)
+        return text
 
 
-_state = {"tid": None, "reason": None}
+class _In(io.TextIOBase):
+    """stdin for the program: each line is typed by the user into the output box while the program waits."""
+
+    def readable(self):
+        return True
+
+    def isatty(self):
+        return False
+
+    def readline(self, size=-1):
+        line = _next_line()
+        if size is not None and size >= 0 and len(line) > size:
+            _lines.appendleft(line[size:])
+            line = line[:size]
+        return line
+
+    def read(self, size=-1):
+        if size is not None and size >= 0:
+            buf = ""
+            while len(buf) < size:
+                line = _next_line()
+                if not line:
+                    break
+                buf += line
+            if len(buf) > size:
+                _lines.appendleft(buf[size:])
+                buf = buf[:size]
+            return buf
+        chunks = []
+        while True:
+            line = _next_line()
+            if not line:
+                return "".join(chunks)
+            chunks.append(line)
+
+    def readlines(self, hint=-1):
+        out = []
+        while True:
+            line = _next_line()
+            if not line:
+                return out
+            out.append(line)
+
+
+_state = {"tid": None, "reason": None, "waiting": False, "waited": 0.0, "wait_start": None, "eof": False, "out": None}
 _real_sleep = time.sleep
+_cv = threading.Condition()
+_lines = collections.deque()
+
+
+def _next_line():
+    """Blocks until the user sends a line (or closes input). Returns "" at end of input."""
+    with _cv:
+        t0 = time.monotonic()
+        _state["waiting"] = True
+        _state["wait_start"] = t0
+        try:
+            while not _lines and not _state["eof"]:
+                _cv.wait(0.05)          # short waits so Stop / time limit can interrupt
+            if _lines:
+                return _lines.popleft()
+            return ""
+        finally:
+            _state["waiting"] = False
+            _state["wait_start"] = None
+            _state["waited"] += time.monotonic() - t0
+
+
+def send(line):
+    """Called by the screen when the user presses Enter in the output box."""
+    with _cv:
+        line = str(line)
+        if not line.endswith("\n"):
+            line += "\n"
+        _lines.append(line)
+        _cv.notify_all()
+
+
+def close_input():
+    """Called by the screen for the EOF button (like Ctrl+D)."""
+    with _cv:
+        _state["eof"] = True
+        _cv.notify_all()
+
+
+def poll():
+    """Returns [new output, waiting for input?] for the screen."""
+    out = _state.get("out")
+    text = out.take() if out is not None else ""
+    return [text, bool(_state["waiting"])]
 
 
 def _raise_in(tid, exc):
@@ -84,11 +184,19 @@ def stop():
         _raise_in(tid, _Stop)
 
 
-def _timeout():
-    tid = _state.get("tid")
-    if tid is not None:
-        _state["reason"] = "timeout"
-        _raise_in(tid, _Stop)
+def _watchdog(timeout, t_start, stop_evt):
+    """Stops the program when it has been *running* for `timeout` seconds. Waiting for input does not count."""
+    while not stop_evt.wait(0.05):
+        waited = _state["waited"]
+        ws = _state["wait_start"]
+        if ws is not None:
+            waited += time.monotonic() - ws
+        if time.monotonic() - t_start - waited > timeout:
+            tid = _state.get("tid")
+            if tid is not None:
+                _state["reason"] = "timeout"
+                _raise_in(tid, _Stop)
+            return
 
 
 def _print_error(exc_type, exc, tb):
@@ -98,17 +206,21 @@ def _print_error(exc_type, exc, tb):
     traceback.print_exception(exc_type, exc, tb)
 
 
-def run(code, stdin_text, work_dir, lib_paths, timeout):
+def run(code, work_dir, lib_paths, timeout):
     out = _Out()
+    _state.update({"out": out, "waiting": False, "waited": 0.0, "wait_start": None, "eof": False, "reason": None})
+    with _cv:
+        _lines.clear()
     saved = (sys.stdout, sys.stderr, sys.stdin, list(sys.path), os.getcwd(), time.sleep,
              getattr(sys, "argv", None), set(sys.modules))
     status_code = 0
     status = None
-    timer = None
+    watch = None
+    watch_stop = threading.Event()
     try:
         sys.stdout = out
         sys.stderr = out
-        sys.stdin = io.StringIO(stdin_text)
+        sys.stdin = _In()
         time.sleep = _sleep
         os.makedirs(work_dir, exist_ok=True)
         os.chdir(work_dir)
@@ -124,9 +236,8 @@ def run(code, stdin_text, work_dir, lib_paths, timeout):
         linecache.cache[FILENAME] = (len(code), None, code.splitlines(True), FILENAME)
         _state["tid"] = threading.get_ident()
         _state["reason"] = None
-        timer = threading.Timer(float(timeout), _timeout)
-        timer.daemon = True
-        timer.start()
+        watch = threading.Thread(target=_watchdog, args=(float(timeout), time.monotonic(), watch_stop), daemon=True)
+        watch.start()
         g = {"__name__": "__main__", "__file__": FILENAME, "__builtins__": builtins, "__doc__": None}
         try:
             compiled = compile(code, FILENAME, "exec")
@@ -149,10 +260,10 @@ def run(code, stdin_text, work_dir, lib_paths, timeout):
             _print_error(type(e), e, e.__traceback__)
             status_code = 1
     finally:
-        if timer is not None:
-            timer.cancel()
+        watch_stop.set()
         reason = _state.get("reason")
         _state["tid"] = None
+        _state["waiting"] = False
         sys.stdout, sys.stderr, sys.stdin = saved[0], saved[1], saved[2]
         sys.path[:] = saved[3]
         try:
@@ -180,4 +291,4 @@ def run(code, stdin_text, work_dir, lib_paths, timeout):
         status = "stopped by you"
     else:
         status = "exited with code %d" % status_code
-    return [out.getvalue(), status]
+    return [out.take(), status]

@@ -189,7 +189,7 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
             Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}", fontSize = 24.sp, fontWeight = FontWeight.Medium, color = Ink)
             Text("What shall we do today?", color = Color.Gray)
         }
-        item(key = "profile") { ProfileCard(p.profile) { go(Screen.Setup(true)) } }
+        item(key = "profile") { ProfileCard(p.profile, p.photo) { go(Screen.Setup(true)) } }
         item {
             Card(shape = RoundedCornerShape(24.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
                 Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {

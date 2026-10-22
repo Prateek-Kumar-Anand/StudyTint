@@ -19,10 +19,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,11 +49,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.io.File
+import kotlinx.coroutines.delay
 
 object CEngine {
     private var loaded = false
 
-    private fun load(): Boolean {
+    fun load(): Boolean {
         if (!loaded) {
             loaded = try {
                 System.loadLibrary("clab")
@@ -62,20 +66,85 @@ object CEngine {
         return loaded
     }
 
-    external fun run(src: ByteArray, input: ByteArray, dir: String, timeoutMs: Int): ByteArray
+    external fun start(src: ByteArray, dir: String, timeoutMs: Int): Long
+    /** [flags, output bytes...]; flags: 1 = waiting for input, 2 = finished. */
+    external fun poll(handle: Long, waitMs: Int): ByteArray
+    external fun write(handle: Long, data: ByteArray)
+    external fun closeInput(handle: Long)
+    external fun kill(handle: Long)
+    external fun finish(handle: Long): String
+}
 
-    /** Returns (program output, status line). */
-    fun execute(ctx: Context, code: String, input: String, timeoutMs: Int = 10000): Pair<String, String> {
-        if (!load()) return Pair("", "C engine is not available on this device")
-        val dir = File(ctx.cacheDir, "clab")
-        dir.mkdirs()
-        val raw = run(code.toByteArray(Charsets.UTF_8), input.toByteArray(Charsets.UTF_8), dir.absolutePath, timeoutMs)
-        val cut = raw.lastIndexOf(0.toByte())
-        return if (cut < 0) {
-            Pair(String(raw, Charsets.UTF_8), "")
-        } else {
-            Pair(String(raw, 0, cut, Charsets.UTF_8), String(raw, cut + 1, raw.size - cut - 1, Charsets.UTF_8))
+/**
+ * One run of a C program. Output is streamed to [onText] as it appears, [onWaiting] tells the screen when
+ * the program is waiting for a line to be typed, and [onDone] gets the final status line.
+ * send / eof / stop may be called from the UI thread at any time.
+ */
+class CRun(
+    private val ctx: Context,
+    private val code: String,
+    private val timeoutMs: Int,
+    private val onText: (String) -> Unit,
+    private val onWaiting: (Boolean) -> Unit,
+    private val onDone: (String) -> Unit
+) {
+    private val lock = Any()
+    private var handle = 0L
+
+    fun start() {
+        Thread(null, Runnable { runLoop() }, "clab-run", 64L * 1024 * 1024).start()
+    }
+
+    private fun runLoop() {
+        try {
+            if (!CEngine.load()) {
+                onDone("C engine is not available on this device")
+                return
+            }
+            val dir = File(ctx.cacheDir, "clab")
+            dir.mkdirs()
+            val h = synchronized(lock) {
+                val v = CEngine.start(code.toByteArray(Charsets.UTF_8), dir.absolutePath, timeoutMs)
+                handle = v
+                v
+            }
+            if (h == 0L) {
+                onDone("could not start program")
+                return
+            }
+            val decoder = Utf8Chunker()
+            var wasWaiting = false
+            while (true) {
+                val r = CEngine.poll(h, 60)
+                val flags = if (r.isNotEmpty()) r[0].toInt() else 2
+                if (r.size > 1) onText(decoder.feed(r.copyOfRange(1, r.size)))
+                val w = (flags and 1) != 0
+                if (w != wasWaiting) { wasWaiting = w; onWaiting(w) }
+                if ((flags and 2) != 0) break
+            }
+            val status = synchronized(lock) {
+                val st = CEngine.finish(h)
+                handle = 0L
+                st
+            }
+            onWaiting(false)
+            onDone(status)
+        } catch (e: Throwable) {
+            onWaiting(false)
+            onDone("Could not run: " + (e.message ?: "error"))
         }
+    }
+
+    fun send(line: String) {
+        synchronized(lock) { if (handle != 0L) CEngine.write(handle, (line + "\n").toByteArray(Charsets.UTF_8)) }
+    }
+
+    fun eof() {
+        synchronized(lock) { if (handle != 0L) CEngine.closeInput(handle) }
+    }
+
+    fun stop() {
+        synchronized(lock) { if (handle != 0L) CEngine.kill(handle) }
     }
 }
 
@@ -244,12 +313,29 @@ fun CLabScreen(back: () -> Unit) {
     val ctx = LocalContext.current
     val prefs = remember { ctx.getSharedPreferences("clab_prefs", Context.MODE_PRIVATE) }
     var code by remember { mutableStateOf(TextFieldValue(prefs.getString("code", samples["Hello"]) ?: "")) }
-    var input by remember { mutableStateOf(prefs.getString("input", "") ?: "") }
     var output by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }
     var running by remember { mutableStateOf(false) }
+    var waiting by remember { mutableStateOf(false) }
+    val outLock = remember { Any() }
+    val current = remember { arrayOfNulls<CRun>(1) }
+    val scroll = rememberScrollState()
     val highlight = remember { CHighlight() }
     val mono = FontFamily.Monospace
+
+    // leaving the screen stops a program that is still running
+    DisposableEffect(Unit) { onDispose { current[0]?.stop() } }
+    // keep the prompt in view when the program asks for input
+    LaunchedEffect(waiting) {
+        if (waiting) {
+            delay(150)
+            scroll.animateScrollTo(scroll.maxValue)
+        }
+    }
+
+    fun appendOut(t: String) {
+        synchronized(outLock) { output += t }
+    }
 
     fun setCode(v: TextFieldValue) {
         code = v
@@ -265,33 +351,37 @@ fun CLabScreen(back: () -> Unit) {
     fun runCode() {
         if (running) return
         running = true
+        waiting = false
         output = ""
         status = "Running…"
         val src = code.text
-        val stdin = input
-        prefs.edit().putString("code", src).putString("input", stdin).apply()
-        Thread(null, Runnable {
-            val res = try {
-                CEngine.execute(ctx.applicationContext, src, stdin)
-            } catch (e: Throwable) {
-                Pair("", "Could not run: " + (e.message ?: "error"))
+        prefs.edit().putString("code", src).apply()
+        val run = CRun(
+            ctx.applicationContext, src, 10000,
+            onText = { appendOut(it) },
+            onWaiting = { waiting = it },
+            onDone = { st ->
+                val out = synchronized(outLock) { output }
+                val errs = Regex("(?m)^\\S+:\\d+:\\d+: error:").findAll(out).count()
+                val warns = Regex("(?m)^\\S+:\\d+:\\d+: warning:").findAll(out).count()
+                status = when {
+                    errs > 0 -> "build failed: $errs error${if (errs > 1) "s" else ""}" + (if (warns > 0) ", $warns warning${if (warns > 1) "s" else ""}" else "")
+                    warns > 0 && st.endsWith("code 0") -> st + " ($warns warning${if (warns > 1) "s" else ""})"
+                    else -> st
+                }
+                current[0] = null
+                waiting = false
+                running = false
             }
-            output = res.first
-            val errs = Regex("(?m)^\\S+:\\d+:\\d+: error:").findAll(res.first).count()
-            val warns = Regex("(?m)^\\S+:\\d+:\\d+: warning:").findAll(res.first).count()
-            status = when {
-                errs > 0 -> "build failed: $errs error${if (errs > 1) "s" else ""}" + (if (warns > 0) ", $warns warning${if (warns > 1) "s" else ""}" else "")
-                warns > 0 && res.second.endsWith("code 0") -> res.second + " ($warns warning${if (warns > 1) "s" else ""})"
-                else -> res.second
-            }
-            running = false
-        }, "clab-run", 64L * 1024 * 1024).start()
+        )
+        current[0] = run
+        run.start()
     }
 
     Column(Modifier.fillMaxSize()) {
         TopBar("C Lab", back)
         Column(
-            Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 4.dp),
+            Modifier.weight(1f).verticalScroll(scroll).padding(horizontal = 16.dp, vertical = 4.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -327,43 +417,35 @@ fun CLabScreen(back: () -> Unit) {
                 }
             }
 
-            Text("Input for scanf (optional)", fontSize = 13.sp, color = Color.Gray)
-            BasicTextField(
-                value = input,
-                onValueChange = { input = it; prefs.edit().putString("input", it).apply() },
-                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp)
-                    .background(Color.White, RoundedCornerShape(14.dp)).padding(14.dp),
-                textStyle = TextStyle(fontFamily = mono, fontSize = 14.sp, color = Ink)
-            )
-
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Button(
                     onClick = { runCode() }, enabled = !running,
                     shape = RoundedCornerShape(16.dp), modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2FA37A))
                 ) { Text(if (running) "Running…" else "▶  Run", fontSize = 16.sp) }
+                OutlinedButton(
+                    onClick = { current[0]?.stop() }, enabled = running,
+                    shape = RoundedCornerShape(16.dp)
+                ) { Text("Stop") }
                 Button(
-                    onClick = { output = ""; status = "" },
+                    onClick = { output = ""; status = "" }, enabled = !running,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Ink)
                 ) { Text("Clear") }
             }
 
-            Column(
-                Modifier.fillMaxWidth().heightIn(min = 120.dp)
-                    .background(Color(0xFF111118), RoundedCornerShape(16.dp)).padding(14.dp)
-            ) {
-                Text("Output", fontSize = 12.sp, color = Color(0xFF8A8A94))
-                Spacer(Modifier.padding(top = 6.dp))
-                SelectionContainer {
-                    Text(remember(output) { colorDiagnostics(output) }, fontFamily = mono, fontSize = 13.sp, color = Color(0xFFE6E6F0), lineHeight = 19.sp)
-                }
-                if (status.isNotEmpty()) {
-                    Spacer(Modifier.padding(top = 8.dp))
-                    val ok = (status.endsWith("code 0") || status.contains("code 0 (") || status == "Running…")
-                    Text(status, fontFamily = mono, fontSize = 12.sp, color = if (ok) Color(0xFF7EE0A8) else Color(0xFFFFB86C))
-                }
-            }
+            ConsoleBox(
+                output = remember(output) { colorDiagnostics(output) },
+                status = status,
+                statusOk = status.endsWith("code 0") || status.contains("code 0 (") || status == "Running…",
+                running = running,
+                waiting = waiting,
+                onSubmit = { line ->
+                    appendOut(line + "\n")        // echo what was typed, like a terminal
+                    current[0]?.send(line)
+                },
+                onEof = { current[0]?.eof() }
+            )
             Spacer(Modifier.padding(bottom = 24.dp))
         }
     }
