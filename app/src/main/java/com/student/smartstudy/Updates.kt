@@ -19,6 +19,13 @@ object Updates {
 
     val changelog = listOf(
         Release(
+            "1.3.0",
+            listOf(
+                "Python Lab: new \"Get online\" tab. Search PyPI or pick a popular library and save it, with the libraries it needs, straight to internal storage, phone storage or the SD card",
+                "Downloads are checked against PyPI's checksum, and only libraries that can run on a phone (pure Python) are offered"
+            )
+        ),
+        Release(
             "1.2.0",
             listOf(
                 "C Lab and Python Lab: type input right in the output box, like a terminal",

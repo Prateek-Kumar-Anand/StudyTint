@@ -43,7 +43,7 @@ connection and your progress never leaves the device.
   tracebacks, `input()` support, a time limit and a Stop button. Choose where its files live (internal storage,
   phone storage or SD card), import pure-Python libraries from a folder, `.py`, `.zip` or `.whl`, and save scripts.
 - **Personal profile.** Your name, course and roll details are shown on the home screen.
-- **Private by design.** No account and no internet permission. Data is stored locally.
+- **Private by design.** No account. Data is stored locally. The internet is used only when you open **Get online** in Python Lab to download libraries from PyPI.
 
 ## Tech stack
 

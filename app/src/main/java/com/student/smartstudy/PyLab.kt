@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TextFieldValue
@@ -405,6 +407,10 @@ fun PyLabScreen(back: () -> Unit) {
     val scroll = rememberScrollState()
     var panel by remember { mutableStateOf("") }
     var note by remember { mutableStateOf("") }
+    var onlineQuery by remember { mutableStateOf("") }
+    var onlineHits by remember { mutableStateOf<List<PyOnline.Hit>?>(null) }   // null = show the popular list
+    var onlineBusy by remember { mutableStateOf("") }                           // "", "search" or the library being saved
+    var onlineMsg by remember { mutableStateOf("") }
     var refresh by remember { mutableStateOf(0) }
     var showSave by remember { mutableStateOf(false) }
     var saveName by remember { mutableStateOf("") }
@@ -416,6 +422,7 @@ fun PyLabScreen(back: () -> Unit) {
     val kind = remember(refresh) { PyStorage.kind(ctx) }
     val root = remember(refresh) { PyStorage.root(ctx) }
     val libList = remember(refresh) { PyLibs.list(PyStorage.libs(root)) }
+    val onlineInstalled = remember(refresh) { PyOnline.installedNames(PyStorage.libs(root)) }
     val scriptList = remember(refresh) { (PyStorage.scripts(root).listFiles() ?: emptyArray()).filter { it.isFile && it.name.endsWith(".py") }.sortedBy { it.name.lowercase() } }
 
     androidx.compose.runtime.LaunchedEffect(Unit) {
@@ -460,6 +467,41 @@ fun PyLabScreen(back: () -> Unit) {
     }
     val filesLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
         if (uris.isNotEmpty()) { note = "Copying…"; runAsync { PyLibs.importFiles(ctx, uris, PyStorage.libs(PyStorage.root(ctx))) } }
+    }
+
+    fun doOnlineSearch() {
+        val q = onlineQuery.trim()
+        if (q.isEmpty()) { onlineHits = null; onlineMsg = ""; return }
+        if (onlineBusy.isNotEmpty()) return
+        onlineBusy = "search"
+        onlineMsg = "Searching…"
+        Thread {
+            try {
+                val found = PyOnline.search(q)
+                onlineHits = found
+                onlineMsg = if (found.isEmpty()) "Nothing found for \"$q\". Try the exact library name." else ""
+            } catch (e: java.net.UnknownHostException) {
+                onlineMsg = "No internet connection."
+            } catch (e: java.net.ConnectException) {
+                onlineMsg = "No internet connection."
+            } catch (e: Exception) {
+                onlineMsg = "Search failed: ${e.message ?: "network error"}"
+            }
+            onlineBusy = ""
+        }.start()
+    }
+
+    fun doOnlineInstall(name: String) {
+        if (onlineBusy.isNotEmpty()) return
+        onlineBusy = name
+        onlineMsg = "Looking up $name…"
+        val libs = PyStorage.libs(root)
+        Thread {
+            val res = PyOnline.install(libs, name) { onlineMsg = it }
+            onlineMsg = res.message()
+            onlineBusy = ""
+            refresh++
+        }.start()
     }
 
     fun runCode() {
@@ -569,7 +611,7 @@ fun PyLabScreen(back: () -> Unit) {
 
             // ---- storage, libraries, scripts
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                listOf("storage" to "Storage", "libs" to "Libraries", "scripts" to "My scripts").forEach { (id, label) ->
+                listOf("storage" to "Storage", "libs" to "Libraries", "online" to "Get online", "scripts" to "My scripts").forEach { (id, label) ->
                     val on = panel == id
                     Surface(
                         shape = RoundedCornerShape(20.dp), color = if (on) Accent else Color.White,
@@ -622,6 +664,7 @@ fun PyLabScreen(back: () -> Unit) {
                             colors = ButtonDefaults.buttonColors(containerColor = Accent)
                         ) { Text("Add files") }
                     }
+                    TextButton(onClick = { panel = "online" }) { Text("Or get libraries from the internet →") }
                     Text("A folder with __init__.py is added as one package; any other folder adds everything inside it. Files can be .py, .zip, .whl or .egg. Libraries with compiled code (.so) cannot run.", fontSize = 12.sp, color = Color.Gray)
                     if (libList.isEmpty()) Text("No libraries yet.", fontSize = 13.sp, color = Ink)
                     libList.forEach { item ->
@@ -635,6 +678,89 @@ fun PyLabScreen(back: () -> Unit) {
                             }
                         }
                     }
+                }
+
+                "online" -> Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    Text(
+                        "Download libraries from the internet (PyPI) straight into Python Lab, together with the libraries they need. " +
+                            "Only pure-Python libraries can run on a phone: ones built on compiled code (NumPy, pandas, Pillow, SciPy…) cannot.",
+                        fontSize = 13.sp, color = Color.Gray
+                    )
+                    Text("Save to", fontSize = 12.sp, color = Color.Gray)
+                    Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        PyStore.values().forEach { k ->
+                            val avail = PyStorage.baseFor(ctx, k) != null
+                            val on = kind == k
+                            Surface(
+                                shape = RoundedCornerShape(16.dp), color = if (on) Accent else Color.White,
+                                modifier = Modifier.tap(RoundedCornerShape(16.dp)) {
+                                    if (avail && !on && onlineBusy.isEmpty()) {
+                                        note = "Switching…"
+                                        runAsync { PyStorage.switchTo(ctx, k) }
+                                    }
+                                }
+                            ) {
+                                Text(
+                                    k.label, Modifier.padding(horizontal = 14.dp, vertical = 8.dp), fontSize = 13.sp,
+                                    color = if (on) Color.White else if (avail) Ink else Color.Gray
+                                )
+                            }
+                        }
+                    }
+                    Text(PyStorage.libs(root).absolutePath, fontFamily = mono, fontSize = 11.sp, color = Color.Gray)
+
+                    Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        BasicTextField(
+                            value = onlineQuery,
+                            onValueChange = { onlineQuery = it },
+                            singleLine = true,
+                            modifier = Modifier.weight(1f).background(Color.White, RoundedCornerShape(14.dp)).padding(14.dp),
+                            textStyle = TextStyle(fontFamily = mono, fontSize = 14.sp, color = Ink),
+                            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None, autoCorrect = false, imeAction = ImeAction.Search),
+                            keyboardActions = KeyboardActions(onSearch = { doOnlineSearch() }),
+                            decorationBox = { inner ->
+                                if (onlineQuery.isEmpty()) Text("Search PyPI, e.g. requests", fontSize = 14.sp, color = Color.Gray)
+                                inner()
+                            }
+                        )
+                        Button(
+                            onClick = { doOnlineSearch() }, enabled = onlineBusy.isEmpty(),
+                            shape = RoundedCornerShape(14.dp), colors = ButtonDefaults.buttonColors(containerColor = Accent)
+                        ) { Text("Search") }
+                    }
+                    if (onlineBusy.isNotEmpty()) androidx.compose.material3.LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                    if (onlineMsg.isNotEmpty()) Text(onlineMsg, fontSize = 13.sp, color = Accent)
+
+                    val shown = onlineHits ?: PyOnline.popular()
+                    Text(if (onlineHits == null) "Popular pure-Python libraries" else "Results", fontSize = 13.sp, fontWeight = FontWeight.Medium, color = Ink)
+                    shown.forEach { h ->
+                        val have = PyOnline.normalize(h.name) in onlineInstalled
+                        Surface(shape = RoundedCornerShape(14.dp), color = Color.White, modifier = Modifier.fillMaxWidth()) {
+                            Row(Modifier.padding(start = 14.dp, end = 4.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                                Column(Modifier.weight(1f).padding(vertical = 8.dp)) {
+                                    Text(
+                                        h.name + (if (h.version.isNotEmpty()) "  ${h.version}" else "") + (if (have) "  ✓" else ""),
+                                        fontFamily = mono, fontSize = 14.sp, color = Ink
+                                    )
+                                    if (h.summary.isNotEmpty()) Text(h.summary, fontSize = 12.sp, color = Color.Gray)
+                                }
+                                if (onlineBusy == h.name) {
+                                    Text("Saving…", fontSize = 13.sp, color = Accent, modifier = Modifier.padding(end = 12.dp))
+                                } else {
+                                    TextButton(onClick = { doOnlineInstall(h.name) }, enabled = onlineBusy.isEmpty()) {
+                                        Text(if (have) "Update" else "Install")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (onlineHits != null) {
+                        TextButton(onClick = { onlineHits = null; onlineQuery = ""; onlineMsg = "" }) { Text("Back to popular") }
+                    }
+                    Text(
+                        "Saved libraries appear in the Libraries tab, where you can remove them. They are checked against PyPI's checksum before they are kept.",
+                        fontSize = 12.sp, color = Color.Gray
+                    )
                 }
 
                 "scripts" -> Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
