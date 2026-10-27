@@ -19,6 +19,20 @@ object Updates {
 
     val changelog = listOf(
         Release(
+            "1.5.1",
+            listOf(
+                "Removed the Highlighted topics screen and the star on units; the home screen now shows Score, C Lab, Python Lab and DBMS Lab"
+            )
+        ),
+        Release(
+            "1.5.0",
+            listOf(
+                "New DBMS Lab: write SQL and see the results as a table. Runs on a real, current SQLite (JOINs including RIGHT and FULL, window functions, views, triggers, transactions)",
+                "DBMS Lab: sample College, Company, Library and Bank databases, your own databases, a table browser, query history, name and keyword suggestions, and plain-English error hints",
+                "DBMS Lab: SHOW TABLES, DESC and TRUNCATE work like MySQL, BEGIN / COMMIT / ROLLBACK can be tried out safely, and .sql or .db files can be opened or shared"
+            )
+        ),
+        Release(
             "1.4.0",
             listOf(
                 "C Lab now works like Turbo C: the whole program is checked first and every error and warning is listed the way Turbo C words it (Error NONAME00.C 5: Undefined symbol 'x' in function main)",

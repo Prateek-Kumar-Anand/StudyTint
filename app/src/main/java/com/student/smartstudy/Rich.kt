@@ -219,8 +219,6 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Text("UNIT ${i + 1}  ·  DETAILED NOTES", color = Color.White.copy(alpha = 0.8f), fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
-                                    Spacer(Modifier.weight(1f))
-                                    Text(if (key in p.stars) "★" else "☆", Modifier.clickable { p.star(key) }, color = Color.White, fontSize = 22.sp)
                                 }
                                 Text(r.title, color = Color.White, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.Medium)
                                 Text(r.intro, color = Color.White.copy(alpha = 0.88f), fontSize = 13.sp, lineHeight = 19.sp)

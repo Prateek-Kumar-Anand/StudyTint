@@ -43,9 +43,9 @@ sealed interface Screen {
     object Welcome : Screen
     object Home : Screen
     object Score : Screen
-    object Stars : Screen
     object CLab : Screen
     object PyLab : Screen
+    object DbLab : Screen
     data class Setup(val edit: Boolean) : Screen
     data class Pick(val m: Mode) : Screen
     data class Notes(val s: Subject, val i: Int, val prev: Screen) : Screen
@@ -58,7 +58,7 @@ private fun depth(s: Screen): Int = when (s) {
     Screen.Welcome -> 0
     Screen.Home -> 1
     is Screen.Setup -> if (s.edit) 2 else 1
-    Screen.Score, Screen.Stars, Screen.CLab, Screen.PyLab, is Screen.Pick -> 2
+    Screen.Score, Screen.CLab, Screen.PyLab, Screen.DbLab, is Screen.Pick -> 2
     is Screen.Notes, is Screen.RichNotes, is Screen.Quiz -> 3
     is Screen.Topic -> 4
 }
@@ -114,7 +114,6 @@ fun App(p: Progress) {
             is Screen.Setup -> SetupScreen(p, s.edit, { screen = Screen.Home }) { screen = Screen.Home }
             Screen.Home -> Home(p, st("home")) { screen = it }
             Screen.Score -> ScoreScreen(p, st("score")) { screen = Screen.Home }
-            Screen.Stars -> StarsScreen(p, { screen = Screen.Home }, st("stars")) { sub, i -> screen = if (rich["${sub.id}:$i"] != null) Screen.RichNotes(sub, i, Screen.Stars) else Screen.Notes(sub, i, Screen.Stars) }
             is Screen.Pick -> PickScreen(s.m, p, { screen = Screen.Home }, st("pick:${s.m}")) { sub, i ->
                 screen = if (s.m == Mode.Study) (if (rich["${sub.id}:$i"] != null) Screen.RichNotes(sub, i, s) else Screen.Notes(sub, i, s)) else Screen.Quiz(sub, i, s)
             }
@@ -124,6 +123,7 @@ fun App(p: Progress) {
             is Screen.Quiz -> QuizScreen(s.s, s.i, p) { screen = s.prev }
             Screen.CLab -> CLabScreen { screen = Screen.Home }
             Screen.PyLab -> PyLabScreen { screen = Screen.Home }
+            Screen.DbLab -> DbLabScreen { screen = Screen.Home }
         }
         }
     }
@@ -213,13 +213,13 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 OptionCard("Score", "Your results", Color(0xFF3B9BE0), Modifier.weight(1f)) { go(Screen.Score) }
-                OptionCard("Highlighted", "Starred topics", Color(0xFFE0A800), Modifier.weight(1f)) { go(Screen.Stars) }
+                OptionCard("C Lab", "Write & run C code", Color(0xFF2FA37A), Modifier.weight(1f)) { go(Screen.CLab) }
             }
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OptionCard("C Lab", "Write & run C code", Color(0xFF2FA37A), Modifier.weight(1f)) { go(Screen.CLab) }
                 OptionCard("Python Lab", "Write & run Python", Color(0xFF3776AB), Modifier.weight(1f)) { go(Screen.PyLab) }
+                OptionCard("DBMS Lab", "Write & run SQL", DbColor, Modifier.weight(1f)) { go(Screen.DbLab) }
             }
         }
         item(key = "version") {
@@ -286,7 +286,6 @@ fun NotesScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(u.title, Modifier.weight(1f), fontSize = 22.sp, fontWeight = FontWeight.Medium, color = Ink)
-                    Text(if (key in p.stars) "★" else "☆", Modifier.clickable { p.star(key) }.padding(8.dp), fontSize = 26.sp)
                 }
             }
             items(u.notes) { n ->
@@ -383,31 +382,6 @@ fun QuizScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
                 }
                 if (sel != -1) Button({ idx++; sel = -1 }, Modifier.fillMaxWidth().padding(20.dp).height(54.dp), shape = CircleShape,
                     colors = ButtonDefaults.buttonColors(containerColor = Accent)) { Text(if (idx == qs.size - 1) "Finish" else "Next") }
-            }
-        }
-    }
-}
-
-@Composable
-fun StarsScreen(p: Progress, back: () -> Unit, listState: LazyListState, open: (Subject, Int) -> Unit) {
-    val list = subjects.flatMap { s -> s.units.indices.filter { "${s.id}:$it" in p.stars }.map { s to it } }
-    Column(Modifier.fillMaxSize()) {
-        TopBar("Highlighted topics", back)
-        if (list.isEmpty()) {
-            Box(Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
-                Text("Tap ☆ on any unit while studying to highlight it here.", color = Color.Gray, textAlign = TextAlign.Center)
-            }
-        } else LazyColumn(state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            items(list, key = { (s, i) -> "${s.id}:$i" }) { (s, i) ->
-                Card(
-                    Modifier.fillMaxWidth().tap(RoundedCornerShape(20.dp)) { open(s, i) }, shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
-                    Column(Modifier.padding(18.dp)) {
-                        Text(s.name, color = s.color, fontSize = 13.sp, fontWeight = FontWeight.Medium)
-                        Text(s.units[i].title, fontSize = 16.sp, color = Ink)
-                    }
-                }
             }
         }
     }

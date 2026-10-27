@@ -29,8 +29,6 @@ class Progress(ctx: Context) {
         private set
     var done by mutableStateOf(sp.getStringSet("done", emptySet())!!.toSet())
         private set
-    var stars by mutableStateOf(sp.getStringSet("stars", emptySet())!!.toSet())
-        private set
     var read by mutableStateOf(sp.getStringSet("read", emptySet())!!.toSet())
         private set
     var stats by mutableStateOf(
@@ -50,10 +48,6 @@ class Progress(ctx: Context) {
     fun toggle(key: String) {
         done = if (key in done) done - key else done + key
         sp.edit().putStringSet("done", done).apply()
-    }
-    fun star(key: String) {
-        stars = if (key in stars) stars - key else stars + key
-        sp.edit().putStringSet("stars", stars).apply()
     }
     fun saveProfile(n: Profile) {
         profile = Profile(n.name.trim(), n.father.trim(), n.lurn.trim(), n.roll.trim(), n.course.trim())

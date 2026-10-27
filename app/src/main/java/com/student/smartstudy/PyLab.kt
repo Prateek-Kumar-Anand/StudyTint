@@ -219,7 +219,7 @@ object PyLibs {
 // ---------------------------------------------------------------- engine
 
 object PyEngine {
-    private fun ensure(ctx: Context) {
+    @Synchronized fun ensure(ctx: Context) {
         if (!Python.isStarted()) Python.start(AndroidPlatform(ctx.applicationContext))
     }
 

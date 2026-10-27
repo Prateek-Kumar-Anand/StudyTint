@@ -35,7 +35,6 @@ connection and your progress never leaves the device.
 - **Practice quizzes.** Multiple-choice banks per unit with instant feedback, explanations and
   topic-wise drill-down.
 - **Score and analysis.** Accuracy, quizzes taken, reading progress, plus your strongest and weakest topics.
-- **Highlights.** Star any unit to collect it on a dedicated screen.
 - **C Lab.** Write, run and test C programs on your phone using an embedded
   [picoc](https://github.com/zsaleeba/picoc) interpreter, with a syntax-highlighted editor,
   sample programs, input support and a run timeout. In **Turbo C** mode (the default) a front end written for this app
@@ -45,6 +44,11 @@ connection and your progress never leaves the device.
 - **Python Lab.** Write and run real Python 3.12 (CPython via [Chaquopy](https://chaquo.com/chaquopy/)) with genuine
   tracebacks, `input()` support, a time limit and a Stop button. Choose where its files live (internal storage,
   phone storage or SD card), import pure-Python libraries from a folder, `.py`, `.zip` or `.whl`, and save scripts.
+- **DBMS Lab.** Write SQL and get the results as a table, on a real, current SQLite (through the same Python engine). Run many
+  statements at once or just the part you select, with errors explained in plain English (and hints for MySQL habits such as
+  `AUTO_INCREMENT`, `TOP`, `NOW()`). Supports JOINs including RIGHT/FULL, window functions, views, triggers and `BEGIN` / `COMMIT` /
+  `ROLLBACK`; `SHOW TABLES`, `DESC` and `TRUNCATE` work like MySQL. Keep several databases, start from College, Company, Library or
+  Bank samples, browse tables, columns and keys, reuse past queries, open `.sql` / `.db` files and share a database as SQL.
 - **Personal profile.** Your name, course and roll details are shown on the home screen.
 - **Private by design.** No account. Data is stored locally. The internet is used only when you open **Get online** in Python Lab to download libraries from PyPI.
 
@@ -68,7 +72,7 @@ StudyTint/
 ├── app/src/main/
 │   ├── java/com/student/smartstudy/
 │   │   ├── MainActivity.kt    # Entry point and progress storage
-│   │   ├── Ui.kt              # Navigation, home, pick, quiz and highlight screens
+│   │   ├── Ui.kt              # Navigation, home, pick and quiz screens
 │   │   ├── Rich.kt            # Notes renderer (topics, code blocks, callouts)
 │   │   ├── RichData.kt        # JSON notes model and loader
 │   │   ├── Data.kt            # Subjects, units and quiz banks
@@ -76,11 +80,13 @@ StudyTint/
 │   │   ├── Profile.kt         # Profile card and setup form
 │   │   ├── CLab.kt            # C Lab editor and runner (Turbo C / gcc mode switch)
 │   │   ├── PyLab.kt           # Python Lab: editor, storage choice, library import
+│   │   ├── DbLab.kt           # DBMS Lab screen: editor, results table, tables, history
+│   │   ├── DbEngine.kt        # DBMS Lab bridge to Python and database storage
 │   │   ├── Updates.kt         # Data migrations and "What's new"
 │   │   └── Motion.kt          # Shared tap and press animation
-│   ├── python/                # Python Lab runner (pylab_runner.py)
+│   ├── python/                # Python Lab runner (pylab_runner.py) and SQL engine (dbms_engine.py)
 │   ├── cpp/                   # picoc interpreter, Turbo C checker (tc_*.c), JNI bridge and CMake build
-│   ├── assets/                # Notes and question banks (JSON)
+│   ├── assets/                # Notes and question banks (JSON); dbms/ holds the sample databases (SQL)
 │   └── res/                   # Icons, colours, theme
 ├── .github/workflows/android.yml
 ├── version.properties         # App version (single source of truth)
