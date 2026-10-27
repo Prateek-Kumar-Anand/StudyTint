@@ -291,6 +291,13 @@ unsigned long ExpressionCoerceUnsignedInteger(struct Value *Val)
     }
 }
 
+extern int clab_tc_mode;
+void ClabTcAbort(const char *what);
+static void ClabTcFpDivide(void)
+{
+    if (clab_tc_mode) ClabTcAbort("Floating point error: Divide by 0.");
+}
+
 double ExpressionCoerceFP(struct Value *Val)
 {
     switch (Val->Typ->Base) {
@@ -998,6 +1005,7 @@ void ExpressionInfixOperator(struct ParseState *Parser,
             ASSIGN_FP_OR_INT(BottomFP * TopFP);
             break;
         case TokenDivideAssign:
+            if (TopFP == 0.0) ClabTcFpDivide();
             ASSIGN_FP_OR_INT(BottomFP / TopFP);
             break;
         case TokenEqual:
@@ -1034,6 +1042,7 @@ void ExpressionInfixOperator(struct ParseState *Parser,
             ResultFP = BottomFP * TopFP;
             break;
         case TokenSlash:
+            if (TopFP == 0.0) ClabTcFpDivide();
             ResultFP = BottomFP / TopFP;
             break;
         default:
@@ -1156,6 +1165,16 @@ void ExpressionInfixOperator(struct ParseState *Parser,
             break;
         }
         ExpressionPushInt(Parser, StackTop, ResultInt);
+    } else if (BottomValue->Typ->Base == TypeArray && (Op == TokenPlus || Op == TokenMinus) &&
+            IS_NUMERIC_COERCIBLE(TopValue)) {
+        /* array/integer arithmetic: the array decays to a pointer to its first element */
+        long TopInt = ExpressionCoerceInteger(TopValue);
+        int Size = TypeSize(BottomValue->Typ->FromType, 0, true);
+        char *Base = (char*)&BottomValue->Val->ArrayMem[0];
+        struct Value *Res = ExpressionStackPushValueByType(Parser, StackTop,
+            TypeGetMatching(Parser->pc, Parser, BottomValue->Typ->FromType,
+                TypePointer, 0, Parser->pc->StrEmpty, true));
+        Res->Val->Pointer = (Op == TokenPlus) ? (void*)(Base + TopInt * Size) : (void*)(Base - TopInt * Size);
     } else if (BottomValue->Typ->Base == TypePointer &&
             IS_NUMERIC_COERCIBLE(TopValue)) {
         /* pointer/integer infix arithmetic */
@@ -1211,11 +1230,15 @@ void ExpressionInfixOperator(struct ParseState *Parser,
             ExpressionStackPushValueNode(Parser, StackTop, BottomValue);
         } else
             ProgramFail(Parser, "invalid operation");
-    } else if (BottomValue->Typ->Base == TypePointer &&
-            TopValue->Typ->Base == TypePointer && Op != TokenAssign) {
-        /* pointer/pointer operations */
-        char *TopLoc = (char*)TopValue->Val->Pointer;
-        char *BottomLoc = (char*)BottomValue->Val->Pointer;
+    } else if ((BottomValue->Typ->Base == TypePointer || BottomValue->Typ->Base == TypeArray) &&
+            (TopValue->Typ->Base == TypePointer || TopValue->Typ->Base == TypeArray) &&
+            Op != TokenAssign &&
+            (BottomValue->Typ->Base == TypePointer || TopValue->Typ->Base == TypePointer)) {
+        /* pointer/pointer operations (an array counts as a pointer to its first element) */
+        char *TopLoc = (TopValue->Typ->Base == TypeArray) ?
+            (char*)&TopValue->Val->ArrayMem[0] : (char*)TopValue->Val->Pointer;
+        char *BottomLoc = (BottomValue->Typ->Base == TypeArray) ?
+            (char*)&BottomValue->Val->ArrayMem[0] : (char*)BottomValue->Val->Pointer;
 
         switch (Op) {
         case TokenEqual:
@@ -1224,8 +1247,23 @@ void ExpressionInfixOperator(struct ParseState *Parser,
         case TokenNotEqual:
             ExpressionPushInt(Parser, StackTop, BottomLoc != TopLoc);
             break;
-        case TokenMinus:
-            ExpressionPushInt(Parser, StackTop, BottomLoc - TopLoc);
+        case TokenMinus: {
+            int ElemSize = TypeSize(BottomValue->Typ->FromType, 0, true);
+            if (ElemSize <= 0) ElemSize = 1;
+            ExpressionPushInt(Parser, StackTop, (BottomLoc - TopLoc) / ElemSize);
+            break;
+        }
+        case TokenLessThan:
+            ExpressionPushInt(Parser, StackTop, BottomLoc < TopLoc);
+            break;
+        case TokenGreaterThan:
+            ExpressionPushInt(Parser, StackTop, BottomLoc > TopLoc);
+            break;
+        case TokenLessEqual:
+            ExpressionPushInt(Parser, StackTop, BottomLoc <= TopLoc);
+            break;
+        case TokenGreaterEqual:
+            ExpressionPushInt(Parser, StackTop, BottomLoc >= TopLoc);
             break;
         default:
             ProgramFail(Parser, "invalid operation");

@@ -1,0 +1,976 @@
+=== stddef.h
+#ifndef __STDDEF_H
+#define __STDDEF_H
+#ifndef NULL
+#define NULL 0
+#endif
+typedef int ptrdiff_t;
+typedef unsigned size_t;
+typedef char wchar_t;
+#define offsetof(s_name, m_name) ((size_t)&(((s_name *)0)->m_name))
+extern int _doserrno;
+#endif
+
+=== stdio.h
+#ifndef __STDIO_H
+#define __STDIO_H
+#include <stddef.h>
+#define EOF (-1)
+#define BUFSIZ 512
+#define FILENAME_MAX 80
+#define FOPEN_MAX 20
+#define L_tmpnam 13
+#define TMP_MAX 0xFFFF
+#define SEEK_SET 0
+#define SEEK_CUR 1
+#define SEEK_END 2
+#define _IOFBF 0
+#define _IOLBF 1
+#define _IONBF 2
+#define P_tmpdir "\\"
+typedef long fpos_t;
+typedef struct {
+    short level;
+    unsigned flags;
+    char fd;
+    unsigned char hold;
+    short bsize;
+    unsigned char *buffer;
+    unsigned char *curp;
+    unsigned istemp;
+    short token;
+} FILE;
+extern FILE _streams[];
+#define stdin (&_streams[0])
+#define stdout (&_streams[1])
+#define stderr (&_streams[2])
+#define stdaux (&_streams[3])
+#define stdprn (&_streams[4])
+typedef char *va_list_stdio;
+void clearerr(FILE *stream);
+int fclose(FILE *stream);
+int fcloseall(void);
+FILE *fdopen(int handle, char *type);
+int feof(FILE *stream);
+int ferror(FILE *stream);
+int fflush(FILE *stream);
+int fgetc(FILE *stream);
+int fgetchar(void);
+int fgetpos(FILE *stream, fpos_t *pos);
+char *fgets(char *s, int n, FILE *stream);
+int fileno(FILE *stream);
+int flushall(void);
+FILE *fopen(const char *filename, const char *mode);
+int fprintf(FILE *stream, const char *format, ...);
+int fputc(int c, FILE *stream);
+int fputchar(int c);
+int fputs(const char *s, FILE *stream);
+size_t fread(void *ptr, size_t size, size_t n, FILE *stream);
+FILE *freopen(const char *filename, const char *mode, FILE *stream);
+int fscanf(FILE *stream, const char *format, ...);
+int fseek(FILE *stream, long offset, int whence);
+int fsetpos(FILE *stream, const fpos_t *pos);
+long ftell(FILE *stream);
+size_t fwrite(const void *ptr, size_t size, size_t n, FILE *stream);
+int getc(FILE *stream);
+int getchar(void);
+char *gets(char *s);
+int getw(FILE *stream);
+void perror(const char *s);
+int printf(const char *format, ...);
+int putc(int c, FILE *stream);
+int putchar(int c);
+int puts(const char *s);
+int putw(int w, FILE *stream);
+int remove(const char *filename);
+int rename(const char *oldname, const char *newname);
+void rewind(FILE *stream);
+int scanf(const char *format, ...);
+void setbuf(FILE *stream, char *buf);
+int setvbuf(FILE *stream, char *buf, int type, size_t size);
+int sprintf(char *buffer, const char *format, ...);
+int sscanf(const char *buffer, const char *format, ...);
+char *strerror(int errnum);
+FILE *tmpfile(void);
+char *tmpnam(char *s);
+char *tempnam(char *dir, char *prefix);
+int ungetc(int c, FILE *stream);
+int unlink(const char *filename);
+int vfprintf(FILE *stream, const char *format, char *arglist);
+int vfscanf(FILE *stream, const char *format, char *arglist);
+int vprintf(const char *format, char *arglist);
+int vscanf(const char *format, char *arglist);
+int vsprintf(char *buffer, const char *format, char *arglist);
+int vsscanf(const char *buffer, const char *format, char *arglist);
+FILE *_fsopen(const char *filename, const char *mode, int shflg);
+int _fgetc(FILE *stream);
+int _fputc(int c, FILE *stream);
+#endif
+
+=== stdlib.h
+#ifndef __STDLIB_H
+#define __STDLIB_H
+#include <stddef.h>
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+#define RAND_MAX 0x7FFF
+#define MB_CUR_MAX 1
+typedef struct { int quot; int rem; } div_t;
+typedef struct { long quot; long rem; } ldiv_t;
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#define random(num) (int)(((long)rand()*(num))/(RAND_MAX+1))
+#define randomize() srand((unsigned)time(NULL))
+extern int errno;
+extern int _doserrno;
+extern char **environ;
+extern unsigned _psp;
+extern unsigned _version;
+void abort(void);
+int abs(int x);
+int atexit(void (*func)(void));
+double atof(const char *s);
+int atoi(const char *s);
+long atol(const char *s);
+void *bsearch(const void *key, const void *base, size_t nelem, size_t width, int (*fcmp)(const void *, const void *));
+void *calloc(size_t nitems, size_t size);
+div_t div(int numer, int denom);
+char *ecvt(double value, int ndig, int *dec, int *sign);
+void exit(int status);
+void _exit(int status);
+char *fcvt(double value, int ndig, int *dec, int *sign);
+void free(void *block);
+char *gcvt(double value, int ndec, char *buf);
+char *getenv(const char *name);
+char *itoa(int value, char *string, int radix);
+long labs(long x);
+ldiv_t ldiv(long numer, long denom);
+void *lfind(const void *key, const void *base, size_t *num, size_t width, int (*fcmp)(const void *, const void *));
+void *lsearch(const void *key, void *base, size_t *num, size_t width, int (*fcmp)(const void *, const void *));
+char *ltoa(long value, char *string, int radix);
+void *malloc(size_t size);
+int mblen(const char *s, size_t n);
+int putenv(const char *name);
+void qsort(void *base, size_t nelem, size_t width, int (*fcmp)(const void *, const void *));
+int rand(void);
+void *realloc(void *block, size_t size);
+void srand(unsigned seed);
+void swab(char *from, char *to, int nbytes);
+double strtod(const char *s, char **endptr);
+long strtol(const char *s, char **endptr, int radix);
+unsigned long strtoul(const char *s, char **endptr, int radix);
+int system(const char *command);
+char *ultoa(unsigned long value, char *string, int radix);
+void perror(const char *s);
+double _atold(const char *s);
+void _searchenv(const char *file, const char *varname, char *buf);
+void searchpath(const char *file);
+void _fullpath(char *buf, const char *path, size_t maxlen);
+#endif
+
+=== string.h
+#ifndef __STRING_H
+#define __STRING_H
+#include <stddef.h>
+void *memccpy(void *dest, const void *src, int c, size_t n);
+void *memchr(const void *s, int c, size_t n);
+int memcmp(const void *s1, const void *s2, size_t n);
+void *memcpy(void *dest, const void *src, size_t n);
+int memicmp(const void *s1, const void *s2, size_t n);
+void *memmove(void *dest, const void *src, size_t n);
+void *memset(void *s, int c, size_t n);
+void movedata(unsigned srcseg, unsigned srcoff, unsigned dstseg, unsigned dstoff, size_t n);
+void movmem(void *src, void *dest, unsigned length);
+void setmem(void *dest, unsigned length, char value);
+char *stpcpy(char *dest, const char *src);
+char *strcat(char *dest, const char *src);
+char *strchr(const char *s, int c);
+int strcmp(const char *s1, const char *s2);
+int strcmpi(const char *s1, const char *s2);
+int strcoll(const char *s1, const char *s2);
+char *strcpy(char *dest, const char *src);
+size_t strcspn(const char *s1, const char *s2);
+char *strdup(const char *s);
+char *_strerror(const char *s);
+char *strerror(int errnum);
+int stricmp(const char *s1, const char *s2);
+size_t strlen(const char *s);
+char *strlwr(char *s);
+char *strncat(char *dest, const char *src, size_t maxlen);
+int strncmp(const char *s1, const char *s2, size_t maxlen);
+int strncmpi(const char *s1, const char *s2, size_t n);
+char *strncpy(char *dest, const char *src, size_t maxlen);
+int strnicmp(const char *s1, const char *s2, size_t maxlen);
+char *strnset(char *s, int ch, size_t n);
+char *strpbrk(const char *s1, const char *s2);
+char *strrchr(const char *s, int c);
+char *strrev(char *s);
+char *strset(char *s, int ch);
+size_t strspn(const char *s1, const char *s2);
+char *strstr(const char *s1, const char *s2);
+char *strtok(char *s1, const char *s2);
+char *strupr(char *s);
+size_t strxfrm(char *s1, const char *s2, size_t n);
+#endif
+
+=== mem.h
+#ifndef __MEM_H
+#define __MEM_H
+#include <string.h>
+#endif
+
+=== memory.h
+#ifndef __MEMORY_H
+#define __MEMORY_H
+#include <string.h>
+#endif
+
+=== math.h
+#ifndef __MATH_H
+#define __MATH_H
+#define HUGE_VAL 1.797693E+308
+#define M_E 2.71828182845904523536
+#define M_LOG2E 1.44269504088896340736
+#define M_LOG10E 0.434294481903251827651
+#define M_LN2 0.693147180559945309417
+#define M_LN10 2.30258509299404568402
+#define M_PI 3.14159265358979323846
+#define M_PI_2 1.57079632679489661923
+#define M_PI_4 0.785398163397448309616
+#define M_1_PI 0.318309886183790671538
+#define M_2_PI 0.636619772367581343076
+#define M_1_SQRTPI 0.564189583547756286948
+#define M_2_SQRTPI 1.12837916709551257390
+#define M_SQRT2 1.41421356237309504880
+#define M_SQRT_2 0.707106781186547524401
+#define MAXFLOAT 3.37E+38
+typedef struct { double x, y; } complex;
+struct exception { int type; char *name; double arg1, arg2, retval; };
+#define DOMAIN 1
+#define SING 2
+#define OVERFLOW 3
+#define UNDERFLOW 4
+#define TLOSS 5
+#define PLOSS 6
+int abs(int x);
+double acos(double x);
+double asin(double x);
+double atan(double x);
+double atan2(double y, double x);
+double atof(const char *s);
+double cabs(complex z);
+double ceil(double x);
+double cos(double x);
+double cosh(double x);
+double exp(double x);
+double fabs(double x);
+double floor(double x);
+double fmod(double x, double y);
+double frexp(double x, int *exponent);
+double hypot(double x, double y);
+long labs(long x);
+double ldexp(double x, int exponent);
+double log(double x);
+double log10(double x);
+int matherr(struct exception *e);
+double modf(double x, double *ipart);
+double poly(double x, int degree, double coeffs[]);
+double pow(double x, double y);
+double pow10(int p);
+double sin(double x);
+double sinh(double x);
+double sqrt(double x);
+double tan(double x);
+double tanh(double x);
+long double acosl(long double x);
+long double asinl(long double x);
+long double atanl(long double x);
+long double ceill(long double x);
+long double cosl(long double x);
+long double expl(long double x);
+long double fabsl(long double x);
+long double floorl(long double x);
+long double logl(long double x);
+long double powl(long double x, long double y);
+long double sinl(long double x);
+long double sqrtl(long double x);
+long double tanl(long double x);
+unsigned _clear87(void);
+unsigned _status87(void);
+void _fpreset(void);
+#endif
+
+=== ctype.h
+#ifndef __CTYPE_H
+#define __CTYPE_H
+int isalnum(int c);
+int isalpha(int c);
+int isascii(int c);
+int iscntrl(int c);
+int isdigit(int c);
+int isgraph(int c);
+int islower(int c);
+int isprint(int c);
+int ispunct(int c);
+int isspace(int c);
+int isupper(int c);
+int isxdigit(int c);
+int toascii(int c);
+int tolower(int c);
+int toupper(int c);
+int _tolower(int c);
+int _toupper(int c);
+#endif
+
+=== conio.h
+#ifndef __CONIO_H
+#define __CONIO_H
+#ifndef __COLORS
+#define __COLORS
+enum COLORS {
+    BLACK, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN, LIGHTGRAY, DARKGRAY,
+    LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED, LIGHTMAGENTA, YELLOW, WHITE
+};
+#define BLINK 128
+#endif
+enum text_modes { LASTMODE = -1, BW40 = 0, C40, BW80, C80, MONO = 7, C4350 = 64 };
+#define _NOCURSOR 0
+#define _SOLIDCURSOR 1
+#define _NORMALCURSOR 2
+struct text_info {
+    unsigned char winleft;
+    unsigned char wintop;
+    unsigned char winright;
+    unsigned char winbottom;
+    unsigned char attribute;
+    unsigned char normattr;
+    unsigned char currmode;
+    unsigned char screenheight;
+    unsigned char screenwidth;
+    unsigned char curx;
+    unsigned char cury;
+};
+extern int directvideo;
+extern int _wscroll;
+char *cgets(char *str);
+void clreol(void);
+void clrscr(void);
+int cprintf(const char *format, ...);
+int cputs(const char *str);
+int cscanf(const char *format, ...);
+void delline(void);
+int getch(void);
+int getche(void);
+char *getpass(const char *prompt);
+int gettext(int left, int top, int right, int bottom, void *destin);
+void gettextinfo(struct text_info *r);
+void gotoxy(int x, int y);
+void highvideo(void);
+int inp(unsigned portid);
+unsigned inpw(unsigned portid);
+void insline(void);
+int kbhit(void);
+void lowvideo(void);
+int movetext(int left, int top, int right, int bottom, int destleft, int desttop);
+void normvideo(void);
+int outp(unsigned portid, int value);
+unsigned outpw(unsigned portid, unsigned value);
+int putch(int c);
+int puttext(int left, int top, int right, int bottom, void *source);
+void _setcursortype(int cur_t);
+void textattr(int newattr);
+void textbackground(int newcolor);
+void textcolor(int newcolor);
+void textmode(int newmode);
+int ungetch(int ch);
+int wherex(void);
+int wherey(void);
+void window(int left, int top, int right, int bottom);
+#endif
+
+=== dos.h
+#ifndef __DOS_H
+#define __DOS_H
+#include <stddef.h>
+#define FA_RDONLY 0x01
+#define FA_HIDDEN 0x02
+#define FA_SYSTEM 0x04
+#define FA_LABEL 0x08
+#define FA_DIREC 0x10
+#define FA_ARCH 0x20
+#define FP_OFF(fp) ((unsigned)(fp))
+#define FP_SEG(fp) ((unsigned)((unsigned long)(fp) >> 16))
+#define MK_FP(seg,ofs) ((void far *)(((unsigned long)(seg) << 16) | (unsigned)(ofs)))
+#define geninterrupt(n) 0
+#define CARRY_FLAG 1
+struct WORDREGS { unsigned int ax, bx, cx, dx, si, di, cflag, flags; };
+struct BYTEREGS { unsigned char al, ah, bl, bh, cl, ch, dl, dh; };
+union REGS { struct WORDREGS x; struct BYTEREGS h; };
+struct SREGS { unsigned int es; unsigned int cs; unsigned int ss; unsigned int ds; };
+struct REGPACK { unsigned r_ax, r_bx, r_cx, r_dx, r_bp, r_si, r_di, r_ds, r_es, r_flags; };
+struct date { int da_year; char da_day; char da_mon; };
+struct time { unsigned char ti_min; unsigned char ti_hour; unsigned char ti_hund; unsigned char ti_sec; };
+struct dfree { unsigned df_avail; unsigned df_total; unsigned df_bsec; unsigned df_sclus; };
+extern int _doserrno;
+extern unsigned _psp;
+extern unsigned char _osmajor;
+extern unsigned char _osminor;
+int absread(int drive, int nsects, long lsect, void *buffer);
+int abswrite(int drive, int nsects, long lsect, void *buffer);
+int allocmem(unsigned size, unsigned *segp);
+int bdos(int dosfun, unsigned dosdx, unsigned dosal);
+int bdosptr(int dosfun, void *argument, unsigned dosal);
+int freemem(unsigned segx);
+int int86(int intno, union REGS *inregs, union REGS *outregs);
+int int86x(int intno, union REGS *inregs, union REGS *outregs, struct SREGS *segregs);
+int intdos(union REGS *inregs, union REGS *outregs);
+int intdosx(union REGS *inregs, union REGS *outregs, struct SREGS *segregs);
+void intr(int intno, struct REGPACK *preg);
+void delay(unsigned milliseconds);
+void sleep(unsigned seconds);
+void sound(unsigned frequency);
+void nosound(void);
+void disable(void);
+void enable(void);
+void getdate(struct date *datep);
+void setdate(struct date *datep);
+void gettime(struct time *timep);
+void settime(struct time *timep);
+void getdfree(unsigned char drive, struct dfree *dtable);
+unsigned char getverify(void);
+void setverify(int value);
+void *getvect(int interruptno);
+void setvect(int interruptno, void interrupt (*isr)());
+void keep(unsigned char status, unsigned size);
+void outport(int portid, int value);
+void outportb(int portid, unsigned char value);
+int inport(int portid);
+unsigned char inportb(int portid);
+int peek(unsigned segment, unsigned offset);
+char peekb(unsigned segment, unsigned offset);
+void poke(unsigned segment, unsigned offset, int value);
+void pokeb(unsigned segment, unsigned offset, char value);
+int getpsp(void);
+void parsfnm(const char *cmdline, void *fcb, int option);
+int dosexterr(void *eptr);
+int getcbrk(void);
+int setcbrk(int cbrkvalue);
+unsigned long dostounix(struct date *d, struct time *t);
+void unixtodos(unsigned long time, struct date *d, struct time *t);
+int getftime(int handle, void *ftimep);
+int setftime(int handle, void *ftimep);
+int _dos_getdiskfree(unsigned drive, void *table);
+void _dos_getdate(void *datep);
+void _dos_gettime(void *timep);
+#endif
+
+=== time.h
+#ifndef __TIME_H
+#define __TIME_H
+#include <stddef.h>
+#define CLOCKS_PER_SEC 18.2
+#define CLK_TCK 18.2
+typedef long time_t;
+typedef long clock_t;
+struct tm {
+    int tm_sec;
+    int tm_min;
+    int tm_hour;
+    int tm_mday;
+    int tm_mon;
+    int tm_year;
+    int tm_wday;
+    int tm_yday;
+    int tm_isdst;
+};
+extern int daylight;
+extern long timezone;
+extern char *tzname[2];
+char *asctime(const struct tm *tblock);
+clock_t clock(void);
+char *ctime(const time_t *time);
+double difftime(time_t time2, time_t time1);
+struct tm *gmtime(const time_t *timer);
+struct tm *localtime(const time_t *timer);
+time_t mktime(struct tm *t);
+int stime(time_t *tp);
+size_t strftime(char *s, size_t maxsize, const char *fmt, const struct tm *t);
+time_t time(time_t *timer);
+void tzset(void);
+#endif
+
+=== process.h
+#ifndef __PROCESS_H
+#define __PROCESS_H
+#define P_WAIT 0
+#define P_NOWAIT 1
+#define P_OVERLAY 2
+#define _P_WAIT 0
+#define _P_NOWAIT 1
+#define _P_OVERLAY 2
+extern unsigned _psp;
+void abort(void);
+void exit(int status);
+void _exit(int status);
+int execl(const char *path, const char *arg0, ...);
+int execle(const char *path, const char *arg0, ...);
+int execlp(const char *path, const char *arg0, ...);
+int execlpe(const char *path, const char *arg0, ...);
+int execv(const char *path, char *argv[]);
+int execve(const char *path, char *argv[], char *envp[]);
+int execvp(const char *path, char *argv[]);
+int execvpe(const char *path, char *argv[], char *envp[]);
+int spawnl(int mode, const char *path, const char *arg0, ...);
+int spawnle(int mode, const char *path, const char *arg0, ...);
+int spawnlp(int mode, const char *path, const char *arg0, ...);
+int spawnlpe(int mode, const char *path, const char *arg0, ...);
+int spawnv(int mode, const char *path, char *argv[]);
+int spawnve(int mode, const char *path, char *argv[], char *envp[]);
+int spawnvp(int mode, const char *path, char *argv[]);
+int spawnvpe(int mode, const char *path, char *argv[], char *envp[]);
+int system(const char *command);
+int getpid(void);
+#endif
+
+=== alloc.h
+#ifndef __ALLOC_H
+#define __ALLOC_H
+#include <stddef.h>
+void *calloc(size_t nitems, size_t size);
+void free(void *block);
+void *malloc(size_t size);
+void *realloc(void *block, size_t size);
+unsigned coreleft(void);
+void far *farcalloc(unsigned long nunits, unsigned long unitsz);
+unsigned long farcoreleft(void);
+void farfree(void far *block);
+void far *farmalloc(unsigned long nbytes);
+void far *farrealloc(void far *oldblock, unsigned long nbytes);
+int brk(void *addr);
+void *sbrk(int incr);
+int heapcheck(void);
+int heapfillfree(unsigned int fillvalue);
+int heapcheckfree(unsigned int fillvalue);
+#endif
+
+=== malloc.h
+#ifndef __MALLOC_H
+#define __MALLOC_H
+#include <alloc.h>
+#endif
+
+=== limits.h
+#ifndef __LIMITS_H
+#define __LIMITS_H
+#define CHAR_BIT 8
+#define SCHAR_MAX 127
+#define SCHAR_MIN (-128)
+#define UCHAR_MAX 255
+#define CHAR_MAX 127
+#define CHAR_MIN (-128)
+#define SHRT_MAX 32767
+#define SHRT_MIN (-32767-1)
+#define USHRT_MAX 65535U
+#define INT_MAX 32767
+#define INT_MIN (-32767-1)
+#define UINT_MAX 65535U
+#define LONG_MAX 2147483647L
+#define LONG_MIN (-2147483647L-1)
+#define ULONG_MAX 4294967295UL
+#endif
+
+=== float.h
+#ifndef __FLOAT_H
+#define __FLOAT_H
+#define FLT_RADIX 2
+#define FLT_ROUNDS 1
+#define FLT_DIG 6
+#define FLT_EPSILON 1.192092896e-07F
+#define FLT_MANT_DIG 24
+#define FLT_MAX 3.402823466e+38F
+#define FLT_MAX_10_EXP 38
+#define FLT_MAX_EXP 128
+#define FLT_MIN 1.175494351e-38F
+#define FLT_MIN_10_EXP (-37)
+#define FLT_MIN_EXP (-125)
+#define DBL_DIG 15
+#define DBL_EPSILON 2.2204460492503131e-16
+#define DBL_MANT_DIG 53
+#define DBL_MAX 1.7976931348623157e+308
+#define DBL_MAX_10_EXP 308
+#define DBL_MAX_EXP 1024
+#define DBL_MIN 2.2250738585072014e-308
+#define DBL_MIN_10_EXP (-307)
+#define DBL_MIN_EXP (-1021)
+#define LDBL_DIG 18
+#define LDBL_EPSILON 1.084202172485504434e-19L
+#define LDBL_MANT_DIG 64
+#define LDBL_MAX 1.18973149535723176502e+4932L
+#define LDBL_MAX_10_EXP 4932
+#define LDBL_MAX_EXP 16384
+#define LDBL_MIN 3.36210314311209350626e-4932L
+#define LDBL_MIN_10_EXP (-4931)
+#define LDBL_MIN_EXP (-16381)
+unsigned int _clear87(void);
+void _fpreset(void);
+unsigned int _status87(void);
+#endif
+
+=== assert.h
+#ifndef __ASSERT_H
+#define __ASSERT_H
+void __assertfail(const char *msg, const char *cond, const char *file, int line);
+#define assert(p) ((p) ? (void)0 : (void)__assertfail("Assertion failed: %s, file %s, line %d\n", #p, __FILE__, __LINE__))
+#endif
+
+=== errno.h
+#ifndef __ERRNO_H
+#define __ERRNO_H
+extern int errno;
+extern int _doserrno;
+extern int sys_nerr;
+extern char *sys_errlist[];
+#define EZERO 0
+#define EINVFNC 1
+#define ENOENT 2
+#define ENOTDIR 3
+#define EMFILE 4
+#define EACCES 5
+#define EBADF 6
+#define ENOMEM 8
+#define EINVMEM 9
+#define EINVENV 10
+#define EINVFMT 11
+#define EINVACC 12
+#define EINVDAT 13
+#define ENODEV 15
+#define ECURDIR 16
+#define ENOTSAM 17
+#define ENMFILE 18
+#define EINVAL 19
+#define E2BIG 20
+#define ENOEXEC 21
+#define EXDEV 22
+#define EDOM 33
+#define ERANGE 34
+#define EEXIST 35
+#endif
+
+=== stdarg.h
+#ifndef __STDARG_H
+#define __STDARG_H
+typedef char *va_list;
+#define va_start(ap, parmN) ((void)0)
+#define va_arg(ap, type) (*(type *)(ap))
+#define va_end(ap) ((void)0)
+#endif
+
+=== setjmp.h
+#ifndef __SETJMP_H
+#define __SETJMP_H
+typedef struct {
+    unsigned j_sp, j_ss, j_flag, j_cs, j_ip, j_bp, j_di, j_es, j_si, j_ds;
+} jmp_buf[1];
+void longjmp(jmp_buf jmpb, int retval);
+int setjmp(jmp_buf jmpb);
+#endif
+
+=== signal.h
+#ifndef __SIGNAL_H
+#define __SIGNAL_H
+typedef int sig_atomic_t;
+#define SIG_DFL ((void (*)(int))0)
+#define SIG_IGN ((void (*)(int))1)
+#define SIG_ERR ((void (*)(int))-1)
+#define SIGABRT 22
+#define SIGFPE 8
+#define SIGILL 4
+#define SIGINT 2
+#define SIGSEGV 11
+#define SIGTERM 15
+void (*signal(int sig, void (*func)(int)))(int);
+int raise(int sig);
+int gsignal(int sig);
+void (*ssignal(int sig, void (*action)(int)))(int);
+#endif
+
+=== locale.h
+#ifndef __LOCALE_H
+#define __LOCALE_H
+#define LC_ALL 0
+#define LC_COLLATE 1
+#define LC_CTYPE 2
+#define LC_MONETARY 3
+#define LC_NUMERIC 4
+#define LC_TIME 5
+struct lconv { char *decimal_point; char *thousands_sep; char *grouping; };
+char *setlocale(int category, const char *locale);
+struct lconv *localeconv(void);
+#endif
+
+=== values.h
+#ifndef __VALUES_H
+#define __VALUES_H
+#define MAXINT 32767
+#define MININT (-32767-1)
+#define MAXLONG 2147483647L
+#define MAXSHORT 32767
+#define BITSPERBYTE 8
+#define MAXDOUBLE 1.797693E+308
+#define MAXFLOAT 3.37E+38
+#endif
+
+=== io.h
+#ifndef __IO_H
+#define __IO_H
+#include <stddef.h>
+#define SEEK_SET 0
+#define SEEK_CUR 1
+#define SEEK_END 2
+int access(const char *path, int amode);
+int chmod(const char *path, int amode);
+int chsize(int handle, long size);
+int close(int handle);
+int _close(int handle);
+int creat(const char *path, int amode);
+int creatnew(const char *path, int mode);
+int creattemp(char *path, int attrib);
+int dup(int handle);
+int dup2(int oldhandle, int newhandle);
+int eof(int handle);
+long filelength(int handle);
+int getftime(int handle, void *ftimep);
+int ioctl(int handle, int func, ...);
+int isatty(int handle);
+int lock(int handle, long offset, long length);
+long lseek(int handle, long offset, int fromwhere);
+int open(const char *path, int access, ...);
+int _open(const char *path, int oflags);
+int read(int handle, void *buf, unsigned len);
+int _read(int handle, void *buf, unsigned len);
+int remove(const char *path);
+int rename(const char *oldname, const char *newname);
+int setftime(int handle, void *ftimep);
+long tell(int handle);
+unsigned umask(unsigned mode);
+int unlink(const char *path);
+int unlock(int handle, long offset, long length);
+int write(int handle, const void *buf, unsigned len);
+int _write(int handle, const void *buf, unsigned len);
+#endif
+
+=== fcntl.h
+#ifndef __FCNTL_H
+#define __FCNTL_H
+#define O_RDONLY 0x0001
+#define O_WRONLY 0x0002
+#define O_RDWR 0x0004
+#define O_APPEND 0x0800
+#define O_CREAT 0x0100
+#define O_TRUNC 0x0200
+#define O_EXCL 0x0400
+#define O_BINARY 0x8000
+#define O_TEXT 0x4000
+#endif
+
+=== share.h
+#ifndef __SHARE_H
+#define __SHARE_H
+#define SH_COMPAT 0x0000
+#define SH_DENYRW 0x0010
+#define SH_DENYWR 0x0020
+#define SH_DENYRD 0x0030
+#define SH_DENYNONE 0x0040
+#endif
+
+=== sys/types.h
+#ifndef __SYS_TYPES_H
+#define __SYS_TYPES_H
+typedef long time_t_sys;
+#endif
+
+=== sys/stat.h
+#ifndef __SYS_STAT_H
+#define __SYS_STAT_H
+#define S_IFMT 0xF000
+#define S_IFDIR 0x4000
+#define S_IFCHR 0x2000
+#define S_IFREG 0x8000
+#define S_IREAD 0x0100
+#define S_IWRITE 0x0080
+#define S_IEXEC 0x0040
+struct stat {
+    short st_dev;
+    short st_ino;
+    short st_mode;
+    short st_nlink;
+    int st_uid;
+    int st_gid;
+    short st_rdev;
+    long st_size;
+    long st_atime;
+    long st_mtime;
+    long st_ctime;
+};
+int chmod(const char *path, int amode);
+int fstat(int handle, struct stat *statbuf);
+int stat(const char *path, struct stat *statbuf);
+#endif
+
+=== dir.h
+#ifndef __DIR_H
+#define __DIR_H
+#define MAXPATH 80
+#define MAXDRIVE 3
+#define MAXDIR 66
+#define MAXFILE 9
+#define MAXEXT 5
+struct ffblk {
+    char ff_reserved[21];
+    char ff_attrib;
+    int ff_ftime;
+    int ff_fdate;
+    long ff_fsize;
+    char ff_name[13];
+};
+int chdir(const char *path);
+int findfirst(const char *pathname, struct ffblk *ffblk, int attrib);
+int findnext(struct ffblk *ffblk);
+void fnmerge(char *path, const char *drive, const char *dir, const char *name, const char *ext);
+int fnsplit(const char *path, char *drive, char *dir, char *name, char *ext);
+int getcurdir(int drive, char *directory);
+char *getcwd(char *buf, int buflen);
+int getdisk(void);
+int mkdir(const char *path);
+char *mktemp(char *template);
+int rmdir(const char *path);
+char *searchpath(const char *file);
+int setdisk(int drive);
+#endif
+
+=== direct.h
+#ifndef __DIRECT_H
+#define __DIRECT_H
+#include <dir.h>
+#endif
+
+=== bios.h
+#ifndef __BIOS_H
+#define __BIOS_H
+int bioscom(int cmd, char abyte, int port);
+int biosdisk(int cmd, int drive, int head, int track, int sector, int nsects, void *buffer);
+int biosequip(void);
+int bioskey(int cmd);
+int biosmemory(void);
+int biosprint(int cmd, int abyte, int port);
+long biostime(int cmd, long newtime);
+#endif
+
+=== graphics.h
+#ifndef __GRAPHICS_H
+#define __GRAPHICS_H
+#ifndef __COLORS
+#define __COLORS
+enum COLORS {
+    BLACK, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN, LIGHTGRAY, DARKGRAY,
+    LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED, LIGHTMAGENTA, YELLOW, WHITE
+};
+#define BLINK 128
+#endif
+enum graphics_drivers { DETECT, CGA, MCGA, EGA, EGA64, EGAMONO, IBM8514, HERCMONO, ATT400, VGA, PC3270 };
+enum graphics_modes { CGAC0, CGAC1, CGAC2, CGAC3, CGAHI };
+enum line_styles { SOLID_LINE, DOTTED_LINE, CENTER_LINE, DASHED_LINE, USERBIT_LINE };
+enum fill_patterns { EMPTY_FILL, SOLID_FILL, LINE_FILL, LTSLASH_FILL, SLASH_FILL, BKSLASH_FILL, LTBKSLASH_FILL, HATCH_FILL, XHATCH_FILL, INTERLEAVE_FILL, WIDE_DOT_FILL, CLOSE_DOT_FILL, USER_FILL };
+enum text_directions { HORIZ_DIR, VERT_DIR };
+enum font_names { DEFAULT_FONT, TRIPLEX_FONT, SMALL_FONT, SANS_SERIF_FONT, GOTHIC_FONT };
+enum putimage_ops { COPY_PUT, XOR_PUT, OR_PUT, AND_PUT, NOT_PUT };
+enum text_just { LEFT_TEXT, CENTER_TEXT, RIGHT_TEXT, BOTTOM_TEXT = 0, TOP_TEXT = 2 };
+#define NORM_WIDTH 1
+#define THICK_WIDTH 3
+#define MAXCOLORS 15
+struct arccoordstype { int x, y, xstart, ystart, xend, yend; };
+struct linesettingstype { int linestyle; unsigned upattern; int thickness; };
+struct fillsettingstype { int pattern; int color; };
+struct textsettingstype { int font; int direction; int charsize; int horiz; int vert; };
+struct viewporttype { int left, top, right, bottom; int clip; };
+struct palettetype { unsigned char size; signed char colors[16]; };
+void arc(int x, int y, int stangle, int endangle, int radius);
+void bar(int left, int top, int right, int bottom);
+void bar3d(int left, int top, int right, int bottom, int depth, int topflag);
+void circle(int x, int y, int radius);
+void cleardevice(void);
+void clearviewport(void);
+void closegraph(void);
+void detectgraph(int *graphdriver, int *graphmode);
+void drawpoly(int numpoints, int *polypoints);
+void ellipse(int x, int y, int stangle, int endangle, int xradius, int yradius);
+void fillellipse(int x, int y, int xradius, int yradius);
+void fillpoly(int numpoints, int *polypoints);
+void floodfill(int x, int y, int border);
+void getarccoords(struct arccoordstype *arccoords);
+int getbkcolor(void);
+int getcolor(void);
+void getfillsettings(struct fillsettingstype *fillinfo);
+int getgraphmode(void);
+void getimage(int left, int top, int right, int bottom, void *bitmap);
+void getlinesettings(struct linesettingstype *lineinfo);
+int getmaxcolor(void);
+int getmaxmode(void);
+int getmaxx(void);
+int getmaxy(void);
+char *getmodename(int mode_number);
+void getpalette(struct palettetype *palette);
+int getpixel(int x, int y);
+void gettextsettings(struct textsettingstype *texttypeinfo);
+void getviewsettings(struct viewporttype *viewport);
+int getx(void);
+int gety(void);
+void graphdefaults(void);
+char *grapherrormsg(int errorcode);
+int graphresult(void);
+unsigned imagesize(int left, int top, int right, int bottom);
+void initgraph(int *graphdriver, int *graphmode, char *pathtodriver);
+int installuserdriver(char *name, int huge (*detect)(void));
+int installuserfont(char *name);
+void line(int x1, int y1, int x2, int y2);
+void linerel(int dx, int dy);
+void lineto(int x, int y);
+void moverel(int dx, int dy);
+void moveto(int x, int y);
+void outtext(char *textstring);
+void outtextxy(int x, int y, char *textstring);
+void pieslice(int x, int y, int stangle, int endangle, int radius);
+void putimage(int left, int top, void *bitmap, int op);
+void putpixel(int x, int y, int color);
+void rectangle(int left, int top, int right, int bottom);
+int registerbgidriver(void (*driver)(void));
+int registerbgifont(void (*font)(void));
+void restorecrtmode(void);
+void sector(int x, int y, int stangle, int endangle, int xradius, int yradius);
+void setactivepage(int page);
+void setallpalette(struct palettetype *palette);
+void setaspectratio(int xasp, int yasp);
+void setbkcolor(int color);
+void setcolor(int color);
+void setfillpattern(char *upattern, int color);
+void setfillstyle(int pattern, int color);
+unsigned setgraphbufsize(unsigned bufsize);
+void setgraphmode(int mode);
+void setlinestyle(int linestyle, unsigned upattern, int thickness);
+void setpalette(int colornum, int color);
+void setrgbpalette(int colornum, int red, int green, int blue);
+void settextjustify(int horiz, int vert);
+void settextstyle(int font, int direction, int charsize);
+void setusercharsize(int multx, int divx, int multy, int divy);
+void setviewport(int left, int top, int right, int bottom, int clip);
+void setvisualpage(int page);
+void setwritemode(int mode);
+int textheight(char *textstring);
+int textwidth(char *textstring);
+#endif
+
+=== _defs.h
+#ifndef ___DEFS_H
+#define ___DEFS_H
+#endif
+

@@ -7,7 +7,7 @@
 /* Streaming interface used by CEngine / CRun in CLab.kt. */
 
 JNIEXPORT jlong JNICALL
-Java_com_student_smartstudy_CEngine_start(JNIEnv *env, jobject thiz, jbyteArray jsrc, jstring jdir, jint timeoutMs)
+Java_com_student_smartstudy_CEngine_start(JNIEnv *env, jobject thiz, jbyteArray jsrc, jstring jdir, jint timeoutMs, jint mode)
 {
     jsize srcLen = (*env)->GetArrayLength(env, jsrc);
     char *src = (char *)malloc((size_t)srcLen + 1);
@@ -20,7 +20,7 @@ Java_com_student_smartstudy_CEngine_start(JNIEnv *env, jobject thiz, jbyteArray 
     if (!src || !dir) { free(src); free(dir); return 0; }
     (*env)->GetByteArrayRegion(env, jsrc, 0, srcLen, (jbyte *)src);
     src[srcLen] = 0;
-    p = clab_proc_start(src, dir, timeoutMs);
+    p = clab_proc_start(src, dir, timeoutMs, (int)mode);
     free(src);
     free(dir);
     return (jlong)(intptr_t)p;

@@ -66,7 +66,8 @@ object CEngine {
         return loaded
     }
 
-    external fun start(src: ByteArray, dir: String, timeoutMs: Int): Long
+    /** mode: 1 = Turbo C (whole-program checker + Turbo C style messages), 0 = plain interpreter */
+    external fun start(src: ByteArray, dir: String, timeoutMs: Int, mode: Int): Long
     /** [flags, output bytes...]; flags: 1 = waiting for input, 2 = finished. */
     external fun poll(handle: Long, waitMs: Int): ByteArray
     external fun write(handle: Long, data: ByteArray)
@@ -84,6 +85,7 @@ class CRun(
     private val ctx: Context,
     private val code: String,
     private val timeoutMs: Int,
+    private val turboC: Boolean,
     private val onText: (String) -> Unit,
     private val onWaiting: (Boolean) -> Unit,
     private val onDone: (String) -> Unit
@@ -104,7 +106,7 @@ class CRun(
             val dir = File(ctx.cacheDir, "clab")
             dir.mkdirs()
             val h = synchronized(lock) {
-                val v = CEngine.start(code.toByteArray(Charsets.UTF_8), dir.absolutePath, timeoutMs)
+                val v = CEngine.start(code.toByteArray(Charsets.UTF_8), dir.absolutePath, timeoutMs, if (turboC) 1 else 0)
                 handle = v
                 v
             }
@@ -151,7 +153,8 @@ class CRun(
 private val cKeywords = setOf(
     "auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else", "enum",
     "extern", "float", "for", "goto", "if", "int", "long", "register", "return", "short", "signed",
-    "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"
+    "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while",
+    "near", "far", "huge", "cdecl", "pascal", "interrupt"
 )
 
 private val EditorBg = Color(0xFF1E1E2E)
@@ -210,28 +213,33 @@ private class CHighlight : VisualTransformation {
 
 private val samples = linkedMapOf(
     "Hello" to """#include <stdio.h>
+#include <conio.h>
 
-int main() {
+void main()
+{
+    clrscr();
     printf("Hello, World!\n");
-    return 0;
 }
 """,
     "Input" to """#include <stdio.h>
+#include <conio.h>
 
-int main() {
+void main()
+{
     int a, b;
+    clrscr();
     printf("Enter two numbers: ");
     scanf("%d %d", &a, &b);
     printf("Sum = %d\n", a + b);
-    return 0;
 }
 """,
     "Loop" to """#include <stdio.h>
 
-int main() {
-    int n = 5;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= i; j++) printf("* ");
+int main()
+{
+    int i, j, n = 5;
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= i; j++) printf("* ");
         printf("\n");
     }
     return 0;
@@ -239,15 +247,16 @@ int main() {
 """,
     "Array" to """#include <stdio.h>
 
-int main() {
+int main()
+{
     int a[6] = {42, 7, 19, 3, 25, 11};
-    int n = 6;
-    for (int i = 0; i < n - 1; i++)
-        for (int j = 0; j < n - i - 1; j++)
+    int n = 6, i, j, t;
+    for (i = 0; i < n - 1; i++)
+        for (j = 0; j < n - i - 1; j++)
             if (a[j] > a[j + 1]) {
-                int t = a[j]; a[j] = a[j + 1]; a[j + 1] = t;
+                t = a[j]; a[j] = a[j + 1]; a[j + 1] = t;
             }
-    for (int i = 0; i < n; i++) printf("%d ", a[i]);
+    for (i = 0; i < n; i++) printf("%d ", a[i]);
     printf("\n");
     return 0;
 }
@@ -260,7 +269,8 @@ struct Student {
     int marks;
 };
 
-int main() {
+int main()
+{
     struct Student s;
     strcpy(s.name, "Asha");
     s.marks = 91;
@@ -271,16 +281,19 @@ int main() {
     "Pointer" to """#include <stdio.h>
 #include <stdlib.h>
 
-void swap(int *a, int *b) {
+void swap(int *a, int *b)
+{
     int t = *a; *a = *b; *b = t;
 }
 
-int main() {
-    int x = 10, y = 20;
+int main()
+{
+    int x = 10, y = 20, i;
+    int *p;
     swap(&x, &y);
     printf("x=%d y=%d\n", x, y);
-    int *p = (int *)malloc(3 * sizeof(int));
-    for (int i = 0; i < 3; i++) p[i] = i * i;
+    p = (int *)malloc(3 * sizeof(int));
+    for (i = 0; i < 3; i++) p[i] = i * i;
     printf("%d %d %d\n", p[0], p[1], p[2]);
     free(p);
     return 0;
@@ -288,20 +301,43 @@ int main() {
 """,
     "Recursion" to """#include <stdio.h>
 
-int fact(int n) {
+int fact(int n)
+{
     return n <= 1 ? 1 : n * fact(n - 1);
 }
 
-int fib(int n) {
+int fib(int n)
+{
     if (n < 2) return n;
     return fib(n - 1) + fib(n - 2);
 }
 
-int main() {
+int main()
+{
+    int i;
     printf("5! = %d\n", fact(5));
-    for (int i = 0; i < 10; i++) printf("%d ", fib(i));
+    for (i = 0; i < 10; i++) printf("%d ", fib(i));
     printf("\n");
     return 0;
+}
+""",
+    "TC errors" to """#include <stdio.h>
+
+int add(int a, int b)
+{
+    return a + b;
+}
+
+void main()
+{
+    int x = 5, y;
+    float f;
+    y = add(x);
+    z = 10;
+    printf("%d", y)
+    for (int i = 0; i < 3; i++)
+        printf("%d", i);
+    undefined_fn(3);
 }
 """
 )
@@ -315,6 +351,7 @@ fun CLabScreen(back: () -> Unit) {
     var code by remember { mutableStateOf(TextFieldValue(prefs.getString("code", samples["Hello"]) ?: "")) }
     var output by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }
+    var turboC by remember { mutableStateOf(prefs.getBoolean("turbo_c", true)) }
     var running by remember { mutableStateOf(false) }
     var waiting by remember { mutableStateOf(false) }
     val outLock = remember { Any() }
@@ -357,15 +394,21 @@ fun CLabScreen(back: () -> Unit) {
         val src = code.text
         prefs.edit().putString("code", src).apply()
         val run = CRun(
-            ctx.applicationContext, src, 10000,
+            ctx.applicationContext, src, 10000, turboC,
             onText = { appendOut(it) },
             onWaiting = { waiting = it },
             onDone = { st ->
                 val out = synchronized(outLock) { output }
-                val errs = Regex("(?m)^\\S+:\\d+:\\d+: error:").findAll(out).count()
-                val warns = Regex("(?m)^\\S+:\\d+:\\d+: warning:").findAll(out).count()
+                val errs = if (turboC)
+                    Regex("(?m)^(Error NONAME00\\.C \\d+:|Linker Error:)").findAll(out).count()
+                else Regex("(?m)^\\S+:\\d+:\\d+: error:").findAll(out).count()
+                val warns = if (turboC)
+                    Regex("(?m)^Warning NONAME00\\.C \\d+:").findAll(out).count()
+                else Regex("(?m)^\\S+:\\d+:\\d+: warning:").findAll(out).count()
+                val abnormal = turboC && out.contains("Abnormal program termination")
                 status = when {
-                    errs > 0 -> "build failed: $errs error${if (errs > 1) "s" else ""}" + (if (warns > 0) ", $warns warning${if (warns > 1) "s" else ""}" else "")
+                    errs > 0 -> (if (turboC) "compile failed: " else "build failed: ") + "$errs error${if (errs > 1) "s" else ""}" + (if (warns > 0) ", $warns warning${if (warns > 1) "s" else ""}" else "")
+                    abnormal -> "Abnormal program termination"
                     warns > 0 && st.endsWith("code 0") -> st + " ($warns warning${if (warns > 1) "s" else ""})"
                     else -> st
                 }
@@ -384,6 +427,22 @@ fun CLabScreen(back: () -> Unit) {
             Modifier.weight(1f).verticalScroll(scroll).padding(horizontal = 16.dp, vertical = 4.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf(true to "Turbo C", false to "gcc style").forEach { (tc, label) ->
+                    Surface(
+                        shape = RoundedCornerShape(20.dp),
+                        color = if (turboC == tc) Color(0xFF2FA37A) else Color.White,
+                        modifier = Modifier.clickable(enabled = !running) {
+                            turboC = tc
+                            prefs.edit().putBoolean("turbo_c", tc).apply()
+                        }
+                    ) {
+                        Text(label, Modifier.padding(horizontal = 14.dp, vertical = 8.dp), fontSize = 13.sp,
+                            color = if (turboC == tc) Color.White else Ink, fontWeight = FontWeight.Medium)
+                    }
+                }
+            }
+
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 samples.forEach { (name, src) ->
                     Surface(
@@ -454,12 +513,20 @@ fun CLabScreen(back: () -> Unit) {
 private val diagError = Regex("^\\S+:\\d+:\\d+: error:.*")
 private val diagWarn = Regex("^\\S+:\\d+:\\d+: warning:.*")
 private val diagCaret = Regex("^\\s*\\|\\s*\\^.*")
+private val tcError = Regex("^(Error NONAME00\\.C \\d+:|Linker Error:).*")
+private val tcWarn = Regex("^Warning NONAME00\\.C \\d+:.*")
+private val tcHead = Regex("^(Compiling NONAME00\\.C:|Linking NONAME00\\.EXE:|\\s+Errors: \\d+\\s+Warnings: \\d+.*)$")
+private val tcAbort = Regex("^(Abnormal program termination|Divide error|Floating point error:.*|Stack overflow!|Null pointer assignment|scanf : floating point formats not linked|C Lab could not.*)$")
 
 private fun colorDiagnostics(out: String): androidx.compose.ui.text.AnnotatedString =
     androidx.compose.ui.text.buildAnnotatedString {
         val lines = out.split("\n")
         lines.forEachIndexed { i, l ->
             val style = when {
+                tcError.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFF6B6B), fontWeight = FontWeight.Bold)
+                tcWarn.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFFD166), fontWeight = FontWeight.Bold)
+                tcHead.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFF8AB4F8), fontWeight = FontWeight.Bold)
+                tcAbort.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFF6B6B), fontWeight = FontWeight.Bold)
                 diagError.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFF6B6B), fontWeight = FontWeight.Bold)
                 diagWarn.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFFD166), fontWeight = FontWeight.Bold)
                 diagCaret.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFF7EE0A8), fontWeight = FontWeight.Bold)

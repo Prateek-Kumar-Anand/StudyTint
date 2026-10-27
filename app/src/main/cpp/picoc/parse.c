@@ -649,6 +649,13 @@ enum ParseResult ParseStatement(struct ParseState *Parser,
         ExpressionParse(Parser, &CValue);
         if (Parser->Mode == RunModeRun)
             VariableStackPop(Parser, CValue);
+        /* comma operator at statement level: "i = 0, j = 5;" and "i++, j--" in for loops */
+        while (LexGetToken(Parser, NULL, false) == TokenComma) {
+            LexGetToken(Parser, NULL, true);
+            ExpressionParse(Parser, &CValue);
+            if (Parser->Mode == RunModeRun)
+                VariableStackPop(Parser, CValue);
+        }
         break;
     case TokenLeftBrace:
         ParseBlock(Parser, false, true);

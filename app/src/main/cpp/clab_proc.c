@@ -15,6 +15,7 @@
 #include <unistd.h>
 
 int clab_run_program(const char *src);
+extern int clab_tc_mode;
 extern FILE *clab_stdin_file;
 
 #define MAX_OUT (256 * 1024)
@@ -88,7 +89,7 @@ static FILE *make_hooked_stdin(void)
 }
 #endif
 
-static void child_main(const char *src, const char *dir, int timeout_ms, int note_fd)
+static void child_main(const char *src, const char *dir, int timeout_ms, int note_fd, int mode)
 {
     struct rlimit rl;
     int code;
@@ -110,6 +111,7 @@ static void child_main(const char *src, const char *dir, int timeout_ms, int not
         clab_stdin_file = in;
         { ssize_t w = write(note_fd, "H", 1); (void)w; }
     }
+    clab_tc_mode = mode;
     code = clab_run_program(src);
     fflush(NULL);
     _exit(code & 0xff);
@@ -117,7 +119,7 @@ static void child_main(const char *src, const char *dir, int timeout_ms, int not
 
 /* ------------------------------------------------------------------ parent side */
 
-ClabProc *clab_proc_start(const char *src, const char *dir, int timeout_ms)
+ClabProc *clab_proc_start(const char *src, const char *dir, int timeout_ms, int mode)
 {
     int inP[2], outP[2], noteP[2];
     ClabProc *p;
@@ -139,7 +141,7 @@ ClabProc *clab_proc_start(const char *src, const char *dir, int timeout_ms)
         dup2(outP[1], 1);
         dup2(outP[1], 2);
         close(inP[0]); close(inP[1]); close(outP[0]); close(outP[1]); close(noteP[0]);
-        child_main(src, dir, timeout_ms, noteP[1]);
+        child_main(src, dir, timeout_ms, noteP[1], mode);
         _exit(127);
     }
 

@@ -13,13 +13,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
+#include <unistd.h>
 #include "picoc/picoc.h"
 #include "picoc/interpreter.h"
+#include "tc.h"
 
 extern void IncludeFile(Picoc *pc, char *Filename);
 
 /* stdin used by the interpreter (see picoc/cstdlib/stdio.c). NULL = the process stdin. */
 FILE *clab_stdin_file = NULL;
+
+/* 1 = behave like Turbo C: whole-program compile errors/warnings first, TC style run-time messages */
+int clab_tc_mode = 0;
+/* set from the Turbo C checker: the program uses floating point (Turbo C's scanf needs it linked) */
+int clab_tc_float_used = 1;
 
 #define CLAB_STACK (128000 * 16)
 
@@ -412,6 +420,25 @@ static void blank_library_protos(Picoc *pc, char *prog, const struct NameSet *us
     }
 }
 
+/* "const" and "volatile" do nothing to the interpreter: blank them out (the Turbo C checker
+ * already rejected writes to const objects). */
+static void blank_qualifiers(char *prog, const char *clean)
+{
+    static const char *words[] = { "const", "volatile", NULL };
+    int w;
+    for (w = 0; words[w]; w++) {
+        size_t n = strlen(words[w]);
+        const char *p = clean;
+        while ((p = strstr(p, words[w])) != NULL) {
+            if ((p == clean || !is_ident(p[-1])) && !is_ident(p[n])) {
+                size_t off = (size_t)(p - clean), k;
+                for (k = 0; k < n; k++) prog[off + k] = ' ';
+            }
+            p += n;
+        }
+    }
+}
+
 static int brace_depth_at(const char *text, const char *upto)
 {
     int depth = 0;
@@ -453,6 +480,47 @@ static char *fix_old_main(const char *src, const char *clean)
     return NULL;
 }
 
+
+/* ------------------------------------------------------------------ Turbo C run-time crashes */
+
+static void tc_signal(int sig, siginfo_t *si, void *ctx)
+{
+    static const char divide[] = "Divide error\nAbnormal program termination\n";
+    static const char nullp[]  = "\nNull pointer assignment\n";
+    static const char stack[]  = "Stack overflow!\nAbnormal program termination\n";
+    ssize_t w;
+    (void)ctx;
+    fflush(stdout);
+    if (sig == SIGFPE) {
+        w = write(1, divide, sizeof divide - 1);
+        _exit(3);
+    }
+    if (si && (unsigned long)si->si_addr >= 0x10000UL) {
+        w = write(1, stack, sizeof stack - 1);
+        (void)w;
+        _exit(3);
+    }
+    w = write(1, nullp, sizeof nullp - 1);
+    (void)w;
+    _exit(255);
+}
+
+static void tc_install_signals(void)
+{
+    struct sigaction sa;
+    static char altstack[64 * 1024];
+    stack_t ss;
+    ss.ss_sp = altstack; ss.ss_size = sizeof altstack; ss.ss_flags = 0;
+    sigaltstack(&ss, NULL);
+    memset(&sa, 0, sizeof sa);
+    sa.sa_sigaction = tc_signal;
+    sa.sa_flags = SA_SIGINFO | SA_ONSTACK;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGFPE, &sa, NULL);
+    sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGBUS, &sa, NULL);
+}
+
 /* ------------------------------------------------------------------ entry point */
 
 int clab_run_program(const char *src)
@@ -466,6 +534,15 @@ int clab_run_program(const char *src)
     int code;
 
     if (clab_stdin_file == NULL) clab_stdin_file = stdin;
+    if (clab_tc_mode) {
+        TcResult tr;
+        int ok = tc_check(src, stdout, &tr);
+        fflush(stdout);
+        clab_tc_float_used = tr.float_used;
+        tc_install_signals();
+        if (!ok) { free(clean); return 1; }
+        if (tr.errors == 0 && (tr.warnings > 0)) { fputc('\n', stdout); fflush(stdout); }
+    }
     set_init(&user);
     if (clean) {
         collect_declared(clean, &user);
@@ -485,6 +562,7 @@ int clab_run_program(const char *src)
         prog = strdup(src);
         if (prog) {
             blank_library_protos(&pc, prog, &user);
+            blank_qualifiers(prog, clean);
             fixed = fix_old_main(prog, clean);
             program = fixed ? fixed : prog;
         }

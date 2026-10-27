@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdio_ext.h>
 #include <ctype.h>
+#include <string.h>
+#include <unistd.h>
 #include "picoc.h"
 #include "interpreter.h"
 
@@ -154,6 +156,41 @@ static void ClabWording(const char *in, char *out, size_t cap)
     snprintf(out, cap, "%s", tmp);
 }
 
+
+/* ---- Turbo C mode: run-time messages the way the Turbo C run-time library prints them ---- */
+extern int clab_tc_mode;
+
+void ClabTcAbort(const char *what)
+{
+    fflush(stdout);
+    if (what && *what) printf("%s", what);
+    printf("\nAbnormal program termination\n");
+    fflush(stdout);
+    _exit(3);
+}
+
+/* a failure of the interpreter itself (not a mistake the Turbo C checker could see) */
+static void ClabTcFail(Picoc *pc, int Line, const char *Raw)
+{
+    char msg[600];
+    ClabWording(Raw, msg, sizeof(msg));
+    if (strstr(Raw, "NULL pointer") || strstr(msg, "NULL pointer")) {
+        fflush(stdout);
+        printf("\nNull pointer assignment\n");
+        fflush(stdout);
+        _exit(255);
+    }
+    if (strstr(msg, "out of memory")) {
+        ClabTcAbort("Stack overflow!");
+    }
+    fflush(stdout);
+    /* Turbo C accepted the program, so this is a limit of the C Lab interpreter, not a C error */
+    if (Line > 0)
+        PlatformPrintf(pc->CStdOut, "\nC Lab could not run line %d: %s\n(Turbo C accepts this, but the C Lab interpreter does not support it yet.)\n", Line, msg);
+    else
+        PlatformPrintf(pc->CStdOut, "\nC Lab could not run the program: %s\n", msg);
+}
+
 static const char *ClabLineStart(const char *Src, int Line)
 {
     int c = 1;
@@ -182,6 +219,7 @@ static void ClabReport(Picoc *pc, const char *FileName, const char *SourceText,
 {
     char msg[600];
     const char *fn = FileName ? FileName : "main.c";
+    if (clab_tc_mode) { ClabTcFail(pc, Line, Raw); return; }
     ClabWording(Raw, msg, sizeof(msg));
     if (Col < 0) Col = 0;
     if (SourceText != NULL && strstr(msg, "undeclared (first use") != NULL &&
@@ -276,6 +314,7 @@ void ProgramFailNoParser(Picoc *pc, const char *Message, ...)
     va_end(Args);
     n = strlen(buf);
     while (n && (buf[n - 1] == '\n' || buf[n - 1] == '\r')) buf[--n] = 0;
+    if (clab_tc_mode) { ClabTcFail(pc, 0, buf); PlatformExit(pc, 1); }
     ClabWording(buf, msg, sizeof(msg));
     PlatformPrintf(pc->CStdOut, "main.c: error: %s\n", msg);
     PlatformExit(pc, 1);

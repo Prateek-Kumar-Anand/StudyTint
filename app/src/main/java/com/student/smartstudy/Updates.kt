@@ -19,6 +19,16 @@ object Updates {
 
     val changelog = listOf(
         Release(
+            "1.4.0",
+            listOf(
+                "C Lab now works like Turbo C: the whole program is checked first and every error and warning is listed the way Turbo C words it (Error NONAME00.C 5: Undefined symbol 'x' in function main)",
+                "Turbo C extras: Linker Error messages, \"Function should return a value\", \"'x' is declared but never used\", \"Call to function 'f' with no prototype\" and more",
+                "Turbo C run-time messages: Divide error, Floating point error: Divide by 0., Stack overflow!, Null pointer assignment, sqrt: DOMAIN error",
+                "Turbo C library functions such as gotoxy, textcolor, cprintf, delay, strupr, strrev, itoa and randomize",
+                "Switch between Turbo C and the old gcc style at the top of C Lab. Also fixed comma in for loops, several variables in a struct line, const, and pointer subtraction"
+            )
+        ),
+        Release(
             "1.3.0",
             listOf(
                 "Python Lab: new \"Get online\" tab. Search PyPI or pick a popular library and save it, with the libraries it needs, straight to internal storage, phone storage or the SD card",

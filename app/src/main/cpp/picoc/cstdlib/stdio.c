@@ -439,6 +439,22 @@ int StdioBaseScanf(struct ParseState *Parser, FILE *Stream, char *StrIn,
     int ArgCount = 0;
     void *ScanfArg[MAX_SCANF_ARGS];
 
+    {
+        extern int clab_tc_mode, clab_tc_float_used;
+        extern void ClabTcAbort(const char *what);
+        if (clab_tc_mode && !clab_tc_float_used) {
+            const char *q;
+            for (q = Format; *q; q++) {
+                if (*q != '%') continue;
+                q++;
+                if (*q == '%') continue;
+                while (*q && strchr("*0123456789lL", *q)) q++;
+                if (*q && strchr("feEgG", *q)) ClabTcAbort("scanf : floating point formats not linked");
+                if (!*q) break;
+            }
+        }
+    }
+
     if (Args->NumArgs > MAX_SCANF_ARGS)
         ProgramFail(Parser, "too many arguments to scanf() - %d max",
          MAX_SCANF_ARGS);

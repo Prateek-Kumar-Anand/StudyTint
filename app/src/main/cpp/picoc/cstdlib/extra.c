@@ -1,5 +1,10 @@
 /* extra standard headers for C Lab */
+#include <stdio.h>
+#include <unistd.h>
 #include "../interpreter.h"
+
+extern void StdioPrintf(struct ParseState *, struct Value *, struct Value **, int);
+extern void StdioScanf(struct ParseState *, struct Value *, struct Value **, int);
 
 #define L(s) s "\n"
 
@@ -132,7 +137,102 @@ static const char SignalDefs[] =
 static const char ConioDefs[] =
     L("int getch() { return getchar(); }")
     L("int getche() { return getchar(); }")
-    L("void clrscr() { }");
+    L("int ungetch(int c) { return c; }")
+    L("int putch(int c) { putchar(c); return c; }")
+    L("int cputs(char *s) { printf(\"%s\", s); return 0; }")
+    L("int kbhit() { return 1; }")
+    L("void clrscr() { }")
+    L("void clreol() { }")
+    L("void delline() { }")
+    L("void insline() { }")
+    L("void gotoxy(int x, int y) { }")
+    L("int wherex() { return 1; }")
+    L("int wherey() { return 1; }")
+    L("void textcolor(int c) { }")
+    L("void textbackground(int c) { }")
+    L("void textattr(int a) { }")
+    L("void textmode(int m) { }")
+    L("void window(int a, int b, int c, int d) { }")
+    L("void highvideo() { }")
+    L("void lowvideo() { }")
+    L("void normvideo() { }")
+    L("#define BLACK 0")
+    L("#define BLUE 1")
+    L("#define GREEN 2")
+    L("#define CYAN 3")
+    L("#define RED 4")
+    L("#define MAGENTA 5")
+    L("#define BROWN 6")
+    L("#define LIGHTGRAY 7")
+    L("#define DARKGRAY 8")
+    L("#define LIGHTBLUE 9")
+    L("#define LIGHTGREEN 10")
+    L("#define LIGHTCYAN 11")
+    L("#define LIGHTRED 12")
+    L("#define LIGHTMAGENTA 13")
+    L("#define YELLOW 14")
+    L("#define WHITE 15")
+    L("#define BLINK 128");
+
+static const char DosDefs[] =
+    L("void sound(int hz) { }")
+    L("void nosound() { }");
+
+/* Turbo C library functions that the standard headers do not have */
+static const char TcStdlibDefs[] =
+    L("char *itoa(int v, char *s, int r) { char t[40]; int i = 0, n = 0; long u = v; if (r == 10 && v < 0) { s[n++] = '-'; u = -u; } else if (v < 0) u = u & 4294967295; if (u == 0) t[i++] = '0'; while (u > 0) { int d = u % r; t[i++] = d < 10 ? '0' + d : 'a' + d - 10; u = u / r; } while (i > 0) s[n++] = t[--i]; s[n] = 0; return s; }")
+    L("char *ltoa(long v, char *s, int r) { char t[70]; int i = 0, n = 0; long u = v; if (r == 10 && v < 0) { s[n++] = '-'; u = -u; } if (u == 0) t[i++] = '0'; while (u > 0) { int d = u % r; t[i++] = d < 10 ? '0' + d : 'a' + d - 10; u = u / r; } while (i > 0) s[n++] = t[--i]; s[n] = 0; return s; }")
+    L("int random(int n) { return rand() % n; }")
+    L("void randomize() { srand((int)time(NULL)); }");
+
+static const char TcStringDefs[] =
+    L("int stricmp(char *a, char *b) { while (*a && tolower(*a) == tolower(*b)) { a++; b++; } return tolower(*a) - tolower(*b); }")
+    L("int strcmpi(char *a, char *b) { while (*a && tolower(*a) == tolower(*b)) { a++; b++; } return tolower(*a) - tolower(*b); }")
+    L("int strnicmp(char *a, char *b, size_t n) { while (n > 1 && *a && tolower(*a) == tolower(*b)) { a++; b++; n--; } return n == 0 ? 0 : tolower(*a) - tolower(*b); }")
+    L("int strncmpi(char *a, char *b, size_t n) { while (n > 1 && *a && tolower(*a) == tolower(*b)) { a++; b++; n--; } return n == 0 ? 0 : tolower(*a) - tolower(*b); }")
+    L("char *strupr(char *s) { char *p = s; while (*p) { *p = toupper(*p); p++; } return s; }")
+    L("char *strlwr(char *s) { char *p = s; while (*p) { *p = tolower(*p); p++; } return s; }")
+    L("char *strrev(char *s) { int i = 0, j = strlen(s) - 1; while (i < j) { char c = s[i]; s[i] = s[j]; s[j] = c; i++; j--; } return s; }")
+    L("char *strset(char *s, int c) { char *p = s; while (*p) { *p = c; p++; } return s; }")
+    L("char *strnset(char *s, int c, size_t n) { char *p = s; while (*p && n > 0) { *p = c; p++; n--; } return s; }")
+    L("char *stpcpy(char *d, char *s) { while (*s) { *d = *s; d++; s++; } *d = 0; return d; }");
+
+static const char TcMathDefs[] =
+    L("float pow10(int p) { return pow(10.0, p); }")
+    L("float fabsl(float x) { return fabs(x); }")
+    L("float sqrtl(float x) { return sqrt(x); }")
+    L("float sinl(float x) { return sin(x); }")
+    L("float cosl(float x) { return cos(x); }")
+    L("float tanl(float x) { return tan(x); }")
+    L("float expl(float x) { return exp(x); }")
+    L("float logl(float x) { return log(x); }")
+    L("float powl(float x, float y) { return pow(x, y); }")
+    L("float floorl(float x) { return floor(x); }")
+    L("float ceill(float x) { return ceil(x); }");
+
+static const char TcStdioDefs[] =
+    L("int flushall() { fflush(stdout); return 0; }")
+    L("int fgetchar() { return getchar(); }")
+    L("int unlink(char *p) { return remove(p); }");
+
+static void TcDelay(struct ParseState *Parser, struct Value *ReturnValue,
+    struct Value **Param, int NumArgs)
+{
+    long ms = Param[0]->Val->Integer;
+    if (ms > 1000) ms = 1000;
+    if (ms > 0) usleep((useconds_t)ms * 1000);
+}
+
+static struct LibraryFunction ConioFunctions[] = {
+    {StdioPrintf, "int cprintf(char *, ...);"},
+    {StdioScanf, "int cscanf(char *, ...);"},
+    {NULL, NULL}
+};
+
+static struct LibraryFunction DosFunctions[] = {
+    {TcDelay, "void delay(int);"},
+    {NULL, NULL}
+};
 
 static const char Iso646Defs[] =
     L("#define and &&")
@@ -223,8 +323,8 @@ static void SetupStdarg(Picoc *pc) { IncludeFile(pc, "stdio.h"); }
 static void SetupConio(Picoc *pc) { IncludeFile(pc, "stdio.h"); }
 static void SetupMath(Picoc *pc) { MathSetupFunc(pc); }
 static void SetupStdio(Picoc *pc) { IncludeFile(pc, "__types.h"); StdioSetupFunc(pc); }
-static void SetupStdlib(Picoc *pc) { IncludeFile(pc, "__types.h"); StdlibSetupFunc(pc); }
-static void SetupString(Picoc *pc) { IncludeFile(pc, "__types.h"); StringSetupFunc(pc); }
+static void SetupStdlib(Picoc *pc) { IncludeFile(pc, "__types.h"); IncludeFile(pc, "time.h"); StdlibSetupFunc(pc); }
+static void SetupString(Picoc *pc) { IncludeFile(pc, "__types.h"); IncludeFile(pc, "ctype.h"); StringSetupFunc(pc); }
 static void SetupTime(Picoc *pc) { IncludeFile(pc, "__types.h"); StdTimeSetupFunc(pc); }
 static void SetupUnistd(Picoc *pc) { IncludeFile(pc, "__types.h"); }
 
@@ -253,7 +353,14 @@ void ExtraIncludeInit(Picoc *pc)
     Reg(pc, "stdarg.h", SetupStdarg, NULL);
     Reg(pc, "locale.h", SetupEmpty, LocaleDefs);
     Reg(pc, "signal.h", SetupEmpty, SignalDefs);
-    Reg(pc, "conio.h", SetupConio, ConioDefs);
+    IncludeRegister(pc, "conio.h", SetupConio, ConioFunctions, ConioDefs);
+    IncludeRegister(pc, "dos.h", SetupConio, DosFunctions, DosDefs);
+    Reg(pc, "process.h", SetupToStdlib, NULL);
+    Reg(pc, "io.h", SetupWithStdio, NULL);
+    Reg(pc, "mem.h", SetupToString, NULL);
+    Reg(pc, "alloc.h", SetupToStdlib, NULL);
+    Reg(pc, "dir.h", SetupEmpty, NULL);
+    Reg(pc, "bios.h", SetupEmpty, NULL);
     Reg(pc, "iso646.h", SetupEmpty, Iso646Defs);
     Reg(pc, "malloc.h", SetupToStdlib, NULL);
     Reg(pc, "memory.h", SetupToString, NULL);
@@ -271,9 +378,13 @@ void ExtraIncludeInit(Picoc *pc)
 }
 
 /* C source added to the standard headers (used by IncludeInit) */
-const char *ExtraMathDefs(void) { return MathDefs; }
-const char *ExtraStdlibDefs(void) { return StdlibExtraDefs; }
-const char *ExtraStringDefs(void) { return StringExtraDefs; }
+static char MathAll[8192], StdlibAll[8192], StringAll[8192];
+extern const char StdioDefs[];
+static char StdioAll[8192];
+const char *ExtraStdioDefs(void) { snprintf(StdioAll, sizeof StdioAll, "%s%s", StdioDefs, TcStdioDefs); return StdioAll; }
+const char *ExtraMathDefs(void) { snprintf(MathAll, sizeof MathAll, "%s%s", MathDefs, TcMathDefs); return MathAll; }
+const char *ExtraStdlibDefs(void) { snprintf(StdlibAll, sizeof StdlibAll, "%s%s", StdlibExtraDefs, TcStdlibDefs); return StdlibAll; }
+const char *ExtraStringDefs(void) { snprintf(StringAll, sizeof StringAll, "%s%s", StringExtraDefs, TcStringDefs); return StringAll; }
 void ExtraSetupStdio(Picoc *pc) { SetupStdio(pc); }
 void ExtraSetupStdlib(Picoc *pc) { SetupStdlib(pc); }
 void ExtraSetupString(Picoc *pc) { SetupString(pc); }

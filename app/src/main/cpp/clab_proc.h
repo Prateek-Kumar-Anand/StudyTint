@@ -11,7 +11,8 @@
 typedef struct ClabProc ClabProc;
 
 /* Starts the program.  timeout_ms counts only time spent running, not time spent waiting for input. */
-ClabProc *clab_proc_start(const char *src, const char *dir, int timeout_ms);
+/* mode: 1 = Turbo C, 0 = plain interpreter */
+ClabProc *clab_proc_start(const char *src, const char *dir, int timeout_ms, int mode);
 
 /* Waits up to wait_ms for output.  Returns the number of bytes copied into buf (may be 0). */
 int clab_proc_poll(ClabProc *p, char *buf, int cap, int wait_ms, int *flags);

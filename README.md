@@ -38,7 +38,10 @@ connection and your progress never leaves the device.
 - **Highlights.** Star any unit to collect it on a dedicated screen.
 - **C Lab.** Write, run and test C programs on your phone using an embedded
   [picoc](https://github.com/zsaleeba/picoc) interpreter, with a syntax-highlighted editor,
-  sample programs, input support and a run timeout.
+  sample programs, input support and a run timeout. In **Turbo C** mode (the default) a front end written for this app
+  reads the whole program first, like Turbo C++ 3.0 compiling `NONAME00.C`, and prints Turbo C style errors, warnings
+  and linker errors; only a program with no errors is run, and run-time failures print Turbo C's messages
+  (`Divide error`, `Null pointer assignment`, ...). A **gcc style** switch keeps the earlier behaviour.
 - **Python Lab.** Write and run real Python 3.12 (CPython via [Chaquopy](https://chaquo.com/chaquopy/)) with genuine
   tracebacks, `input()` support, a time limit and a Stop button. Choose where its files live (internal storage,
   phone storage or SD card), import pure-Python libraries from a folder, `.py`, `.zip` or `.whl`, and save scripts.
@@ -71,12 +74,12 @@ StudyTint/
 │   │   ├── Data.kt            # Subjects, units and quiz banks
 │   │   ├── Dashboard.kt       # Score and analysis screen
 │   │   ├── Profile.kt         # Profile card and setup form
-│   │   ├── CLab.kt            # C Lab editor and runner
+│   │   ├── CLab.kt            # C Lab editor and runner (Turbo C / gcc mode switch)
 │   │   ├── PyLab.kt           # Python Lab: editor, storage choice, library import
 │   │   ├── Updates.kt         # Data migrations and "What's new"
 │   │   └── Motion.kt          # Shared tap and press animation
 │   ├── python/                # Python Lab runner (pylab_runner.py)
-│   ├── cpp/                   # picoc interpreter, JNI bridge and CMake build
+│   ├── cpp/                   # picoc interpreter, Turbo C checker (tc_*.c), JNI bridge and CMake build
 │   ├── assets/                # Notes and question banks (JSON)
 │   └── res/                   # Icons, colours, theme
 ├── .github/workflows/android.yml

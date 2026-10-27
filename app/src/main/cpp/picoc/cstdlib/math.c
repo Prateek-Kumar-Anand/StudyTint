@@ -1,5 +1,16 @@
 /*  */
 #include <math.h>
+#include <stdio.h>
+
+extern int clab_tc_mode;
+
+/* Turbo C's math library reports domain / singularity errors on the screen and carries on */
+static void TcMathErr(const char *fn, const char *kind)
+{
+    fflush(stdout);
+    fprintf(stderr, "%s: %s error\n", fn, kind);
+    fflush(stderr);
+}
 
 #include "../interpreter.h"
 
@@ -40,12 +51,14 @@ void MathTan(struct ParseState *Parser, struct Value *ReturnValue,
 void MathAsin(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (clab_tc_mode && (Param[0]->Val->FP > 1.0 || Param[0]->Val->FP < -1.0)) { TcMathErr("asin", "DOMAIN"); ReturnValue->Val->FP = 0; return; }
     ReturnValue->Val->FP = asin(Param[0]->Val->FP);
 }
 
 void MathAcos(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (clab_tc_mode && (Param[0]->Val->FP > 1.0 || Param[0]->Val->FP < -1.0)) { TcMathErr("acos", "DOMAIN"); ReturnValue->Val->FP = 0; return; }
     ReturnValue->Val->FP = acos(Param[0]->Val->FP);
 }
 
@@ -112,12 +125,20 @@ void MathLdexp(struct ParseState *Parser, struct Value *ReturnValue,
 void MathLog(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (clab_tc_mode && Param[0]->Val->FP <= 0.0) {
+        TcMathErr("log", Param[0]->Val->FP == 0.0 ? "SING" : "DOMAIN");
+        ReturnValue->Val->FP = -HUGE_VAL; return;
+    }
     ReturnValue->Val->FP = log(Param[0]->Val->FP);
 }
 
 void MathLog10(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (clab_tc_mode && Param[0]->Val->FP <= 0.0) {
+        TcMathErr("log10", Param[0]->Val->FP == 0.0 ? "SING" : "DOMAIN");
+        ReturnValue->Val->FP = -HUGE_VAL; return;
+    }
     ReturnValue->Val->FP = log10(Param[0]->Val->FP);
 }
 
@@ -136,6 +157,7 @@ void MathPow(struct ParseState *Parser, struct Value *ReturnValue,
 void MathSqrt(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (clab_tc_mode && Param[0]->Val->FP < 0.0) { TcMathErr("sqrt", "DOMAIN"); ReturnValue->Val->FP = 0; return; }
     ReturnValue->Val->FP = sqrt(Param[0]->Val->FP);
 }
 

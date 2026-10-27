@@ -265,7 +265,10 @@ void TypeParseStruct(struct ParseState *Parser, struct ValueType **Typ,
         STRUCT_TABLE_SIZE, true);
 
     do {
-        TypeParse(Parser, &MemberType, &MemberIdentifier, NULL);
+        struct ValueType *MemberBase = NULL;
+        TypeParseFront(Parser, &MemberBase, NULL);
+        do {
+        TypeParseIdentPart(Parser, MemberBase, &MemberType, &MemberIdentifier);
         if (MemberType == NULL || MemberIdentifier == NULL)
             ProgramFail(Parser, "invalid type in struct");
 
@@ -297,6 +300,10 @@ void TypeParseStruct(struct ParseState *Parser, struct ValueType **Typ,
         if (!TableSet(pc, (*Typ)->Members, MemberIdentifier, MemberValue,
                 Parser->FileName, Parser->Line, Parser->CharacterPos))
             ProgramFail(Parser, "member '%s' already defined", &MemberIdentifier);
+
+        if (LexGetToken(Parser, NULL, false) != TokenComma) break;
+        LexGetToken(Parser, NULL, true);
+        } while (1);
 
         if (LexGetToken(Parser, NULL, true) != TokenSemicolon)
             ProgramFail(Parser, "semicolon expected");

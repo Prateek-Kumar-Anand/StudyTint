@@ -6,6 +6,8 @@
 
 
 /* initialize the built-in include libraries */
+extern const char *ExtraStdioDefs(void);
+
 void IncludeInit(Picoc *pc)
 {
     IncludeRegister(pc, "ctype.h", NULL, &StdCtypeFunctions[0], NULL);
@@ -14,7 +16,7 @@ void IncludeInit(Picoc *pc)
     IncludeRegister(pc, "math.h", &ExtraSetupMath, &MathFunctions[0], ExtraMathDefs());
 # endif
     IncludeRegister(pc, "stdbool.h", &StdboolSetupFunc, NULL, StdboolDefs);
-    IncludeRegister(pc, "stdio.h", &ExtraSetupStdio, &StdioFunctions[0], StdioDefs);
+    IncludeRegister(pc, "stdio.h", &ExtraSetupStdio, &StdioFunctions[0], ExtraStdioDefs());
     IncludeRegister(pc, "stdlib.h", &ExtraSetupStdlib, &StdlibFunctions[0], ExtraStdlibDefs());
     IncludeRegister(pc, "string.h", &ExtraSetupString, &StringFunctions[0], ExtraStringDefs());
     IncludeRegister(pc, "time.h", &ExtraSetupTime, &StdTimeFunctions[0], StdTimeDefs);
