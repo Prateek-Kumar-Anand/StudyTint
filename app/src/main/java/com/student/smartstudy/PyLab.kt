@@ -65,8 +65,8 @@ import java.io.IOException
 
 enum class PyStore(val label: String, val hint: String) {
     Internal("Internal storage", "Private to this app. Always available."),
-    Shared("Phone storage", "App folder on shared storage. Visible in a file manager under Android/data."),
-    Sd("SD card", "App folder on the SD card. Needs a card to be inserted.")
+    Shared("Phone storage", "App folder on shared storage, visible in a file manager under Android/data. Other apps may be able to change files here, so keep only code you trust."),
+    Sd("SD card", "App folder on the SD card. Needs a card to be inserted. Other apps may be able to change files here, so keep only code you trust.")
 }
 
 object PyStorage {
@@ -304,6 +304,7 @@ private val pyBuiltins = setOf(
 private class PyHighlight : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val s = text.text
+        if (s.length > 40_000) return TransformedText(text, OffsetMapping.Identity)   // colouring a huge text on every key press would make typing lag
         val b = AnnotatedString.Builder(s)
         var i = 0
         while (i < s.length) {

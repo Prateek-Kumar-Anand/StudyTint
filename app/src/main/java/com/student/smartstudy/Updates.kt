@@ -19,6 +19,15 @@ object Updates {
 
     val changelog = listOf(
         Release(
+            "1.5.2",
+            listOf(
+                "Security: library downloads only come from PyPI, every file must match its checksum, and C programs can only use files in their own folder",
+                "Security: the SQL lab blocks ATTACH and extensions, so an imported database cannot touch other files; the app is no longer debuggable and has no cloud backup",
+                "Stability: a Python program that uses far too much memory is stopped instead of crashing the app, and notes load in the background so the app opens faster",
+                "Smoother scrolling: a faster release build, lighter press animations, and long program output no longer slows the screen"
+            )
+        ),
+        Release(
             "1.5.1",
             listOf(
                 "Removed the Highlighted topics screen and the star on units; the home screen now shows Score, C Lab, Python Lab and DBMS Lab"

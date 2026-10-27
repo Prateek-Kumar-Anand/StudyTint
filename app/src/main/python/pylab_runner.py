@@ -184,9 +184,35 @@ def stop():
         _raise_in(tid, _Stop)
 
 
+def _rss_mb():
+    try:
+        with open("/proc/self/statm") as f:
+            return int(f.read().split()[1]) * os.sysconf("SC_PAGE_SIZE") / 1048576.0
+    except Exception:
+        return 0.0
+
+
+def _memory_limit_mb():
+    """About 45% of the phone's RAM, kept between 600 MB and 2.5 GB: a runaway program is stopped before Android kills the app."""
+    try:
+        with open("/proc/meminfo") as f:
+            kb = int(f.readline().split()[1])
+        return max(600.0, min(2500.0, kb / 1024.0 * 0.45))
+    except Exception:
+        return 1200.0
+
+
 def _watchdog(timeout, t_start, stop_evt):
-    """Stops the program when it has been *running* for `timeout` seconds. Waiting for input does not count."""
+    """Stops the program when it has been *running* for `timeout` seconds (waiting for input does not count)
+    or when it uses far too much memory."""
+    mem_limit = _memory_limit_mb()
     while not stop_evt.wait(0.05):
+        if _rss_mb() > mem_limit:
+            tid = _state.get("tid")
+            if tid is not None:
+                _state["reason"] = "memory"
+                _raise_in(tid, _Stop)
+            return
         waited = _state["waited"]
         ws = _state["wait_start"]
         if ws is not None:
@@ -285,6 +311,8 @@ def run(code, work_dir, lib_paths, timeout):
         importlib.invalidate_caches()
     if out.truncated:
         status = "stopped: too much output"
+    elif reason == "memory":
+        status = "stopped: used too much memory"
     elif reason == "timeout":
         status = "stopped: ran longer than %d seconds" % int(timeout)
     elif reason == "user":

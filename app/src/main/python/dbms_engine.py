@@ -20,9 +20,47 @@ def _connect(path):
     conn = _conns.get(path)
     if conn is None:
         conn = sqlite3.connect(path, isolation_level=None, check_same_thread=False, timeout=5)
+        _harden(conn)
         conn.execute("PRAGMA foreign_keys = ON")
         _conns[path] = conn
     return conn
+
+
+def _harden(conn):
+    """A database file can come from anywhere (an imported .db, a pasted script), so the connection is locked down:
+    no ATTACH (it could create files anywhere in the app's storage), no extensions, no raw schema edits, no unsafe
+    functions inside views and triggers, and limits on how big one value or statement may be."""
+    try:
+        conn.enable_load_extension(False)
+    except Exception:
+        pass
+    for name, value in (("SQLITE_LIMIT_ATTACHED", 0), ("SQLITE_LIMIT_LENGTH", 100_000_000),
+                        ("SQLITE_LIMIT_SQL_LENGTH", 5_000_000), ("SQLITE_LIMIT_VARIABLE_NUMBER", 999)):
+        try:
+            conn.setlimit(getattr(sqlite3, name), value)
+        except Exception:
+            pass
+    try:
+        conn.setconfig(sqlite3.SQLITE_DBCONFIG_DEFENSIVE, True)
+        conn.setconfig(sqlite3.SQLITE_DBCONFIG_TRUSTED_SCHEMA, False)
+    except Exception:
+        pass
+    try:
+        conn.set_authorizer(_authorizer)
+    except Exception:
+        pass
+
+
+_DENIED = {getattr(sqlite3, n) for n in ("SQLITE_ATTACH", "SQLITE_DETACH") if hasattr(sqlite3, n)}
+
+
+def _authorizer(action, arg1, arg2, db_name, source):
+    if action in _DENIED:
+        return sqlite3.SQLITE_DENY
+    return sqlite3.SQLITE_OK
+
+
+_RE_VACUUM_INTO = re.compile(r"^\s*VACUUM\b.*\bINTO\b", re.I | re.S)
 
 
 def close_db(path):
@@ -214,6 +252,8 @@ def _hint(stmt, err):
         h = table.get(fn)
         if h:
             return h
+    if "not authorized" in low:
+        return "This command is blocked in the lab for safety (ATTACH and loading extensions are not allowed)."
     if "ambiguous column name" in low:
         return "More than one table has that column. Prefix it with the table or alias, e.g.  S.name."
     if low.startswith("no such column") and '"' in stmt:
@@ -324,6 +364,8 @@ def run(path, text, timeout_sec=15, max_rows=1000, stop_on_error=True, line_offs
                                 (tname,)).fetchone()
                             if row is None:
                                 raise sqlite3.OperationalError("Table '%s' doesn't exist" % tname)
+                    if _RE_VACUUM_INTO.match(stmt):
+                        raise sqlite3.OperationalError("VACUUM INTO is turned off here because it writes a file outside the lab")
                     cur = conn.execute(sql, params)
                     if cur.description is not None:
                         cols = [d[0] for d in cur.description]

@@ -25,19 +25,24 @@ android {
     // A fixed signing key keeps every build installable over the previous one (updates keep your data).
     signingConfigs {
         create("studytint") {
-            storeFile = file("studytint.jks")
-            storePassword = "studytint"
-            keyAlias = "studytint"
-            keyPassword = "studytint"
+            // SECURITY: the key in the repository is public. For a build nobody else can sign, put your own key in
+            // GitHub Secrets (see the README) and these variables take over; the repository key is only the fallback.
+            storeFile = System.getenv("STUDYTINT_KEYSTORE")?.takeIf { it.isNotBlank() }?.let { file(it) } ?: file("studytint.jks")
+            storePassword = System.getenv("STUDYTINT_STORE_PASSWORD") ?: "studytint"
+            keyAlias = System.getenv("STUDYTINT_KEY_ALIAS") ?: "studytint"
+            keyPassword = System.getenv("STUDYTINT_KEY_PASSWORD") ?: "studytint"
         }
     }
     externalNativeBuild { cmake { path = file("src/main/cpp/CMakeLists.txt") } }
     buildTypes {
         debug { signingConfig = signingConfigs.getByName("studytint") }
+        // The release build is what CI ships: not debuggable (nobody can attach a debugger or read the app's data with run-as)
+        // and noticeably smoother than a debug build. Code shrinking stays off because the C engine is called through JNI by name.
         release {
             signingConfig = signingConfigs.getByName("studytint")
-            isMinifyEnabled = true; isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            isDebuggable = false
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }

@@ -5,8 +5,9 @@ on:
     branches: ["**"]
   pull_request:
   workflow_dispatch:
+# The build job can only read the repository. Only the release job below may write, and only for tags.
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
@@ -16,23 +17,44 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 17 }
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: "8.7" }
-      - name: Build debug APK
+      - name: Use your private signing key (only if you added the secrets)
+        env:
+          KS_B64: ${{ secrets.KEYSTORE_BASE64 }}
+          KS_PASS: ${{ secrets.KEYSTORE_PASSWORD }}
+          KS_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KS_KEYPASS: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            {
+              echo "STUDYTINT_KEYSTORE=$RUNNER_TEMP/release.jks"
+              echo "STUDYTINT_STORE_PASSWORD=$KS_PASS"
+              echo "STUDYTINT_KEY_ALIAS=$KS_ALIAS"
+              echo "STUDYTINT_KEY_PASSWORD=${KS_KEYPASS:-$KS_PASS}"
+            } >> "$GITHUB_ENV"
+            echo "Signing with the private key from repository secrets."
+          else
+            echo "No private key in secrets: signing with the key stored in the repository."
+          fi
+      - name: Build release APK
         run: |
           mkdir -p logs
           set -o pipefail
-          gradle assembleDebug --stacktrace --warning-mode all 2>&1 | tee logs/build.log
+          gradle assembleRelease --stacktrace --warning-mode all 2>&1 | tee logs/build.log
       - name: Name the APK with its version
         if: success()
         run: |
           . <(grep -E '^VERSION_' version.properties)
           mkdir -p dist
-          cp app/build/outputs/apk/debug/app-debug.apk "dist/StudyTint-v${VERSION_NAME}-build${GITHUB_RUN_NUMBER}.apk"
+          cp app/build/outputs/apk/release/app-release.apk "dist/StudyTint-v${VERSION_NAME}-build${GITHUB_RUN_NUMBER}.apk"
       - name: Extract error log
         if: always()
         run: |
@@ -50,12 +72,22 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: StudyTint-debug-apk
+          name: StudyTint-apk
           path: dist/*.apk
           if-no-files-found: error
           retention-days: 30
-      - name: Publish release (tags only)
-        if: success() && startsWith(github.ref, 'refs/tags/v')
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: StudyTint-apk
+          path: dist
+      - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*.apk

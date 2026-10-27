@@ -19,12 +19,13 @@ import androidx.compose.ui.graphics.graphicsLayer
 fun Modifier.tap(shape: Shape, onClick: () -> Unit): Modifier = composed {
     val src = remember { MutableInteractionSource() }
     val pressed by src.collectIsPressedAsState()
-    val scale by animateFloatAsState(
+    // the animated value is read inside graphicsLayer, so a press redraws this one card instead of recomposing it every frame
+    val scale = animateFloatAsState(
         if (pressed) 0.97f else 1f,
         spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessMedium),
         label = "tap"
     )
-    this.graphicsLayer { scaleX = scale; scaleY = scale }
+    this.graphicsLayer { scaleX = scale.value; scaleY = scale.value }
         .clip(shape)
         .clickable(interactionSource = src, indication = LocalIndication.current, onClick = onClick)
 }

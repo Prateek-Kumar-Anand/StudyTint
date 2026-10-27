@@ -114,6 +114,7 @@ private val sqlFunctions = listOf(
 private class SqlHighlight : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val s = text.text
+        if (s.length > 40_000) return TransformedText(text, OffsetMapping.Identity)   // colouring a huge text on every key press would make typing lag
         val b = AnnotatedString.Builder(s)
         var i = 0
         while (i < s.length) {
@@ -444,13 +445,24 @@ fun DbLabScreen(back: () -> Unit) {
     fun importUri(uri: Uri) {
         Thread {
             try {
-                val bytes = ctx.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                // read at most 40 MB so a huge file cannot use up the phone's memory
+                val limit = 40_000_000
+                val bytes = ctx.contentResolver.openInputStream(uri)?.use { ins ->
+                    val out = java.io.ByteArrayOutputStream()
+                    val buf = ByteArray(64 * 1024)
+                    while (out.size() <= limit) {
+                        val n = ins.read(buf)
+                        if (n < 0) break
+                        out.write(buf, 0, n)
+                    }
+                    out.toByteArray()
+                }
                 if (bytes == null) {
                     toastOnMain(appCtx, "Could not open that file")
                     return@Thread
                 }
-                if (bytes.size > 40_000_000) {
-                    toastOnMain(appCtx, "That file is too large")
+                if (bytes.size > limit) {
+                    toastOnMain(appCtx, "That file is too large (the limit is 40 MB)")
                     return@Thread
                 }
                 val display = ctx.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)

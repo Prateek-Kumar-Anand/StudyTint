@@ -3,6 +3,9 @@ package com.student.smartstudy
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -35,7 +38,8 @@ data class Sec(val n: Int, val t: String, val k: String, val s: String, val b: L
 @Immutable
 data class Rich(val title: String, val intro: String, val sec: List<Sec>)
 
-var rich: Map<String, Rich> = emptyMap()
+/** The detailed notes. Filled in by [loadRich] in the background; being Compose state, screens update the moment it is ready. */
+var rich: Map<String, Rich> by mutableStateOf(emptyMap())
     private set
 
 private fun strs(a: JSONArray) = (0 until a.length()).map { a.getString(it) }
@@ -79,7 +83,13 @@ private val NOTE_FILES = listOf(
     "c:3" to "C_Pointers_Structures_Memory_Files_Preprocessor_Notes.json"
 )
 
+/** Parses the notes on a background thread so the app opens straight away (about 2.7 MB of JSON). */
 fun loadRich(ctx: Context) {
+    val app = ctx.applicationContext
+    Thread(null, { loadRichNow(app) }, "load-notes").start()
+}
+
+private fun loadRichNow(ctx: Context) {
     val m = mutableMapOf<String, Rich>()
     for ((key, file) in NOTE_FILES) {
         try {

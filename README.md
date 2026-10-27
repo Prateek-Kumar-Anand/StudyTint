@@ -126,7 +126,7 @@ Quiz banks are JSON arrays of objects with the keys `u` (unit), `q` (question), 
 
 1. Push the repository to GitHub.
 2. Open the **Actions** tab and run **Build APK** (it also runs on every push).
-3. Download **StudyTint-debug-apk** from the run's artifacts.
+3. Download **StudyTint-apk** from the run's artifacts.
 4. If a build fails, download **build-logs** (`build.log`, `errors.log` and the Gradle reports).
 
 ### Locally
@@ -135,10 +135,28 @@ Requirements: JDK 17, Android SDK 34, and the NDK and CMake from the SDK Manager
 
 ```bash
 gradle assembleDebug
-# APK: app/build/outputs/apk/debug/app-debug.apk
+# APK: app/build/outputs/apk/debug/app-debug.apk   (GitHub Actions builds the smoother, non-debuggable release variant)
 ```
 
 You can also open the folder in Android Studio (Koala or newer) and run it on a device or emulator.
+
+## Security
+
+What the app does to protect you and your data (see `SECURITY.md` for the full audit):
+
+- Everything stays on the phone: no account, no analytics, no cloud backup, and the build is not debuggable.
+- Internet is used only by Python Lab "Get online". It talks to PyPI over https, accepts files only from PyPI's own servers
+  and saves a file only when it matches the checksum PyPI published.
+- C programs run in a separate process with CPU, output and file-size limits, can only open files inside their own folder,
+  and cannot run shell commands.
+- The SQL lab blocks `ATTACH`, extensions and `VACUUM INTO`, and treats imported `.db` files as untrusted.
+- Python programs are stopped when they run too long or use far too much memory.
+
+**Use your own signing key.** `app/studytint.jks` and its password are public in this repository, so anyone could build an APK
+that Android would accept as an update to yours. To fix that for your own builds, create a key and add four repository secrets
+(Settings > Secrets and variables > Actions): `KEYSTORE_BASE64` (`base64 -w0 my.jks`), `KEYSTORE_PASSWORD`, `KEY_ALIAS` and
+`KEY_PASSWORD`. The workflow then signs with it automatically. A new key means installing the new APK once as a fresh install
+(Android will not update across different keys), so export what you need first.
 
 ## Releasing an update
 

@@ -163,6 +163,7 @@ private val EditorFg = Color(0xFFE6E6F0)
 private class CHighlight : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val s = text.text
+        if (s.length > 40_000) return TransformedText(text, OffsetMapping.Identity)   // colouring a huge text on every key press would make typing lag
         val b = AnnotatedString.Builder(s)
         var i = 0
         while (i < s.length) {
@@ -518,11 +519,17 @@ private val tcWarn = Regex("^Warning NONAME00\\.C \\d+:.*")
 private val tcHead = Regex("^(Compiling NONAME00\\.C:|Linking NONAME00\\.EXE:|\\s+Errors: \\d+\\s+Warnings: \\d+.*)$")
 private val tcAbort = Regex("^(Abnormal program termination|Divide error|Floating point error:.*|Stack overflow!|Null pointer assignment|scanf : floating point formats not linked|C Lab could not.*)$")
 
+private fun mayBeDiagnostic(l: String): Boolean =
+    l.length < 400 && (l.contains("rror") || l.contains("arning") || l.startsWith("Compiling") || l.startsWith("Linking") ||
+        l.startsWith("Abnormal") || l.startsWith("Divide") || l.startsWith("Floating") || l.startsWith("Stack") ||
+        l.startsWith("Null") || l.startsWith("scanf") || l.startsWith("C Lab") || l.trimStart().startsWith("|") || l.trimStart().startsWith("Errors"))
+
 private fun colorDiagnostics(out: String): androidx.compose.ui.text.AnnotatedString =
     androidx.compose.ui.text.buildAnnotatedString {
         val lines = out.split("\n")
         lines.forEachIndexed { i, l ->
-            val style = when {
+            // most lines are ordinary program output: skip the seven regular expressions for them
+            val style = if (!mayBeDiagnostic(l)) null else when {
                 tcError.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFF6B6B), fontWeight = FontWeight.Bold)
                 tcWarn.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFFFFD166), fontWeight = FontWeight.Bold)
                 tcHead.matches(l) -> androidx.compose.ui.text.SpanStyle(color = Color(0xFF8AB4F8), fontWeight = FontWeight.Bold)

@@ -229,6 +229,7 @@ object PyOnline {
             if (!satisfies(w.version, req.specs, true)) continue
             val hashes = o.optJSONObject("hashes")
             val sha = if (hashes == null) "" else str(hashes, "sha256")
+            if (!Regex("[0-9a-fA-F]{64}").matches(sha)) continue      // never save a file we cannot verify
             val rf = RemoteFile(filename, str(o, "url"), sha, o.optLong("size", -1L), w.version)
             if (rf.url.isEmpty()) continue
             if (ver.pre) preCandidates += ver to rf else candidates += ver to rf
@@ -283,7 +284,7 @@ object PyOnline {
             }
             if (f.size > 0 && total != f.size) throw IOException("$label was cut off (${formatBytes(total)} of ${formatBytes(f.size)})")
             val got = md.digest().joinToString("") { "%02x".format(it) }
-            if (f.sha256.isNotEmpty() && !got.equals(f.sha256, ignoreCase = true)) {
+            if (!got.equals(f.sha256, ignoreCase = true)) {
                 throw OnlineException("$label did not match its checksum, so it was not saved.")
             }
             if (!looksLikeWheel(part)) throw OnlineException("$label is not a valid library file.")
@@ -324,16 +325,36 @@ object PyOnline {
 
     private class NotFound : IOException("Not found")
 
+    /** Only PyPI itself and its file host may be contacted (a redirect or a link inside PyPI's answer cannot send us elsewhere). */
+    private fun hostAllowed(host: String): Boolean {
+        if (allowHttp) return true                       // tests only
+        val h = host.lowercase()
+        return h == "pypi.org" || h == "files.pythonhosted.org" || h.endsWith(".pypi.org")
+    }
+
     private fun open(url: String, accept: String?): HttpURLConnection {
-        val u = java.net.URI(url).toURL()
-        if (u.protocol != "https" && !(allowHttp && u.protocol == "http")) throw OnlineException("Only secure (https) downloads are allowed.")
-        val c = u.openConnection() as HttpURLConnection
-        c.connectTimeout = 15000
-        c.readTimeout = 30000
-        c.instanceFollowRedirects = true
-        c.setRequestProperty("User-Agent", UA)
-        if (accept != null) c.setRequestProperty("Accept", accept)
-        return c
+        var current = url
+        repeat(5) {
+            val u = java.net.URI(current).toURL()
+            if (u.protocol != "https" && !(allowHttp && u.protocol == "http")) throw OnlineException("Only secure (https) downloads are allowed.")
+            if (!hostAllowed(u.host ?: "")) throw OnlineException("Blocked a download from an unexpected server (${u.host}).")
+            val c = u.openConnection() as HttpURLConnection
+            c.connectTimeout = 15000
+            c.readTimeout = 30000
+            c.instanceFollowRedirects = false            // redirects are followed by hand so every hop is checked
+            c.setRequestProperty("User-Agent", UA)
+            if (accept != null) c.setRequestProperty("Accept", accept)
+            val code = c.responseCode
+            if (code == 301 || code == 302 || code == 303 || code == 307 || code == 308) {
+                val loc = c.getHeaderField("Location")
+                c.disconnect()
+                if (loc.isNullOrBlank()) throw IOException("The server sent a bad redirect")
+                current = java.net.URI(current).resolve(loc).toString()
+            } else {
+                return c
+            }
+        }
+        throw IOException("Too many redirects")
     }
 
     private fun getText(url: String, accept: String): String {

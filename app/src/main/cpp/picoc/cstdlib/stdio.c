@@ -546,10 +546,22 @@ int StdioBaseScanf(struct ParseState *Parser, FILE *Stream, char *StrIn,
     }
 }
 
+/* C Lab programs may only touch files inside their own work folder: no absolute paths, no ".." */
+static int ClabPathOk(const char *p)
+{
+    const char *q;
+    if (p == NULL || p[0] == 0 || p[0] == '/') return 0;
+    for (q = p; *q; q++) {
+        if ((q == p || q[-1] == '/') && q[0] == '.' && q[1] == '.' && (q[2] == '/' || q[2] == 0)) return 0;
+    }
+    return 1;
+}
+
 /* stdio calls */
 void StdioFopen(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (!ClabPathOk(Param[0]->Val->Pointer)) { errno = EACCES; ReturnValue->Val->Pointer = NULL; return; }
     ReturnValue->Val->Pointer = fopen(Param[0]->Val->Pointer,
         Param[1]->Val->Pointer);
 }
@@ -557,6 +569,7 @@ void StdioFopen(struct ParseState *Parser, struct Value *ReturnValue,
 void StdioFreopen(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (!ClabPathOk(Param[0]->Val->Pointer)) { errno = EACCES; ReturnValue->Val->Pointer = NULL; return; }
     ReturnValue->Val->Pointer = freopen(Param[0]->Val->Pointer,
         Param[1]->Val->Pointer, Param[2]->Val->Pointer);
 }
@@ -597,12 +610,14 @@ void StdioFgets(struct ParseState *Parser, struct Value *ReturnValue,
 void StdioRemove(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (!ClabPathOk(Param[0]->Val->Pointer)) { errno = EACCES; ReturnValue->Val->Integer = -1; return; }
     ReturnValue->Val->Integer = remove(Param[0]->Val->Pointer);
 }
 
 void StdioRename(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
+    if (!ClabPathOk(Param[0]->Val->Pointer) || !ClabPathOk(Param[1]->Val->Pointer)) { errno = EACCES; ReturnValue->Val->Integer = -1; return; }
     ReturnValue->Val->Integer = rename(Param[0]->Val->Pointer,
         Param[1]->Val->Pointer);
 }

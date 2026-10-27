@@ -37,6 +37,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+private const val MAX_SHOWN = 30_000
+
 /**
  * The output box shared by C Lab and Python Lab. While a program runs, a prompt line at the bottom
  * of the box lets you type what the program asks for (scanf / input()) and press Enter, like a terminal.
@@ -58,8 +60,15 @@ fun ConsoleBox(
     ) {
         Text("Output", fontSize = 12.sp, color = Color(0xFF8A8A94))
         Spacer(Modifier.padding(top = 6.dp))
+        // Laying out a very long text on every update makes the whole screen stutter, so only the last part is drawn.
+        val shown = if (output.length > MAX_SHOWN) {
+            androidx.compose.ui.text.buildAnnotatedString {
+                append("… earlier output hidden …\n")
+                append(output.subSequence(output.length - MAX_SHOWN, output.length))
+            }
+        } else output
         SelectionContainer {
-            Text(output, fontFamily = mono, fontSize = 13.sp, color = Color(0xFFE6E6F0), lineHeight = 19.sp)
+            Text(shown, fontFamily = mono, fontSize = 13.sp, color = Color(0xFFE6E6F0), lineHeight = 19.sp)
         }
         if (running) ConsoleInput(waiting, onSubmit, onEof)
         if (status.isNotEmpty()) {

@@ -101,6 +101,8 @@ static void child_main(const char *src, const char *dir, int timeout_ms, int not
     setrlimit(RLIMIT_CPU, &rl);
     rl.rlim_cur = rl.rlim_max = 20 * 1024 * 1024;
     setrlimit(RLIMIT_FSIZE, &rl);
+    rl.rlim_cur = rl.rlim_max = 0;
+    setrlimit(RLIMIT_CORE, &rl);               /* no core dumps of the app's memory */
     signal(SIGPIPE, SIG_DFL);
     /* line buffered, like a terminal; the buffer is also flushed whenever input is requested */
     setvbuf(stdout, obuf, _IOLBF, sizeof(obuf));
