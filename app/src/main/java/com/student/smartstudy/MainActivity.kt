@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Updates.migrate(applicationContext)
-        loadMathBank(applicationContext)
+        loadQuestionBanks(applicationContext)
         loadRich(applicationContext)
         setContent { MaterialTheme { App(remember { Progress(applicationContext) }) } }
     }

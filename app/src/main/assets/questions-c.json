@@ -1,0 +1,3902 @@
+[
+  {
+    "u": 1,
+    "q": "What is the first step in solving a computational problem?",
+    "o": [
+      "Writing code",
+      "Understanding the problem",
+      "Compiling the program",
+      "Testing the output"
+    ],
+    "a": 1,
+    "s": "You cannot design a correct solution until you know exactly what is given and what is required.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "An algorithm is:",
+    "o": [
+      "A programming language",
+      "A finite sequence of steps to solve a problem",
+      "A computer hardware component",
+      "A flowchart symbol"
+    ],
+    "a": 1,
+    "s": "An algorithm is a finite, well-defined sequence of steps that solves a problem.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which property requires an algorithm to terminate after a finite number of steps?",
+    "o": [
+      "Input",
+      "Output",
+      "Finiteness",
+      "Definiteness"
+    ],
+    "a": 2,
+    "s": "Finiteness: the algorithm must end after a limited number of steps.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "An algorithm should produce:",
+    "o": [
+      "At least one output",
+      "Only comments",
+      "Infinite instructions",
+      "No result"
+    ],
+    "a": 0,
+    "s": "Every algorithm must give at least one output, otherwise it solves nothing.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is NOT a characteristic of a good algorithm?",
+    "o": [
+      "Definiteness",
+      "Finiteness",
+      "Ambiguity",
+      "Effectiveness"
+    ],
+    "a": 2,
+    "s": "Steps must be unambiguous (definite). Ambiguity is a defect, not a characteristic.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Pseudocode is:",
+    "o": [
+      "Machine code",
+      "An informal, language-independent way to describe an algorithm",
+      "A type of compiler",
+      "A C library"
+    ],
+    "a": 1,
+    "s": "Pseudocode describes logic in plain structured English, not tied to any language.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which symbol is commonly used for input/output in a flowchart?",
+    "o": [
+      "Rectangle",
+      "Diamond",
+      "Parallelogram",
+      "Oval"
+    ],
+    "a": 2,
+    "s": "The parallelogram represents input and output.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which flowchart symbol represents a process?",
+    "o": [
+      "Rectangle",
+      "Diamond",
+      "Circle",
+      "Parallelogram"
+    ],
+    "a": 0,
+    "s": "The rectangle is the processing (calculation or assignment) box.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "A diamond in a flowchart represents:",
+    "o": [
+      "Start",
+      "Input",
+      "Decision",
+      "Processing"
+    ],
+    "a": 2,
+    "s": "The diamond holds a condition with Yes/No (True/False) exits.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which symbol usually represents the start or end of a flowchart?",
+    "o": [
+      "Oval",
+      "Rectangle",
+      "Diamond",
+      "Parallelogram"
+    ],
+    "a": 0,
+    "s": "The oval (terminator) marks Start and End.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Flow lines in a flowchart indicate:",
+    "o": [
+      "Data types",
+      "Direction of control",
+      "Memory size",
+      "Variable names"
+    ],
+    "a": 1,
+    "s": "Arrows show the order in which steps are executed.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which tool is most suitable for representing the logical steps of a solution visually?",
+    "o": [
+      "Compiler",
+      "Flowchart",
+      "Linker",
+      "Loader"
+    ],
+    "a": 1,
+    "s": "A flowchart is the graphical representation of an algorithm.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Pseudocode is primarily intended to:",
+    "o": [
+      "Be executed directly by a CPU",
+      "Explain program logic clearly",
+      "Replace an operating system",
+      "Store program output"
+    ],
+    "a": 1,
+    "s": "Its purpose is to communicate logic to humans before coding.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "In an algorithm, a decision is generally based on:",
+    "o": [
+      "A condition",
+      "A comment",
+      "A file name",
+      "A data type declaration"
+    ],
+    "a": 0,
+    "s": "Decisions test a condition that is true or false.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which control structure executes instructions one after another?",
+    "o": [
+      "Selection",
+      "Sequence",
+      "Iteration",
+      "Recursion"
+    ],
+    "a": 1,
+    "s": "Sequence means statements run in the order written.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Repeating a set of instructions is known as:",
+    "o": [
+      "Selection",
+      "Iteration",
+      "Compilation",
+      "Declaration"
+    ],
+    "a": 1,
+    "s": "Iteration (looping) repeats steps.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Choosing between alternative paths based on a condition is:",
+    "o": [
+      "Sequence",
+      "Selection",
+      "Linking",
+      "Loading"
+    ],
+    "a": 1,
+    "s": "Selection (branching) such as if-else.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "What is the main purpose of dry-running an algorithm?",
+    "o": [
+      "To translate it into machine code",
+      "To trace its steps manually and verify logic",
+      "To install a compiler",
+      "To create a header file"
+    ],
+    "a": 1,
+    "s": "A dry run traces values by hand to catch logic errors before coding.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "Which of these is a valid example of an algorithm step?",
+    "o": [
+      "Add A and B, then display the sum",
+      "Make the computer intelligent",
+      "Run forever without a condition",
+      "Produce an unspecified result"
+    ],
+    "a": 0,
+    "s": "A valid step is clear, precise and executable.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "A flowchart is useful because it:",
+    "o": [
+      "Removes the need for testing",
+      "Shows program logic graphically",
+      "Automatically writes C code",
+      "Stores variables permanently"
+    ],
+    "a": 1,
+    "s": "It presents the logic visually so it is easy to follow and check.",
+    "t": "Algorithms & Flowcharts"
+  },
+  {
+    "u": 1,
+    "q": "The C programming language was developed by:",
+    "o": [
+      "Bjarne Stroustrup",
+      "Dennis Ritchie",
+      "James Gosling",
+      "Guido van Rossum"
+    ],
+    "a": 1,
+    "s": "Dennis Ritchie created C. Stroustrup made C++, Gosling Java, van Rossum Python.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "C was developed at:",
+    "o": [
+      "Bell Laboratories",
+      "Microsoft",
+      "IBM Research",
+      "Stanford University"
+    ],
+    "a": 0,
+    "s": "C was developed at AT&T Bell Laboratories.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "C was developed primarily in which decade?",
+    "o": [
+      "1950s",
+      "1960s",
+      "1970s",
+      "1990s"
+    ],
+    "a": 2,
+    "s": "Ritchie developed C in the early 1970s (around 1972).",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "C is commonly described as a:",
+    "o": [
+      "Low-level language only",
+      "High-level language only",
+      "Middle-level language",
+      "Markup language"
+    ],
+    "a": 2,
+    "s": "C combines high-level constructs with low-level memory access, so it is called middle-level.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a common extension for a C source file?",
+    "o": [
+      ".cpp",
+      ".c",
+      ".java",
+      ".py"
+    ],
+    "a": 1,
+    "s": "C source files use .c (.cpp is C++).",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "Which function is the usual entry point of a hosted C program?",
+    "o": [
+      "start()",
+      "main()",
+      "run()",
+      "execute()"
+    ],
+    "a": 1,
+    "s": "Execution begins at main().",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "Which header is needed for standard printf() and scanf() declarations?",
+    "o": [
+      "stdlib.h",
+      "string.h",
+      "stdio.h",
+      "math.h"
+    ],
+    "a": 2,
+    "s": "stdio.h declares the standard input/output functions.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "Which punctuation mark commonly terminates a C statement?",
+    "o": [
+      ":",
+      ";",
+      ",",
+      "."
+    ],
+    "a": 1,
+    "s": "A semicolon ends a statement.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "C is:",
+    "o": [
+      "Case-insensitive",
+      "Case-sensitive",
+      "Whitespace-sensitive only",
+      "Unable to use identifiers"
+    ],
+    "a": 1,
+    "s": "Main and main are different names in C.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a valid basic structure element of a C program?",
+    "o": [
+      "Preprocessor directives",
+      "HTML tags",
+      "SQL tables",
+      "Java packages"
+    ],
+    "a": 0,
+    "s": "A C program has preprocessor directives, global declarations, main() and functions.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "A comment in C that begins with // continues until:",
+    "o": [
+      "The next semicolon",
+      "The end of the line",
+      "The next brace",
+      "The end of the program"
+    ],
+    "a": 1,
+    "s": "A // comment ends at the end of the line.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "Which notation is used for a multi-line comment in C?",
+    "o": [
+      "//",
+      "/* */",
+      "<!-- -->",
+      "#"
+    ],
+    "a": 1,
+    "s": "/* ... */ can span several lines.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "The preprocessor handles directives that generally begin with:",
+    "o": [
+      "$",
+      "#",
+      "@",
+      "%"
+    ],
+    "a": 1,
+    "s": "Directives such as #include and #define start with #.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "Which directive is commonly used to include a header file?",
+    "o": [
+      "#define",
+      "#include",
+      "#ifdef",
+      "#pragma"
+    ],
+    "a": 1,
+    "s": "#include copies a header file into the source.",
+    "t": "C Basics & Program Structure"
+  },
+  {
+    "u": 1,
+    "q": "What is the main role of a compiler?",
+    "o": [
+      "To execute source code without translation",
+      "To translate source code into a lower-level form",
+      "To design flowcharts",
+      "To manage keyboard hardware"
+    ],
+    "a": 1,
+    "s": "A compiler translates source code into assembly or machine-level code.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "Which stage commonly converts preprocessed C code into assembly code?",
+    "o": [
+      "Compilation",
+      "Linking",
+      "Loading",
+      "Editing"
+    ],
+    "a": 0,
+    "s": "The compilation stage produces assembly from preprocessed code.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "The assembler converts:",
+    "o": [
+      "Assembly code into object code",
+      "Object code into source code",
+      "C code into pseudocode",
+      "Output into input"
+    ],
+    "a": 0,
+    "s": "Assembly becomes machine-level object code (.o or .obj).",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "The linker mainly:",
+    "o": [
+      "Checks keyboard input",
+      "Combines object files and resolves external references",
+      "Draws flowcharts",
+      "Formats source code"
+    ],
+    "a": 1,
+    "s": "The linker joins object files and libraries into one executable.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "The loader is responsible for:",
+    "o": [
+      "Loading an executable into memory for execution",
+      "Writing source code",
+      "Defining variables",
+      "Creating comments"
+    ],
+    "a": 0,
+    "s": "The loader places the executable in memory and starts it.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "Which sequence best represents a traditional C build process?",
+    "o": [
+      "Linking → Editing → Preprocessing → Loading",
+      "Preprocessing → Compilation → Assembly → Linking",
+      "Loading → Compilation → Editing → Assembly",
+      "Assembly → Preprocessing → Linking → Editing"
+    ],
+    "a": 1,
+    "s": "Preprocess, compile, assemble, link (then load and run).",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "A syntax error is generally detected during:",
+    "o": [
+      "Compilation",
+      "Program execution only",
+      "Printing",
+      "File deletion"
+    ],
+    "a": 0,
+    "s": "The compiler reports syntax errors.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "A linker error may occur when:",
+    "o": [
+      "An external function definition cannot be found",
+      "A variable has a valid value",
+      "A comment is present",
+      "The program contains spaces"
+    ],
+    "a": 0,
+    "s": "A typical linker error is 'undefined reference' to a function.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "Which file commonly contains compiled object code?",
+    "o": [
+      ".txt",
+      ".o or .obj",
+      ".html",
+      ".jpg"
+    ],
+    "a": 1,
+    "s": "Object files use .o (GCC) or .obj (MSVC).",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "What does IDE stand for?",
+    "o": [
+      "Integrated Development Environment",
+      "Internal Data Execution",
+      "Internet Design Engine",
+      "Integrated Digital Electronics"
+    ],
+    "a": 0,
+    "s": "An IDE bundles editor, compiler and debugger.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a C compiler?",
+    "o": [
+      "GCC",
+      "MySQL",
+      "Apache",
+      "Photoshop"
+    ],
+    "a": 0,
+    "s": "GCC is the GNU C compiler.",
+    "t": "Compilation Process"
+  },
+  {
+    "u": 1,
+    "q": "The smallest individual units of a C program are called:",
+    "o": [
+      "Tokens",
+      "Modules",
+      "Packages",
+      "Screens"
+    ],
+    "a": 0,
+    "s": "Tokens: keywords, identifiers, constants, strings, operators, punctuators.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a C token?",
+    "o": [
+      "Keyword",
+      "Paragraph",
+      "Slide",
+      "Folder"
+    ],
+    "a": 0,
+    "s": "A keyword is one kind of token.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which of these is a C keyword?",
+    "o": [
+      "total",
+      "main",
+      "int",
+      "marks"
+    ],
+    "a": 2,
+    "s": "int is reserved. main is a function name, not a keyword.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is NOT a C keyword?",
+    "o": [
+      "while",
+      "return",
+      "float",
+      "student"
+    ],
+    "a": 3,
+    "s": "student is an ordinary identifier.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Keywords in C are:",
+    "o": [
+      "User-defined names",
+      "Reserved words with predefined meanings",
+      "Always numeric constants",
+      "Comments"
+    ],
+    "a": 1,
+    "s": "Keywords have fixed meanings and cannot be used as names.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which is a valid C identifier?",
+    "o": [
+      "2value",
+      "total_marks",
+      "total-marks",
+      "float"
+    ],
+    "a": 1,
+    "s": "Identifiers use letters, digits and underscores, cannot start with a digit and cannot be keywords.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which character may appear in a C identifier?",
+    "o": [
+      "Hyphen",
+      "Space",
+      "Underscore",
+      "@"
+    ],
+    "a": 2,
+    "s": "Only letters, digits and underscore are allowed.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "A C identifier cannot:",
+    "o": [
+      "Contain letters",
+      "Contain digits after the first character",
+      "Begin with a digit",
+      "Contain underscores"
+    ],
+    "a": 2,
+    "s": "An identifier must not start with a digit.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which name is invalid as an identifier because it is a keyword?",
+    "o": [
+      "count",
+      "number1",
+      "return",
+      "total_sum"
+    ],
+    "a": 2,
+    "s": "return is reserved.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "C identifiers are:",
+    "o": [
+      "Case-sensitive",
+      "Always uppercase",
+      "Always lowercase",
+      "Not allowed to contain letters"
+    ],
+    "a": 0,
+    "s": "Total and total are different identifiers.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "A constant is a value that:",
+    "o": [
+      "Changes after every statement",
+      "Does not change during its intended use",
+      "Must be a character",
+      "Must be entered using scanf()"
+    ],
+    "a": 1,
+    "s": "A constant stays fixed.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which is an integer constant?",
+    "o": [
+      "25",
+      "3.14",
+      "'A'",
+      "\"Hello\""
+    ],
+    "a": 0,
+    "s": "25 has no decimal point. 3.14 is floating, 'A' is a character, \"Hello\" is a string.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which is a character constant in C?",
+    "o": [
+      "\"A\"",
+      "'A'",
+      "A",
+      "[A]"
+    ],
+    "a": 1,
+    "s": "Character constants use single quotes.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which is a string literal?",
+    "o": [
+      "'Hello'",
+      "\"Hello\"",
+      "Hello",
+      "100"
+    ],
+    "a": 1,
+    "s": "String literals use double quotes.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "Which suffix can indicate an unsigned integer constant?",
+    "o": [
+      "U",
+      "F",
+      "Lf",
+      "D"
+    ],
+    "a": 0,
+    "s": "25U is unsigned. F is for float constants.",
+    "t": "Tokens, Identifiers & Constants"
+  },
+  {
+    "u": 1,
+    "q": "A variable is:",
+    "o": [
+      "A named memory location whose value can change",
+      "A reserved keyword",
+      "A flowchart symbol",
+      "A compiler error"
+    ],
+    "a": 0,
+    "s": "A variable names a storage location whose value may change.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which is a valid variable declaration?",
+    "o": [
+      "int age;",
+      "age int;",
+      "integer age;",
+      "int = age;"
+    ],
+    "a": 0,
+    "s": "Syntax: type name;",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "In the declaration int x = 10;, the value 10 is:",
+    "o": [
+      "Identifier",
+      "Integer constant",
+      "Keyword",
+      "Operator"
+    ],
+    "a": 1,
+    "s": "10 is an integer constant. x is the identifier.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which statement assigns 20 to variable x?",
+    "o": [
+      "int == 20;",
+      "x = 20;",
+      "20 = x;",
+      "x := 20;"
+    ],
+    "a": 1,
+    "s": "Assignment puts the value on the right into the variable on the left.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a valid identifier for a variable?",
+    "o": [
+      "first name",
+      "_count",
+      "1count",
+      "char"
+    ],
+    "a": 1,
+    "s": "_count starts with an underscore and has no spaces or keywords.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which category contains int, char, and float?",
+    "o": [
+      "Primary/basic data types",
+      "User-defined data types only",
+      "Derived data types only",
+      "File types"
+    ],
+    "a": 0,
+    "s": "These are the basic (primary) data types.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which C type is commonly used to store a single character?",
+    "o": [
+      "int",
+      "char",
+      "float",
+      "double"
+    ],
+    "a": 1,
+    "s": "char holds one character.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which type is generally used for single-precision floating-point values?",
+    "o": [
+      "char",
+      "float",
+      "void",
+      "struct"
+    ],
+    "a": 1,
+    "s": "float is single precision.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which type generally provides more precision than float?",
+    "o": [
+      "double",
+      "char",
+      "void",
+      "_Bool"
+    ],
+    "a": 0,
+    "s": "double has about twice the precision of float.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "The void type indicates:",
+    "o": [
+      "A character value",
+      "No value or no type",
+      "A floating-point value",
+      "A string value"
+    ],
+    "a": 1,
+    "s": "void means no value (for example a function returning nothing).",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a derived data type in C?",
+    "o": [
+      "Array",
+      "int",
+      "char",
+      "float"
+    ],
+    "a": 0,
+    "s": "Arrays, pointers and functions are derived types.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which operator is used to declare a pointer variable?",
+    "o": [
+      "&",
+      "*",
+      "%",
+      "->"
+    ],
+    "a": 1,
+    "s": "int *p; declares a pointer to int.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "A function type is associated with:",
+    "o": [
+      "Functions",
+      "Arrays only",
+      "Character constants",
+      "Preprocessor directives"
+    ],
+    "a": 0,
+    "s": "Functions have a type made of return type and parameter types.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which keyword is used to define a structure?",
+    "o": [
+      "union",
+      "struct",
+      "enum",
+      "typedef"
+    ],
+    "a": 1,
+    "s": "struct groups variables of different types.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which keyword is used to define a union?",
+    "o": [
+      "struct",
+      "union",
+      "switch",
+      "register"
+    ],
+    "a": 1,
+    "s": "union members share the same memory.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which keyword is used to define an enumeration?",
+    "o": [
+      "enum",
+      "extern",
+      "auto",
+      "signed"
+    ],
+    "a": 0,
+    "s": "enum defines named integer constants.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a user-defined type mechanism in C?",
+    "o": [
+      "struct",
+      "int",
+      "char",
+      "float"
+    ],
+    "a": 0,
+    "s": "struct, union and enum create user-defined types.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "What does typedef do?",
+    "o": [
+      "Defines an alias for a type name",
+      "Prints a value",
+      "Reads keyboard input",
+      "Ends a loop"
+    ],
+    "a": 0,
+    "s": "typedef gives a new name to an existing type.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which declaration creates an array of 10 integers?",
+    "o": [
+      "int a(10);",
+      "int a[10];",
+      "array int a;",
+      "int[10] a();"
+    ],
+    "a": 1,
+    "s": "Array syntax: type name[size];",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which declaration creates a pointer to int?",
+    "o": [
+      "int p;",
+      "int *p;",
+      "pointer int p;",
+      "*int p();"
+    ],
+    "a": 1,
+    "s": "int *p; declares p as a pointer to int.",
+    "t": "Variables & Data Types"
+  },
+  {
+    "u": 1,
+    "q": "Which header file declares getchar() and putchar()?",
+    "o": [
+      "stdio.h",
+      "math.h",
+      "string.h",
+      "time.h"
+    ],
+    "a": 0,
+    "s": "Both are in stdio.h.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which function is used for formatted output in C?",
+    "o": [
+      "scanf()",
+      "printf()",
+      "getchar()",
+      "putchar()"
+    ],
+    "a": 1,
+    "s": "printf writes formatted output.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which function is used for formatted input in C?",
+    "o": [
+      "printf()",
+      "puts()",
+      "scanf()",
+      "putchar()"
+    ],
+    "a": 2,
+    "s": "scanf reads formatted input.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which format specifier is commonly used with printf() for an int?",
+    "o": [
+      "%f",
+      "%c",
+      "%d",
+      "%s"
+    ],
+    "a": 2,
+    "s": "%d prints a signed decimal integer.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which format specifier is commonly used for a float value in printf()?",
+    "o": [
+      "%f",
+      "%d",
+      "%c",
+      "%u"
+    ],
+    "a": 0,
+    "s": "%f prints floating-point values.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which format specifier is used to print a character?",
+    "o": [
+      "%s",
+      "%c",
+      "%d",
+      "%lf"
+    ],
+    "a": 1,
+    "s": "%c prints one character.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which format specifier is commonly used to print a string?",
+    "o": [
+      "%c",
+      "%s",
+      "%f",
+      "%u"
+    ],
+    "a": 1,
+    "s": "%s prints a null-terminated string.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "In scanf(\"%d\", &x);, what is the purpose of &?",
+    "o": [
+      "It multiplies x",
+      "It obtains the address of x",
+      "It prints x",
+      "It declares x"
+    ],
+    "a": 1,
+    "s": "scanf needs the address of x so it can store the value there.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which statement correctly reads an integer into variable n?",
+    "o": [
+      "scanf(\"%d\", n);",
+      "scanf(\"%d\", &n);",
+      "printf(\"%d\", &n);",
+      "getchar(\"%d\", &n);"
+    ],
+    "a": 1,
+    "s": "Pass the address of n with &.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which function reads a single character from standard input?",
+    "o": [
+      "putchar()",
+      "getchar()",
+      "printf()",
+      "puts()"
+    ],
+    "a": 1,
+    "s": "getchar() reads one character.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which function writes a single character to standard output?",
+    "o": [
+      "getchar()",
+      "scanf()",
+      "putchar()",
+      "gets()"
+    ],
+    "a": 2,
+    "s": "putchar() writes one character.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "getchar() returns:",
+    "o": [
+      "A character value represented as int, or EOF",
+      "A float only",
+      "A string pointer only",
+      "A file name"
+    ],
+    "a": 0,
+    "s": "It returns an int so that EOF (-1) can be told apart from valid characters.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which function is unformatted character output?",
+    "o": [
+      "scanf()",
+      "printf()",
+      "putchar()",
+      "getchar()"
+    ],
+    "a": 2,
+    "s": "putchar writes a raw character with no format string.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which of the following is a formatted I/O function?",
+    "o": [
+      "getchar()",
+      "putchar()",
+      "printf()",
+      "None of these"
+    ],
+    "a": 2,
+    "s": "printf (and scanf) use format specifiers.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "What does EOF commonly indicate?",
+    "o": [
+      "End of file or input condition",
+      "Start of function",
+      "End of a variable name",
+      "A floating-point value"
+    ],
+    "a": 0,
+    "s": "EOF signals that no more input is available (or an error).",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which escape sequence moves the cursor to a new line in printf()?",
+    "o": [
+      "\\t",
+      "\\n",
+      "\\0",
+      "\\r"
+    ],
+    "a": 1,
+    "s": "\\n is the newline.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which escape sequence represents a horizontal tab?",
+    "o": [
+      "\\n",
+      "\\t",
+      "\\0",
+      "\\r"
+    ],
+    "a": 1,
+    "s": "\\t is the horizontal tab.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "What is the output of printf(\"%d\", 5 + 3);?",
+    "o": [
+      "53",
+      "8",
+      "5 + 3",
+      "Compilation error"
+    ],
+    "a": 1,
+    "s": "The expression 5 + 3 is evaluated first and %d prints 8.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which statement about scanf() is correct?",
+    "o": [
+      "It is used only for output",
+      "It commonly uses format specifiers to read input",
+      "It cannot read numeric values",
+      "It is declared in math.h"
+    ],
+    "a": 1,
+    "s": "scanf uses format specifiers such as %d, %f and %c.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 1,
+    "q": "Which pair correctly matches the function with its purpose?",
+    "o": [
+      "printf() – formatted input",
+      "scanf() – formatted output",
+      "getchar() – read one character",
+      "putchar() – read one character"
+    ],
+    "a": 2,
+    "s": "getchar reads one character. printf outputs, scanf inputs, putchar writes.",
+    "t": "Input & Output"
+  },
+  {
+    "u": 2,
+    "q": "Which operator is used for addition in C?",
+    "o": [
+      "+",
+      "-",
+      "*",
+      "/"
+    ],
+    "a": 0,
+    "s": "+ adds two operands.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of 10 % 3 in C?",
+    "o": [
+      "3",
+      "1",
+      "0",
+      "10"
+    ],
+    "a": 1,
+    "s": "10 = 3 x 3 + 1, so the remainder is 1.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator is used for multiplication?",
+    "o": [
+      "x",
+      "*",
+      "**",
+      "%"
+    ],
+    "a": 1,
+    "s": "* multiplies. C has no ** operator.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator gives the remainder after integer division?",
+    "o": [
+      "/",
+      "//",
+      "%",
+      "+"
+    ],
+    "a": 2,
+    "s": "% is the modulus (remainder) operator.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of 7 / 2 when both operands are integers?",
+    "o": [
+      "3",
+      "3.5",
+      "4",
+      "2"
+    ],
+    "a": 0,
+    "s": "Integer division discards the fraction: 3.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator has higher precedence?",
+    "o": [
+      "*",
+      "+",
+      "=",
+      "||"
+    ],
+    "a": 0,
+    "s": "Multiplicative operators bind tighter than additive, assignment and logical OR.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which of the following is a relational operator?",
+    "o": [
+      "&&",
+      "==",
+      "+=",
+      "%"
+    ],
+    "a": 1,
+    "s": "== is relational. && is logical, += is assignment, % is arithmetic.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What does the expression 5 > 3 evaluate to in C?",
+    "o": [
+      "0",
+      "1",
+      "5",
+      "3"
+    ],
+    "a": 1,
+    "s": "A true relational expression gives 1.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator checks equality between two values?",
+    "o": [
+      "=",
+      "==",
+      "!=",
+      "<="
+    ],
+    "a": 1,
+    "s": "== compares. = assigns.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator means \"not equal to\"?",
+    "o": [
+      "<>",
+      "!=",
+      "~=",
+      "=!"
+    ],
+    "a": 1,
+    "s": "!= is not-equal in C.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator represents logical AND?",
+    "o": [
+      "&",
+      "&&",
+      "||",
+      "!"
+    ],
+    "a": 1,
+    "s": "&& is logical AND. & is bitwise AND.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator represents logical OR?",
+    "o": [
+      "||",
+      "|",
+      "&&",
+      "^"
+    ],
+    "a": 0,
+    "s": "|| is logical OR. | is bitwise OR.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator performs logical NOT?",
+    "o": [
+      "~",
+      "!",
+      "&",
+      "%"
+    ],
+    "a": 1,
+    "s": "! is logical NOT. ~ is bitwise complement.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "In C, a non-zero value used as a condition is treated as:",
+    "o": [
+      "False",
+      "True",
+      "Undefined",
+      "A syntax error"
+    ],
+    "a": 1,
+    "s": "Zero is false, any non-zero value is true.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of !0 in C?",
+    "o": [
+      "0",
+      "1",
+      "-1",
+      "2"
+    ],
+    "a": 1,
+    "s": "!0 is 1 (true).",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator assigns a value to a variable?",
+    "o": [
+      "==",
+      "=",
+      "!=",
+      ":="
+    ],
+    "a": 1,
+    "s": "= is the assignment operator.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What does x += 5 mean?",
+    "o": [
+      "x = 5",
+      "x = x + 5",
+      "x = x * 5",
+      "x = x - 5"
+    ],
+    "a": 1,
+    "s": "x += 5 is shorthand for x = x + 5.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which is a compound assignment operator?",
+    "o": [
+      "===",
+      "+=",
+      "=>",
+      "&&="
+    ],
+    "a": 1,
+    "s": "+= combines an operation with assignment. C has no ===, => or &&=.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the value of x after int x = 4; x *= 3;?",
+    "o": [
+      "7",
+      "12",
+      "1",
+      "3"
+    ],
+    "a": 1,
+    "s": "x = 4 * 3 = 12.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator is the conditional or ternary operator?",
+    "o": [
+      "::",
+      "?:",
+      "&&",
+      "->"
+    ],
+    "a": 1,
+    "s": "The ternary operator is ?:.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "How many operands does the ternary operator use?",
+    "o": [
+      "One",
+      "Two",
+      "Three",
+      "Four"
+    ],
+    "a": 2,
+    "s": "condition ? value1 : value2 has three operands.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which expression correctly uses the ternary operator?",
+    "o": [
+      "condition ? value1 : value2",
+      "condition : value1 ? value2",
+      "condition ?? value1",
+      "condition -> value1 : value2"
+    ],
+    "a": 0,
+    "s": "Syntax: condition ? expr1 : expr2.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of (4 > 2) ? 10 : 20?",
+    "o": [
+      "2",
+      "4",
+      "10",
+      "20"
+    ],
+    "a": 2,
+    "s": "4 > 2 is true, so the first value 10 is chosen.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator performs bitwise AND?",
+    "o": [
+      "&&",
+      "&",
+      "||",
+      "!"
+    ],
+    "a": 1,
+    "s": "& ANDs each pair of bits.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator performs bitwise OR?",
+    "o": [
+      "|",
+      "||",
+      "&",
+      "~"
+    ],
+    "a": 0,
+    "s": "| ORs each pair of bits.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator performs bitwise XOR?",
+    "o": [
+      "&",
+      "|",
+      "^",
+      "!"
+    ],
+    "a": 2,
+    "s": "^ is bitwise exclusive OR.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator performs bitwise complement?",
+    "o": [
+      "!",
+      "~",
+      "^",
+      "%"
+    ],
+    "a": 1,
+    "s": "~ flips every bit.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator shifts bits to the left?",
+    "o": [
+      ">>",
+      "<<",
+      "&&",
+      "<="
+    ],
+    "a": 1,
+    "s": "<< is left shift.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator shifts bits to the right?",
+    "o": [
+      ">>",
+      "<<",
+      "=",
+      "||"
+    ],
+    "a": 0,
+    "s": ">> is right shift.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the binary representation of decimal 5?",
+    "o": [
+      "010",
+      "101",
+      "110",
+      "111"
+    ],
+    "a": 1,
+    "s": "5 = 4 + 1 = 101 in binary.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of 5 & 3?",
+    "o": [
+      "1",
+      "7",
+      "6",
+      "2"
+    ],
+    "a": 0,
+    "s": "101 & 011 = 001 = 1.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of 5 | 3?",
+    "o": [
+      "1",
+      "6",
+      "7",
+      "5"
+    ],
+    "a": 2,
+    "s": "101 | 011 = 111 = 7.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of 5 ^ 3?",
+    "o": [
+      "1",
+      "6",
+      "7",
+      "8"
+    ],
+    "a": 1,
+    "s": "101 ^ 011 = 110 = 6.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator has higher precedence in C?",
+    "o": [
+      "*",
+      "+",
+      "=",
+      ","
+    ],
+    "a": 0,
+    "s": "* is higher than +, = and the comma operator (lowest).",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which statement about the expression a + b * c is correct?",
+    "o": [
+      "Addition is evaluated first",
+      "Multiplication is evaluated first",
+      "Assignment is evaluated first",
+      "The expression is invalid"
+    ],
+    "a": 1,
+    "s": "* has higher precedence, so it is b * c first.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which statement is used for basic decision-making?",
+    "o": [
+      "if",
+      "for",
+      "break",
+      "continue"
+    ],
+    "a": 0,
+    "s": "if tests a condition and chooses what to execute.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "The if statement executes its block when the condition is:",
+    "o": [
+      "Zero",
+      "Non-zero",
+      "Always false",
+      "A string"
+    ],
+    "a": 1,
+    "s": "Any non-zero value counts as true.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which keyword provides an alternative block when an if condition is false?",
+    "o": [
+      "otherwise",
+      "else",
+      "switch",
+      "default"
+    ],
+    "a": 1,
+    "s": "else runs when the if condition is false.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which is the correct basic syntax of an if statement?",
+    "o": [
+      "if condition then",
+      "if (condition) { statements; }",
+      "if {condition}:",
+      "when (condition)"
+    ],
+    "a": 1,
+    "s": "The condition goes in parentheses, followed by a block.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "An if-else statement is used to:",
+    "o": [
+      "Repeat statements",
+      "Select between two alternatives",
+      "Declare variables",
+      "Define a function"
+    ],
+    "a": 1,
+    "s": "It chooses between two paths.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "An if statement inside another if statement is called:",
+    "o": [
+      "Simple if",
+      "Nested if",
+      "Switch if",
+      "Loop if"
+    ],
+    "a": 1,
+    "s": "This is a nested if.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which keyword begins a multi-way selection statement in C?",
+    "o": [
+      "choose",
+      "switch",
+      "select",
+      "case"
+    ],
+    "a": 1,
+    "s": "switch selects among several case labels.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which keyword labels an individual option in a switch statement?",
+    "o": [
+      "option",
+      "case",
+      "else",
+      "when"
+    ],
+    "a": 1,
+    "s": "Each option is written as case value:.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which keyword specifies the fallback branch in a switch statement?",
+    "o": [
+      "else",
+      "default",
+      "fallback",
+      "otherwise"
+    ],
+    "a": 1,
+    "s": "default runs when no case matches.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which statement commonly terminates a switch case to prevent fall-through?",
+    "o": [
+      "continue",
+      "break",
+      "goto",
+      "return"
+    ],
+    "a": 1,
+    "s": "break leaves the switch.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which data types are permitted as the controlling expression of a standard C switch statement?",
+    "o": [
+      "Any structure type",
+      "Integer types, including enumerations",
+      "Floating-point types only",
+      "Character arrays"
+    ],
+    "a": 1,
+    "s": "switch needs an integer expression (char and enum are integer types).",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "What happens if break is omitted at the end of a matching switch case?",
+    "o": [
+      "The program always terminates",
+      "Execution may continue into subsequent case labels",
+      "The switch is skipped",
+      "A syntax error always occurs"
+    ],
+    "a": 1,
+    "s": "Control falls through to the next case.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Can two case labels in the same switch have the same constant value?",
+    "o": [
+      "Yes, always",
+      "No",
+      "Only for characters",
+      "Only with default"
+    ],
+    "a": 1,
+    "s": "Duplicate case values are a compile-time error.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "How many default labels may appear in one switch statement?",
+    "o": [
+      "Zero or one",
+      "Exactly two",
+      "Unlimited",
+      "At least three"
+    ],
+    "a": 0,
+    "s": "default is optional and can appear at most once.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which statement is generally suitable for checking a range of conditions?",
+    "o": [
+      "if-else-if ladder",
+      "switch with floating-point cases",
+      "goto only",
+      "break only"
+    ],
+    "a": 0,
+    "s": "Ranges such as marks >= 90 need relational tests, which an if-else-if ladder handles.",
+    "t": "Selection Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which loop checks its condition before executing the loop body?",
+    "o": [
+      "do-while",
+      "while",
+      "Both do-while and while check after the body",
+      "None"
+    ],
+    "a": 1,
+    "s": "while is entry-controlled.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which loop is guaranteed to execute its body at least once?",
+    "o": [
+      "for",
+      "while",
+      "do-while",
+      "Nested while"
+    ],
+    "a": 2,
+    "s": "do-while tests the condition after the body.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which keyword begins a for loop?",
+    "o": [
+      "repeat",
+      "for",
+      "loop",
+      "iterate"
+    ],
+    "a": 1,
+    "s": "for (init; condition; update).",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which is the correct general syntax of a for loop?",
+    "o": [
+      "for (initialization; condition; update)",
+      "for (condition, initialization, update)",
+      "for initialization; condition; update",
+      "repeat (initialization; condition)"
+    ],
+    "a": 0,
+    "s": "Three parts separated by semicolons inside parentheses.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "In a for loop, which part is evaluated first?",
+    "o": [
+      "Update expression",
+      "Loop body",
+      "Initialization expression",
+      "Condition after the body"
+    ],
+    "a": 2,
+    "s": "Initialization runs once, then the condition is checked.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which loop is often convenient when the number of iterations is known?",
+    "o": [
+      "for",
+      "do-while only",
+      "goto",
+      "switch"
+    ],
+    "a": 0,
+    "s": "for keeps initialization, condition and update together.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "What happens if the condition of a while loop is initially false?",
+    "o": [
+      "The body executes once",
+      "The body does not execute",
+      "The program must crash",
+      "The loop executes forever"
+    ],
+    "a": 1,
+    "s": "The check comes first, so the body is skipped.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "What is the purpose of the update expression in a typical counting loop?",
+    "o": [
+      "To change the loop-control variable",
+      "To declare a header file",
+      "To end the program",
+      "To define a function"
+    ],
+    "a": 0,
+    "s": "It changes the counter so the loop can finish.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "What is a nested loop?",
+    "o": [
+      "A loop without a condition",
+      "A loop placed inside another loop",
+      "A loop that cannot terminate",
+      "A loop containing only break"
+    ],
+    "a": 1,
+    "s": "One loop inside another.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "If an outer loop runs 3 times and an inner loop runs 2 times per outer iteration, how many times does the inner body execute in total?",
+    "o": [
+      "2",
+      "3",
+      "5",
+      "6"
+    ],
+    "a": 3,
+    "s": "3 x 2 = 6.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which loop is an entry-controlled loop?",
+    "o": [
+      "do-while",
+      "while",
+      "Both are exit-controlled",
+      "Neither"
+    ],
+    "a": 1,
+    "s": "while (and for) test the condition on entry.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which loop is an exit-controlled loop?",
+    "o": [
+      "for",
+      "while",
+      "do-while",
+      "None"
+    ],
+    "a": 2,
+    "s": "do-while tests after the body.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "What punctuation ends the condition in a do-while statement?",
+    "o": [
+      "A comma",
+      "A semicolon",
+      "A colon",
+      "A brace only"
+    ],
+    "a": 1,
+    "s": "do { ... } while (condition); needs the final semicolon.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which statement correctly describes an infinite loop?",
+    "o": [
+      "A loop that never executes",
+      "A loop whose termination condition is never reached",
+      "A loop that executes exactly once",
+      "A loop without a body"
+    ],
+    "a": 1,
+    "s": "The loop never ends because the exit condition is never met.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "What is the output of this code? int i = 1; while (i <= 3) { printf(\"%d\", i); i++; }",
+    "o": [
+      "123",
+      "012",
+      "1234",
+      "321"
+    ],
+    "a": 0,
+    "s": "It prints 1, 2 and 3 one after another with no separators: 123.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "What is the output of this code? int i = 1; do { printf(\"%d\", i); i++; } while (i < 1);",
+    "o": [
+      "No output",
+      "1",
+      "12",
+      "Infinite output"
+    ],
+    "a": 1,
+    "s": "The body runs once and prints 1. Then i = 2 and 2 < 1 is false.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which loop component is optional in a for statement?",
+    "o": [
+      "The two semicolons",
+      "Any of the three expressions",
+      "The loop body in every form",
+      "The for keyword"
+    ],
+    "a": 1,
+    "s": "Each of the three expressions may be left empty, but the semicolons stay.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of placing a semicolon immediately after a for loop header?",
+    "o": [
+      "It always causes a syntax error",
+      "It creates an empty loop body",
+      "It skips compilation",
+      "It converts the loop into a switch"
+    ],
+    "a": 1,
+    "s": "The semicolon is the loop body (an empty statement), so the following block runs once.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which loop is commonly used to traverse a two-dimensional array?",
+    "o": [
+      "Nested for loops",
+      "A single if statement",
+      "switch only",
+      "goto only"
+    ],
+    "a": 0,
+    "s": "One loop for rows and one for columns.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "If a loop variable is never updated and the condition remains true, the loop may become:",
+    "o": [
+      "A syntax error",
+      "An infinite loop",
+      "A function",
+      "A constant"
+    ],
+    "a": 1,
+    "s": "The condition never becomes false.",
+    "t": "Loops"
+  },
+  {
+    "u": 2,
+    "q": "Which statement immediately exits the nearest enclosing loop or switch?",
+    "o": [
+      "continue",
+      "break",
+      "goto",
+      "case"
+    ],
+    "a": 1,
+    "s": "break leaves the innermost loop or switch.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which statement skips the remaining statements in the current loop iteration?",
+    "o": [
+      "break",
+      "continue",
+      "switch",
+      "default"
+    ],
+    "a": 1,
+    "s": "continue jumps to the next iteration.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "In a for loop, continue transfers control to:",
+    "o": [
+      "The initialization expression",
+      "The loop update expression, then condition check",
+      "The statement after the loop",
+      "The start of the program"
+    ],
+    "a": 1,
+    "s": "In a for loop the update runs before the condition is re-tested.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "In a while loop, continue transfers control to:",
+    "o": [
+      "The condition check",
+      "The function declaration",
+      "The statement after the loop",
+      "The nearest switch default"
+    ],
+    "a": 0,
+    "s": "Control goes directly to re-evaluating the condition.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which statement transfers control to a labeled statement?",
+    "o": [
+      "break",
+      "continue",
+      "goto",
+      "case"
+    ],
+    "a": 2,
+    "s": "goto label; jumps to the label.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which keyword is used to define a label target for goto?",
+    "o": [
+      "label",
+      "A valid identifier followed by a colon",
+      "case",
+      "default"
+    ],
+    "a": 1,
+    "s": "A label is written as name: (for example end:). There is no label keyword.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which statement is generally preferred over excessive use of goto?",
+    "o": [
+      "Structured control statements",
+      "More labels",
+      "More global variables",
+      "Unconditional recursion"
+    ],
+    "a": 0,
+    "s": "if, loops and switch keep programs readable. Heavy goto use creates tangled code.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "A break statement inside nested loops exits:",
+    "o": [
+      "All loops",
+      "Only the nearest enclosing loop",
+      "The entire operating system",
+      "The outermost function automatically"
+    ],
+    "a": 1,
+    "s": "break affects only the innermost loop (or switch).",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "What happens when continue is executed inside a loop?",
+    "o": [
+      "The program ends",
+      "The current iteration is abandoned and the next iteration proceeds",
+      "The loop is permanently exited",
+      "The function is redeclared"
+    ],
+    "a": 1,
+    "s": "The rest of the body is skipped for this iteration only.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "Which statement can be used inside both loops and switch statements?",
+    "o": [
+      "continue",
+      "break",
+      "case",
+      "default"
+    ],
+    "a": 1,
+    "s": "break works in both. continue works only in loops.",
+    "t": "Jump Statements"
+  },
+  {
+    "u": 2,
+    "q": "An expression in C is:",
+    "o": [
+      "A combination of operands and operators that produces a value",
+      "Only a comment",
+      "Only a function name",
+      "A header file"
+    ],
+    "a": 0,
+    "s": "Operands joined by operators yield a value.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Which of the following is an arithmetic expression?",
+    "o": [
+      "a + b * 2",
+      "int a;",
+      "#include <stdio.h>",
+      "return;"
+    ],
+    "a": 0,
+    "s": "It combines variables and constants with arithmetic operators.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "What is the value of 2 + 3 * 4?",
+    "o": [
+      "20",
+      "14",
+      "24",
+      "10"
+    ],
+    "a": 1,
+    "s": "3 * 4 = 12 first, then 2 + 12 = 14.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Parentheses in an expression are commonly used to:",
+    "o": [
+      "Change or clarify evaluation order",
+      "End the program",
+      "Declare a header file",
+      "Convert every value to a string"
+    ],
+    "a": 0,
+    "s": "Parenthesised parts are evaluated first.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Type conversion means:",
+    "o": [
+      "Changing a value from one data type to another",
+      "Changing a variable name",
+      "Replacing a compiler",
+      "Removing all operators"
+    ],
+    "a": 0,
+    "s": "Converting a value from one type to another.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Implicit type conversion is performed:",
+    "o": [
+      "Automatically by the compiler according to language rules",
+      "Only by using a cast operator",
+      "Only by the programmer at runtime",
+      "Only inside printf()"
+    ],
+    "a": 0,
+    "s": "The compiler promotes types automatically (usual arithmetic conversions).",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Explicit type conversion is also known as:",
+    "o": [
+      "Automatic promotion",
+      "Type casting",
+      "Linking",
+      "Tokenization"
+    ],
+    "a": 1,
+    "s": "Explicit conversion is type casting.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Which expression performs an explicit conversion of x to float?",
+    "o": [
+      "float(x)",
+      "(float)x",
+      "x as float",
+      "convert float x"
+    ],
+    "a": 1,
+    "s": "A cast puts the type in parentheses: (float)x.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "In the expression 5 + 2.5, the integer operand is generally converted to:",
+    "o": [
+      "char",
+      "float or the corresponding common floating type",
+      "void",
+      "A string"
+    ],
+    "a": 1,
+    "s": "The int is converted to the floating type of the other operand (double here).",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of (float)5 / 2 in C?",
+    "o": [
+      "2",
+      "2.5",
+      "3",
+      "5"
+    ],
+    "a": 1,
+    "s": "The cast makes 5 a float, so the division is floating-point: 2.5.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of 5 / 2 when both operands are int?",
+    "o": [
+      "2",
+      "2.5",
+      "3",
+      "0.5"
+    ],
+    "a": 0,
+    "s": "Integer division truncates to 2.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Assigning a double value to an int variable may cause:",
+    "o": [
+      "Fractional part to be discarded",
+      "The int variable to become a string",
+      "Automatic array creation",
+      "A guaranteed compilation failure"
+    ],
+    "a": 0,
+    "s": "The fractional part is truncated (and an out-of-range value is undefined).",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Which conversion may lose information?",
+    "o": [
+      "Converting int to a wider integer type",
+      "Converting double to int",
+      "Converting float to double",
+      "Converting char to int"
+    ],
+    "a": 1,
+    "s": "double to int drops the fraction. The others widen the type.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "In C, the cast operator is written using:",
+    "o": [
+      "Square brackets",
+      "Parentheses containing a type name",
+      "Curly braces",
+      "Angle brackets"
+    ],
+    "a": 1,
+    "s": "For example (int)3.7.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Which statement about implicit conversion is correct?",
+    "o": [
+      "It never occurs in C",
+      "It can occur in arithmetic expressions and assignments",
+      "It requires a goto statement",
+      "It is performed only by printf()"
+    ],
+    "a": 1,
+    "s": "Mixed-type arithmetic and assignments trigger automatic conversions.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "What is the value of x after this code? int x = 5; x = x + 2.8;",
+    "o": [
+      "7",
+      "7.8",
+      "8",
+      "5"
+    ],
+    "a": 0,
+    "s": "x + 2.8 is 7.8 (double). Storing it in an int truncates to 7.",
+    "t": "Expressions & Type Conversion"
+  },
+  {
+    "u": 2,
+    "q": "Which operator has right-to-left associativity among these?",
+    "o": [
+      "+",
+      "*",
+      "=",
+      "<"
+    ],
+    "a": 2,
+    "s": "Assignment associates right to left (a = b = c means a = (b = c)).",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "What is the result of the expression (10 > 5) && (3 < 1)?",
+    "o": [
+      "1",
+      "0",
+      "10",
+      "5"
+    ],
+    "a": 1,
+    "s": "1 && 0 is 0.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which operator is evaluated before logical AND in the expression a > 2 && b < 5?",
+    "o": [
+      "&&",
+      "Relational operators",
+      "Assignment operator",
+      "Comma operator"
+    ],
+    "a": 1,
+    "s": "Relational operators have higher precedence than &&.",
+    "t": "Operators"
+  },
+  {
+    "u": 2,
+    "q": "Which statement about the conditional operator ?: is correct?",
+    "o": [
+      "It is a unary operator",
+      "It selects one of two expressions based on a condition",
+      "It performs bitwise XOR",
+      "It terminates a loop"
+    ],
+    "a": 1,
+    "s": "It is the only ternary operator and picks one of two expressions.",
+    "t": "Operators"
+  },
+  {
+    "u": 3,
+    "q": "An array in C is used to store:",
+    "o": [
+      "Values of different data types only",
+      "Multiple values of the same data type",
+      "Only character values",
+      "Only constant values"
+    ],
+    "a": 1,
+    "s": "An array holds several elements of one type.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Array elements are stored in:",
+    "o": [
+      "Random locations",
+      "Contiguous memory locations",
+      "Separate files",
+      "CPU registers only"
+    ],
+    "a": 1,
+    "s": "Elements sit next to each other in memory.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "The index of the first element of a C array is:",
+    "o": [
+      "1",
+      "-1",
+      "0",
+      "Depends on compiler"
+    ],
+    "a": 2,
+    "s": "C arrays are zero-indexed.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which is a valid declaration of an integer array with 5 elements?",
+    "o": [
+      "int a(5);",
+      "int a[5];",
+      "array int a[5];",
+      "int[5] a;"
+    ],
+    "a": 1,
+    "s": "Syntax: type name[size];",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "What is the last valid index of int a[10];?",
+    "o": [
+      "10",
+      "9",
+      "11",
+      "1"
+    ],
+    "a": 1,
+    "s": "Indices run from 0 to size - 1, so 0 to 9.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "How many elements are present in int marks[7];?",
+    "o": [
+      "6",
+      "7",
+      "8",
+      "14"
+    ],
+    "a": 1,
+    "s": "The declared size is the number of elements.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "What is the value of a[2] after int a[4] = {10, 20, 30, 40};?",
+    "o": [
+      "10",
+      "20",
+      "30",
+      "40"
+    ],
+    "a": 2,
+    "s": "a[0]=10, a[1]=20, a[2]=30.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which expression accesses the first element of array x?",
+    "o": [
+      "x[1]",
+      "x[0]",
+      "x(-1)",
+      "x.first"
+    ],
+    "a": 1,
+    "s": "The first element is at index 0.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "If int a[5] = {1, 2}; is declared, the remaining elements are initialized to:",
+    "o": [
+      "Garbage values",
+      "Zero",
+      "One",
+      "-1"
+    ],
+    "a": 1,
+    "s": "With a partial initializer, the rest are set to 0.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "What is the correct way to find the number of elements in an array a in the same scope where it is an actual array?",
+    "o": [
+      "sizeof(a) / sizeof(a[0])",
+      "sizeof(a[0]) / sizeof(a)",
+      "length(a)",
+      "count(a)"
+    ],
+    "a": 0,
+    "s": "Total bytes divided by bytes per element. This fails for an array parameter, which is really a pointer.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "What is the result of accessing an array element outside its valid bounds in C?",
+    "o": [
+      "It always returns zero",
+      "It is undefined behavior",
+      "It automatically expands the array",
+      "It always produces a compile-time error"
+    ],
+    "a": 1,
+    "s": "C does not check bounds. The behaviour is undefined.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "A one-dimensional array is also called:",
+    "o": [
+      "Linear array",
+      "Circular queue",
+      "Linked list",
+      "Tree"
+    ],
+    "a": 0,
+    "s": "A 1-D array is a linear array.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which statement assigns 50 to the third element of array x?",
+    "o": [
+      "x[3] = 50;",
+      "x[2] = 50;",
+      "x(2) = 50;",
+      "x = 50;"
+    ],
+    "a": 1,
+    "s": "The third element has index 2.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which loop is commonly used to traverse all elements of an array?",
+    "o": [
+      "for loop",
+      "switch statement",
+      "goto only",
+      "if statement only"
+    ],
+    "a": 0,
+    "s": "A for loop with the index as counter is the standard way.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "In C, the name of an array expression usually converts to:",
+    "o": [
+      "The value of its last element",
+      "A pointer to its first element",
+      "The number of elements",
+      "A character constant"
+    ],
+    "a": 1,
+    "s": "An array name decays to a pointer to its first element (except with sizeof and &).",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "A two-dimensional array is commonly used to represent:",
+    "o": [
+      "A single scalar value",
+      "A table of rows and columns",
+      "A function prototype",
+      "A string terminator"
+    ],
+    "a": 1,
+    "s": "A 2-D array models a matrix or table.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which is a valid declaration of a 3 × 4 integer array?",
+    "o": [
+      "int a[3][4];",
+      "int a(3,4);",
+      "int[3,4] a;",
+      "array a[3][4];"
+    ],
+    "a": 0,
+    "s": "Each dimension gets its own brackets.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "How many elements are in int matrix[3][4];?",
+    "o": [
+      "7",
+      "12",
+      "3",
+      "4"
+    ],
+    "a": 1,
+    "s": "3 x 4 = 12.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "In matrix[2][3], the first index generally identifies the:",
+    "o": [
+      "Column",
+      "Row",
+      "Data type",
+      "Memory size"
+    ],
+    "a": 1,
+    "s": "The first index is the row, the second is the column.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "In C, a two-dimensional array is stored in:",
+    "o": [
+      "Column-major order",
+      "Row-major order",
+      "Random order",
+      "Diagonal order"
+    ],
+    "a": 1,
+    "s": "C stores row after row (row-major).",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "In row-major representation, elements of each row are stored:",
+    "o": [
+      "Contiguously",
+      "In reverse memory order",
+      "In separate memory devices",
+      "Only in registers"
+    ],
+    "a": 0,
+    "s": "Each row occupies consecutive locations, and rows follow one another.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which expression accesses the element in the second row and third column of a C array named a?",
+    "o": [
+      "a[2][3]",
+      "a[1][2]",
+      "a[2][1]",
+      "a[1][3]"
+    ],
+    "a": 1,
+    "s": "Indices start at 0, so row 2 is 1 and column 3 is 2.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which loop structure is commonly used to traverse a two-dimensional array?",
+    "o": [
+      "Two nested loops",
+      "One switch statement",
+      "A single break statement",
+      "Only recursion"
+    ],
+    "a": 0,
+    "s": "Outer loop for rows, inner loop for columns.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "If int a[2][3] = {{1,2,3},{4,5,6}};, what is a[1][1]?",
+    "o": [
+      "2",
+      "4",
+      "5",
+      "6"
+    ],
+    "a": 2,
+    "s": "Row 1 is {4,5,6}, and index 1 of it is 5.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "The total memory occupied by int a[2][3], assuming sizeof(int) is 4 bytes, is:",
+    "o": [
+      "6 bytes",
+      "12 bytes",
+      "24 bytes",
+      "32 bytes"
+    ],
+    "a": 2,
+    "s": "6 elements x 4 bytes = 24 bytes.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which operation on an array means visiting each element one by one?",
+    "o": [
+      "Traversal",
+      "Compilation",
+      "Linking",
+      "Recursion"
+    ],
+    "a": 0,
+    "s": "Traversal visits every element.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Searching an array means:",
+    "o": [
+      "Arranging all elements",
+      "Finding whether a target value exists and/or its position",
+      "Deleting the array declaration",
+      "Converting it to a string"
+    ],
+    "a": 1,
+    "s": "Searching looks for a target value and often returns its index.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which operation changes the order of elements in an array?",
+    "o": [
+      "Sorting",
+      "Linking",
+      "Prototyping",
+      "Casting"
+    ],
+    "a": 0,
+    "s": "Sorting rearranges the elements.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Inserting an element into the middle of a fixed-size array may require:",
+    "o": [
+      "Shifting existing elements",
+      "Deleting the compiler",
+      "Changing the array's data type",
+      "Replacing all elements with pointers"
+    ],
+    "a": 0,
+    "s": "Later elements must move one place to make room.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "Which statement about a C array is correct?",
+    "o": [
+      "Its size can automatically grow whenever an element is added",
+      "Its elements are accessed using indices",
+      "It can store only one element",
+      "Its first index is always 1"
+    ],
+    "a": 1,
+    "s": "Elements are accessed by index. Size is fixed and indexing starts at 0.",
+    "t": "Arrays"
+  },
+  {
+    "u": 3,
+    "q": "A C string is:",
+    "o": [
+      "An integer array",
+      "A character sequence terminated by the null character",
+      "A character sequence terminated by a space",
+      "A floating-point array"
+    ],
+    "a": 1,
+    "s": "A C string is a char array ending with '\\0'.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which character marks the end of a C string?",
+    "o": [
+      "'\\n'",
+      "'\\0'",
+      "'\\t'",
+      "' '"
+    ],
+    "a": 1,
+    "s": "The null character '\\0' terminates a string.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which header file declares standard string-handling functions?",
+    "o": [
+      "stdio.h",
+      "string.h",
+      "math.h",
+      "stdlib.h"
+    ],
+    "a": 1,
+    "s": "strlen, strcpy, strcat and strcmp are in string.h.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which declaration can store the string \"Hello\" including its terminator?",
+    "o": [
+      "char s[5] = \"Hello\";",
+      "char s[6] = \"Hello\";",
+      "int s[6] = \"Hello\";",
+      "char s = \"Hello\";"
+    ],
+    "a": 1,
+    "s": "Five letters plus the null character need 6 bytes.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "How many characters are in the string literal \"Cat\", excluding the null terminator?",
+    "o": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "a": 1,
+    "s": "C, a and t make 3.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "How many bytes are required to store \"Cat\" as a C string, assuming one byte per char?",
+    "o": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "a": 2,
+    "s": "3 characters + 1 null terminator = 4.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which function returns the length of a string, excluding the terminating null character?",
+    "o": [
+      "strcpy()",
+      "strlen()",
+      "strcat()",
+      "strcmp()"
+    ],
+    "a": 1,
+    "s": "strlen counts characters before '\\0'.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "What does strlen(\"Hello\") return?",
+    "o": [
+      "4",
+      "5",
+      "6",
+      "0"
+    ],
+    "a": 1,
+    "s": "Hello has 5 characters.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which function copies one string into another?",
+    "o": [
+      "strcat()",
+      "strcmp()",
+      "strcpy()",
+      "strlen()"
+    ],
+    "a": 2,
+    "s": "strcpy(dest, src) copies src into dest.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which function concatenates two strings?",
+    "o": [
+      "strcat()",
+      "strcpy()",
+      "strlen()",
+      "strcmp()"
+    ],
+    "a": 0,
+    "s": "strcat appends one string to another.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which function compares two strings lexicographically?",
+    "o": [
+      "strlen()",
+      "strcpy()",
+      "strcat()",
+      "strcmp()"
+    ],
+    "a": 3,
+    "s": "strcmp compares strings character by character.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "What does strcmp() return when two strings are equal?",
+    "o": [
+      "A negative value",
+      "Zero",
+      "A positive value",
+      "The string length"
+    ],
+    "a": 1,
+    "s": "It returns 0 for equal strings.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which statement correctly copies source into destination?",
+    "o": [
+      "strcpy(destination, source);",
+      "strcpy(source, destination);",
+      "strcat(destination);",
+      "strlen(destination, source);"
+    ],
+    "a": 0,
+    "s": "The destination is the first argument.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Before using strcat(destination, source), destination must have:",
+    "o": [
+      "No null terminator",
+      "Enough space for the combined string and null terminator",
+      "Only one byte of space",
+      "An integer data type"
+    ],
+    "a": 1,
+    "s": "strcat does not check size, so a too-small buffer overflows.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which function is used to find the number of characters in a string?",
+    "o": [
+      "strcmp()",
+      "strlen()",
+      "strcat()",
+      "strcpy()"
+    ],
+    "a": 1,
+    "s": "strlen gives the length.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "What is the output of strlen(\"\")?",
+    "o": [
+      "0",
+      "1",
+      "-1",
+      "Undefined in every case"
+    ],
+    "a": 0,
+    "s": "An empty string has no characters before the terminator.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which of the following is a valid string declaration?",
+    "o": [
+      "char name[] = \"Ravi\";",
+      "string name = \"Ravi\";",
+      "char name = \"Ravi\";",
+      "int name[] = \"Ravi\";"
+    ],
+    "a": 0,
+    "s": "C has no built-in string type, so a char array is used. The size is inferred as 5.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "What is the purpose of the null character in a C string?",
+    "o": [
+      "It indicates the end of the string",
+      "It indicates the beginning of an array",
+      "It stores the string length",
+      "It separates two functions"
+    ],
+    "a": 0,
+    "s": "String functions stop when they reach '\\0'.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which statement about gets() is correct?",
+    "o": [
+      "It is the recommended safe input function",
+      "It was removed from the C standard because it cannot limit input length",
+      "It returns an integer array",
+      "It concatenates two strings"
+    ],
+    "a": 1,
+    "s": "gets cannot limit input and causes buffer overflows. It was removed in C11.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "Which function is generally preferred for bounded string input from standard input?",
+    "o": [
+      "gets()",
+      "scanf(\"%s\", ...)",
+      "fgets()",
+      "strcat()"
+    ],
+    "a": 2,
+    "s": "fgets takes a size limit and so avoids overflow.",
+    "t": "Strings"
+  },
+  {
+    "u": 3,
+    "q": "A function in C is:",
+    "o": [
+      "A named block of code that performs a task",
+      "A data type only",
+      "A memory address only",
+      "A loop keyword"
+    ],
+    "a": 0,
+    "s": "A function is a named, reusable block of code.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Modular programming means:",
+    "o": [
+      "Writing the entire program in one large function",
+      "Dividing a program into smaller manageable modules",
+      "Avoiding functions",
+      "Using only global variables"
+    ],
+    "a": 1,
+    "s": "The program is split into smaller modules (functions).",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which is a benefit of using functions?",
+    "o": [
+      "Code reuse",
+      "More duplication",
+      "No testing possible",
+      "No program structure"
+    ],
+    "a": 0,
+    "s": "Write once, call many times.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "A function prototype tells the compiler about:",
+    "o": [
+      "Function name, return type, and parameter types",
+      "Only the function's output",
+      "The number of files on disk",
+      "The values of all local variables"
+    ],
+    "a": 0,
+    "s": "It declares the name, return type and parameter types.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which is a valid function prototype for a function that adds two integers and returns an int?",
+    "o": [
+      "int add(int, int);",
+      "add int(int, int)",
+      "int add;",
+      "function add(int, int);"
+    ],
+    "a": 0,
+    "s": "Syntax: return_type name(parameter types);",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which part of a function includes its executable statements?",
+    "o": [
+      "Prototype",
+      "Definition",
+      "Function call",
+      "Header inclusion"
+    ],
+    "a": 1,
+    "s": "The definition contains the body.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "A function call is used to:",
+    "o": [
+      "Execute or invoke a function",
+      "Declare a variable",
+      "Include a header file",
+      "Define a structure"
+    ],
+    "a": 0,
+    "s": "A call runs the function.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which keyword is used to send a value back from a function?",
+    "o": [
+      "break",
+      "return",
+      "continue",
+      "goto"
+    ],
+    "a": 1,
+    "s": "return sends a value to the caller and ends the function.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which return type indicates that a function does not return a value?",
+    "o": [
+      "int",
+      "char",
+      "void",
+      "float"
+    ],
+    "a": 2,
+    "s": "void means no return value.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which is a valid function definition?",
+    "o": [
+      "int square(int x) { return x * x; }",
+      "int square(int x);",
+      "square(int x);",
+      "function square { return x; }"
+    ],
+    "a": 0,
+    "s": "It has a return type, name, parameters and a body.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "In a function declaration, the values listed in parentheses are called:",
+    "o": [
+      "Arguments",
+      "Parameters",
+      "Operators",
+      "Labels"
+    ],
+    "a": 1,
+    "s": "They are parameters (formal parameters).",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "The actual values supplied when a function is called are called:",
+    "o": [
+      "Arguments",
+      "Prototypes",
+      "Return types",
+      "Tokens"
+    ],
+    "a": 0,
+    "s": "They are arguments (actual parameters).",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which statement about a function prototype is correct?",
+    "o": [
+      "It must contain the function body",
+      "It can allow a function to be called before its definition",
+      "It executes the function immediately",
+      "It stores the function's return value"
+    ],
+    "a": 1,
+    "s": "With a prototype, a function can be called before its definition appears.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which function is the usual starting point of a hosted C program?",
+    "o": [
+      "printf()",
+      "main()",
+      "start()",
+      "begin()"
+    ],
+    "a": 1,
+    "s": "Execution begins in main().",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "A local variable declared inside a function is generally accessible:",
+    "o": [
+      "Throughout every source file",
+      "Only within its scope",
+      "Only inside main()",
+      "From every function automatically"
+    ],
+    "a": 1,
+    "s": "Its scope is the block in which it is declared.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "A function that calls itself is called:",
+    "o": [
+      "Inline function",
+      "Recursive function",
+      "Library function",
+      "Nested array"
+    ],
+    "a": 1,
+    "s": "This is recursion.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "What is essential for a recursive function to stop calling itself?",
+    "o": [
+      "A base case",
+      "A global array",
+      "A string function",
+      "A goto label"
+    ],
+    "a": 0,
+    "s": "A base case ends the recursion.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "What may happen if a recursive function has no reachable base case?",
+    "o": [
+      "It always returns zero",
+      "It may continue until stack exhaustion",
+      "It automatically becomes iterative",
+      "It is ignored by the compiler"
+    ],
+    "a": 1,
+    "s": "Calls pile up on the call stack until it overflows.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "The factorial of 0 is:",
+    "o": [
+      "0",
+      "1",
+      "-1",
+      "Undefined"
+    ],
+    "a": 1,
+    "s": "By definition 0! = 1.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "What is 5! (5 factorial)?",
+    "o": [
+      "25",
+      "60",
+      "120",
+      "720"
+    ],
+    "a": 2,
+    "s": "5 x 4 x 3 x 2 x 1 = 120.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "Which is the recursive definition of factorial for n > 0?",
+    "o": [
+      "n! = n + (n-1)!",
+      "n! = n × (n-1)!",
+      "n! = n × n",
+      "n! = n - (n-1)!"
+    ],
+    "a": 1,
+    "s": "n! = n x (n-1)!",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "What is the base case commonly used in a factorial function?",
+    "o": [
+      "factorial(0) = 1",
+      "factorial(0) = 0",
+      "factorial(1) = 0",
+      "factorial(n) = n"
+    ],
+    "a": 0,
+    "s": "factorial(0) = 1 (factorial(1) = 1 also works).",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "What is the value of factorial(4)?",
+    "o": [
+      "12",
+      "16",
+      "24",
+      "32"
+    ],
+    "a": 2,
+    "s": "4 x 3 x 2 x 1 = 24.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "The Fibonacci sequence commonly begins with:",
+    "o": [
+      "1, 1",
+      "0, 1",
+      "2, 3",
+      "1, 2"
+    ],
+    "a": 1,
+    "s": "The usual form is 0, 1, 1, 2, 3, 5, ...",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "In the standard Fibonacci sequence, each term after the first two is:",
+    "o": [
+      "The product of the previous two terms",
+      "The sum of the previous two terms",
+      "The difference of the previous two terms",
+      "Twice the previous term"
+    ],
+    "a": 1,
+    "s": "F(n) = F(n-1) + F(n-2).",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "What is the fifth term of the sequence 0, 1, 1, 2, 3, 5, … when counting 0 as the first term?",
+    "o": [
+      "2",
+      "3",
+      "5",
+      "8"
+    ],
+    "a": 1,
+    "s": "1st 0, 2nd 1, 3rd 1, 4th 2, 5th 3.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "Which is a common recursive definition of Fibonacci numbers?",
+    "o": [
+      "F(n) = F(n-1) + F(n-2)",
+      "F(n) = F(n-1) × F(n-2)",
+      "F(n) = F(n-1) - F(n-2)",
+      "F(n) = 2 × F(n-1)"
+    ],
+    "a": 0,
+    "s": "Each term is the sum of the previous two.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "Which is a valid base-case pair for the standard Fibonacci definition?",
+    "o": [
+      "F(0)=0 and F(1)=1",
+      "F(0)=1 and F(1)=2",
+      "F(0)=2 and F(1)=3",
+      "F(0)=0 and F(1)=0"
+    ],
+    "a": 0,
+    "s": "The standard base cases are F(0) = 0 and F(1) = 1.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "Each recursive function call generally creates:",
+    "o": [
+      "A new activation record on the call stack",
+      "A new source file",
+      "A new compiler",
+      "A new header file"
+    ],
+    "a": 0,
+    "s": "Every call gets its own stack frame with its own parameters and locals.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "Which statement about recursion is correct?",
+    "o": [
+      "It always uses less memory than iteration",
+      "It involves a function calling itself directly or indirectly",
+      "It cannot solve mathematical problems",
+      "It does not need a stopping condition"
+    ],
+    "a": 1,
+    "s": "Recursion means a function calls itself, directly or through another function.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "In C, arguments are passed to ordinary functions by:",
+    "o": [
+      "Call by reference only",
+      "Call by value",
+      "Call by name",
+      "Call by text"
+    ],
+    "a": 1,
+    "s": "C always passes by value. Pointers are used to simulate by-reference.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "In call by value, a function receives:",
+    "o": [
+      "A copy of the argument's value",
+      "The original variable automatically",
+      "The variable's source-code text",
+      "A complete copy of the program"
+    ],
+    "a": 0,
+    "s": "The function works on a copy.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "If a function changes its value parameter, the caller's original variable is generally:",
+    "o": [
+      "Changed automatically",
+      "Unchanged",
+      "Deleted",
+      "Converted to a string"
+    ],
+    "a": 1,
+    "s": "Only the copy changes.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "C can achieve reference-like modification of a caller's variable by passing:",
+    "o": [
+      "Its address using a pointer",
+      "Its variable name as text",
+      "A comment",
+      "A return type only"
+    ],
+    "a": 0,
+    "s": "Pass the address with & and modify it through the pointer.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "Which operator obtains the address of a variable?",
+    "o": [
+      "*",
+      "&",
+      "%",
+      "!"
+    ],
+    "a": 1,
+    "s": "&x is the address of x.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "Which operator is used to dereference a pointer?",
+    "o": [
+      "&",
+      "*",
+      "#",
+      "::"
+    ],
+    "a": 1,
+    "s": "*p accesses the value that p points to.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "Which function parameter can receive the address of an integer?",
+    "o": [
+      "int x",
+      "int *x",
+      "char x[]",
+      "void x"
+    ],
+    "a": 1,
+    "s": "int *x is a pointer to int.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "Consider void update(int *p) { *p = 20; }. What does *p = 20 do?",
+    "o": [
+      "Changes the value at the address stored in p",
+      "Changes the pointer's data type",
+      "Prints the address",
+      "Declares a new array"
+    ],
+    "a": 0,
+    "s": "It stores 20 in the variable that p points to.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "Which statement about \"call by reference\" in C is most accurate?",
+    "o": [
+      "C has built-in reference parameters like C++",
+      "C uses pointers to allow a function to modify caller-owned objects",
+      "C always passes every argument by address",
+      "C does not allow pointers"
+    ],
+    "a": 1,
+    "s": "C has no reference parameters. It passes pointers (by value) to achieve the effect.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "What is the main difference between call by value and pointer-based modification?",
+    "o": [
+      "Call by value passes a copy; a pointer parameter can access the caller's object through its address",
+      "Both always modify the caller's variable",
+      "Call by value passes source code",
+      "Pointer parameters cannot modify data"
+    ],
+    "a": 0,
+    "s": "A copy cannot affect the original. A pointer lets the function reach it.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "What is the output of this code? int x = 5; void change(int n) { n = 10; } int main(void) { change(x); printf(\"%d\", x); }",
+    "o": [
+      "5",
+      "10",
+      "0",
+      "Compilation error"
+    ],
+    "a": 0,
+    "s": "n is a copy, so x stays 5.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "What is the output of this code? int x = 5; void change(int *n) { *n = 10; } int main(void) { change(&x); printf(\"%d\", x); }",
+    "o": [
+      "5",
+      "10",
+      "Address of x",
+      "Undefined because pointers cannot be passed"
+    ],
+    "a": 1,
+    "s": "change gets the address of x and writes 10 through it.",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "Which is the correct way to call a function that expects an int pointer and should modify variable x?",
+    "o": [
+      "change(x);",
+      "change(&x);",
+      "change(*x);",
+      "change(int x);"
+    ],
+    "a": 1,
+    "s": "Pass the address: change(&x).",
+    "t": "Call by Value & Pointers"
+  },
+  {
+    "u": 3,
+    "q": "What is a function's return value?",
+    "o": [
+      "The value sent back to the calling code",
+      "The number of parameters",
+      "The function's memory address only",
+      "The function prototype"
+    ],
+    "a": 0,
+    "s": "It is the value given back by return.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which statement about a void function is correct?",
+    "o": [
+      "It cannot contain any statements",
+      "It does not return a value to its caller",
+      "It must return an integer",
+      "It cannot accept parameters"
+    ],
+    "a": 1,
+    "s": "A void function returns nothing but can still take parameters.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which of the following is a standard C library function?",
+    "o": [
+      "strlen()",
+      "myFunction()",
+      "calculateTotal()",
+      "displayMarks()"
+    ],
+    "a": 0,
+    "s": "strlen is in the standard library. The others are user-defined names.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which header should be included to use strlen()?",
+    "o": [
+      "stdio.h",
+      "string.h",
+      "math.h",
+      "limits.h"
+    ],
+    "a": 1,
+    "s": "strlen is declared in string.h.",
+    "t": "Functions"
+  },
+  {
+    "u": 3,
+    "q": "Which statement about recursion and iteration is correct?",
+    "o": [
+      "Both can be used to repeat computations",
+      "Iteration always creates a new function call",
+      "Recursion never uses a call stack",
+      "Recursion cannot have a base case"
+    ],
+    "a": 0,
+    "s": "Both repeat work. Recursion uses calls and a stack, iteration uses loops.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "What is a likely disadvantage of a simple recursive Fibonacci implementation?",
+    "o": [
+      "It may repeat many calculations",
+      "It cannot produce Fibonacci numbers",
+      "It never makes function calls",
+      "It requires a string array"
+    ],
+    "a": 0,
+    "s": "fib(n-1) and fib(n-2) recompute the same values, giving exponential time.",
+    "t": "Recursion"
+  },
+  {
+    "u": 3,
+    "q": "Which practice improves the reliability of recursive functions?",
+    "o": [
+      "Omitting all base cases",
+      "Ensuring a correct base case and progress toward it",
+      "Using global variables for every value",
+      "Calling the function with the same input forever"
+    ],
+    "a": 1,
+    "s": "Each call must move closer to a base case that stops the recursion.",
+    "t": "Recursion"
+  }
+]

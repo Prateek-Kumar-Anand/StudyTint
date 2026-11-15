@@ -210,16 +210,21 @@ private val baseQuiz: Map<String, List<Q>> = mapOf(
 var quiz: Map<String, List<Q>> = baseQuiz
     private set
 
-fun loadMathBank(ctx: android.content.Context) {
+fun loadQuestionBanks(ctx: android.content.Context) {
+    loadBank(ctx, "ma", "questions-math.json")
+    loadBank(ctx, "c", "questions-c.json")
+}
+
+private fun loadBank(ctx: android.content.Context, subjectId: String, file: String) {
     try {
-        val arr = org.json.JSONArray(ctx.assets.open("questions-math.json").bufferedReader().use { it.readText() })
+        val arr = org.json.JSONArray(ctx.assets.open(file).bufferedReader().use { it.readText() })
         val list = (0 until arr.length()).map { n ->
             val o = arr.getJSONObject(n)
             val opts = o.getJSONArray("o")
             Q(o.getInt("u") - 1, o.getString("q"), (0 until opts.length()).map { opts.getString(it) }, o.getInt("a"), o.optString("s"), o.optString("t"))
         }
-        if (list.isNotEmpty()) quiz = quiz + ("ma" to list)
+        if (list.isNotEmpty()) quiz = quiz + (subjectId to list)
     } catch (e: Exception) {
-        android.util.Log.e("SmartStudy", "Maths question bank failed to load", e)
+        android.util.Log.e("SmartStudy", "Question bank $file failed to load", e)
     }
 }
