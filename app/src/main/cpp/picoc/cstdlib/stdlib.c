@@ -98,7 +98,8 @@ void StdlibExit(struct ParseState *Parser, struct Value *ReturnValue,
 void StdlibGetenv(struct ParseState *Parser, struct Value *ReturnValue,
     struct Value **Param, int NumArgs)
 {
-    ReturnValue->Val->Pointer = getenv(Param[0]->Val->Pointer);
+    /* C Lab programs must not read the app's environment (paths, class paths); every variable is reported as unset. */
+    ReturnValue->Val->Pointer = NULL;
 }
 
 void StdlibSystem(struct ParseState *Parser, struct Value *ReturnValue,

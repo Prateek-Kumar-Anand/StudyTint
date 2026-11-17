@@ -3,3 +3,8 @@ build/
 *.iml
 local.properties
 .idea/
+__pycache__/
+*.pyc
+*.keystore
+release.jks
+.env

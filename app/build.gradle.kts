@@ -27,7 +27,7 @@ android {
         create("studytint") {
             // SECURITY: the key in the repository is public. For a build nobody else can sign, put your own key in
             // GitHub Secrets (see the README) and these variables take over; the repository key is only the fallback.
-            storeFile = System.getenv("STUDYTINT_KEYSTORE")?.takeIf { it.isNotBlank() }?.let { file(it) } ?: file("studytint.jks")
+            storeFile = System.getenv("STUDYTINT_KEYSTORE")?.takeIf { it.isNotBlank() }?.let { file(it) } ?: file("studytint_signing_key.jks")
             storePassword = System.getenv("STUDYTINT_STORE_PASSWORD") ?: "studytint"
             keyAlias = System.getenv("STUDYTINT_KEY_ALIAS") ?: "studytint"
             keyPassword = System.getenv("STUDYTINT_KEY_PASSWORD") ?: "studytint"

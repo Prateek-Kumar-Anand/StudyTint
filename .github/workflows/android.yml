@@ -33,7 +33,11 @@ jobs:
           KS_KEYPASS: ${{ secrets.KEY_PASSWORD }}
         run: |
           if [ -n "$KS_B64" ]; then
+            umask 077
             echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            case "$KS_PASS$KS_ALIAS$KS_KEYPASS" in
+              *$'\n'*|*$'\r'*) echo "::error::Signing secrets must not contain line breaks."; exit 1 ;;
+            esac
             {
               echo "STUDYTINT_KEYSTORE=$RUNNER_TEMP/release.jks"
               echo "STUDYTINT_STORE_PASSWORD=$KS_PASS"
@@ -42,7 +46,7 @@ jobs:
             } >> "$GITHUB_ENV"
             echo "Signing with the private key from repository secrets."
           else
-            echo "No private key in secrets: signing with the key stored in the repository."
+            echo "::warning::No private key in repository secrets. This build is signed with the PUBLIC key stored in the repository; anyone can sign an APK that installs over it. See SECURITY.md."
           fi
       - name: Build release APK
         run: |
@@ -55,6 +59,9 @@ jobs:
           . <(grep -E '^VERSION_' version.properties)
           mkdir -p dist
           cp app/build/outputs/apk/release/app-release.apk "dist/StudyTint-v${VERSION_NAME}-build${GITHUB_RUN_NUMBER}.apk"
+      - name: Delete the private key from the runner
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.jks"
       - name: Extract error log
         if: always()
         run: |

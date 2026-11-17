@@ -4,7 +4,7 @@
 #include <string.h>
 #include "c_lab_process.h"
 
-/* Streaming interface used by CEngine / CRun in CLab.kt. */
+/* Streaming interface used by CEngine / CRun in CProgrammingLab.kt. */
 
 JNIEXPORT jlong JNICALL
 Java_com_student_smartstudy_CEngine_start(JNIEnv *env, jobject thiz, jbyteArray jsrc, jstring jdir, jint timeoutMs, jint mode)

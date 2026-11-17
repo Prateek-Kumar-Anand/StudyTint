@@ -57,6 +57,13 @@ class Progress(ctx: Context) {
         done = if (key in done) done - key else done + key
         sp.edit().putStringSet("done", done).apply()
     }
+    /** True once the user chose "Skip for now" on the first-run profile screen, so it is not shown again at every start. */
+    var profileSkipped by mutableStateOf(sp.getBoolean("p_skipped", false))
+        private set
+    fun skipProfile() {
+        profileSkipped = true
+        sp.edit().putBoolean("p_skipped", true).apply()
+    }
     fun saveProfile(n: Profile) {
         profile = Profile(n.name.trim(), n.father.trim(), n.lurn.trim(), n.roll.trim(), n.course.trim())
         sp.edit().putString("p_name", profile.name).putString("p_father", profile.father).putString("p_lurn", profile.lurn)
