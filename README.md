@@ -47,7 +47,7 @@ Multiple-choice quizzes by unit or by topic, with an explanation after every ans
 <td valign="top">
 
 ### 📊 Score
-A dashboard of quizzes done, accuracy, and your **strongest and weakest topics**, so you know what to revise next.
+A soft, card-based dashboard: a reading-progress bar, a **daily activity grid**, a ranked list of your **strongest and weakest topics** with progress rings, and a petal chart showing how each subject is going, so you know what to revise next.
 
 </td>
 <td valign="top">

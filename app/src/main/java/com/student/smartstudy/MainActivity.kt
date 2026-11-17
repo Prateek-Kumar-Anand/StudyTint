@@ -38,6 +38,14 @@ class Progress(ctx: Context) {
         }.toMap()
     )
         private set
+    /** Number of things done per day (answers given and new notes opened), keyed by yyyyMMdd. Feeds the activity grid on the Score screen. */
+    var activity by mutableStateOf(
+        sp.getStringSet("activity", emptySet())!!.mapNotNull { e ->
+            val k = e.indexOf('=')
+            if (k < 0) null else e.substring(0, k) to (e.substring(k + 1).toIntOrNull() ?: 0)
+        }.toMap()
+    )
+        private set
     var scores by mutableStateOf(
         sp.getStringSet("scores2", emptySet())!!.mapNotNull { e ->
             e.split("=").let { if (it.size == 2) it[0] to (it[1].toIntOrNull() ?: 0) else null }
@@ -64,7 +72,16 @@ class Progress(ctx: Context) {
     private fun persist() {
         sp.edit().putStringSet("stats", stats.map { "${it.key}=${it.value.first},${it.value.second}" }.toSet()).apply()
     }
+    private fun bumpDay() {
+        val d = dayKey(0)
+        // keep roughly the last 200 days so the stored set stays small
+        val cutoff = dayKey(200)
+        val keep = activity.filterKeys { it >= cutoff }
+        activity = keep + (d to ((keep[d] ?: 0) + 1))
+        sp.edit().putStringSet("activity", activity.map { "${it.key}=${it.value}" }.toSet()).apply()
+    }
     fun record(key: String, topic: String, ok: Boolean) {
+        bumpDay()
         val add = if (ok) 1 else 0
         fun bump(k: String) { val c = stats[k] ?: (0 to 0); stats = stats + (k to (c.first + 1 to c.second + add)) }
         bump(key)
@@ -78,6 +95,7 @@ class Progress(ctx: Context) {
     }
     fun markRead(key: String) {
         if (key !in read) {
+            bumpDay()
             read = read + key
             sp.edit().putStringSet("read", read).apply()
         }
