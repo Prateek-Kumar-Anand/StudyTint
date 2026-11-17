@@ -39,6 +39,8 @@ no WebView, no custom permissions, no content providers or broadcast receivers, 
 
 ## File layout
 
+If an older copy of the project is updated by copying files over it, the old file names stay behind and cause "Conflicting declarations" build errors. `tools/remove_old_files.sh` removes them, and the Gradle build deletes them automatically as well.
+
 Every source file now has a full descriptive name (for example `NotesRenderer.kt`, `dbms_query_engine.py`, `sample_databases/`,
 `studytint_signing_key.jks`), and no text file is stored on a single line.
 

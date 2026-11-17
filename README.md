@@ -119,6 +119,8 @@ gradle assembleRelease
 
 Or just push the repository to GitHub: the **Build APK** workflow does the same thing and attaches the APK to the run.
 
+> **Updating an older copy?** Several files were renamed. If the old files are still in your repository the build fails with *Conflicting declarations*. Run `bash tools/remove_old_files.sh` once (or delete the old files by hand); the build also removes them automatically.
+
 <details>
 <summary><b>Project layout</b></summary>
 
