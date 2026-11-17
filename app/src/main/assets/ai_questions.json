@@ -1,0 +1,1939 @@
+[
+ {
+  "u": 1,
+  "q": "Which is a typical strength of machine intelligence compared with human intelligence?",
+  "o": [
+   "Processing huge amounts of data quickly and consistently",
+   "Moral judgement",
+   "Common-sense understanding of any situation",
+   "Genuine emotions"
+  ],
+  "a": 0,
+  "s": "Machines excel at speed, scale and repetition. Humans excel at common sense, creativity and empathy.",
+  "t": "Intelligence & Definitions"
+ },
+ {
+  "u": 1,
+  "q": "Which is typically a strength of human intelligence over current AI?",
+  "o": [
+   "Common sense and adapting to completely new situations",
+   "Never getting tired",
+   "Searching huge databases instantly",
+   "Calculating millions of sums per second"
+  ],
+  "a": 0,
+  "s": "Humans transfer knowledge flexibly across unfamiliar situations.",
+  "t": "Intelligence & Definitions"
+ },
+ {
+  "u": 1,
+  "q": "Artificial Intelligence is best defined as:",
+  "o": [
+   "Machines that perform tasks that normally require human intelligence",
+   "A programming language",
+   "Any electronic device",
+   "A type of database"
+  ],
+  "a": 0,
+  "s": "Learning, reasoning, perception and language understanding are typical examples.",
+  "t": "Intelligence & Definitions"
+ },
+ {
+  "u": 1,
+  "q": "Who coined the term 'Artificial Intelligence'?",
+  "o": [
+   "Dennis Ritchie",
+   "Charles Babbage",
+   "Alan Turing",
+   "John McCarthy"
+  ],
+  "a": 3,
+  "s": "McCarthy used the term in the 1955 proposal for the 1956 Dartmouth workshop.",
+  "t": "Intelligence & Definitions"
+ },
+ {
+  "u": 1,
+  "q": "An intelligent agent is something that:",
+  "o": [
+   "Perceives its environment through sensors and acts through actuators",
+   "Only follows a flowchart",
+   "Only displays results",
+   "Only stores data"
+  ],
+  "a": 0,
+  "s": "The agent cycle is perceive, decide, act.",
+  "t": "Intelligence & Definitions"
+ },
+ {
+  "u": 1,
+  "q": "Which of these is an actuator of a robot?",
+  "o": [
+   "A microphone",
+   "A motor that moves an arm",
+   "A camera",
+   "A temperature sensor"
+  ],
+  "a": 1,
+  "s": "Sensors perceive. Actuators act.",
+  "t": "Intelligence & Definitions"
+ },
+ {
+  "u": 1,
+  "q": "Who proposed the Turing Test?",
+  "o": [
+   "Herbert Simon",
+   "John McCarthy",
+   "Alan Turing",
+   "Marvin Minsky"
+  ],
+  "a": 2,
+  "s": "Turing described the imitation game in 1950.",
+  "t": "Turing Test"
+ },
+ {
+  "u": 1,
+  "q": "The Turing Test is passed when:",
+  "o": [
+   "A machine solves a maths problem",
+   "A human judge cannot reliably tell the machine from a human in conversation",
+   "A machine passes an exam",
+   "A machine wins a chess game"
+  ],
+  "a": 1,
+  "s": "The judge converses by text with a human and a machine.",
+  "t": "Turing Test"
+ },
+ {
+  "u": 1,
+  "q": "In what year did Turing publish 'Computing Machinery and Intelligence'?",
+  "o": [
+   "1966",
+   "1950",
+   "1956",
+   "1936"
+  ],
+  "a": 1,
+  "s": "It opens with the question 'Can machines think?'.",
+  "t": "Turing Test"
+ },
+ {
+  "u": 1,
+  "q": "A common criticism of the Turing Test is that it:",
+  "o": [
+   "Measures imitation of human conversation, not true understanding",
+   "Cannot be run",
+   "Needs no judge",
+   "Tests only vision"
+  ],
+  "a": 0,
+  "s": "A system might fool a judge with tricks without understanding.",
+  "t": "Turing Test"
+ },
+ {
+  "u": 1,
+  "q": "The thought experiment that argues symbol manipulation is not understanding is Searle's:",
+  "o": [
+   "Turing machine",
+   "Chinese Room",
+   "Trolley problem",
+   "Monty Hall problem"
+  ],
+  "a": 1,
+  "s": "Searle argued a person following rules need not understand Chinese.",
+  "t": "Turing Test"
+ },
+ {
+  "u": 1,
+  "q": "The field of AI was formally launched at the:",
+  "o": [
+   "MIT Summit of 1970",
+   "Stanford Meeting of 1985",
+   "Dartmouth Conference of 1956",
+   "Turing Conference of 1950"
+  ],
+  "a": 2,
+  "s": "The Dartmouth Summer Research Project brought the founders together.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "Which of these was one of the organisers of the Dartmouth proposal?",
+  "o": [
+   "Linus Torvalds",
+   "John McCarthy",
+   "Tim Berners-Lee",
+   "Bill Gates"
+  ],
+  "a": 1,
+  "s": "McCarthy, Minsky, Rochester and Shannon proposed it.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "An 'AI winter' is:",
+  "o": [
+   "A type of robot",
+   "A season of rapid growth",
+   "A period of reduced funding and interest after over-hyped expectations",
+   "A cooling method for computers"
+  ],
+  "a": 2,
+  "s": "Examples are the mid-1970s and late 1980s to early 1990s.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "A major reason for AI winters was:",
+  "o": [
+   "Too much funding",
+   "Too many data scientists",
+   "Limited computing power and results that fell short of promises",
+   "Lack of electricity"
+  ],
+  "a": 2,
+  "s": "Early methods did not scale to real-world problems.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "Which program beat world chess champion Garry Kasparov in 1997?",
+  "o": [
+   "Deep Blue",
+   "AlphaGo",
+   "ELIZA",
+   "Watson"
+  ],
+  "a": 0,
+  "s": "IBM's Deep Blue won the 1997 match.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "Which system beat the Jeopardy! champions in 2011?",
+  "o": [
+   "IBM Watson",
+   "AlphaGo",
+   "Deep Blue",
+   "Siri"
+  ],
+  "a": 0,
+  "s": "Watson answered natural-language questions.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "Which system defeated Go champion Lee Sedol in 2016?",
+  "o": [
+   "Watson",
+   "Deep Blue",
+   "ELIZA",
+   "AlphaGo"
+  ],
+  "a": 3,
+  "s": "DeepMind's AlphaGo used deep learning and reinforcement learning.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "ELIZA, an early chatbot of the 1960s, imitated a:",
+  "o": [
+   "Travel agent",
+   "Psychotherapist",
+   "Doctor of surgery",
+   "Chess player"
+  ],
+  "a": 1,
+  "s": "Joseph Weizenbaum's ELIZA matched keywords and reflected statements.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "The perceptron, an early neural network model, was introduced by:",
+  "o": [
+   "Geoffrey Hinton",
+   "Alan Turing",
+   "Frank Rosenblatt",
+   "Claude Shannon"
+  ],
+  "a": 2,
+  "s": "Rosenblatt proposed it in 1958.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "The deep-learning breakthrough in image recognition (AlexNet) came in:",
+  "o": [
+   "1956",
+   "2023",
+   "1980",
+   "2012"
+  ],
+  "a": 3,
+  "s": "AlexNet won the ImageNet challenge in 2012 by a large margin.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "The Transformer architecture, the basis of modern language models, was introduced in:",
+  "o": [
+   "2022",
+   "2017",
+   "2005",
+   "1997"
+  ],
+  "a": 1,
+  "s": "'Attention Is All You Need' appeared in 2017.",
+  "t": "History"
+ },
+ {
+  "u": 1,
+  "q": "AI designed for one specific task, such as spam filtering, is called:",
+  "o": [
+   "General AI",
+   "Narrow AI (weak AI)",
+   "Super AI",
+   "Strong AI"
+  ],
+  "a": 1,
+  "s": "All AI deployed today is narrow.",
+  "t": "Types of AI"
+ },
+ {
+  "u": 1,
+  "q": "AI that could perform any intellectual task a human can is called:",
+  "o": [
+   "Artificial General Intelligence (AGI)",
+   "Reactive AI",
+   "Narrow AI",
+   "Expert system"
+  ],
+  "a": 0,
+  "s": "AGI does not yet exist.",
+  "t": "Types of AI"
+ },
+ {
+  "u": 1,
+  "q": "AI that surpasses human intelligence in all areas is:",
+  "o": [
+   "Artificial Super Intelligence",
+   "Rule-based AI",
+   "Narrow AI",
+   "Reactive machine"
+  ],
+  "a": 0,
+  "s": "It is hypothetical.",
+  "t": "Types of AI"
+ },
+ {
+  "u": 1,
+  "q": "Which of these is an example of narrow AI?",
+  "o": [
+   "A machine with human-level reasoning in every field",
+   "A recommendation system",
+   "A self-aware computer",
+   "A conscious robot"
+  ],
+  "a": 1,
+  "s": "It is good at one task only.",
+  "t": "Types of AI"
+ },
+ {
+  "u": 1,
+  "q": "Which statement about today's AI is correct?",
+  "o": [
+   "General AI is widely deployed",
+   "All existing systems are narrow AI",
+   "Super AI exists",
+   "AI has human consciousness"
+  ],
+  "a": 1,
+  "s": "General and super AI remain theoretical.",
+  "t": "Types of AI"
+ },
+ {
+  "u": 1,
+  "q": "Which AI domain focuses on extracting insights from data?",
+  "o": [
+   "Data science",
+   "Computer vision",
+   "Cryptography",
+   "Robotics only"
+  ],
+  "a": 0,
+  "s": "It combines statistics, programming and domain knowledge.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "Which domain enables machines to interpret images and video?",
+  "o": [
+   "Natural language processing",
+   "Speech synthesis",
+   "Data mining only",
+   "Computer vision"
+  ],
+  "a": 3,
+  "s": "Examples are face recognition and medical imaging.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "Which domain deals with understanding and generating human language?",
+  "o": [
+   "Computer vision",
+   "Game theory",
+   "Natural language processing (NLP)",
+   "Networking"
+  ],
+  "a": 2,
+  "s": "Examples are translation, chatbots and summarisation.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "Face unlock on a phone is an application of:",
+  "o": [
+   "NLP",
+   "Databases",
+   "Computer vision",
+   "Compiler design"
+  ],
+  "a": 2,
+  "s": "It recognises a face from an image.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "A chatbot that answers customer questions primarily uses:",
+  "o": [
+   "NLP",
+   "Computer vision only",
+   "Disk scheduling",
+   "Image compression"
+  ],
+  "a": 0,
+  "s": "It must understand and generate language.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "Predicting house prices from past sales data is mainly:",
+  "o": [
+   "Computer vision",
+   "Data science / machine learning",
+   "Robotics",
+   "Speech recognition"
+  ],
+  "a": 1,
+  "s": "It learns patterns from tabular data.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "In NLP, splitting text into words or pieces is called:",
+  "o": [
+   "Normalisation of a database",
+   "Tokenisation",
+   "Compilation",
+   "Encryption"
+  ],
+  "a": 1,
+  "s": "Tokens are the units fed to later steps.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "Which task uses both computer vision and NLP?",
+  "o": [
+   "Compressing a file",
+   "Sending an email",
+   "Generating a caption for a photo",
+   "Sorting a list"
+  ],
+  "a": 2,
+  "s": "It reads an image and produces text.",
+  "t": "Core Domains"
+ },
+ {
+  "u": 1,
+  "q": "Which is a benefit of AI?",
+  "o": [
+   "Guaranteed accuracy in all cases",
+   "Automating repetitive tasks and assisting diagnosis",
+   "Removing the need for any oversight",
+   "Zero cost always"
+  ],
+  "a": 1,
+  "s": "AI saves time, but it needs oversight.",
+  "t": "Applications & Risks"
+ },
+ {
+  "u": 1,
+  "q": "Which is a known risk of AI?",
+  "o": [
+   "No job impact",
+   "No privacy concerns",
+   "Bias and misuse",
+   "Perfect fairness by default"
+  ],
+  "a": 2,
+  "s": "Responsible development must address these risks.",
+  "t": "Applications & Risks"
+ },
+ {
+  "u": 1,
+  "q": "Human oversight of AI decisions is called:",
+  "o": [
+   "Human-in-the-loop",
+   "Machine-only mode",
+   "Auto-deploy",
+   "Black-box mode"
+  ],
+  "a": 0,
+  "s": "A person reviews or approves important decisions.",
+  "t": "Applications & Risks"
+ },
+ {
+  "u": 1,
+  "q": "A 'black-box' model is one whose:",
+  "o": [
+   "Code is public",
+   "Training data is small",
+   "Internal reasoning is hard to explain",
+   "Output is always black"
+  ],
+  "a": 2,
+  "s": "Explainability is a concern for deep models.",
+  "t": "Applications & Risks"
+ },
+ {
+  "u": 2,
+  "q": "A well-defined AI search problem includes:",
+  "o": [
+   "Only the data",
+   "Only the actions",
+   "Initial state, actions, goal test and path cost",
+   "Only the goal"
+  ],
+  "a": 2,
+  "s": "These four components define the problem formally.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "In AI, a state is:",
+  "o": [
+   "A type of loop",
+   "A country",
+   "A configuration of the problem at a point in time",
+   "A variable name"
+  ],
+  "a": 2,
+  "s": "For the 8-puzzle, a state is an arrangement of tiles.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "The state space is:",
+  "o": [
+   "The memory of the computer",
+   "The goal state only",
+   "The set of all states reachable from the initial state",
+   "A list of rules"
+  ],
+  "a": 2,
+  "s": "Search explores this space.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "The goal test checks:",
+  "o": [
+   "The cost of the path",
+   "The number of actions",
+   "Whether a given state is a goal state",
+   "Whether the code compiles"
+  ],
+  "a": 2,
+  "s": "It returns true or false for a state.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "Path cost is:",
+  "o": [
+   "The depth only",
+   "The number of states",
+   "A numeric cost assigned to a sequence of actions",
+   "The heuristic value"
+  ],
+  "a": 2,
+  "s": "For example, distance in km on a road map.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "A solution to a search problem is:",
+  "o": [
+   "A heuristic",
+   "Any state",
+   "A single action",
+   "A sequence of actions from the initial state to a goal state"
+  ],
+  "a": 3,
+  "s": "An optimal solution has the lowest path cost.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "The branching factor b is:",
+  "o": [
+   "The path cost",
+   "The number of goals",
+   "The maximum number of successors of a node",
+   "The depth of the solution"
+  ],
+  "a": 2,
+  "s": "It drives how fast the search space grows.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "In the 8-puzzle, an action is:",
+  "o": [
+   "Removing a tile",
+   "Rotating the board",
+   "Sliding a tile into the blank space",
+   "Adding a tile"
+  ],
+  "a": 2,
+  "s": "Up to four moves are possible.",
+  "t": "Problem Solving"
+ },
+ {
+  "u": 2,
+  "q": "Uninformed (blind) search strategies use:",
+  "o": [
+   "No problem-specific knowledge beyond the problem definition",
+   "Machine learning",
+   "A database",
+   "A heuristic"
+  ],
+  "a": 0,
+  "s": "They only know the structure of the problem.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "Breadth-first search (BFS) expands nodes in order of:",
+  "o": [
+   "Alphabetical order",
+   "Cost only",
+   "Heuristic value",
+   "Depth (shallowest first)"
+  ],
+  "a": 3,
+  "s": "It uses a FIFO queue.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "BFS uses which data structure for its frontier?",
+  "o": [
+   "Heap sorted by h",
+   "Hash table only",
+   "Queue",
+   "Stack"
+  ],
+  "a": 2,
+  "s": "First in, first out.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "DFS uses which data structure for its frontier?",
+  "o": [
+   "Array of costs",
+   "Priority queue",
+   "Queue",
+   "Stack (or recursion)"
+  ],
+  "a": 3,
+  "s": "Last in, first out.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "BFS finds the shortest path (fewest steps) because:",
+  "o": [
+   "It chooses randomly",
+   "It uses a heuristic",
+   "It always picks the cheapest node",
+   "It explores all nodes at one depth before going deeper"
+  ],
+  "a": 3,
+  "s": "With equal step costs it is optimal.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "What is the main drawback of BFS?",
+  "o": [
+   "High memory use as the frontier grows exponentially",
+   "It cannot find solutions",
+   "It is not complete",
+   "It uses a heuristic"
+  ],
+  "a": 0,
+  "s": "The frontier holds about b^d nodes.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "Depth-first search (DFS) has the advantage of:",
+  "o": [
+   "Low memory use",
+   "Using heuristics",
+   "Guaranteed shortest path",
+   "Never looping"
+  ],
+  "a": 0,
+  "s": "It stores only the current path and siblings.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "A risk of DFS in graphs with cycles is:",
+  "o": [
+   "Always finding the longest path",
+   "Using too little memory",
+   "Running out of heuristics",
+   "Getting stuck in infinite paths or loops without a visited set"
+  ],
+  "a": 3,
+  "s": "A visited set or depth limit avoids this.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "Is DFS guaranteed to find the shortest path?",
+  "o": [
+   "Yes",
+   "No",
+   "Only with a heap",
+   "Only in trees"
+  ],
+  "a": 1,
+  "s": "It may find a deep, long solution first.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "Uniform-cost search expands the node with the lowest:",
+  "o": [
+   "Heuristic h(n)",
+   "Number of children",
+   "Depth",
+   "Path cost g(n)"
+  ],
+  "a": 3,
+  "s": "It is optimal for non-negative step costs.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "Iterative deepening search combines:",
+  "o": [
+   "Random search and sorting",
+   "Greedy and A*",
+   "BFS-like completeness with DFS-like memory use",
+   "Hill climbing and BFS"
+  ],
+  "a": 2,
+  "s": "It runs depth-limited DFS with increasing limits.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "In a tree with branching factor 2, how many nodes are at depth 3?",
+  "o": [
+   "3",
+   "9",
+   "8",
+   "6"
+  ],
+  "a": 2,
+  "s": "2 × 2 × 2 = 8.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "If BFS visits nodes in the tree A-(B,C), B-(D,E), C-(F), the visiting order is:",
+  "o": [
+   "A C B F E D",
+   "A B C D E F",
+   "A D E B F C",
+   "A B D E C F"
+  ],
+  "a": 1,
+  "s": "Level by level: A; B, C; D, E, F.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "If DFS (visiting left child first) is applied to the same tree A-(B,C), B-(D,E), C-(F), the order is:",
+  "o": [
+   "A D B E C F",
+   "A C F B D E",
+   "A B C D E F",
+   "A B D E C F"
+  ],
+  "a": 3,
+  "s": "It goes deep along B before returning to C.",
+  "t": "Uninformed Search"
+ },
+ {
+  "u": 2,
+  "q": "Informed search uses:",
+  "o": [
+   "Only the path cost",
+   "A heuristic estimate of the distance to the goal",
+   "No knowledge",
+   "Random choices"
+  ],
+  "a": 1,
+  "s": "The heuristic h(n) guides the search.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "A heuristic function h(n) estimates:",
+  "o": [
+   "The depth of n",
+   "The cost from the start to n",
+   "The cost from node n to the nearest goal",
+   "The number of children of n"
+  ],
+  "a": 2,
+  "s": "It is a guess, ideally cheap to compute.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "Greedy best-first search expands the node with the lowest:",
+  "o": [
+   "h(n)",
+   "g(n)",
+   "g(n) + h(n)",
+   "Depth"
+  ],
+  "a": 0,
+  "s": "It looks only at the estimated distance to the goal.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "A* search uses the evaluation function:",
+  "o": [
+   "f(n) = g(n) − h(n)",
+   "f(n) = g(n)",
+   "f(n) = h(n)",
+   "f(n) = g(n) + h(n)"
+  ],
+  "a": 3,
+  "s": "g is the cost so far and h the estimate to the goal.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "A heuristic is admissible if it:",
+  "o": [
+   "Always overestimates",
+   "Never overestimates the true cost to the goal",
+   "Equals the depth",
+   "Is always zero"
+  ],
+  "a": 1,
+  "s": "With an admissible heuristic A* is optimal (tree search).",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "If h(n) = 0 for every node, A* behaves like:",
+  "o": [
+   "DFS",
+   "Hill climbing",
+   "Greedy best-first",
+   "Uniform-cost search"
+  ],
+  "a": 3,
+  "s": "Then f(n) = g(n).",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "Which is a common heuristic for the 8-puzzle?",
+  "o": [
+   "Manhattan distance of tiles from their goal positions",
+   "Memory size",
+   "The number of letters",
+   "CPU speed"
+  ],
+  "a": 0,
+  "s": "Sum of horizontal and vertical distances.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "What is the Manhattan distance between (1, 2) and (4, 6)?",
+  "o": [
+   "7",
+   "5",
+   "4",
+   "3"
+  ],
+  "a": 0,
+  "s": "|4 − 1| + |6 − 2| = 3 + 4 = 7.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "Greedy best-first search is:",
+  "o": [
+   "Not guaranteed to be optimal",
+   "Not able to use heuristics",
+   "Always uses more memory than BFS",
+   "Always optimal"
+  ],
+  "a": 0,
+  "s": "It can follow a promising-looking but costly path.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "A node has g = 5 and h = 3. What is its f value in A*?",
+  "o": [
+   "8",
+   "15",
+   "5",
+   "2"
+  ],
+  "a": 0,
+  "s": "f = g + h = 8.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "Which search strategy is optimal when the heuristic is admissible?",
+  "o": [
+   "Random search",
+   "A*",
+   "DFS",
+   "Greedy best-first"
+  ],
+  "a": 1,
+  "s": "A* with an admissible heuristic returns an optimal path.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "Hill climbing can get stuck in a:",
+  "o": [
+   "Local maximum",
+   "Database",
+   "Queue",
+   "Stack"
+  ],
+  "a": 0,
+  "s": "It moves to better neighbours and stops when none is better.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "Which is better informed: h1 = 5 or h2 = 8 for the same node with true cost 10 (both admissible)?",
+  "o": [
+   "h2, because it is closer to the true cost",
+   "Neither",
+   "Both equal",
+   "h1"
+  ],
+  "a": 0,
+  "s": "A larger admissible heuristic prunes more of the search.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 2,
+  "q": "A good heuristic should be:",
+  "o": [
+   "Cheap to compute and close to the true cost without overestimating",
+   "Very expensive",
+   "Random",
+   "Larger than the true cost"
+  ],
+  "a": 0,
+  "s": "There is a trade-off between accuracy and computation time.",
+  "t": "Informed Search"
+ },
+ {
+  "u": 3,
+  "q": "Raw facts and figures are called:",
+  "o": [
+   "Wisdom",
+   "Knowledge",
+   "Information",
+   "Data"
+  ],
+  "a": 3,
+  "s": "For example, the number 38.",
+  "t": "Data, Information, Knowledge"
+ },
+ {
+  "u": 3,
+  "q": "Data that has been processed to give meaning, such as 'the temperature is 38 °C', is:",
+  "o": [
+   "Raw data",
+   "Knowledge",
+   "Information",
+   "Code"
+  ],
+  "a": 2,
+  "s": "Context gives data meaning.",
+  "t": "Data, Information, Knowledge"
+ },
+ {
+  "u": 3,
+  "q": "Understanding that 'a fever above 38 °C with cough suggests flu' is an example of:",
+  "o": [
+   "Data",
+   "Hardware",
+   "Noise",
+   "Knowledge"
+  ],
+  "a": 3,
+  "s": "Knowledge connects information to rules and experience.",
+  "t": "Data, Information, Knowledge"
+ },
+ {
+  "u": 3,
+  "q": "Which order shows the hierarchy from lowest to highest?",
+  "o": [
+   "Data, knowledge, information",
+   "Information, data, knowledge",
+   "Knowledge, information, data",
+   "Data, information, knowledge"
+  ],
+  "a": 3,
+  "s": "Data becomes information, and information becomes knowledge.",
+  "t": "Data, Information, Knowledge"
+ },
+ {
+  "u": 3,
+  "q": "Knowledge representation in AI is about:",
+  "o": [
+   "Encrypting files",
+   "Compressing images",
+   "Storing knowledge in a form a computer can use to reason",
+   "Printing documents"
+  ],
+  "a": 2,
+  "s": "A good representation is accurate, complete and efficient to use.",
+  "t": "Knowledge Representation"
+ },
+ {
+  "u": 3,
+  "q": "Which is a knowledge representation method?",
+  "o": [
+   "Disk partition",
+   "Hash function",
+   "Bubble sort",
+   "Semantic network"
+  ],
+  "a": 3,
+  "s": "Others include rules, frames and logic.",
+  "t": "Knowledge Representation"
+ },
+ {
+  "u": 3,
+  "q": "A good knowledge representation scheme should be:",
+  "o": [
+   "As long as possible",
+   "Random",
+   "Expressive and efficient for reasoning",
+   "Hidden from the system"
+  ],
+  "a": 2,
+  "s": "It must capture the facts and allow inference.",
+  "t": "Knowledge Representation"
+ },
+ {
+  "u": 3,
+  "q": "A proposition is a statement that is:",
+  "o": [
+   "Always true",
+   "Always false",
+   "Either true or false",
+   "A question"
+  ],
+  "a": 2,
+  "s": "'It is raining' is a proposition. 'Is it raining?' is not.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "Which connective is written ∧?",
+  "o": [
+   "OR",
+   "IMPLIES",
+   "AND",
+   "NOT"
+  ],
+  "a": 2,
+  "s": "∧ means AND and ∨ means OR.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "Which connective is written ¬?",
+  "o": [
+   "XOR",
+   "OR",
+   "AND",
+   "NOT"
+  ],
+  "a": 3,
+  "s": "¬P is the negation of P.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "The truth value of P ∧ Q when P is true and Q is false is:",
+  "o": [
+   "Both",
+   "False",
+   "True",
+   "Unknown"
+  ],
+  "a": 1,
+  "s": "AND is true only when both are true.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "The truth value of P ∨ Q when P is true and Q is false is:",
+  "o": [
+   "True",
+   "False",
+   "Error",
+   "Unknown"
+  ],
+  "a": 0,
+  "s": "OR is true if at least one is true.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "P → Q (implication) is false only when:",
+  "o": [
+   "Both are false",
+   "P is false",
+   "Q is true",
+   "P is true and Q is false"
+  ],
+  "a": 3,
+  "s": "Equivalent to ¬P ∨ Q.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "The statement 'If it rains then the road is wet' is false only when:",
+  "o": [
+   "It does not rain",
+   "It rains and the road is wet",
+   "The road is wet",
+   "It rains and the road is not wet"
+  ],
+  "a": 3,
+  "s": "An implication fails only when the premise is true and the conclusion is false.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "¬(P ∧ Q) is equivalent to:",
+  "o": [
+   "¬P ∨ ¬Q",
+   "P ∧ ¬Q",
+   "¬P ∧ ¬Q",
+   "P ∨ Q"
+  ],
+  "a": 0,
+  "s": "De Morgan's law.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "How many rows does a truth table with 3 propositions have?",
+  "o": [
+   "3",
+   "6",
+   "8",
+   "9"
+  ],
+  "a": 2,
+  "s": "2³ = 8.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "A tautology is a formula that is:",
+  "o": [
+   "Sometimes true",
+   "False under every assignment",
+   "True under every assignment",
+   "Meaningless"
+  ],
+  "a": 2,
+  "s": "For example P ∨ ¬P.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "A contradiction is a formula that is:",
+  "o": [
+   "Sometimes true",
+   "A tautology",
+   "True under every assignment",
+   "False under every assignment"
+  ],
+  "a": 3,
+  "s": "For example P ∧ ¬P.",
+  "t": "Propositional Logic"
+ },
+ {
+  "u": 3,
+  "q": "A production rule has the form:",
+  "o": [
+   "IF condition THEN action or conclusion",
+   "FOR i IN range",
+   "SELECT FROM",
+   "WHILE true DO"
+  ],
+  "a": 0,
+  "s": "For example IF fever AND cough THEN flu is likely.",
+  "t": "Rule-Based Systems"
+ },
+ {
+  "u": 3,
+  "q": "In a rule-based system, the working memory holds:",
+  "o": [
+   "The compiler",
+   "All the rules",
+   "The current facts",
+   "The user manual"
+  ],
+  "a": 2,
+  "s": "Rules fire when their conditions match the facts.",
+  "t": "Rule-Based Systems"
+ },
+ {
+  "u": 3,
+  "q": "Forward chaining starts from:",
+  "o": [
+   "Known facts and applies rules to derive new facts",
+   "The conclusion only",
+   "A random rule",
+   "The goal and works backwards"
+  ],
+  "a": 0,
+  "s": "It is data-driven.",
+  "t": "Rule-Based Systems"
+ },
+ {
+  "u": 3,
+  "q": "Backward chaining starts from:",
+  "o": [
+   "Random facts",
+   "Known facts only",
+   "The last rule",
+   "A goal and looks for rules and facts that support it"
+  ],
+  "a": 3,
+  "s": "It is goal-driven.",
+  "t": "Rule-Based Systems"
+ },
+ {
+  "u": 3,
+  "q": "Given rules A → B and B → C and the fact A, forward chaining concludes:",
+  "o": [
+   "Only B",
+   "B and then C",
+   "Only C",
+   "Nothing"
+  ],
+  "a": 1,
+  "s": "A gives B, then B gives C.",
+  "t": "Rule-Based Systems"
+ },
+ {
+  "u": 3,
+  "q": "Which chaining method is typically used for diagnosis goals such as 'does the patient have flu?'",
+  "o": [
+   "Backward chaining",
+   "Neither",
+   "Forward chaining only",
+   "Random chaining"
+  ],
+  "a": 0,
+  "s": "It tests a hypothesis by looking for supporting evidence.",
+  "t": "Rule-Based Systems"
+ },
+ {
+  "u": 3,
+  "q": "A semantic network represents knowledge as:",
+  "o": [
+   "Nodes (concepts) connected by labelled links (relations)",
+   "A table of numbers",
+   "A binary file",
+   "A list of rules only"
+  ],
+  "a": 0,
+  "s": "For example Dog — is-a — Animal.",
+  "t": "Semantic Networks"
+ },
+ {
+  "u": 3,
+  "q": "In a semantic network, the relation 'is-a' is used for:",
+  "o": [
+   "Naming files",
+   "Calculating cost",
+   "Deleting nodes",
+   "Inheritance from a general class"
+  ],
+  "a": 3,
+  "s": "A Canary is-a Bird inherits the properties of birds.",
+  "t": "Semantic Networks"
+ },
+ {
+  "u": 3,
+  "q": "If 'Bird can fly' and 'Canary is-a Bird', a semantic network lets us infer that:",
+  "o": [
+   "A Canary is a mammal",
+   "A Canary can fly",
+   "Birds cannot fly",
+   "A Bird is a Canary"
+  ],
+  "a": 1,
+  "s": "Properties are inherited down the is-a links.",
+  "t": "Semantic Networks"
+ },
+ {
+  "u": 3,
+  "q": "An expert system is:",
+  "o": [
+   "A search engine",
+   "An operating system",
+   "A program that captures the knowledge of human experts to solve problems in a domain",
+   "A hardware device"
+  ],
+  "a": 2,
+  "s": "It gives advice in a narrow area, such as diagnosis.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "The main components of an expert system include:",
+  "o": [
+   "Knowledge base, inference engine and user interface",
+   "Compiler, linker and loader",
+   "Input, output and printer",
+   "CPU, RAM and disk"
+  ],
+  "a": 0,
+  "s": "Often with an explanation facility and knowledge acquisition module.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "The knowledge base contains:",
+  "o": [
+   "The user interface",
+   "The operating system",
+   "Only the output",
+   "Facts and rules of the domain"
+  ],
+  "a": 3,
+  "s": "It is the stored expertise.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "The inference engine:",
+  "o": [
+   "Applies rules to facts to reach conclusions",
+   "Stores the facts",
+   "Draws the screen",
+   "Compiles the code"
+  ],
+  "a": 0,
+  "s": "It performs forward or backward chaining.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "The explanation facility of an expert system:",
+  "o": [
+   "Edits the screen",
+   "Shows how or why a conclusion was reached",
+   "Stores the rules",
+   "Executes the rules"
+  ],
+  "a": 1,
+  "s": "It builds user trust.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "MYCIN was an early expert system for:",
+  "o": [
+   "Controlling robots",
+   "Translating languages",
+   "Playing chess",
+   "Diagnosing bacterial infections"
+  ],
+  "a": 3,
+  "s": "It was developed at Stanford in the 1970s.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "An advantage of expert systems is:",
+  "o": [
+   "No need for maintenance",
+   "Common sense reasoning in any area",
+   "Self-learning without any data",
+   "Consistent, available advice without fatigue"
+  ],
+  "a": 3,
+  "s": "They are consistent but limited to their domain.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "A limitation of classic expert systems is:",
+  "o": [
+   "They need no experts",
+   "Knowledge acquisition is hard and they lack common sense",
+   "They cannot store rules",
+   "They are too fast"
+  ],
+  "a": 1,
+  "s": "Rules must be written by hand and become hard to maintain.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 3,
+  "q": "The person who builds the knowledge base by interviewing experts is called a:",
+  "o": [
+   "Compiler designer",
+   "Database auditor",
+   "Knowledge engineer",
+   "Network administrator"
+  ],
+  "a": 2,
+  "s": "Knowledge acquisition is called the bottleneck of expert systems.",
+  "t": "Expert Systems"
+ },
+ {
+  "u": 4,
+  "q": "Machine learning is:",
+  "o": [
+   "Systems that learn patterns from data instead of being explicitly programmed",
+   "A programming language",
+   "A type of database",
+   "Writing every rule by hand"
+  ],
+  "a": 0,
+  "s": "Performance improves with experience.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "How does ML differ from traditional rule-based programming?",
+  "o": [
+   "Traditional programs learn from data",
+   "ML learns rules from data; traditional programs follow rules written by humans",
+   "They are identical",
+   "ML needs no data"
+  ],
+  "a": 1,
+  "s": "Traditional: data + rules → answers. ML: data + answers → rules.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "In ML, features are:",
+  "o": [
+   "The final predictions",
+   "The programming language",
+   "The input variables used to make a prediction",
+   "The hardware"
+  ],
+  "a": 2,
+  "s": "For house prices: area, rooms and location.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "In supervised learning, labels are:",
+  "o": [
+   "The model's weights",
+   "The correct answers for the training examples",
+   "The test cases",
+   "The input features"
+  ],
+  "a": 1,
+  "s": "For example 'spam' or 'not spam'.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "Why is data split into training and test sets?",
+  "o": [
+   "To delete data",
+   "To remove labels",
+   "To check the model on data it has not seen",
+   "To make training slower"
+  ],
+  "a": 2,
+  "s": "Test performance estimates generalisation.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "Overfitting means the model:",
+  "o": [
+   "Performs poorly on training data",
+   "Performs equally on all data",
+   "Performs well on training data but poorly on new data",
+   "Has no parameters"
+  ],
+  "a": 2,
+  "s": "It memorised the noise in the training set.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "Underfitting means the model:",
+  "o": [
+   "Is too simple to capture the pattern",
+   "Is too complex",
+   "Has perfect accuracy",
+   "Memorises the data"
+  ],
+  "a": 0,
+  "s": "It performs poorly even on training data.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "Which step usually comes first when developing an ML system?",
+  "o": [
+   "Collect and prepare data",
+   "Deploy the model",
+   "Write the report",
+   "Monitor the model"
+  ],
+  "a": 0,
+  "s": "Then train, evaluate, tune and deploy.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "Which is NOT a typical stage of the ML workflow?",
+  "o": [
+   "Model training",
+   "Data collection",
+   "Compiling the dataset into machine code",
+   "Evaluation"
+  ],
+  "a": 2,
+  "s": "Data is cleaned and prepared, not compiled.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "Accuracy is:",
+  "o": [
+   "The size of the dataset",
+   "The fraction of predictions that are correct",
+   "The number of features",
+   "The training time"
+  ],
+  "a": 1,
+  "s": "Correct predictions divided by total predictions.",
+  "t": "Machine Learning Basics"
+ },
+ {
+  "u": 4,
+  "q": "Which type of learning uses labelled data?",
+  "o": [
+   "Unsupervised learning",
+   "Reinforcement learning",
+   "Random learning",
+   "Supervised learning"
+  ],
+  "a": 3,
+  "s": "Each example has a known correct output.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "Predicting a number such as house price is called:",
+  "o": [
+   "Association",
+   "Regression",
+   "Clustering",
+   "Classification"
+  ],
+  "a": 1,
+  "s": "The output is continuous.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "Deciding whether an email is spam is called:",
+  "o": [
+   "Regression",
+   "Compression",
+   "Clustering",
+   "Classification"
+  ],
+  "a": 3,
+  "s": "The output is a category.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "Grouping customers by similar behaviour without labels is:",
+  "o": [
+   "Regression",
+   "Reinforcement learning",
+   "Clustering (unsupervised learning)",
+   "Classification"
+  ],
+  "a": 2,
+  "s": "The algorithm finds structure on its own.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "K-means is an algorithm for:",
+  "o": [
+   "Rule chaining",
+   "Regression only",
+   "Classification with labels",
+   "Clustering"
+  ],
+  "a": 3,
+  "s": "It groups data into k clusters.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "In reinforcement learning, an agent learns by:",
+  "o": [
+   "Receiving rewards or penalties for its actions",
+   "Clustering data",
+   "Copying rules",
+   "Reading labelled examples"
+  ],
+  "a": 0,
+  "s": "It maximises cumulative reward.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "A self-learning game-playing program that improves through win/lose feedback uses:",
+  "o": [
+   "Reinforcement learning",
+   "Rule-based programming only",
+   "Clustering only",
+   "Supervised learning only"
+  ],
+  "a": 0,
+  "s": "The reward is winning.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "Which algorithm is commonly used for classification?",
+  "o": [
+   "Decision tree",
+   "Apriori only",
+   "k-means",
+   "Linear search"
+  ],
+  "a": 0,
+  "s": "Others include logistic regression and k-nearest neighbours.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "k-nearest neighbours classifies a point by:",
+  "o": [
+   "The majority class among its k closest points",
+   "Random choice",
+   "Its colour only",
+   "Its row number"
+  ],
+  "a": 0,
+  "s": "It is a simple, instance-based method.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "Which is an example of unsupervised learning?",
+  "o": [
+   "Finding groups of similar news articles",
+   "Predicting tomorrow's temperature from labelled history",
+   "Classifying labelled images",
+   "Teaching a robot with rewards"
+  ],
+  "a": 0,
+  "s": "No labels are given.",
+  "t": "Types of ML"
+ },
+ {
+  "u": 4,
+  "q": "A recommendation engine suggests items by:",
+  "o": [
+   "Sorting alphabetically",
+   "Learning from user behaviour and item similarity",
+   "Random selection",
+   "Counting letters"
+  ],
+  "a": 1,
+  "s": "Collaborative filtering and content-based filtering are common.",
+  "t": "Applications"
+ },
+ {
+  "u": 4,
+  "q": "Collaborative filtering recommends items based on:",
+  "o": [
+   "The preferences of similar users",
+   "The price only",
+   "The alphabet",
+   "The colour of the item"
+  ],
+  "a": 0,
+  "s": "'People like you also liked...'.",
+  "t": "Applications"
+ },
+ {
+  "u": 4,
+  "q": "Content-based recommendation uses:",
+  "o": [
+   "Random items",
+   "Only popularity",
+   "The features of items the user already liked",
+   "Other users' ratings only"
+  ],
+  "a": 2,
+  "s": "It recommends similar items.",
+  "t": "Applications"
+ },
+ {
+  "u": 4,
+  "q": "Virtual assistants such as Siri or Alexa combine:",
+  "o": [
+   "Only a database",
+   "Only a printer",
+   "Only a calculator",
+   "Speech recognition, NLP and ML"
+  ],
+  "a": 3,
+  "s": "They convert speech to text, understand intent and respond.",
+  "t": "Applications"
+ },
+ {
+  "u": 4,
+  "q": "Spam filtering is an application of:",
+  "o": [
+   "Clustering only",
+   "Image processing",
+   "Classification",
+   "Compilation"
+  ],
+  "a": 2,
+  "s": "Messages are classified as spam or not spam.",
+  "t": "Applications"
+ },
+ {
+  "u": 4,
+  "q": "Fraud detection in banking often looks for:",
+  "o": [
+   "The longest transactions only",
+   "Only weekends",
+   "Unusual patterns (anomalies) in transactions",
+   "The newest customers"
+  ],
+  "a": 2,
+  "s": "Anomaly detection flags rare behaviour.",
+  "t": "Applications"
+ },
+ {
+  "u": 4,
+  "q": "AI ethics is concerned with:",
+  "o": [
+   "Only speed",
+   "Only hardware",
+   "Fairness, transparency, privacy and accountability",
+   "Only advertising"
+  ],
+  "a": 2,
+  "s": "It guides responsible design and use.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "Data bias occurs when:",
+  "o": [
+   "Training data does not fairly represent the population or reflects past prejudice",
+   "Data is encrypted",
+   "Data is too large",
+   "Data has labels"
+  ],
+  "a": 0,
+  "s": "A model learns the bias in its data.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "A hiring model trained on past data that favoured one group may:",
+  "o": [
+   "Remove all bias automatically",
+   "Ignore the data",
+   "Reproduce that discrimination",
+   "Be perfectly fair"
+  ],
+  "a": 2,
+  "s": "Biased data produces biased predictions.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "Which step helps reduce bias in an AI system?",
+  "o": [
+   "Using less data",
+   "Hiding the model",
+   "Skipping testing",
+   "Using diverse, representative data and auditing outcomes"
+  ],
+  "a": 3,
+  "s": "Regular fairness audits matter.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "Privacy concerns in AI arise because systems:",
+  "o": [
+   "Cannot store data",
+   "May collect and use large amounts of personal data",
+   "Only use public data",
+   "Never use data"
+  ],
+  "a": 1,
+  "s": "Consent, minimisation and security are essential.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "Data minimisation means:",
+  "o": [
+   "Copying data to many places",
+   "Collecting only the data that is necessary",
+   "Deleting all data immediately",
+   "Collecting as much as possible"
+  ],
+  "a": 1,
+  "s": "It is a core privacy principle.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "A deepfake is:",
+  "o": [
+   "A search algorithm",
+   "A data compression method",
+   "A type of encryption",
+   "Synthetic media that realistically imitates a person's face or voice"
+  ],
+  "a": 3,
+  "s": "Deepfakes can be used for fraud and misinformation.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "A good way to be careful about suspicious media is to:",
+  "o": [
+   "Assume it is real",
+   "Share it immediately",
+   "Verify the source before believing or sharing",
+   "Ignore the source"
+  ],
+  "a": 2,
+  "s": "Check trusted sources and look for signs of manipulation.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "AI's effect on jobs is best described as:",
+  "o": [
+   "Some tasks are automated and new roles appear, so reskilling matters",
+   "Only creates problems",
+   "No effect at all",
+   "All jobs vanish immediately"
+  ],
+  "a": 0,
+  "s": "The impact varies by task and industry.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "Explainable AI aims to:",
+  "o": [
+   "Increase model size",
+   "Hide decisions",
+   "Remove data",
+   "Make model decisions understandable to humans"
+  ],
+  "a": 3,
+  "s": "Transparency builds trust and helps detect errors.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "Which is a principle of responsible AI?",
+  "o": [
+   "Maximum data collection",
+   "Ignoring harms",
+   "Accountability",
+   "Secrecy at any cost"
+  ],
+  "a": 2,
+  "s": "Others are fairness, transparency, privacy, safety and human oversight.",
+  "t": "Ethics"
+ },
+ {
+  "u": 4,
+  "q": "Who is accountable when an AI system causes harm?",
+  "o": [
+   "Nobody",
+   "The algorithm alone",
+   "Only the end user always",
+   "The people and organisations that design, deploy and operate it"
+  ],
+  "a": 3,
+  "s": "Responsibility rests with humans and organisations.",
+  "t": "Ethics"
+ }
+]

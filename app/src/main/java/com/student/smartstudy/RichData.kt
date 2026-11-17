@@ -61,26 +61,26 @@ private fun blk(o: JSONObject): Blk = when (o.getString("t")) {
 }
 
 private val NOTE_FILES = listOf(
-    "ma:0" to "sets_relations_functions_detailed_notes.json",
-    "ma:1" to "counting_and_recurrence_relations_detailed_notes.json",
-    "ma:2" to "matrix_algebra_comprehensive_detailed_notes.json",
-    "ma:3" to "elementary_graph_theory_detailed_notes.json",
-    "db:0" to "Database_Foundations_and_Design_Detailed_Study_Notes.json",
-    "db:1" to "Relational_Algebra_and_SQL_Mastery_Detailed_Study_Notes.json",
-    "db:2" to "Normalization_and_Transaction_Management_Detailed_Study_Notes.json",
-    "db:3" to "Database_Security_and_Emerging_Trends_Detailed_Study_Notes.json",
-    "ai:0" to "Artificial_Intelligence_Foundations_Study_Notes.json",
-    "ai:1" to "Solving_and_Search_Basics_AI_Study_Notes.json",
-    "ai:2" to "Knowledge_Representation_and_Expert_Systems_Study_Notes.json",
-    "ai:3" to "Introduction_to_Machine_Learning_and_AI_Ethics_Study_Notes.json",
-    "py:0" to "Python_Programming_Fundamentals_Detailed_Study_Notes.json",
-    "py:1" to "Python_Data_Structures_and_Functions_Detailed_Study_Notes.json",
-    "py:2" to "Python_OOP_Modules_File_IO_and_Log_Analysis_Study_Notes.json",
-    "py:3" to "Python_Advanced_Libraries_Exceptions_System_Scripting_Requests_NumPy_Pandas_Study_Notes.json",
-    "c:0" to "Introduction_to_Problem_Solving_and_C_Fundamentals_Detailed_Study_Notes.json",
-    "c:1" to "C_Operators_Control_Flow_Type_Conversion_Notes.json",
-    "c:2" to "C_Arrays_Strings_Functions_Recursion_Notes.json",
-    "c:3" to "C_Pointers_Structures_Memory_Files_Preprocessor_Notes.json"
+    "ma:0" to "maths_unit1_notes.json",
+    "ma:1" to "maths_unit2_notes.json",
+    "ma:2" to "maths_unit3_notes.json",
+    "ma:3" to "maths_unit4_notes.json",
+    "db:0" to "dbms_unit1_notes.json",
+    "db:1" to "dbms_unit2_notes.json",
+    "db:2" to "dbms_unit3_notes.json",
+    "db:3" to "dbms_unit4_notes.json",
+    "ai:0" to "ai_unit1_notes.json",
+    "ai:1" to "ai_unit2_notes.json",
+    "ai:2" to "ai_unit3_notes.json",
+    "ai:3" to "ai_unit4_notes.json",
+    "py:0" to "python_unit1_notes.json",
+    "py:1" to "python_unit2_notes.json",
+    "py:2" to "python_unit3_notes.json",
+    "py:3" to "python_unit4_notes.json",
+    "c:0" to "c_unit1_notes.json",
+    "c:1" to "c_unit2_notes.json",
+    "c:2" to "c_unit3_notes.json",
+    "c:3" to "c_unit4_notes.json"
 )
 
 /** Parses the notes on a background thread so the app opens straight away (about 2.7 MB of JSON). */

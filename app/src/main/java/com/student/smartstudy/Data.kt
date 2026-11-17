@@ -211,11 +211,15 @@ var quiz: Map<String, List<Q>> = baseQuiz
     private set
 
 fun loadQuestionBanks(ctx: android.content.Context) {
-    loadBank(ctx, "ma", "questions-math.json")
-    loadBank(ctx, "c", "questions-c.json")
+    loadBank(ctx, "ma", "maths_questions.json", keepBuiltIn = false)
+    loadBank(ctx, "c", "c_questions.json", keepBuiltIn = false)
+    // Python and AI already ship a few built-in questions; the new banks are added after them.
+    loadBank(ctx, "py", "python_questions.json", keepBuiltIn = true)
+    loadBank(ctx, "ai", "ai_questions.json", keepBuiltIn = true)
+    loadBank(ctx, "db", "dbms_questions.json", keepBuiltIn = false)
 }
 
-private fun loadBank(ctx: android.content.Context, subjectId: String, file: String) {
+private fun loadBank(ctx: android.content.Context, subjectId: String, file: String, keepBuiltIn: Boolean) {
     try {
         val arr = org.json.JSONArray(ctx.assets.open(file).bufferedReader().use { it.readText() })
         val list = (0 until arr.length()).map { n ->
@@ -223,7 +227,7 @@ private fun loadBank(ctx: android.content.Context, subjectId: String, file: Stri
             val opts = o.getJSONArray("o")
             Q(o.getInt("u") - 1, o.getString("q"), (0 until opts.length()).map { opts.getString(it) }, o.getInt("a"), o.optString("s"), o.optString("t"))
         }
-        if (list.isNotEmpty()) quiz = quiz + (subjectId to list)
+        if (list.isNotEmpty()) quiz = quiz + (subjectId to ((if (keepBuiltIn) quiz[subjectId].orEmpty() else emptyList()) + list))
     } catch (e: Exception) {
         android.util.Log.e("SmartStudy", "Question bank $file failed to load", e)
     }

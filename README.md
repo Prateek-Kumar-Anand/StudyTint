@@ -39,7 +39,7 @@ Detailed, exam-oriented notes for every unit, with definitions, worked examples,
 <td width="50%" valign="top">
 
 ### 🎯 Practise
-Multiple-choice quizzes by unit or by topic, with an explanation after every answer. Large banks for **C (300)** and **Maths (488)**.
+Multiple-choice quizzes by unit or by topic, with an explanation after every answer. **1,380+ questions**: Maths (488), C (372), Python (200+), DBMS (175) and AI (150+).
 
 </td>
 </tr>
@@ -149,8 +149,9 @@ StudyTint/
 
 <br>
 
+- **File names** follow one pattern: `<subject>_unit<N>_notes.json` (for example `python_unit2_notes.json`) and `<subject>_questions.json`, with subjects `python`, `maths`, `c`, `ai` and `dbms`. Files starting with `legacy_` are older copies that the app no longer loads.
 - **Notes** are JSON files in `app/src/main/assets/`, each a `title`, an `intro` and a list of `sec` sections made of simple blocks (paragraphs, lists, code, notes, tables and Q&A). Add new sections at the end of a file so existing reading progress stays correct.
-- **Questions** live in `questions-math.json` and `questions-c.json`, as `{ "u": unit, "q": question, "o": [4 options], "a": answer index, "s": explanation, "t": topic }`. Both are loaded by `loadQuestionBanks` in `Data.kt`. To give another subject a bank, add a file and one `loadBank(...)` line.
+- **Questions** live in `maths_questions.json`, `c_questions.json`, `python_questions.json`, `dbms_questions.json` and `ai_questions.json`, as `{ "u": unit, "q": question, "o": [4 options], "a": answer index, "s": explanation, "t": topic }`. They are loaded by `loadQuestionBanks` in `Data.kt`. To give a subject a bank, add a file and one `loadBank(...)` line.
 
 </details>
 

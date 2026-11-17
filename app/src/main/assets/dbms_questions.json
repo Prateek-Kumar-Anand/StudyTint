@@ -1,0 +1,2277 @@
+[
+ {
+  "u": 1,
+  "q": "What is a database?",
+  "o": [
+   "An organised collection of related data",
+   "A single spreadsheet only",
+   "A type of network",
+   "A programming language"
+  ],
+  "a": 0,
+  "s": "A database is an organised, shared collection of related data.",
+  "t": "DBMS vs File System"
+ },
+ {
+  "u": 1,
+  "q": "What does a DBMS do?",
+  "o": [
+   "Only compiles programs",
+   "Only prints reports",
+   "Creates, stores, manages and controls access to data",
+   "Only draws diagrams"
+  ],
+  "a": 2,
+  "s": "A DBMS is the software that defines, stores, retrieves and protects data.",
+  "t": "DBMS vs File System"
+ },
+ {
+  "u": 1,
+  "q": "Which is a drawback of the traditional file-processing system?",
+  "o": [
+   "Data redundancy and inconsistency",
+   "Built-in security",
+   "Automatic backup",
+   "Strong data independence"
+  ],
+  "a": 0,
+  "s": "The same data is repeated in many files and the copies can disagree.",
+  "t": "DBMS vs File System"
+ },
+ {
+  "u": 1,
+  "q": "What is data redundancy?",
+  "o": [
+   "Sorting data",
+   "Unnecessary duplication of data",
+   "Deleting data",
+   "Encrypting data"
+  ],
+  "a": 1,
+  "s": "Redundancy wastes space and causes update anomalies.",
+  "t": "DBMS vs File System"
+ },
+ {
+  "u": 1,
+  "q": "What is data independence?",
+  "o": [
+   "Data that never changes",
+   "Data without any keys",
+   "Data stored in many files",
+   "Changing the schema at one level without changing the level above"
+  ],
+  "a": 3,
+  "s": "Physical and logical data independence separate programs from storage details.",
+  "t": "DBMS vs File System"
+ },
+ {
+  "u": 1,
+  "q": "Which advantage does a DBMS have over a file system?",
+  "o": [
+   "No need for users",
+   "Controlled redundancy and concurrent access with integrity",
+   "Less hardware always",
+   "Faster typing"
+  ],
+  "a": 1,
+  "s": "A DBMS reduces redundancy, enforces integrity and supports concurrent users.",
+  "t": "DBMS vs File System"
+ },
+ {
+  "u": 1,
+  "q": "Which model organises data in a tree with parent-child links?",
+  "o": [
+   "Relational",
+   "Object",
+   "Hierarchical",
+   "Network"
+  ],
+  "a": 2,
+  "s": "The hierarchical model gives each child exactly one parent.",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "Which model allows a record to have several parents using links (sets)?",
+  "o": [
+   "Flat file",
+   "Network",
+   "Key-value",
+   "Hierarchical"
+  ],
+  "a": 1,
+  "s": "The network model allows many-to-many links using graph-like structures.",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "In the relational model, data is stored in:",
+  "o": [
+   "Graphs",
+   "Tables (relations) of rows and columns",
+   "Trees",
+   "Stacks"
+  ],
+  "a": 1,
+  "s": "A relation is a table of tuples (rows) and attributes (columns).",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "Who proposed the relational model?",
+  "o": [
+   "Peter Chen",
+   "Dennis Ritchie",
+   "Charles Bachman",
+   "E. F. Codd"
+  ],
+  "a": 3,
+  "s": "E. F. Codd introduced it in 1970.",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "In relational terms, a row is called a:",
+  "o": [
+   "Attribute",
+   "Schema",
+   "Domain",
+   "Tuple"
+  ],
+  "a": 3,
+  "s": "A row is a tuple and a column is an attribute.",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "The number of attributes in a relation is called its:",
+  "o": [
+   "Cardinality",
+   "Degree",
+   "Key",
+   "Domain"
+  ],
+  "a": 1,
+  "s": "Degree is the number of columns. Cardinality is the number of rows.",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "The number of tuples in a relation is called its:",
+  "o": [
+   "Schema",
+   "Cardinality",
+   "Degree",
+   "Arity"
+  ],
+  "a": 1,
+  "s": "Cardinality counts rows.",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "The three-schema architecture has which levels?",
+  "o": [
+   "External, conceptual and internal",
+   "Client, server and web",
+   "Logical, binary and hex",
+   "Input, process and output"
+  ],
+  "a": 0,
+  "s": "External (views), conceptual (logical) and internal (physical) levels.",
+  "t": "Data Models"
+ },
+ {
+  "u": 1,
+  "q": "In an ER diagram, a rectangle represents:",
+  "o": [
+   "A key",
+   "A relationship",
+   "An attribute",
+   "An entity"
+  ],
+  "a": 3,
+  "s": "Rectangles are entities, ellipses are attributes and diamonds are relationships.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "In an ER diagram, a diamond represents:",
+  "o": [
+   "An entity",
+   "A weak key",
+   "A relationship",
+   "An attribute"
+  ],
+  "a": 2,
+  "s": "A diamond is a relationship set.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "A multivalued attribute is drawn as:",
+  "o": [
+   "A double ellipse",
+   "A diamond",
+   "A dashed ellipse",
+   "A rectangle"
+  ],
+  "a": 0,
+  "s": "Double ellipse = multivalued, dashed ellipse = derived.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "Which attribute can be calculated from other attributes (for example age from date of birth)?",
+  "o": [
+   "Composite attribute",
+   "Key attribute",
+   "Derived attribute",
+   "Atomic attribute"
+  ],
+  "a": 2,
+  "s": "A derived attribute is computed and need not be stored.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "An attribute that can be split into smaller parts (such as full name) is:",
+  "o": [
+   "Single-valued",
+   "Derived",
+   "Composite",
+   "Multivalued"
+  ],
+  "a": 2,
+  "s": "First name and last name are components of a composite attribute.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "A weak entity is one that:",
+  "o": [
+   "Has no attributes",
+   "Is never stored",
+   "Has only one attribute",
+   "Has no primary key of its own and depends on an owner entity"
+  ],
+  "a": 3,
+  "s": "It needs the owner's key plus a partial key to be identified.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "One student enrols in many courses and each course has many students. This relationship is:",
+  "o": [
+   "Many-to-one",
+   "One-to-many",
+   "Many-to-many",
+   "One-to-one"
+  ],
+  "a": 2,
+  "s": "Both sides can have many instances.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "How is a many-to-many relationship usually implemented in tables?",
+  "o": [
+   "It cannot be implemented",
+   "With a separate junction (linking) table",
+   "By merging both tables",
+   "By a single column"
+  ],
+  "a": 1,
+  "s": "A third table holds the two foreign keys.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "Total participation in an ER diagram is shown by:",
+  "o": [
+   "A dashed line",
+   "A thick arrow",
+   "A double line",
+   "A wavy line"
+  ],
+  "a": 2,
+  "s": "A double line means every entity must take part.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "Generalisation is:",
+  "o": [
+   "Encrypting entities",
+   "Combining entities with common features into a higher-level entity",
+   "Deleting a super class",
+   "Splitting a table into columns"
+  ],
+  "a": 1,
+  "s": "Specialisation goes top-down. Generalisation goes bottom-up.",
+  "t": "ER Model"
+ },
+ {
+  "u": 1,
+  "q": "A super key is:",
+  "o": [
+   "A set of attributes that uniquely identifies a tuple",
+   "A foreign key",
+   "Always the primary key",
+   "Only a single attribute"
+  ],
+  "a": 0,
+  "s": "Any set of attributes that is unique for every row, possibly with extra attributes.",
+  "t": "Keys"
+ },
+ {
+  "u": 1,
+  "q": "A candidate key is:",
+  "o": [
+   "A minimal super key",
+   "A foreign key",
+   "Any super key",
+   "A null key"
+  ],
+  "a": 0,
+  "s": "A candidate key has no unnecessary attribute.",
+  "t": "Keys"
+ },
+ {
+  "u": 1,
+  "q": "The primary key can contain NULL values.",
+  "o": [
+   "True",
+   "Only for text",
+   "False",
+   "Only in Oracle"
+  ],
+  "a": 2,
+  "s": "A primary key must be unique and NOT NULL.",
+  "t": "Keys"
+ },
+ {
+  "u": 1,
+  "q": "How many primary keys can a table have?",
+  "o": [
+   "One",
+   "None",
+   "As many as columns",
+   "Two"
+  ],
+  "a": 0,
+  "s": "Exactly one, though it may consist of several columns.",
+  "t": "Keys"
+ },
+ {
+  "u": 1,
+  "q": "A foreign key is:",
+  "o": [
+   "An index",
+   "An attribute that refers to the primary key of another table",
+   "A second primary key",
+   "A view"
+  ],
+  "a": 1,
+  "s": "It links rows between tables and supports referential integrity.",
+  "t": "Keys"
+ },
+ {
+  "u": 1,
+  "q": "A composite key is:",
+  "o": [
+   "A key with NULLs",
+   "A key stored in two tables",
+   "A hashed key",
+   "A key made of two or more attributes"
+  ],
+  "a": 3,
+  "s": "For example (student_id, course_id).",
+  "t": "Keys"
+ },
+ {
+  "u": 1,
+  "q": "Which constraint makes sure a column value is never missing?",
+  "o": [
+   "DEFAULT",
+   "UNIQUE",
+   "NOT NULL",
+   "CHECK"
+  ],
+  "a": 2,
+  "s": "NOT NULL rejects missing values.",
+  "t": "Integrity Constraints"
+ },
+ {
+  "u": 1,
+  "q": "Which constraint allows NULL but forbids duplicate non-null values?",
+  "o": [
+   "UNIQUE",
+   "NOT NULL",
+   "PRIMARY KEY",
+   "DEFAULT"
+  ],
+  "a": 0,
+  "s": "UNIQUE keeps values distinct (NULL handling varies slightly between systems).",
+  "t": "Integrity Constraints"
+ },
+ {
+  "u": 1,
+  "q": "Which constraint limits values with a condition such as age >= 18?",
+  "o": [
+   "CHECK",
+   "FOREIGN KEY",
+   "UNIQUE",
+   "DEFAULT"
+  ],
+  "a": 0,
+  "s": "CHECK enforces a boolean rule on each row.",
+  "t": "Integrity Constraints"
+ },
+ {
+  "u": 1,
+  "q": "Referential integrity means:",
+  "o": [
+   "Every column is indexed",
+   "Every foreign key value matches an existing primary key value or is NULL",
+   "Every key is numeric",
+   "Every table has a view"
+  ],
+  "a": 1,
+  "s": "A foreign key cannot point to a row that does not exist.",
+  "t": "Integrity Constraints"
+ },
+ {
+  "u": 1,
+  "q": "ON DELETE CASCADE on a foreign key means:",
+  "o": [
+   "Nothing happens",
+   "Deletion is blocked",
+   "Child rows are set to 0",
+   "Deleting a parent row also deletes the matching child rows"
+  ],
+  "a": 3,
+  "s": "CASCADE propagates the delete to the children.",
+  "t": "Integrity Constraints"
+ },
+ {
+  "u": 1,
+  "q": "Entity integrity requires that:",
+  "o": [
+   "Every column is NOT NULL",
+   "The primary key is never NULL",
+   "Every row is identical",
+   "Tables have no foreign keys"
+  ],
+  "a": 1,
+  "s": "No part of a primary key may be NULL.",
+  "t": "Integrity Constraints"
+ },
+ {
+  "u": 2,
+  "q": "Which operator selects rows that satisfy a condition?",
+  "o": [
+   "Selection (σ)",
+   "Rename (ρ)",
+   "Projection (π)",
+   "Union (∪)"
+  ],
+  "a": 0,
+  "s": "σ filters rows. π picks columns.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "Which operator chooses specific columns?",
+  "o": [
+   "Division (÷)",
+   "Join (⋈)",
+   "Selection (σ)",
+   "Projection (π)"
+  ],
+  "a": 3,
+  "s": "π keeps only the listed attributes.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "Projection removes duplicate tuples in the result in:",
+  "o": [
+   "Neither",
+   "Pure relational algebra",
+   "Both",
+   "SQL SELECT by default"
+  ],
+  "a": 1,
+  "s": "Relational algebra works on sets, so duplicates vanish. SQL keeps them unless DISTINCT is used.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "For union of two relations to be valid they must be:",
+  "o": [
+   "Of the same name",
+   "Indexed",
+   "Of equal cardinality",
+   "Union-compatible (same number and types of attributes)"
+  ],
+  "a": 3,
+  "s": "Both need compatible attribute lists.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "Which operator gives tuples in R but not in S?",
+  "o": [
+   "Cartesian product",
+   "Intersection",
+   "Union",
+   "Set difference (R − S)"
+  ],
+  "a": 3,
+  "s": "R − S keeps tuples of R that are absent from S.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "If R has 4 tuples and S has 5 tuples, how many tuples are in R × S?",
+  "o": [
+   "1",
+   "20",
+   "4",
+   "9"
+  ],
+  "a": 1,
+  "s": "The Cartesian product pairs every tuple of R with every tuple of S: 4 × 5.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "A natural join joins relations on:",
+  "o": [
+   "Primary keys only",
+   "All attributes with the same name",
+   "No attributes",
+   "The first column only"
+  ],
+  "a": 1,
+  "s": "It matches equal values of common attributes and keeps one copy.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "Which operation answers 'students who took ALL courses'?",
+  "o": [
+   "Division (÷)",
+   "Selection",
+   "Rename",
+   "Union"
+  ],
+  "a": 0,
+  "s": "Division finds tuples related to every tuple of another relation.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "The rename operator ρ is used to:",
+  "o": [
+   "Join tables",
+   "Sort rows",
+   "Delete a relation",
+   "Give a new name to a relation or attributes"
+  ],
+  "a": 3,
+  "s": "ρ renames.",
+  "t": "Relational Algebra"
+ },
+ {
+  "u": 2,
+  "q": "Which statement creates a table?",
+  "o": [
+   "NEW TABLE",
+   "CREATE TABLE",
+   "MAKE TABLE",
+   "BUILD TABLE"
+  ],
+  "a": 1,
+  "s": "CREATE TABLE defines a table.",
+  "t": "SQL DDL"
+ },
+ {
+  "u": 2,
+  "q": "Which command removes a table and its data completely?",
+  "o": [
+   "CLEAR TABLE",
+   "DELETE TABLE",
+   "REMOVE TABLE",
+   "DROP TABLE"
+  ],
+  "a": 3,
+  "s": "DROP removes the structure as well as the rows.",
+  "t": "SQL DDL"
+ },
+ {
+  "u": 2,
+  "q": "Which command removes all rows but keeps the table structure?",
+  "o": [
+   "RENAME TABLE",
+   "ALTER TABLE",
+   "TRUNCATE TABLE",
+   "DROP TABLE"
+  ],
+  "a": 2,
+  "s": "TRUNCATE empties the table quickly.",
+  "t": "SQL DDL"
+ },
+ {
+  "u": 2,
+  "q": "Which statement adds a column to an existing table?",
+  "o": [
+   "ALTER TABLE ... ADD",
+   "UPDATE TABLE",
+   "INSERT COLUMN",
+   "MODIFY ROWS"
+  ],
+  "a": 0,
+  "s": "ALTER TABLE t ADD column_definition.",
+  "t": "SQL DDL"
+ },
+ {
+  "u": 2,
+  "q": "DDL stands for:",
+  "o": [
+   "Data Definition Language",
+   "Database Design Logic",
+   "Dynamic Data Link",
+   "Data Deletion Language"
+  ],
+  "a": 0,
+  "s": "CREATE, ALTER and DROP are DDL commands.",
+  "t": "SQL DDL"
+ },
+ {
+  "u": 2,
+  "q": "Which of these is a DML command?",
+  "o": [
+   "DROP",
+   "CREATE",
+   "INSERT",
+   "ALTER"
+  ],
+  "a": 2,
+  "s": "INSERT, UPDATE, DELETE and SELECT work on data.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "Which statement changes existing rows?",
+  "o": [
+   "UPDATE",
+   "INSERT",
+   "SELECT",
+   "ALTER"
+  ],
+  "a": 0,
+  "s": "UPDATE ... SET ... WHERE ...",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "What happens if DELETE FROM emp; is run without WHERE?",
+  "o": [
+   "The table is dropped",
+   "All rows are deleted",
+   "Only the first row is deleted",
+   "No rows are deleted"
+  ],
+  "a": 1,
+  "s": "Without a WHERE clause every row matches.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "Which clause filters groups after GROUP BY?",
+  "o": [
+   "LIMIT",
+   "HAVING",
+   "WHERE",
+   "ORDER BY"
+  ],
+  "a": 1,
+  "s": "WHERE filters rows before grouping. HAVING filters groups.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "Which keyword removes duplicate rows from a SELECT result?",
+  "o": [
+   "ONLY",
+   "NODUP",
+   "UNIQUE ROWS",
+   "DISTINCT"
+  ],
+  "a": 3,
+  "s": "SELECT DISTINCT removes duplicates.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "Which operator tests for NULL?",
+  "o": [
+   "EQUALS NULL",
+   "= NULL",
+   "IS NULL",
+   "== NULL"
+  ],
+  "a": 2,
+  "s": "Comparisons with = never match NULL. Use IS NULL.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "What does COUNT(*) count?",
+  "o": [
+   "All rows",
+   "Only distinct rows",
+   "Only non-NULL values of one column",
+   "Columns"
+  ],
+  "a": 0,
+  "s": "COUNT(*) counts rows. COUNT(col) skips NULLs.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "What is the result?  SELECT COUNT(dept) FROM emp;  (4 rows, one dept is NULL)",
+  "o": [
+   "1",
+   "4",
+   "3",
+   "0"
+  ],
+  "a": 2,
+  "s": "COUNT(column) ignores NULL values.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "What is the result?  SELECT SUM(sal) FROM emp WHERE dept = 10;",
+  "o": [
+   "220",
+   "120",
+   "70",
+   "50"
+  ],
+  "a": 1,
+  "s": "50 + 70 = 120.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "What is the result?  SELECT MAX(sal) FROM emp;",
+  "o": [
+   "50",
+   "60",
+   "70",
+   "40"
+  ],
+  "a": 2,
+  "s": "The highest salary is 70.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "What does ORDER BY sal DESC do?",
+  "o": [
+   "Deletes salaries",
+   "Groups salaries",
+   "Sorts from highest to lowest salary",
+   "Sorts from lowest to highest"
+  ],
+  "a": 2,
+  "s": "DESC is descending order.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "Which pattern does LIKE 'A%' match?",
+  "o": [
+   "Text ending with A",
+   "Text starting with A",
+   "Text containing only A",
+   "Text of length 1"
+  ],
+  "a": 1,
+  "s": "% stands for any number of characters.",
+  "t": "SQL DML"
+ },
+ {
+  "u": 2,
+  "q": "What is the result?  SELECT COUNT(*) FROM emp JOIN dept ON emp.dept = dept.did;",
+  "o": [
+   "12",
+   "4",
+   "5",
+   "3"
+  ],
+  "a": 3,
+  "s": "An inner join drops the employee with NULL dept. Rows 1, 2 and 3 match.",
+  "t": "Joins"
+ },
+ {
+  "u": 2,
+  "q": "What is the result?  SELECT COUNT(*) FROM emp LEFT JOIN dept ON emp.dept = dept.did;",
+  "o": [
+   "12",
+   "3",
+   "5",
+   "4"
+  ],
+  "a": 3,
+  "s": "A left join keeps all 4 employees, including the one with no matching department.",
+  "t": "Joins"
+ },
+ {
+  "u": 2,
+  "q": "What is the result?  SELECT COUNT(*) FROM emp CROSS JOIN dept;",
+  "o": [
+   "7",
+   "4",
+   "12",
+   "3"
+  ],
+  "a": 2,
+  "s": "4 employees × 3 departments = 12.",
+  "t": "Joins"
+ },
+ {
+  "u": 2,
+  "q": "Which join returns only rows with matches in both tables?",
+  "o": [
+   "FULL JOIN",
+   "INNER JOIN",
+   "CROSS JOIN",
+   "LEFT JOIN"
+  ],
+  "a": 1,
+  "s": "INNER JOIN keeps matched rows only.",
+  "t": "Joins"
+ },
+ {
+  "u": 2,
+  "q": "Which join keeps all rows of the left table even if there is no match?",
+  "o": [
+   "INNER JOIN",
+   "CROSS JOIN",
+   "LEFT OUTER JOIN",
+   "NATURAL JOIN"
+  ],
+  "a": 2,
+  "s": "Unmatched right-side columns become NULL.",
+  "t": "Joins"
+ },
+ {
+  "u": 2,
+  "q": "A self join is:",
+  "o": [
+   "A join on NULL",
+   "Joining a table with itself",
+   "Joining three tables",
+   "A join without condition"
+  ],
+  "a": 1,
+  "s": "Aliases are needed, for example employees and their managers.",
+  "t": "Joins"
+ },
+ {
+  "u": 2,
+  "q": "What is the result?  SELECT name FROM emp WHERE sal > (SELECT AVG(sal) FROM emp);  (average is 55)",
+  "o": [
+   "Meera",
+   "Asha,Kabir",
+   "Ravi",
+   "Ravi,Meera"
+  ],
+  "a": 3,
+  "s": "Salaries above 55 are 70 (Ravi) and 60 (Meera).",
+  "t": "Subqueries & Views"
+ },
+ {
+  "u": 2,
+  "q": "Which operator checks whether a subquery returns any rows?",
+  "o": [
+   "LIKE",
+   "EXISTS",
+   "BETWEEN",
+   "HAVING"
+  ],
+  "a": 1,
+  "s": "EXISTS is true if the subquery returns at least one row.",
+  "t": "Subqueries & Views"
+ },
+ {
+  "u": 2,
+  "q": "A correlated subquery is one that:",
+  "o": [
+   "Refers to columns of the outer query",
+   "Has no WHERE clause",
+   "Runs only once",
+   "Returns no rows"
+  ],
+  "a": 0,
+  "s": "It is re-evaluated for each outer row.",
+  "t": "Subqueries & Views"
+ },
+ {
+  "u": 2,
+  "q": "A view is:",
+  "o": [
+   "A virtual table defined by a query",
+   "A copy of a table on disk",
+   "A transaction log",
+   "An index"
+  ],
+  "a": 0,
+  "s": "A view stores a query, not the data (unless it is materialised).",
+  "t": "Subqueries & Views"
+ },
+ {
+  "u": 2,
+  "q": "Which statement creates a view?",
+  "o": [
+   "NEW VIEW v",
+   "CREATE VIEW v AS SELECT ...",
+   "BUILD VIEW v",
+   "MAKE VIEW v"
+  ],
+  "a": 1,
+  "s": "CREATE VIEW name AS query.",
+  "t": "Subqueries & Views"
+ },
+ {
+  "u": 2,
+  "q": "A key reason to use views is to:",
+  "o": [
+   "Disable transactions",
+   "Hide columns or complexity from users",
+   "Increase table size",
+   "Remove primary keys"
+  ],
+  "a": 1,
+  "s": "Views simplify queries and restrict what users see.",
+  "t": "Subqueries & Views"
+ },
+ {
+  "u": 2,
+  "q": "A trigger is:",
+  "o": [
+   "Code that runs automatically when an event such as INSERT, UPDATE or DELETE occurs",
+   "A backup file",
+   "A type of join",
+   "A query run by hand"
+  ],
+  "a": 0,
+  "s": "Triggers fire on data-change events.",
+  "t": "Procedures & Triggers"
+ },
+ {
+  "u": 2,
+  "q": "A stored procedure is:",
+  "o": [
+   "A named set of SQL statements saved in the database",
+   "A temporary table",
+   "A user account",
+   "A foreign key"
+  ],
+  "a": 0,
+  "s": "It can be called repeatedly and can take parameters.",
+  "t": "Procedures & Triggers"
+ },
+ {
+  "u": 2,
+  "q": "Which timing options exist for triggers?",
+  "o": [
+   "BEFORE and AFTER",
+   "OPEN and CLOSE",
+   "UP and DOWN",
+   "FIRST and LAST"
+  ],
+  "a": 0,
+  "s": "Triggers run BEFORE or AFTER the event (and INSTEAD OF on views).",
+  "t": "Procedures & Triggers"
+ },
+ {
+  "u": 2,
+  "q": "Inside an UPDATE trigger, NEW and OLD refer to:",
+  "o": [
+   "Two databases",
+   "Two tables",
+   "The row after and before the change",
+   "The user names"
+  ],
+  "a": 2,
+  "s": "OLD holds the previous values, NEW the updated ones.",
+  "t": "Procedures & Triggers"
+ },
+ {
+  "u": 2,
+  "q": "SQL injection occurs when:",
+  "o": [
+   "An index is missing",
+   "User input is inserted into a query as code",
+   "A transaction rolls back",
+   "A table is dropped by the DBA"
+  ],
+  "a": 1,
+  "s": "Attackers change the meaning of a query by crafting input.",
+  "t": "SQL Injection"
+ },
+ {
+  "u": 2,
+  "q": "The best defence against SQL injection is:",
+  "o": [
+   "Parameterised queries (prepared statements)",
+   "Removing all indexes",
+   "Using longer table names",
+   "Disabling views"
+  ],
+  "a": 0,
+  "s": "Parameters keep data separate from the SQL text.",
+  "t": "SQL Injection"
+ },
+ {
+  "u": 2,
+  "q": "What does the input ' OR '1'='1 usually try to do?",
+  "o": [
+   "Make the WHERE condition always true",
+   "Encrypt the database",
+   "Create a table",
+   "Restart the server"
+  ],
+  "a": 0,
+  "s": "It turns the condition into a tautology to bypass checks.",
+  "t": "SQL Injection"
+ },
+ {
+  "u": 2,
+  "q": "Which practice reduces damage if an injection occurs?",
+  "o": [
+   "Storing passwords in plain text",
+   "Using the admin account for the web app",
+   "Least-privilege database accounts",
+   "Showing full error messages"
+  ],
+  "a": 2,
+  "s": "A restricted account can do less even if the query is hijacked.",
+  "t": "SQL Injection"
+ },
+ {
+  "u": 3,
+  "q": "The functional dependency X → Y means:",
+  "o": [
+   "X and Y are equal",
+   "Y determines X",
+   "Each value of X determines exactly one value of Y",
+   "X and Y are keys"
+  ],
+  "a": 2,
+  "s": "If two rows agree on X they must agree on Y.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "Which is a trivial functional dependency?",
+  "o": [
+   "B → AC",
+   "A → B",
+   "AB → A",
+   "A → C"
+  ],
+  "a": 2,
+  "s": "X → Y is trivial when Y is a subset of X.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "Armstrong's reflexivity axiom states:",
+  "o": [
+   "If X → Y then Y → X",
+   "If Y is a subset of X then X → Y",
+   "If X → Y then XZ → YZ",
+   "If X → Y and Y → Z then X → Z"
+  ],
+  "a": 1,
+  "s": "Reflexivity gives the trivial dependencies.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "Armstrong's transitivity axiom states:",
+  "o": [
+   "If X → Y then Y → X",
+   "If X → Y and Y → Z then X → Z",
+   "If X → Y then XZ → Y",
+   "If X → YZ then X → Z only"
+  ],
+  "a": 1,
+  "s": "Dependencies can be chained.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "Given R(A,B,C,D) with A → B, B → C, C → D, what is the closure A⁺?",
+  "o": [
+   "{A,B}",
+   "{A,B,C,D}",
+   "{A,D}",
+   "{A}"
+  ],
+  "a": 1,
+  "s": "A gives B, B gives C and C gives D, so A⁺ = ABCD. A is a candidate key.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "The closure of an attribute set X is:",
+  "o": [
+   "The primary key",
+   "All attributes functionally determined by X",
+   "All tuples containing X",
+   "The number of rows with X"
+  ],
+  "a": 1,
+  "s": "X⁺ is the set of attributes reachable from X using the FDs.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "If the closure of X contains all attributes of the relation, X is a:",
+  "o": [
+   "Weak key",
+   "Super key",
+   "Foreign key",
+   "Trivial key"
+  ],
+  "a": 1,
+  "s": "Such an X determines every attribute.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "Given R(A,B,C) with AB → C and C → B, which are the candidate keys?",
+  "o": [
+   "A only",
+   "BC only",
+   "C only",
+   "AB and AC"
+  ],
+  "a": 3,
+  "s": "AB⁺ = ABC and AC⁺ = ACB (C gives B). Neither A nor B nor C alone determines all attributes.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "A prime attribute is one that:",
+  "o": [
+   "Is NULL",
+   "Is part of some candidate key",
+   "Is numeric",
+   "Is a foreign key"
+  ],
+  "a": 1,
+  "s": "Non-prime attributes belong to no candidate key.",
+  "t": "Functional Dependencies"
+ },
+ {
+  "u": 3,
+  "q": "Which problem does normalisation mainly reduce?",
+  "o": [
+   "Redundancy and update anomalies",
+   "Network delay",
+   "Disk size of indexes",
+   "Query typing"
+  ],
+  "a": 0,
+  "s": "It organises data to avoid insertion, deletion and update anomalies.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "A relation is in 1NF if:",
+  "o": [
+   "It has no foreign key",
+   "It has no primary key",
+   "It has one column",
+   "All attributes hold atomic values"
+  ],
+  "a": 3,
+  "s": "1NF forbids repeating groups and multivalued cells.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "2NF removes:",
+  "o": [
+   "Partial dependencies on part of a composite key",
+   "Transitive dependencies",
+   "Multivalued dependencies",
+   "All FDs"
+  ],
+  "a": 0,
+  "s": "No non-prime attribute may depend on only part of a candidate key.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "3NF removes:",
+  "o": [
+   "Atomicity problems",
+   "Transitive dependencies of non-prime attributes on the key",
+   "Join dependencies",
+   "Partial dependencies only"
+  ],
+  "a": 1,
+  "s": "A non-prime attribute must not depend on another non-prime attribute.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "A relation is in BCNF if, for every non-trivial FD X → Y:",
+  "o": [
+   "X is a single attribute",
+   "Y is a super key",
+   "Y is a prime attribute",
+   "X is a super key"
+  ],
+  "a": 3,
+  "s": "BCNF requires every determinant to be a super key.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "Is a relation in BCNF always in 3NF?",
+  "o": [
+   "Only with two attributes",
+   "Yes",
+   "No",
+   "Only without keys"
+  ],
+  "a": 1,
+  "s": "BCNF is stricter than 3NF.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "R(A,B,C) with AB → C and C → B has keys AB and AC. Which statement is true?",
+  "o": [
+   "It is not in 3NF",
+   "It is not in 1NF",
+   "It is in BCNF",
+   "It is in 3NF but not in BCNF"
+  ],
+  "a": 3,
+  "s": "In C → B the determinant C is not a super key, so not BCNF. B is prime, so 3NF holds.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "Student(Roll, Name, DeptID, DeptName) with Roll → DeptID and DeptID → DeptName violates:",
+  "o": [
+   "3NF (transitive dependency)",
+   "Nothing",
+   "1NF",
+   "2NF only"
+  ],
+  "a": 0,
+  "s": "DeptName depends on Roll through DeptID.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "Decomposition into smaller relations should be:",
+  "o": [
+   "Done only for views",
+   "Random",
+   "Lossless and dependency preserving where possible",
+   "Done only to add columns"
+  ],
+  "a": 2,
+  "s": "A lossless join recreates the original data. Dependency preservation keeps FDs checkable.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "Denormalisation is sometimes used to:",
+  "o": [
+   "Reduce security",
+   "Make data inconsistent on purpose",
+   "Remove keys",
+   "Improve read performance by adding controlled redundancy"
+  ],
+  "a": 3,
+  "s": "It trades redundancy for fewer joins, mainly in analytics.",
+  "t": "Normal Forms"
+ },
+ {
+  "u": 3,
+  "q": "A transaction is:",
+  "o": [
+   "A single SELECT only",
+   "A logical unit of work that must be completed fully or not at all",
+   "A backup",
+   "A table"
+  ],
+  "a": 1,
+  "s": "It is an all-or-nothing group of operations.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "In ACID, the letter A stands for:",
+  "o": [
+   "Auditing",
+   "Atomicity",
+   "Authorisation",
+   "Availability"
+  ],
+  "a": 1,
+  "s": "Atomicity, Consistency, Isolation, Durability.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "Which property says committed changes survive a crash?",
+  "o": [
+   "Consistency",
+   "Isolation",
+   "Atomicity",
+   "Durability"
+  ],
+  "a": 3,
+  "s": "Durable changes are on stable storage.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "Which property makes concurrent transactions appear to run one at a time?",
+  "o": [
+   "Durability",
+   "Atomicity",
+   "Isolation",
+   "Consistency"
+  ],
+  "a": 2,
+  "s": "Isolation hides intermediate states from others.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "A transfer of 30 from account 1 to account 2 either does both steps or neither. This is:",
+  "o": [
+   "Redundancy",
+   "Isolation",
+   "Durability",
+   "Atomicity"
+  ],
+  "a": 3,
+  "s": "All steps succeed together or are rolled back.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "What is the total after this?  BEGIN; UPDATE acc SET bal = bal-30 WHERE id=1; UPDATE acc SET bal = bal+30 WHERE id=2; COMMIT;  (SUM of bal)",
+  "o": [
+   "200",
+   "170",
+   "100",
+   "230"
+  ],
+  "a": 0,
+  "s": "Money only moves between accounts, so the total stays 200 (consistency).",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "Which command undoes the changes of the current transaction?",
+  "o": [
+   "COMMIT",
+   "SAVEPOINT",
+   "GRANT",
+   "ROLLBACK"
+  ],
+  "a": 3,
+  "s": "ROLLBACK restores the state before the transaction.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "Which command makes a transaction's changes permanent?",
+  "o": [
+   "REVOKE",
+   "TRUNCATE",
+   "ROLLBACK",
+   "COMMIT"
+  ],
+  "a": 3,
+  "s": "COMMIT ends the transaction successfully.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "A transaction that has executed its last statement but is not yet committed is in the:",
+  "o": [
+   "Active state",
+   "Failed state",
+   "Aborted state",
+   "Partially committed state"
+  ],
+  "a": 3,
+  "s": "States: active, partially committed, committed, failed, aborted.",
+  "t": "Transactions & ACID"
+ },
+ {
+  "u": 3,
+  "q": "A schedule is serial when:",
+  "o": [
+   "Transactions run one after another with no interleaving",
+   "All operations are reads",
+   "It is aborted",
+   "Operations interleave"
+  ],
+  "a": 0,
+  "s": "Serial schedules are always correct but allow no concurrency.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "Two operations conflict if they belong to different transactions, touch the same item and:",
+  "o": [
+   "At least one is a write",
+   "Neither is a write",
+   "Both are commits",
+   "Both are reads"
+  ],
+  "a": 0,
+  "s": "Read-write, write-read and write-write pairs conflict.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "A schedule is conflict serializable if its precedence graph:",
+  "o": [
+   "Has no edges at all only",
+   "Has exactly one node",
+   "Has a cycle",
+   "Has no cycle"
+  ],
+  "a": 3,
+  "s": "An acyclic precedence graph means an equivalent serial order exists.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "Schedule R1(A) W2(A) W1(A) is:",
+  "o": [
+   "Not conflict serializable",
+   "Recoverable only",
+   "A serial schedule",
+   "Conflict serializable"
+  ],
+  "a": 0,
+  "s": "R1 before W2 gives T1→T2 and W2 before W1 gives T2→T1, a cycle.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "A dirty read happens when a transaction reads:",
+  "o": [
+   "Committed data",
+   "Uncommitted data written by another transaction",
+   "Data from a backup",
+   "Deleted tables"
+  ],
+  "a": 1,
+  "s": "If the writer rolls back the reader has used data that never existed.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "A non-repeatable read occurs when:",
+  "o": [
+   "A row is never found",
+   "A transaction aborts",
+   "A table is locked",
+   "The same row read twice gives different values because another transaction committed a change"
+  ],
+  "a": 3,
+  "s": "A committed update between the two reads changes the value.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "A phantom read occurs when:",
+  "o": [
+   "A row is deleted by the reader",
+   "A lock is released twice",
+   "A repeated query returns new rows inserted by another transaction",
+   "A column is renamed"
+  ],
+  "a": 2,
+  "s": "New rows matching the predicate appear.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "Which isolation level prevents dirty reads, non-repeatable reads and phantoms?",
+  "o": [
+   "Read committed",
+   "Repeatable read in every DBMS",
+   "Serializable",
+   "Read uncommitted"
+  ],
+  "a": 2,
+  "s": "Serializable is the strictest standard level.",
+  "t": "Concurrency & Schedules"
+ },
+ {
+  "u": 3,
+  "q": "A shared (S) lock allows:",
+  "o": [
+   "Only one to read",
+   "Writing by everyone",
+   "Deleting the table",
+   "Several transactions to read the item"
+  ],
+  "a": 3,
+  "s": "Multiple shared locks can coexist.",
+  "t": "Locking"
+ },
+ {
+  "u": 3,
+  "q": "An exclusive (X) lock allows:",
+  "o": [
+   "Many readers",
+   "No access to the holder",
+   "Only reads",
+   "Only the holder to read and write the item"
+  ],
+  "a": 3,
+  "s": "No other lock is compatible with X.",
+  "t": "Locking"
+ },
+ {
+  "u": 3,
+  "q": "Two-phase locking (2PL) has which phases?",
+  "o": [
+   "Growing (acquire) and shrinking (release)",
+   "Prepare and send",
+   "Commit and abort",
+   "Reading and writing"
+  ],
+  "a": 0,
+  "s": "Once a lock is released no new lock may be acquired. This guarantees serializability.",
+  "t": "Locking"
+ },
+ {
+  "u": 3,
+  "q": "Strict 2PL holds exclusive locks until:",
+  "o": [
+   "The transaction commits or aborts",
+   "The next statement",
+   "The server restarts",
+   "The first read"
+  ],
+  "a": 0,
+  "s": "This avoids cascading rollbacks.",
+  "t": "Locking"
+ },
+ {
+  "u": 3,
+  "q": "Timestamp ordering is a way to:",
+  "o": [
+   "Encrypt data",
+   "Join tables",
+   "Create indexes",
+   "Order conflicting operations by transaction start time without locks"
+  ],
+  "a": 3,
+  "s": "Older transactions get priority in conflicts.",
+  "t": "Locking"
+ },
+ {
+  "u": 3,
+  "q": "A deadlock is:",
+  "o": [
+   "A lost connection",
+   "Two or more transactions each waiting for a lock held by the other",
+   "A long query",
+   "A table with no rows"
+  ],
+  "a": 1,
+  "s": "A cycle in the wait-for graph means deadlock.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 3,
+  "q": "How is a deadlock detected?",
+  "o": [
+   "A NULL key",
+   "A missing index",
+   "A failed login",
+   "A cycle in the wait-for graph"
+  ],
+  "a": 3,
+  "s": "If transactions wait for each other in a loop, a victim is aborted.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 3,
+  "q": "Which action is used to resolve a deadlock?",
+  "o": [
+   "Drop the table",
+   "Restart all users",
+   "Add a column",
+   "Abort (roll back) one victim transaction"
+  ],
+  "a": 3,
+  "s": "The victim's locks are released so others can continue.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 3,
+  "q": "Deadlock prevention schemes such as wait-die and wound-wait use:",
+  "o": [
+   "Transaction timestamps",
+   "Views",
+   "Passwords",
+   "Indexes"
+  ],
+  "a": 0,
+  "s": "Timestamps decide whether a transaction waits or is aborted.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 3,
+  "q": "Write-ahead logging (WAL) means:",
+  "o": [
+   "Logs are optional",
+   "No log is kept",
+   "Data is written before the log",
+   "Log records reach stable storage before the changed data pages"
+  ],
+  "a": 3,
+  "s": "The log makes redo and undo possible after a crash.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 3,
+  "q": "After a crash, the REDO operation:",
+  "o": [
+   "Drops tables",
+   "Deletes committed changes",
+   "Locks all rows",
+   "Reapplies committed changes that may not have reached disk"
+  ],
+  "a": 3,
+  "s": "Redo restores durability.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 3,
+  "q": "After a crash, the UNDO operation:",
+  "o": [
+   "Copies the table",
+   "Repeats committed changes",
+   "Rolls back changes of uncommitted transactions",
+   "Creates indexes"
+  ],
+  "a": 2,
+  "s": "Undo restores atomicity.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 3,
+  "q": "A checkpoint:",
+  "o": [
+   "Creates a new table",
+   "Stops all users forever",
+   "Records a point from which recovery can start, reducing recovery work",
+   "Deletes the log"
+  ],
+  "a": 2,
+  "s": "Recovery need not scan the log from the beginning.",
+  "t": "Deadlock & Recovery"
+ },
+ {
+  "u": 4,
+  "q": "DAC (discretionary access control) lets:",
+  "o": [
+   "Access depend on location only",
+   "Only the system decide access",
+   "Nobody grant access",
+   "The owner of an object grant access to others"
+  ],
+  "a": 3,
+  "s": "In DAC owners control permissions, for example with GRANT.",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "Which SQL command gives a privilege to a user?",
+  "o": [
+   "ALLOW",
+   "GRANT",
+   "GIVE",
+   "PERMIT"
+  ],
+  "a": 1,
+  "s": "GRANT SELECT ON t TO user;",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "Which SQL command removes a privilege?",
+  "o": [
+   "REMOVE",
+   "DENY ALL",
+   "DROP USER ONLY",
+   "REVOKE"
+  ],
+  "a": 3,
+  "s": "REVOKE takes the privilege back.",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "In RBAC, permissions are assigned to:",
+  "o": [
+   "Roles, and users are assigned to roles",
+   "Individual passwords",
+   "Tables only",
+   "IP addresses"
+  ],
+  "a": 0,
+  "s": "Users get permissions through the roles they hold.",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "The principle of least privilege means:",
+  "o": [
+   "Users get only the access they need",
+   "No one has access",
+   "Access never expires",
+   "Everyone is admin"
+  ],
+  "a": 0,
+  "s": "It limits the damage of mistakes and attacks.",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "In MAC (mandatory access control), access depends on:",
+  "o": [
+   "Security labels and clearances set by the system",
+   "User passwords only",
+   "The owner's choice",
+   "Table size"
+  ],
+  "a": 0,
+  "s": "Policy is enforced centrally, as in military systems.",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "The Bell-LaPadula model, for confidentiality, forbids:",
+  "o": [
+   "Reading down",
+   "Reading up and writing down",
+   "Logging in",
+   "Writing up"
+  ],
+  "a": 1,
+  "s": "A subject may not read a higher level or write to a lower level.",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "ABAC decides access using:",
+  "o": [
+   "Only the time",
+   "Only file names",
+   "Only the user's role",
+   "Attributes of the user, resource and context"
+  ],
+  "a": 3,
+  "s": "For example department, sensitivity and time of day.",
+  "t": "Access Control"
+ },
+ {
+  "u": 4,
+  "q": "Encryption of stored data is called:",
+  "o": [
+   "Masking",
+   "Encryption in transit",
+   "Encryption at rest",
+   "Hashing"
+  ],
+  "a": 2,
+  "s": "At rest means the data on disk is encrypted.",
+  "t": "Encryption & Auditing"
+ },
+ {
+  "u": 4,
+  "q": "TLS protects data:",
+  "o": [
+   "In backups only",
+   "In memory only",
+   "In transit over the network",
+   "On disk only"
+  ],
+  "a": 2,
+  "s": "TLS secures communication between client and server.",
+  "t": "Encryption & Auditing"
+ },
+ {
+  "u": 4,
+  "q": "Passwords should be stored as:",
+  "o": [
+   "Base64",
+   "Salted slow hashes (bcrypt, scrypt, Argon2)",
+   "Plain text",
+   "Reversible encryption"
+  ],
+  "a": 1,
+  "s": "A salted slow hash resists dictionary and rainbow-table attacks.",
+  "t": "Encryption & Auditing"
+ },
+ {
+  "u": 4,
+  "q": "What is a salt?",
+  "o": [
+   "A random value added to a password before hashing",
+   "A secret key kept in a vault only",
+   "A network protocol",
+   "A type of index"
+  ],
+  "a": 0,
+  "s": "It makes identical passwords produce different hashes.",
+  "t": "Encryption & Auditing"
+ },
+ {
+  "u": 4,
+  "q": "Database auditing means:",
+  "o": [
+   "Compressing tables",
+   "Recording who did what and when",
+   "Adding indexes",
+   "Deleting old data"
+  ],
+  "a": 1,
+  "s": "Audit logs support accountability and investigation.",
+  "t": "Encryption & Auditing"
+ },
+ {
+  "u": 4,
+  "q": "Data masking:",
+  "o": [
+   "Encrypts the whole disk",
+   "Hides parts of sensitive values such as showing only the last 4 digits of a card",
+   "Locks the table",
+   "Deletes the column"
+  ],
+  "a": 1,
+  "s": "The stored value is unchanged, but users see a masked version.",
+  "t": "Encryption & Auditing"
+ },
+ {
+  "u": 4,
+  "q": "Which technique ensures each combination of quasi-identifiers appears at least k times?",
+  "o": [
+   "Sharding",
+   "Normalisation",
+   "Hashing",
+   "k-anonymity"
+  ],
+  "a": 3,
+  "s": "A person is hidden among at least k others.",
+  "t": "Privacy & Law"
+ },
+ {
+  "u": 4,
+  "q": "Differential privacy protects individuals by:",
+  "o": [
+   "Using larger tables",
+   "Adding calibrated noise to query results",
+   "Deleting all data",
+   "Disabling queries"
+  ],
+  "a": 1,
+  "s": "One person's presence barely changes the answer.",
+  "t": "Privacy & Law"
+ },
+ {
+  "u": 4,
+  "q": "India's data protection law passed in 2023 is the:",
+  "o": [
+   "Right to Data Act",
+   "Digital Personal Data Protection Act",
+   "Information Technology Act of 2023",
+   "Personal Data Safety Code"
+  ],
+  "a": 1,
+  "s": "The DPDP Act, 2023, with Rules notified in 2025.",
+  "t": "Privacy & Law"
+ },
+ {
+  "u": 4,
+  "q": "Under the DPDP Act, a data fiduciary is:",
+  "o": [
+   "A regulator",
+   "The person whose data is processed",
+   "A hacker",
+   "The entity that decides the purpose and means of processing personal data"
+  ],
+  "a": 3,
+  "s": "The person whose data it is, is the data principal.",
+  "t": "Privacy & Law"
+ },
+ {
+  "u": 4,
+  "q": "Under the DPDP Act, the person whose personal data is processed is the:",
+  "o": [
+   "Data principal",
+   "Data fiduciary",
+   "Data board",
+   "Data processor"
+  ],
+  "a": 0,
+  "s": "The data principal has rights such as access and correction.",
+  "t": "Privacy & Law"
+ },
+ {
+  "u": 4,
+  "q": "Pseudonymisation differs from anonymisation because:",
+  "o": [
+   "It cannot be reversed",
+   "It can be reversed with additional information, so it is still personal data",
+   "It deletes data",
+   "It encrypts the network"
+  ],
+  "a": 1,
+  "s": "Anonymisation is irreversible.",
+  "t": "Privacy & Law"
+ },
+ {
+  "u": 4,
+  "q": "The CAP theorem says that during a network partition a distributed system must choose between:",
+  "o": [
+   "Reads and writes only",
+   "Consistency and availability",
+   "Security and cost",
+   "Speed and size"
+  ],
+  "a": 1,
+  "s": "Partition tolerance is required, so the trade-off is C versus A.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "BASE stands for:",
+  "o": [
+   "Binary Access Storage Engine",
+   "Basic Atomic Safe Efficient",
+   "Basically Available, Soft state, Eventually consistent",
+   "Backup And Save Everything"
+  ],
+  "a": 2,
+  "s": "BASE is the NoSQL counterpart of ACID.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "MongoDB is which type of NoSQL database?",
+  "o": [
+   "Key-value store",
+   "Column store",
+   "Document store",
+   "Graph database"
+  ],
+  "a": 2,
+  "s": "It stores JSON-like (BSON) documents.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "Redis is mainly a:",
+  "o": [
+   "Relational database",
+   "In-memory key-value store",
+   "Graph database",
+   "Data warehouse"
+  ],
+  "a": 1,
+  "s": "It is used for caches, sessions and counters.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "Cassandra is a:",
+  "o": [
+   "Wide-column store",
+   "Key-value cache",
+   "Document store",
+   "Graph database"
+  ],
+  "a": 0,
+  "s": "It is partitioned, replicated and write-optimised.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "Neo4j is a:",
+  "o": [
+   "Graph database",
+   "Document database",
+   "Wide-column store",
+   "Time-series store"
+  ],
+  "a": 0,
+  "s": "It stores nodes and relationships and is queried with Cypher.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "Which NoSQL type is best for relationships such as friends of friends?",
+  "o": [
+   "Document store",
+   "Graph database",
+   "Key-value store",
+   "Wide-column store"
+  ],
+  "a": 1,
+  "s": "Graph databases traverse relationships efficiently.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "Eventual consistency means:",
+  "o": [
+   "Replicas converge to the same value if no new updates arrive",
+   "Data is always identical on all nodes instantly",
+   "Reads are blocked",
+   "Data is never copied"
+  ],
+  "a": 0,
+  "s": "Temporary differences are allowed.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "Sharding is:",
+  "o": [
+   "Deleting old rows",
+   "Copying data to one machine",
+   "Splitting data across multiple machines",
+   "Encrypting a table"
+  ],
+  "a": 2,
+  "s": "Each shard holds a subset of the data.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "In a quorum system with N replicas, R + W > N guarantees:",
+  "o": [
+   "A read overlaps with the latest write",
+   "No replication",
+   "No failures",
+   "Faster writes only"
+  ],
+  "a": 0,
+  "s": "The read set and write set must share a replica.",
+  "t": "NoSQL & CAP"
+ },
+ {
+  "u": 4,
+  "q": "OLTP systems are designed for:",
+  "o": [
+   "Only backups",
+   "Only reporting",
+   "Many short transactions on current data",
+   "Large historical analysis"
+  ],
+  "a": 2,
+  "s": "OLTP supports day-to-day operations.",
+  "t": "Distributed & Warehousing"
+ },
+ {
+  "u": 4,
+  "q": "OLAP systems are designed for:",
+  "o": [
+   "Login management",
+   "Complex analytical queries on historical data",
+   "Frequent small updates",
+   "Network routing"
+  ],
+  "a": 1,
+  "s": "OLAP supports analysis and decision-making.",
+  "t": "Distributed & Warehousing"
+ },
+ {
+  "u": 4,
+  "q": "A star schema has:",
+  "o": [
+   "Only dimension tables",
+   "Only one table",
+   "A central fact table joined to dimension tables",
+   "No keys"
+  ],
+  "a": 2,
+  "s": "The fact table holds measures; dimensions hold descriptions.",
+  "t": "Distributed & Warehousing"
+ },
+ {
+  "u": 4,
+  "q": "Which OLAP operation moves from year to month level?",
+  "o": [
+   "Pivot",
+   "Slice",
+   "Roll-up",
+   "Drill-down"
+  ],
+  "a": 3,
+  "s": "Drill-down gives more detail.",
+  "t": "Distributed & Warehousing"
+ },
+ {
+  "u": 4,
+  "q": "ETL stands for:",
+  "o": [
+   "Encrypt, Transfer, Lock",
+   "Export, Time, Log",
+   "Extract, Transform, Load",
+   "Enter, Test, Launch"
+  ],
+  "a": 2,
+  "s": "Data is extracted from sources, cleaned and loaded into the warehouse.",
+  "t": "Distributed & Warehousing"
+ },
+ {
+  "u": 4,
+  "q": "The three original Vs of big data are:",
+  "o": [
+   "Visual, Verbal and Virtual",
+   "Value, Version and View",
+   "Validity, Vault and Vector",
+   "Volume, Velocity and Variety"
+  ],
+  "a": 3,
+  "s": "Data is large, fast and diverse.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "HDFS is:",
+  "o": [
+   "A graph language",
+   "A SQL dialect",
+   "A web server",
+   "Hadoop's distributed file system"
+  ],
+  "a": 3,
+  "s": "It stores large files in replicated blocks across machines.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "MapReduce processes data in:",
+  "o": [
+   "Read and write phases",
+   "Map, shuffle and reduce phases",
+   "Prepare and commit phases",
+   "Insert and delete phases"
+  ],
+  "a": 1,
+  "s": "Map emits key-value pairs, shuffle groups by key and reduce aggregates.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "Apache Kafka is mainly used for:",
+  "o": [
+   "Drawing diagrams",
+   "Encrypting passwords",
+   "Streaming events through a distributed log",
+   "Relational joins"
+  ],
+  "a": 2,
+  "s": "It is a partitioned, replicated event log.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "Each block in a blockchain contains the:",
+  "o": [
+   "Name of the database",
+   "Size of the disk",
+   "Password of the miner",
+   "Hash of the previous block"
+  ],
+  "a": 3,
+  "s": "Chaining hashes makes tampering evident.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "Which property makes blockchain records tamper-evident?",
+  "o": [
+   "Blocks are encrypted by a password",
+   "Only one copy exists",
+   "Records are stored in a spreadsheet",
+   "Changing one block changes its hash and breaks the chain"
+  ],
+  "a": 3,
+  "s": "Later blocks no longer match the altered block's hash.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "A Merkle tree is used to:",
+  "o": [
+   "Store passwords",
+   "Join tables",
+   "Sort rows",
+   "Summarise many transactions in one root hash"
+  ],
+  "a": 3,
+  "s": "Any change to a transaction changes the root.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "Proof of work requires miners to:",
+  "o": [
+   "Stake coins",
+   "Pay a fee to a bank",
+   "Find a hash below a target by trying many nonces",
+   "Vote by raising hands"
+  ],
+  "a": 2,
+  "s": "The work is hard to produce but easy to verify.",
+  "t": "Big Data & Blockchain"
+ },
+ {
+  "u": 4,
+  "q": "A vector database is used to:",
+  "o": [
+   "Encrypt backups",
+   "Store only integers",
+   "Replace all SQL",
+   "Find items with similar embeddings quickly"
+  ],
+  "a": 3,
+  "s": "It supports similarity search used in AI applications such as RAG.",
+  "t": "Big Data & Blockchain"
+ }
+]

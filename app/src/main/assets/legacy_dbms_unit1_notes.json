@@ -1,0 +1,3764 @@
+{
+  "title": "Database Foundations & Design",
+  "intro": "Data, DBMS, data models, ER design and integrity constraints from the ground up.",
+  "sec": [
+    {
+      "n": 1,
+      "t": "Foundations: Data, Information, Database, and DBMS",
+      "k": "th",
+      "s": "Data consists of recorded facts, observations, measurements, symbols, or values.",
+      "b": [
+        {
+          "t": "h",
+          "x": "1.1 What is data?"
+        },
+        {
+          "t": "p",
+          "x": "Data consists of recorded facts, observations, measurements, symbols, or values. By itself, a data item may have little meaning until it is interpreted in context."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "101",
+            "\"Aarav\"",
+            "19",
+            "\"BCA\"",
+            "82.5",
+            "\"2026-10-13\"",
+            "\"Present\""
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These values could represent a student ID, name, age, course, examination score, date, and attendance status. Without labels or context, however, it is not always clear what each value means."
+        },
+        {
+          "t": "h",
+          "x": "Data can be represented in many forms"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Numeric data: numbers such as age, marks, price, quantity, or account balance.",
+            "Text data: names, addresses, descriptions, messages, and comments.",
+            "Date and time data: dates of admission, order timestamps, or appointment times.",
+            "Boolean data: true/false or yes/no values.",
+            "Categorical data: values selected from a set, such as a department, course, or status.",
+            "Multimedia data: images, audio, video, and other media.",
+            "Spatial data: geographic coordinates, shapes, and location-related measurements.",
+            "Semi-structured data: data such as JSON or XML that has labels and nested structure but does not necessarily fit neatly into a fixed table.",
+            "Unstructured data: content such as free-form documents, photographs, and recordings that does not follow a simple tabular schema."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The data type matters because it influences what values are valid and what operations make sense. Adding two prices is meaningful; adding a person's name to a date usually is not. A database system uses data types and rules to help manage these differences."
+        },
+        {
+          "t": "h",
+          "x": "1.2 Data versus information"
+        },
+        {
+          "t": "p",
+          "x": "Information is data that has been organized, processed, interpreted, or placed in context so that it becomes useful."
+        },
+        {
+          "t": "h",
+          "x": "Suppose a college records these marks"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "68, 74, 91, 57, 80."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These are data values. If we calculate that the average mark is 74, that the highest mark is 91, and that three students scored at least 70, we have transformed the raw values into information."
+        },
+        {
+          "t": "h",
+          "x": "More examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Data: a transaction amount of 1,500.",
+            "Information: total sales for the day were 25,000.",
+            "Data: a list of student attendance entries.",
+            "Information: a student attended 92% of classes.",
+            "Data: individual product prices and quantities.",
+            "Information: the total value of the current inventory."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Information depends on context and purpose. The same data can be used to produce different information for different people. A teacher may want average marks, while an administrator may want the number of students enrolled in each course."
+        },
+        {
+          "t": "h",
+          "x": "1.3 What is a database?"
+        },
+        {
+          "t": "p",
+          "x": "A database is an organized collection of related data stored so that it can be accessed, managed, and updated efficiently."
+        },
+        {
+          "t": "p",
+          "x": "For example, a college database might contain information about:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Students",
+            "Courses",
+            "Teachers",
+            "Enrolments",
+            "Examinations",
+            "Marks",
+            "Attendance",
+            "Fees"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These pieces of information are related. A student enrols in a course, a teacher teaches a course, and a student receives marks in an examination. A database can represent these relationships and help users answer questions that involve more than one type of record."
+        },
+        {
+          "t": "p",
+          "x": "A simple student table might look like this:"
+        },
+        {
+          "t": "h",
+          "x": "Student"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "+------------+-----------+-----+--------+",
+            "| student_id | name      | age | course |",
+            "+------------+-----------+-----+--------+",
+            "| 1          | Aarav     | 19  | BCA    |",
+            "| 2          | Meera     | 18  | BCA    |",
+            "| 3          | Kabir     | 20  | BBA    |",
+            "+------------+-----------+-----+--------+"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Each row describes one student. Each column represents one property of a student. This tabular arrangement is typical of a relational database."
+        },
+        {
+          "t": "p",
+          "x": "A database is more than a spreadsheet, although the two may look similar for small examples. A database management system provides tools for defining structures, checking rules, controlling access, handling concurrent operations, querying data, and recovering from certain failures. A spreadsheet can be useful for small, individual tasks, but it may become difficult to maintain when many users and applications must share consistent data."
+        },
+        {
+          "t": "h",
+          "x": "1.4 What is a DBMS?"
+        },
+        {
+          "t": "p",
+          "x": "DBMS stands for Database Management System. It is software used to define, create, store, retrieve, update, and administer databases."
+        },
+        {
+          "t": "h",
+          "x": "Examples of DBMS software include"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "SQLite",
+            "MySQL",
+            "PostgreSQL",
+            "Microsoft SQL Server",
+            "Oracle Database",
+            "MariaDB"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A DBMS acts as an interface between users or applications and the stored database. Users generally interact with the database through queries, forms, applications, or administrative tools rather than manually editing the underlying storage files."
+        },
+        {
+          "t": "h",
+          "x": "A DBMS commonly provides"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Data definition: creating tables, columns, relationships, indexes, and other structures.",
+            "Data manipulation: inserting, retrieving, updating, and deleting records.",
+            "Query processing: interpreting a query and determining how to retrieve the requested result.",
+            "Integrity enforcement: checking rules such as required values, unique identifiers, and valid references.",
+            "Access control: limiting which users can view or change particular data.",
+            "Transaction management: grouping related operations so that they can be handled reliably.",
+            "Concurrency control: coordinating simultaneous operations from multiple users or processes.",
+            "Backup and recovery features: helping restore data after certain errors or failures.",
+            "Metadata management: storing descriptions of database objects, such as table names, columns, and data types.",
+            "Performance support: using indexes, query planning, caching, and other mechanisms to improve operations."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Not every DBMS offers exactly the same features. SQLite, for example, is an embedded database engine often used in local applications and learning projects. Larger database servers commonly provide more extensive multi-user administration and network service capabilities."
+        },
+        {
+          "t": "h",
+          "x": "1.5 Database, DBMS, and database system: the difference"
+        },
+        {
+          "t": "p",
+          "x": "These terms are related but not identical."
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Database: the organized collection of stored data.",
+            "DBMS: the software that manages the database.",
+            "Database system: the broader arrangement that may include the database, DBMS, application software, users, hardware, and operating procedures."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Analogy"
+        },
+        {
+          "t": "p",
+          "x": "Imagine a library."
+        },
+        {
+          "t": "ul",
+          "x": [
+            "The books and their organized catalogue records are comparable to the stored data.",
+            "The library-management software is comparable to the DBMS.",
+            "The entire library operation, including staff, computers, rules, and users, is comparable to the database system."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The analogy is not exact, but it helps separate the stored content from the software that manages it."
+        },
+        {
+          "t": "h",
+          "x": "1.6 What does a DBMS do in practice?"
+        },
+        {
+          "t": "p",
+          "x": "Suppose a student registration website needs to display all students enrolled in BCA. The website sends a request to its backend. The backend sends an appropriate query to the DBMS. The DBMS checks the query, accesses the relevant data, and returns the result. The backend then formats the result for the website."
+        },
+        {
+          "t": "p",
+          "x": "The simplified flow is:"
+        },
+        {
+          "t": "p",
+          "x": "User → Website or application → Backend code → DBMS → Stored database"
+        },
+        {
+          "t": "p",
+          "x": "The response returns through the application to the user."
+        },
+        {
+          "t": "p",
+          "x": "In a small local learning setup, a learner may open SQLite in Termux and type SQL commands directly. In a production application, users normally do not receive unrestricted access to the database shell. The application uses controlled operations and permissions."
+        },
+        {
+          "t": "h",
+          "x": "1.7 Basic database terminology"
+        },
+        {
+          "t": "p",
+          "x": "Table: A named structure that stores rows and columns in a relational database."
+        },
+        {
+          "t": "p",
+          "x": "Row or record: One stored entry in a table. In a STUDENT table, one row may describe one student."
+        },
+        {
+          "t": "p",
+          "x": "Column or field: A named property represented in the table, such as name or age."
+        },
+        {
+          "t": "p",
+          "x": "Attribute: A property used to describe an entity in data modelling. In a relational table, attributes commonly correspond to columns."
+        },
+        {
+          "t": "p",
+          "x": "Domain: The permitted set or type of values for an attribute. For example, a course_code attribute may accept codes from an approved set."
+        },
+        {
+          "t": "p",
+          "x": "Schema: The defined structure of a database, including tables, columns, data types, relationships, and constraints."
+        },
+        {
+          "t": "p",
+          "x": "Instance: The actual data stored at a particular moment. The schema may remain the same while the instance changes as rows are inserted, updated, or deleted."
+        },
+        {
+          "t": "p",
+          "x": "Query: A request to retrieve or manipulate data. SQL is a widely used language for relational database queries."
+        },
+        {
+          "t": "p",
+          "x": "Metadata: Data that describes other data. Column names, data types, and constraint definitions are examples of metadata."
+        },
+        {
+          "t": "p",
+          "x": "Index: A structure that can help the DBMS locate rows more efficiently. Indexes can improve reads, but they use storage and can add work to insertions, updates, and deletions."
+        },
+        {
+          "t": "p",
+          "x": "NULL: A special marker representing a missing, unknown, or inapplicable value in SQL. NULL is not the same as zero, an empty string, or the word \"NULL\"."
+        },
+        {
+          "t": "h",
+          "x": "1.8 Why database design matters"
+        },
+        {
+          "t": "p",
+          "x": "Poor design can cause duplicated facts, contradictory values, missing relationships, and difficult updates. Good design begins by asking:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "What real-world things must be represented?",
+            "Which facts describe each thing?",
+            "What relationships exist between the things?",
+            "Which values must be unique?",
+            "Which values are required?",
+            "Which values are allowed?",
+            "Who should be allowed to view or change the data?",
+            "What questions will the system need to answer?"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A database should reflect the real requirements of the application. Adding tables or constraints without understanding the real rules can create confusion. On the other hand, skipping design and immediately creating tables often leads to avoidable problems later."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "t": "DBMS Versus File Systems",
+      "k": "th",
+      "s": "A file-based system stores information in separate files managed by an operating system and by application…",
+      "b": [
+        {
+          "t": "h",
+          "x": "2.1 What is a file-based system?"
+        },
+        {
+          "t": "p",
+          "x": "A file-based system stores information in separate files managed by an operating system and by application code. Files may be plain text, CSV files, spreadsheets, JSON documents, or custom binary formats."
+        },
+        {
+          "t": "h",
+          "x": "Imagine that a college keeps"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "students.csv for student information,",
+            "fees.csv for payment records,",
+            "marks.csv for examination results,",
+            "attendance.csv for attendance records."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Each file may be managed by a different program or department. This approach can be sufficient for a small, isolated task. Problems become more likely when several applications need to share and update related information."
+        },
+        {
+          "t": "h",
+          "x": "2.2 Data redundancy"
+        },
+        {
+          "t": "p",
+          "x": "Data redundancy means storing the same fact unnecessarily in more than one place."
+        },
+        {
+          "t": "p",
+          "x": "Suppose the student's name and phone number are repeated in the student file, fee file, marks file, and attendance file. If the student changes their phone number, every copy must be updated. If one file is missed, the system contains conflicting phone numbers."
+        },
+        {
+          "t": "p",
+          "x": "A DBMS-supported design can store a student's details once in a STUDENT table and connect fee, mark, and attendance records using a student identifier. Some repetition may still be necessary in carefully designed systems, but avoidable duplication should be reduced."
+        },
+        {
+          "t": "p",
+          "x": "Redundancy is not always automatically wrong. Certain systems deliberately duplicate data for performance, reporting, or historical reasons. Such duplication should be controlled and understood rather than accidental."
+        },
+        {
+          "t": "h",
+          "x": "2.3 Data inconsistency"
+        },
+        {
+          "t": "p",
+          "x": "Inconsistency occurs when different copies of the same fact disagree."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "• students.csv says student 101 is enrolled in BCA.",
+            "• attendance.csv says student 101 is enrolled in BBA.",
+            "• marks.csv uses a different spelling of the student's name."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The problem may not be that any single file is unreadable; the problem is that the system does not have one dependable version of the fact. A well-designed database can reduce this risk by maintaining a central record and enforcing appropriate rules."
+        },
+        {
+          "t": "h",
+          "x": "2.4 Difficult data access"
+        },
+        {
+          "t": "p",
+          "x": "With a file system, every new question may require custom code to open files, parse values, filter rows, handle errors, and combine records. A DBMS provides a query language and query engine for common retrieval tasks."
+        },
+        {
+          "t": "p",
+          "x": "For example, SQL can ask for students aged at least 19:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "SELECT student_id, name, age",
+            "FROM Student",
+            "WHERE age >= 19;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The DBMS determines how to retrieve the matching rows. A developer does not normally need to write all the low-level file-reading logic for every query."
+        },
+        {
+          "t": "h",
+          "x": "2.5 Data isolation"
+        },
+        {
+          "t": "p",
+          "x": "In a file-based system, data may be scattered across files with different formats, field names, encodings, and structures. Combining them can be difficult. A DBMS provides a more consistent way to define and relate structured data."
+        },
+        {
+          "t": "h",
+          "x": "2.6 Integrity problems"
+        },
+        {
+          "t": "p",
+          "x": "A plain file usually does not automatically enforce all the rules that the application needs. A program might accidentally create two students with the same identifier, store an impossible age, or record a fee payment for a student who does not exist."
+        },
+        {
+          "t": "h",
+          "x": "A DBMS can enforce constraints such as"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Primary key: identifies each row uniquely.",
+            "Foreign key: ensures a reference points to a valid related row.",
+            "UNIQUE: prevents duplicate values in a column or column combination.",
+            "CHECK: requires a condition to be satisfied.",
+            "NOT NULL: prevents a column from being left NULL."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Constraints do not replace careful application design, but they place important checks close to the data."
+        },
+        {
+          "t": "h",
+          "x": "2.7 Atomicity and transaction problems"
+        },
+        {
+          "t": "p",
+          "x": "Consider a bank transfer of 500 from account A to account B. The operation involves subtracting 500 from A and adding 500 to B. If only the subtraction succeeds, the data becomes incorrect."
+        },
+        {
+          "t": "p",
+          "x": "A transaction can group related operations so that they succeed or fail as a unit, subject to the DBMS's transaction guarantees and configuration. File-based applications can implement careful recovery logic, but the developer may have to build and maintain much of that logic manually."
+        },
+        {
+          "t": "h",
+          "x": "2.8 Concurrent access"
+        },
+        {
+          "t": "p",
+          "x": "Concurrency occurs when multiple users or processes access data at the same time. If two people update the same record, a system must avoid unintended overwriting or inconsistent results."
+        },
+        {
+          "t": "p",
+          "x": "DBMS products provide different mechanisms for coordinating concurrent operations. Their exact behavior varies. SQLite, for example, has its own concurrency model and does not behave identically to a large multi-user database server. The important principle is that simultaneous access needs deliberate management."
+        },
+        {
+          "t": "h",
+          "x": "2.9 Security and access control"
+        },
+        {
+          "t": "p",
+          "x": "Files can be protected using operating-system permissions and application-level controls. However, fine-grained rules may become complicated when several applications share many files."
+        },
+        {
+          "t": "p",
+          "x": "A DBMS may support database users, roles, privileges, views, auditing, encryption integrations, and other controls, depending on the product. Access should follow the principle of least privilege: each user or application receives only the permissions needed for its task."
+        },
+        {
+          "t": "p",
+          "x": "A database is not automatically secure merely because a DBMS is used. Weak passwords, excessive permissions, exposed database ports, unsafe queries, poor backups, and vulnerable application code can still create serious risks."
+        },
+        {
+          "t": "h",
+          "x": "2.10 Backup and recovery"
+        },
+        {
+          "t": "p",
+          "x": "A database system may provide backup tools, transaction logs, checkpoints, and recovery mechanisms. These help restore data after certain failures. A file system can also be backed up, but maintaining consistent backups of several related files while updates are occurring may require extra care."
+        },
+        {
+          "t": "p",
+          "x": "A backup is useful only if it can be restored. Good practice includes storing backups safely, limiting access to them, and testing restoration procedures."
+        },
+        {
+          "t": "h",
+          "x": "2.11 Data independence"
+        },
+        {
+          "t": "p",
+          "x": "Data independence is the ability to make certain changes to data storage or structure without forcing every application to be rewritten. Database architecture and abstraction can reduce the degree to which application programs depend on physical storage details."
+        },
+        {
+          "t": "h",
+          "x": "Two commonly discussed forms are"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Physical data independence: changes to the physical storage arrangement should not require changes to the logical design or application programs, within the system's supported limits.",
+            "Logical data independence: some changes to the logical schema should be possible without requiring changes to every user view or application. This is usually harder to achieve fully."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "2.12 Standards and shared access"
+        },
+        {
+          "t": "p",
+          "x": "Relational DBMS products commonly support SQL, though dialects and features vary. A shared database can support several applications while keeping common data rules in one place. SQL reduces the need to invent a separate query language for every file collection."
+        },
+        {
+          "t": "h",
+          "x": "2.13 Comparison table"
+        },
+        {
+          "t": "p",
+          "x": "Aspect | File-based approach | DBMS approach"
+        },
+        {
+          "t": "p",
+          "x": "Storage | Separate files managed by programs | Managed database structures"
+        },
+        {
+          "t": "p",
+          "x": "Redundancy | Often difficult to control | Can be reduced through design"
+        },
+        {
+          "t": "p",
+          "x": "Consistency | Depends heavily on application logic | Constraints and central management help"
+        },
+        {
+          "t": "p",
+          "x": "Querying | Often requires custom parsing and code | Query language and query engine"
+        },
+        {
+          "t": "p",
+          "x": "Relationships | May be manually encoded in files | Can be modelled and enforced"
+        },
+        {
+          "t": "p",
+          "x": "Integrity | Usually implemented in application code | Database constraints can enforce rules"
+        },
+        {
+          "t": "p",
+          "x": "Concurrency | Must be handled by application design or file mechanisms | DBMS provides concurrency mechanisms"
+        },
+        {
+          "t": "p",
+          "x": "Transactions | Often must be built manually | Transaction facilities commonly available"
+        },
+        {
+          "t": "p",
+          "x": "Security | File and application permissions | Database privileges plus system security"
+        },
+        {
+          "t": "p",
+          "x": "Backup/recovery | Depends on file and application procedures | Database-specific backup and recovery tools"
+        },
+        {
+          "t": "p",
+          "x": "Data independence | Often limited | Supported through database architecture"
+        },
+        {
+          "t": "p",
+          "x": "Cost/complexity | Simple for small tasks | May require setup, administration, and learning"
+        },
+        {
+          "t": "h",
+          "x": "2.14 Are file systems always bad?"
+        },
+        {
+          "t": "p",
+          "x": "No. Files are excellent for documents, images, exports, configuration, logs, small data exchanges, and many other uses. A database is not required for every collection of information."
+        },
+        {
+          "t": "p",
+          "x": "A plain CSV file may be perfectly suitable for a small dataset that is read occasionally and does not need concurrent updates. A DBMS becomes more valuable when data is shared, relationships matter, updates must remain consistent, queries are frequent or complex, access needs to be controlled, or transactions are important."
+        },
+        {
+          "t": "p",
+          "x": "The choice depends on requirements rather than a rule that databases are always better."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "t": "Data Models",
+      "k": "th",
+      "s": "A data model describes how data is organized, what relationships exist, and what rules govern that data.",
+      "b": [
+        {
+          "t": "h",
+          "x": "3.1 What is a data model?"
+        },
+        {
+          "t": "p",
+          "x": "A data model describes how data is organized, what relationships exist, and what rules govern that data. It provides a conceptual framework for designing a database."
+        },
+        {
+          "t": "h",
+          "x": "A data model can help answer"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "What are the main kinds of things we store?",
+            "How are they connected?",
+            "Can one record be connected to many other records?",
+            "What structure is used to retrieve the data?",
+            "What restrictions apply to relationships?"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Three classical models are the hierarchical, network, and relational models. They differ in the way they represent relationships and in how users navigate or query data."
+        },
+        {
+          "t": "ln",
+          "x": [
+            "------------------------------------------------------------",
+            "3.2 Hierarchical data model",
+            "------------------------------------------------------------"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Definition"
+        },
+        {
+          "t": "p",
+          "x": "The hierarchical data model organizes records in a tree-like structure. A tree has a root, parent nodes, and child nodes. In the traditional hierarchical model, a child record generally has one parent record, while a parent can have multiple child records."
+        },
+        {
+          "t": "h",
+          "x": "Structure"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "                 COLLEGE",
+            "                /       \\",
+            "          DEPARTMENT A  DEPARTMENT B",
+            "            /     \\          \\",
+            "        COURSE 1  COURSE 2    COURSE 3"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "In this example, the college is the root. Departments are children of the college, and courses are children of departments."
+        },
+        {
+          "t": "h",
+          "x": "Key characteristics"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Tree structure: data is arranged in parent-child levels.",
+            "One parent per child in the traditional structure.",
+            "One-to-many relationships are natural to represent.",
+            "Access often follows predefined paths from parent to child.",
+            "The structure can be efficient when access patterns match the hierarchy."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "A company may organize its departments, teams, and employees in a hierarchy. A folder system is another intuitive tree-like example, although a real file system can include features that complicate the simple model."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Advantages"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "The tree structure is easy to understand for naturally hierarchical data.",
+            "Parent-to-child navigation can be efficient.",
+            "The relationship path is explicit.",
+            "The model can work well when data follows a stable hierarchy."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Limitations"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Many-to-many relationships are awkward to represent.",
+            "A child traditionally has one parent, which can cause duplication if a real-world item belongs to multiple groups.",
+            "Structural changes can be difficult because applications may rely on specific paths.",
+            "Queries that do not follow the hierarchy can be cumbersome.",
+            "The design may not match data that has many cross-connections."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Example problem"
+        },
+        {
+          "t": "p",
+          "x": "Suppose a student can enrol in several courses and each course has many students. A simple hierarchy with one parent per child cannot naturally express this many-to-many relationship without duplication or additional structures."
+        },
+        {
+          "t": "h",
+          "x": "When useful"
+        },
+        {
+          "t": "p",
+          "x": "A hierarchical model may suit data whose natural organization is a tree, such as certain directory structures, organizational charts, or legacy information systems."
+        },
+        {
+          "t": "ln",
+          "x": [
+            "------------------------------------------------------------",
+            "3.3 Network data model",
+            "------------------------------------------------------------"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Definition"
+        },
+        {
+          "t": "p",
+          "x": "The network data model represents records as nodes connected through links or sets. Unlike the traditional hierarchical model, a record can participate in multiple relationships and may have more than one parent-like connection. The result resembles a graph rather than a strict tree."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "                 STUDENT A",
+            "                 /       \\",
+            "             COURSE 1   COURSE 2",
+            "                \\         /",
+            "                 STUDENT B"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Both students can enrol in the same course, and one student can enrol in multiple courses. The links express the connections without forcing all information into a single tree."
+        },
+        {
+          "t": "h",
+          "x": "Key characteristics"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Records are connected by links or relationship sets.",
+            "A record can have multiple connections.",
+            "Many-to-many relationships can be represented more naturally than in a strict hierarchy.",
+            "Traditional implementations often rely on navigational access paths.",
+            "The structure is more flexible than a simple parent-child tree but can be harder to understand and maintain."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Advantages"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Supports complex relationships.",
+            "Reduces the need to duplicate a record solely because it has several connections.",
+            "Can provide efficient navigation when paths are known.",
+            "Can represent interconnected data more naturally than a strict hierarchy."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Limitations"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Structure and navigation can be complex.",
+            "Programs may depend strongly on the defined links and access paths.",
+            "Database design and maintenance may require specialist knowledge.",
+            "Ad hoc questions can be difficult if the required navigation path is not obvious."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "In a training system, students attend courses, instructors teach courses, and instructors may supervise students. A network-style structure can represent several types of connections among the same records."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "When useful"
+        },
+        {
+          "t": "p",
+          "x": "The network model is historically important and helps explain graph-like relationships. Some specialized systems and graph databases use related ideas, although modern graph databases should not automatically be treated as identical to the classical network database model."
+        },
+        {
+          "t": "ln",
+          "x": [
+            "------------------------------------------------------------",
+            "3.4 Relational data model",
+            "------------------------------------------------------------"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Definition"
+        },
+        {
+          "t": "p",
+          "x": "The relational data model represents data as relations, which are commonly displayed as tables. Each relation has attributes (columns) and tuples (rows). Tables can be related using keys."
+        },
+        {
+          "t": "p",
+          "x": "Example tables:"
+        },
+        {
+          "t": "h",
+          "x": "Student"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "student_id | name  | age",
+            "-----------|-------|----",
+            "1          | Aarav | 19",
+            "2          | Meera | 18",
+            "3          | Kabir | 20"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Course"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "course_id | course_name",
+            "----------|------------",
+            "10        | BCA",
+            "20        | BBA"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Enrolment"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "student_id | course_id",
+            "-----------|----------",
+            "1          | 10",
+            "2          | 10",
+            "3          | 20"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The ENROLMENT table connects students with courses. Student 1 is enrolled in course 10, while student 3 is enrolled in course 20. The identifiers are used to connect rows across tables."
+        },
+        {
+          "t": "p",
+          "x": "Important relational concepts:"
+        },
+        {
+          "t": "p",
+          "x": "Relation: A set-like mathematical structure represented in practice as a table. SQL tables can allow duplicate rows unless rules prevent them, so practical SQL tables are not identical in every detail to the mathematical definition."
+        },
+        {
+          "t": "p",
+          "x": "Tuple: A row in a relation."
+        },
+        {
+          "t": "p",
+          "x": "Attribute: A named property or column."
+        },
+        {
+          "t": "p",
+          "x": "Degree: The number of attributes (columns) in a relation."
+        },
+        {
+          "t": "p",
+          "x": "Cardinality: In relational theory, the number of tuples (rows) in a relation. In other database contexts, cardinality may also refer to the number of distinct values in a column or the multiplicity of a relationship, so context matters."
+        },
+        {
+          "t": "p",
+          "x": "Domain: The allowed set or type of values for an attribute."
+        },
+        {
+          "t": "p",
+          "x": "Key: An attribute or combination of attributes used to identify rows or establish relationships."
+        },
+        {
+          "t": "p",
+          "x": "Primary key: The selected key used as the main identifier for rows in a table."
+        },
+        {
+          "t": "p",
+          "x": "Foreign key: An attribute or group of attributes whose values refer to a key in another or the same table, subject to the DBMS's rules."
+        },
+        {
+          "t": "h",
+          "x": "Advantages"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Tables are familiar and easy to visualize.",
+            "Relationships can be represented with keys.",
+            "SQL provides a declarative way to ask questions about data.",
+            "Constraints help maintain valid data.",
+            "Data can be queried without manually following every storage pointer.",
+            "The model supports normalization, which helps reduce avoidable redundancy and update anomalies.",
+            "Many relational systems provide transactions, access control, indexes, and recovery tools."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Limitations"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Complex data may require many related tables and joins.",
+            "Poor schema design can still cause duplication and inconsistency.",
+            "Certain graph-like or deeply nested workloads may be more natural in other models.",
+            "Performance depends on schema design, indexes, query structure, data volume, and system configuration.",
+            "SQL dialects and capabilities differ among products."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "3.5 Comparison of the three models"
+        },
+        {
+          "t": "p",
+          "x": "Feature | Hierarchical | Network | Relational"
+        },
+        {
+          "t": "p",
+          "x": "Basic structure | Tree | Linked graph-like records | Tables"
+        },
+        {
+          "t": "p",
+          "x": "Typical relationship strength | One-to-many | Multiple connected relationships | Relationships through keys"
+        },
+        {
+          "t": "p",
+          "x": "Child's connections | Usually one parent | May have multiple connections | Depends on keys and relationship tables"
+        },
+        {
+          "t": "p",
+          "x": "Access | Often navigational along hierarchy | Often navigational along links | Declarative queries commonly used"
+        },
+        {
+          "t": "p",
+          "x": "Many-to-many support | Awkward in a strict tree | More natural | Usually represented with a junction table"
+        },
+        {
+          "t": "p",
+          "x": "Ease of understanding | Simple for tree data | Can become complex | Familiar tabular representation"
+        },
+        {
+          "t": "p",
+          "x": "Flexibility for ad hoc queries | Often limited | Can be path-dependent | Generally strong with SQL"
+        },
+        {
+          "t": "p",
+          "x": "Common use today | Legacy or naturally hierarchical systems | Historical model; related concepts persist | Widely used in business applications"
+        },
+        {
+          "t": "h",
+          "x": "3.6 Choosing a data model"
+        },
+        {
+          "t": "p",
+          "x": "No model is automatically best for every task. Choose based on:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "The structure of the real-world data.",
+            "The relationships among records.",
+            "The kinds of queries the application needs.",
+            "The expected volume and rate of updates.",
+            "Integrity requirements.",
+            "Performance and operational requirements.",
+            "The experience and tools available to the development team."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For a typical student management system, a relational model is a strong starting point because students, courses, teachers, enrolments, and marks can be represented as tables with keys and constraints."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "t": "Entity-Relationship (ER) Model",
+      "k": "th",
+      "s": "The Entity-Relationship model is a conceptual method for describing the important things in a system,…",
+      "b": [
+        {
+          "t": "h",
+          "x": "4.1 What is the ER model?"
+        },
+        {
+          "t": "p",
+          "x": "The Entity-Relationship model is a conceptual method for describing the important things in a system, their properties, and the relationships among them. It is commonly used during the planning stage before implementing a relational database."
+        },
+        {
+          "t": "p",
+          "x": "The ER model helps designers discuss requirements in terms of real-world concepts rather than immediately focusing on SQL syntax. A designer can first identify Student, Course, and Teacher as entities, then define their attributes and relationships."
+        },
+        {
+          "t": "p",
+          "x": "An ER diagram is a visual representation of an ER model. Different notations exist, so diagram symbols may vary between textbooks and tools. The concepts remain broadly similar."
+        },
+        {
+          "t": "h",
+          "x": "4.2 Entity"
+        },
+        {
+          "t": "p",
+          "x": "An entity is a distinguishable real-world object, person, place, event, or concept about which data is stored."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Student",
+            "Course",
+            "Teacher",
+            "Department",
+            "Product",
+            "Customer",
+            "Order",
+            "Payment"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "An entity type is a category or class, such as STUDENT. An entity instance is one particular member of that category, such as the student whose student_id is 101."
+        },
+        {
+          "t": "p",
+          "x": "Entity types are commonly implemented as tables in a relational database, though conceptual entities do not have to map one-to-one to tables in every design."
+        },
+        {
+          "t": "h",
+          "x": "4.3 Entity sets"
+        },
+        {
+          "t": "p",
+          "x": "An entity set is a collection of entities of the same type considered together. For example, all student entities in a college database form the STUDENT entity set."
+        },
+        {
+          "t": "h",
+          "x": "A STUDENT entity type may have attributes"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "student_id",
+            "name",
+            "date_of_birth",
+            "email",
+            "admission_date"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "One student instance might have student_id 101, name \"Aarav\", and a particular date of birth. Another student has different values."
+        },
+        {
+          "t": "h",
+          "x": "4.4 Strong entities"
+        },
+        {
+          "t": "p",
+          "x": "A strong entity has its own identifier and can be identified without depending on another entity's key for its identity."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "STUDENT(student_id, name, email)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Here, student_id can identify each student. A student is not identified solely by combining the identifier of another entity with a partial name or number."
+        },
+        {
+          "t": "p",
+          "x": "In ER diagrams, a strong entity is commonly drawn as a single rectangle."
+        },
+        {
+          "t": "h",
+          "x": "4.5 Weak entities"
+        },
+        {
+          "t": "p",
+          "x": "A weak entity cannot be uniquely identified by its own attributes alone and depends on an owner entity for identification. It often has a partial key that becomes unique when combined with the owner's key."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Suppose each employee can have several dependent records, and a dependent's number is unique only within that employee's family record. A DEPENDENT may be identified using (employee_id, dependent_number)."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A weak entity is commonly shown using a double rectangle, and its identifying relationship may be shown with a double diamond in some ER notations. Not every textbook uses exactly the same symbols."
+        },
+        {
+          "t": "p",
+          "x": "A weak entity is a conceptual modelling idea. Its implementation may use a composite primary key or a separate surrogate key plus a uniqueness constraint, depending on requirements."
+        },
+        {
+          "t": "h",
+          "x": "4.6 Attributes"
+        },
+        {
+          "t": "p",
+          "x": "An attribute is a property that describes an entity or relationship."
+        },
+        {
+          "t": "h",
+          "x": "For STUDENT"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "student_id",
+            "name",
+            "date_of_birth",
+            "email",
+            "admission_date"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "For COURSE"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "course_id",
+            "course_name",
+            "credits"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Attributes should describe the entity accurately and should have clearly defined meanings."
+        },
+        {
+          "t": "h",
+          "x": "4.7 Types of attributes"
+        },
+        {
+          "t": "h",
+          "x": "Simple (atomic) attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute treated as one indivisible value for the purposes of the model. Examples may include date_of_birth or student_id. Whether an attribute is truly atomic depends on the intended operations and design."
+        },
+        {
+          "t": "h",
+          "x": "Composite attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute that can be divided into meaningful subparts."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Address may be modelled as house_number, street, city, state, and postal_code.",
+            "A person's name might be divided into first_name and last_name if the application's requirements justify doing so."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Single-valued attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute with one value for each entity instance, such as date_of_birth."
+        },
+        {
+          "t": "h",
+          "x": "Multivalued attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute that can have several values for one entity. A student may have multiple phone numbers. In an ER diagram, a multivalued attribute is often shown with a double oval. In a relational implementation, the values are usually stored in a separate related table rather than placing a comma-separated list in one field."
+        },
+        {
+          "t": "h",
+          "x": "Derived attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute calculated from other stored values."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "age can be derived from date_of_birth and the current date. Since age changes over time, storing it without a clear update strategy can lead to stale values. It is often better to store date_of_birth and calculate age when needed."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Stored attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute that is directly stored. date_of_birth is a stored attribute in the previous example."
+        },
+        {
+          "t": "h",
+          "x": "Key attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute that participates in identifying an entity uniquely. A key attribute is often underlined in a traditional ER diagram."
+        },
+        {
+          "t": "h",
+          "x": "Optional attribute"
+        },
+        {
+          "t": "p",
+          "x": "An attribute that may not have a known or applicable value for every entity, such as a secondary phone number. In a relational schema, this may allow NULL, unless a stricter rule applies."
+        },
+        {
+          "t": "h",
+          "x": "4.8 Choosing good attributes"
+        },
+        {
+          "t": "h",
+          "x": "A good attribute should have"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A clear meaning.",
+            "An appropriate data type and domain.",
+            "A sensible level of detail.",
+            "A defined rule for missing values.",
+            "A clear relationship to the entity.",
+            "A consistent naming convention."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For example, a column called \"value\" is vague. A name such as \"fee_amount\" is more descriptive. If a table stores monetary amounts, the designer should decide the permitted precision, currency, and whether negative values are allowed."
+        },
+        {
+          "t": "p",
+          "x": "Avoid storing several independent facts in one field when they need to be searched or updated separately. For instance, \"Aarav, 19, BCA\" in one column is harder to validate and query than separate name, age, and course-related fields."
+        },
+        {
+          "t": "h",
+          "x": "4.9 Relationships"
+        },
+        {
+          "t": "p",
+          "x": "A relationship represents an association among entities."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A STUDENT enrols in a COURSE.",
+            "A TEACHER teaches a COURSE.",
+            "A CUSTOMER places an ORDER.",
+            "An ORDER contains PRODUCT items."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Relationship types can have attributes of their own. For example, ENROLMENT may have enrolment_date, status, and final_grade. These facts describe the student's participation in a particular course, not merely the student or the course independently."
+        },
+        {
+          "t": "h",
+          "x": "4.10 Degree of a relationship"
+        },
+        {
+          "t": "h",
+          "x": "Unary (recursive) relationship"
+        },
+        {
+          "t": "p",
+          "x": "An entity type relates to itself."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "an employee supervises another employee. Both sides refer to EMPLOYEE, but they play different roles."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Binary relationship"
+        },
+        {
+          "t": "p",
+          "x": "A relationship connects two entity types."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "STUDENT enrols in COURSE."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Ternary relationship"
+        },
+        {
+          "t": "p",
+          "x": "A relationship connects three entity types."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "a SUPPLIER supplies a PRODUCT to a PROJECT. The full meaning may depend on the combination of supplier, product, and project."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A ternary relationship should not be broken into binary relationships automatically. Doing so can lose information about which three-way combinations are valid. The designer should preserve the business meaning."
+        },
+        {
+          "t": "h",
+          "x": "4.11 Cardinality and relationship ratios"
+        },
+        {
+          "t": "p",
+          "x": "Cardinality describes how many entity instances may participate in a relationship. Common relationship types include one-to-one, one-to-many, and many-to-many."
+        },
+        {
+          "t": "h",
+          "x": "One-to-one (1:1)"
+        },
+        {
+          "t": "p",
+          "x": "One entity on one side is associated with at most one entity on the other side, and vice versa, according to the defined rules."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "if each vehicle has one current registration record and each current registration record belongs to one vehicle, the relationship may be modelled as 1:1. Real-world rules should be checked carefully."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "One-to-many (1:N)"
+        },
+        {
+          "t": "p",
+          "x": "One entity on the first side can be associated with many entities on the second side, while each entity on the second side is associated with at most one on the first side."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "one department has many employees, and each employee belongs to one department."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Many-to-many (M:N)"
+        },
+        {
+          "t": "p",
+          "x": "Many entities on either side can be associated with many entities on the other side."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "a student can enrol in many courses, and each course can have many students."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Cardinality should be based on actual business rules. If an application allows a teacher to teach many courses but requires each course to have exactly one teacher, that is a different rule from allowing several teachers per course."
+        },
+        {
+          "t": "h",
+          "x": "4.12 Participation constraints"
+        },
+        {
+          "t": "p",
+          "x": "Participation describes whether participation in a relationship is mandatory or optional."
+        },
+        {
+          "t": "h",
+          "x": "Total participation"
+        },
+        {
+          "t": "p",
+          "x": "Every entity in the relevant set must participate in the relationship. For example, if the rules state that every COURSE must belong to a DEPARTMENT, then every course participates in that relationship."
+        },
+        {
+          "t": "h",
+          "x": "Partial participation"
+        },
+        {
+          "t": "p",
+          "x": "Some entities may not participate. For example, a teacher may be recorded before being assigned to a course."
+        },
+        {
+          "t": "h",
+          "x": "Cardinality and participation are related but different"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Cardinality describes the maximum or allowed number of related entities.",
+            "Participation describes whether participation is mandatory."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Some diagram notations show these rules with lines, minimum/maximum labels, or crow's-foot symbols."
+        },
+        {
+          "t": "h",
+          "x": "4.13 ER diagram symbols"
+        },
+        {
+          "t": "h",
+          "x": "A common traditional notation uses"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Rectangle: strong entity.",
+            "Double rectangle: weak entity.",
+            "Oval: attribute.",
+            "Underlined attribute: key attribute.",
+            "Double oval: multivalued attribute.",
+            "Dashed oval: derived attribute in some notations.",
+            "Diamond: relationship.",
+            "Double diamond: identifying relationship for a weak entity in some notations.",
+            "Connecting lines: association between entities, attributes, and relationships."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Crow's-foot notation uses boxes for entities and line endings to show one/many and optional/mandatory participation. The exact symbols differ between notations, so always follow the legend used by your course or diagramming tool."
+        },
+        {
+          "t": "h",
+          "x": "4.14 A simple ER model for a college"
+        },
+        {
+          "t": "h",
+          "x": "Conceptual entities"
+        },
+        {
+          "t": "h",
+          "x": "Student"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "student_id (identifier)",
+            "name",
+            "date_of_birth",
+            "email"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Course"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "course_id (identifier)",
+            "course_name",
+            "credits"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Relationship"
+        },
+        {
+          "t": "p",
+          "x": "STUDENT ENROLS IN COURSE"
+        },
+        {
+          "t": "h",
+          "x": "Business rules"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A student may enrol in several courses.",
+            "A course may have several students.",
+            "An enrolment connects one student with one course.",
+            "The same student should not have duplicate active enrolment records for the same course, if that is the institution's rule."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This is an M:N relationship between STUDENT and COURSE. When converting the model to a relational design, a junction table can represent each enrolment."
+        },
+        {
+          "t": "h",
+          "x": "Student"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "student_id | name",
+            "-----------|------",
+            "1          | Aarav",
+            "2          | Meera"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Course"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "course_id | course_name",
+            "----------|------------",
+            "10        | Database Systems",
+            "20        | Web Development"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Enrolment"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "student_id | course_id | enrolment_date",
+            "-----------|-----------|---------------",
+            "1          | 10        | 2026-08-01",
+            "1          | 20        | 2026-08-02",
+            "2          | 10        | 2026-08-03"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The ENROLMENT table turns a many-to-many relationship into two one-to-many relationships:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "One student can have many enrolment rows.",
+            "One course can have many enrolment rows."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Each enrolment row refers to one student and one course."
+        },
+        {
+          "t": "h",
+          "x": "4.15 Converting an ER model into relational tables"
+        },
+        {
+          "t": "p",
+          "x": "A common mapping process is:"
+        },
+        {
+          "t": "p",
+          "x": "Step 1: Convert each strong entity into a table."
+        },
+        {
+          "t": "p",
+          "x": "For example, STUDENT becomes a STUDENT table."
+        },
+        {
+          "t": "p",
+          "x": "Step 2: Choose a primary key for each table."
+        },
+        {
+          "t": "p",
+          "x": "For example, student_id identifies each student."
+        },
+        {
+          "t": "p",
+          "x": "Step 3: Convert simple attributes into columns."
+        },
+        {
+          "t": "p",
+          "x": "A STUDENT table may have student_id, name, date_of_birth, and email."
+        },
+        {
+          "t": "p",
+          "x": "Step 4: Handle composite attributes."
+        },
+        {
+          "t": "p",
+          "x": "Store the meaningful components as separate columns when they need independent use, such as city and postal_code."
+        },
+        {
+          "t": "p",
+          "x": "Step 5: Handle multivalued attributes."
+        },
+        {
+          "t": "p",
+          "x": "Create a separate table. For example, STUDENT_PHONE(student_id, phone_number)."
+        },
+        {
+          "t": "p",
+          "x": "Step 6: Map one-to-many relationships."
+        },
+        {
+          "t": "p",
+          "x": "Usually place a foreign key on the many side. If one department has many employees, EMPLOYEE may contain department_id as a foreign key."
+        },
+        {
+          "t": "p",
+          "x": "Step 7: Map many-to-many relationships."
+        },
+        {
+          "t": "p",
+          "x": "Create a junction table. ENROLMENT may contain student_id and course_id, plus relationship attributes such as enrolment_date."
+        },
+        {
+          "t": "p",
+          "x": "Step 8: Map one-to-one relationships."
+        },
+        {
+          "t": "p",
+          "x": "Depending on optionality and business rules, a foreign key with a UNIQUE constraint may be used, or the tables may be combined if appropriate."
+        },
+        {
+          "t": "p",
+          "x": "Step 9: Map weak entities."
+        },
+        {
+          "t": "p",
+          "x": "Include the owner's key in the weak entity's identifier, or use another design that preserves the identifying rule."
+        },
+        {
+          "t": "p",
+          "x": "Step 10: Add integrity constraints."
+        },
+        {
+          "t": "p",
+          "x": "Define primary keys, foreign keys, NOT NULL, UNIQUE, CHECK, and other necessary rules."
+        },
+        {
+          "t": "p",
+          "x": "Step 11: Validate the design against real questions."
+        },
+        {
+          "t": "p",
+          "x": "Can the database answer the required questions without losing information or creating unexplained duplication?"
+        },
+        {
+          "t": "h",
+          "x": "4.16 Common ER design mistakes"
+        },
+        {
+          "t": "p",
+          "x": "Mistake 1: Treating an attribute as an entity without a reason."
+        },
+        {
+          "t": "p",
+          "x": "A simple course name may be an attribute in a tiny example, but a full COURSE entity is usually appropriate when courses have identifiers, credits, instructors, schedules, and enrolments."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 2: Ignoring relationship attributes."
+        },
+        {
+          "t": "p",
+          "x": "An enrolment date belongs to the relationship between a student and a course. Storing it only on STUDENT would be incorrect if a student can enrol in several courses at different times."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 3: Modelling M:N relationships as a single foreign key."
+        },
+        {
+          "t": "p",
+          "x": "A single course_id column in STUDENT cannot represent multiple courses for one student without repeating columns or storing lists. A junction table is the standard relational solution."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 4: Using names as reliable identifiers."
+        },
+        {
+          "t": "p",
+          "x": "Names can change and may not be unique. A stable identifier is usually safer as a primary key."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 5: Forgetting optionality."
+        },
+        {
+          "t": "p",
+          "x": "A field may be optional, but that decision should be intentional. A rule that every course must have a department differs from a rule that a course may be temporarily unassigned."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 6: Storing derived facts without a plan."
+        },
+        {
+          "t": "p",
+          "x": "If age is stored, it may become outdated. Store the source fact, such as date_of_birth, when possible, and derive the changing value when needed."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 7: Making the diagram before understanding requirements."
+        },
+        {
+          "t": "p",
+          "x": "A diagram is only useful if it reflects real business rules. Interview users, inspect forms and reports, and list the questions the system must answer."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "t": "Integrity Constraints: the First Level of Data Defense",
+      "k": "th",
+      "s": "Data integrity means that data remains accurate, valid, consistent, and meaningful throughout its lifecycle.",
+      "b": [
+        {
+          "t": "h",
+          "x": "5.1 What is data integrity?"
+        },
+        {
+          "t": "p",
+          "x": "Data integrity means that data remains accurate, valid, consistent, and meaningful throughout its lifecycle. It includes more than preventing accidental changes. It also means ensuring that values and relationships follow the rules of the domain."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A student identifier must uniquely identify one student.",
+            "A mark may need to remain between 0 and 100.",
+            "An enrolment must refer to an existing student.",
+            "An email address may need to be unique if the institution uses it as a unique login.",
+            "A course's credit value must follow the institution's permitted rules."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Integrity constraints are rules enforced by the database or by the application to stop invalid data from being stored. Database-enforced constraints are especially valuable because they protect data even when multiple application paths write to the same database."
+        },
+        {
+          "t": "h",
+          "x": "5.2 Why are constraints a first level of defense?"
+        },
+        {
+          "t": "p",
+          "x": "Without constraints, an application bug, manual entry error, or unexpected request may insert invalid values. If the database itself checks important rules, invalid data can be rejected at the point of storage."
+        },
+        {
+          "t": "p",
+          "x": "For example, a web form may prevent a user from entering a negative age, but someone could bypass the form and send a request directly to the backend. A CHECK constraint in the database can provide another layer of validation."
+        },
+        {
+          "t": "p",
+          "x": "This is a first level of defense, not a complete security system. Constraints do not replace authentication, authorization, safe query construction, encryption where needed, backups, monitoring, or application validation. They focus on the validity and consistency of stored values and relationships."
+        },
+        {
+          "t": "h",
+          "x": "5.3 Primary key constraint"
+        },
+        {
+          "t": "p",
+          "x": "A primary key is a column or combination of columns chosen to uniquely identify each row in a table."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "STUDENT(student_id, name, age)"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "If student_id is the primary key, every student row must have a unique student_id. The primary key must not be NULL."
+        },
+        {
+          "t": "h",
+          "x": "SQL"
+        },
+        {
+          "t": "code",
+          "x": [
+            "CREATE TABLE Student (",
+            "    student_id INTEGER PRIMARY KEY,",
+            "    name TEXT NOT NULL,",
+            "    age INTEGER",
+            ");"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The exact details of primary-key behavior can vary by DBMS and data type. In SQLite, an INTEGER PRIMARY KEY in an ordinary rowid table has special behavior as an alias for the rowid. Other primary-key declarations and other DBMS products have different implementation details. The general relational rule remains that a primary key uniquely identifies rows and cannot contain NULL."
+        },
+        {
+          "t": "h",
+          "x": "Properties of a primary key"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Unique: two rows cannot have the same primary-key value.",
+            "Not null: every row must have a primary-key value.",
+            "Stable: the value should ideally not change frequently.",
+            "Minimal for its intended purpose: no unnecessary attributes should be added to a key.",
+            "One primary-key constraint per table: that constraint may consist of multiple columns."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Why primary keys matter"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "They distinguish records that otherwise may look alike.",
+            "They support reliable updates and deletions.",
+            "They allow other tables to refer to a specific record.",
+            "They help avoid ambiguity when names or other attributes are duplicated."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Natural key versus surrogate key:"
+        },
+        {
+          "t": "p",
+          "x": "A natural key has meaning in the real world, such as a carefully governed registration number. A surrogate key is an identifier created mainly for database use, such as an auto-generated integer."
+        },
+        {
+          "t": "p",
+          "x": "Natural keys can be useful when the business identifier is stable and genuinely unique. Surrogate keys are often useful when real-world attributes may change, be reused, or be awkward to manage. A surrogate key does not remove the need for other rules; for example, an email or registration number may still require a UNIQUE constraint."
+        },
+        {
+          "t": "h",
+          "x": "Composite primary key"
+        },
+        {
+          "t": "p",
+          "x": "A primary key may consist of more than one column."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "\u0001CREATE TABLE Enrolment (",
+            "\u0001    student_id INTEGER NOT NULL,",
+            "\u0001    course_id INTEGER NOT NULL,",
+            "\u0001    enrolment_date TEXT NOT NULL,",
+            "\u0001    PRIMARY KEY (student_id, course_id)",
+            "\u0001);"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This key prevents the same student-course pair from appearing more than once. It is appropriate only if the business rule allows one record per student-course pair. If the student can enrol in the same course multiple times across different terms, the key may need term_id or another enrolment identifier."
+        },
+        {
+          "t": "h",
+          "x": "5.4 Foreign key constraint"
+        },
+        {
+          "t": "p",
+          "x": "A foreign key is a column or group of columns that references a key in another table, or sometimes the same table. It represents and helps enforce a relationship between records."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "\u0001CREATE TABLE Department (",
+            "\u0001    department_id INTEGER PRIMARY KEY,",
+            "\u0001    department_name TEXT NOT NULL",
+            "\u0001);"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "CREATE TABLE Employee (",
+            "    employee_id INTEGER PRIMARY KEY,",
+            "    employee_name TEXT NOT NULL,",
+            "    department_id INTEGER,",
+            "    FOREIGN KEY (department_id)",
+            "        REFERENCES Department(department_id)",
+            ");"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The department_id in EMPLOYEE refers to a department. If foreign-key enforcement is active, the database can reject an employee row whose non-NULL department_id does not identify an existing department."
+        },
+        {
+          "t": "h",
+          "x": "Important foreign-key concepts"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Referencing table: the table containing the foreign key, here EMPLOYEE.",
+            "Referenced table: the table containing the referenced key, here DEPARTMENT.",
+            "Referential integrity: the rule that references must remain valid according to the constraint.",
+            "Orphan record: a record with a reference to a related record that does not exist. Proper foreign-key enforcement prevents many such cases."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Can a foreign key be NULL?"
+        },
+        {
+          "t": "p",
+          "x": "Often yes, unless the column is also declared NOT NULL. A NULL foreign key commonly means that no related entity is currently assigned or that the relationship is unknown. Whether this is appropriate depends on the business rule."
+        },
+        {
+          "t": "p",
+          "x": "What happens if the referenced row is deleted?"
+        },
+        {
+          "t": "p",
+          "x": "The behavior depends on the declared referential action and the DBMS. Common actions include:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "NO ACTION or RESTRICT: reject or prevent a change that would violate the relationship, according to the product's behavior.",
+            "CASCADE: propagate a delete or update to referencing rows.",
+            "SET NULL: set the referencing foreign-key value to NULL, if allowed.",
+            "SET DEFAULT: set it to the column's default value, where supported and valid."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "FOREIGN KEY (department_id)",
+            "    REFERENCES Department(department_id)",
+            "    ON DELETE SET NULL"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This design says that when a referenced department is deleted, the employee's department_id should be set to NULL, subject to the DBMS and schema rules. That is appropriate only if employees are allowed to exist without a department."
+        },
+        {
+          "t": "h",
+          "x": "Caution"
+        },
+        {
+          "t": "p",
+          "x": "CASCADE is powerful and can remove or change many related records. Choose it based on the real business rules, not merely because it makes errors disappear."
+        },
+        {
+          "t": "h",
+          "x": "SQLite note"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "SQLite supports foreign-key constraints, but applications should explicitly ensure enforcement is enabled on each relevant connection, commonly with:",
+            "\u0001PRAGMA foreign_keys = ON;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Do not assume every SQLite connection has the same setting. Check the setting and test the behavior in your actual environment."
+        },
+        {
+          "t": "h",
+          "x": "5.5 UNIQUE constraint"
+        },
+        {
+          "t": "p",
+          "x": "A UNIQUE constraint requires values in a column, or a combination of columns, to be distinct under the DBMS's comparison rules."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "\u0001CREATE TABLE UserAccount (",
+            "\u0001    user_id INTEGER PRIMARY KEY,",
+            "\u0001    username TEXT UNIQUE,",
+            "\u0001    email TEXT UNIQUE",
+            "\u0001);"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This prevents duplicate non-NULL usernames and emails under the configured comparison behavior. Collation, case sensitivity, and NULL handling can vary by DBMS, so applications should define and test their intended rules."
+        },
+        {
+          "t": "h",
+          "x": "Primary key versus UNIQUE"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A table has one primary-key constraint, though it may use several columns.",
+            "A table can have multiple UNIQUE constraints.",
+            "A primary key cannot be NULL.",
+            "UNIQUE constraints often permit NULL values, and the handling of multiple NULLs varies by DBMS. SQLite, for example, generally treats NULL values as distinct for UNIQUE constraints.",
+            "A primary key is the principal row identifier; a UNIQUE constraint enforces uniqueness for an additional attribute or combination."
+          ]
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "A student may have student_id as the primary key and institutional_email as UNIQUE. The student_id identifies the row, while institutional_email must not be shared by two students."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A UNIQUE constraint is not a complete guarantee that an email address is valid, belongs to the user, or is safe to use for authentication. Format validation, verification, and secure account design are separate concerns."
+        },
+        {
+          "t": "h",
+          "x": "5.6 CHECK constraint"
+        },
+        {
+          "t": "p",
+          "x": "A CHECK constraint requires a Boolean condition to be satisfied for a row, subject to the DBMS's rules for NULL and expression evaluation."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "\u0001CREATE TABLE Student (",
+            "\u0001    student_id INTEGER PRIMARY KEY,",
+            "\u0001    name TEXT NOT NULL,",
+            "\u0001    age INTEGER CHECK (age >= 0)",
+            "\u0001);"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This rejects a non-NULL age below zero in systems that enforce the constraint as expected. If age is optional, NULL may still be permitted because SQL CHECK semantics generally do not treat UNKNOWN as FALSE. If age must be present, declare it NOT NULL as well."
+        },
+        {
+          "t": "h",
+          "x": "Another example"
+        },
+        {
+          "t": "code",
+          "x": [
+            "CREATE TABLE ExamResult (",
+            "    result_id INTEGER PRIMARY KEY,",
+            "    student_id INTEGER NOT NULL,",
+            "    marks REAL NOT NULL CHECK (marks >= 0 AND marks <= 100)",
+            ");"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The CHECK rule prevents marks below zero or above 100. The correct range should be determined by the actual grading system. Some examinations use different scales, grades, or special values."
+        },
+        {
+          "t": "h",
+          "x": "More examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "price ≥ 0",
+            "quantity ≥ 0",
+            "discount_percent BETWEEN 0 AND 100",
+            "status IN ('Pending', 'Paid', 'Cancelled')",
+            "end_date ≥ start_date, if both dates are represented and compared consistently"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A CHECK constraint should be understandable, deterministic where required, and based on rules that the DBMS can reliably evaluate. Cross-row or cross-table business rules may require other techniques; CHECK is not a universal mechanism for every validation problem."
+        },
+        {
+          "t": "h",
+          "x": "5.7 NOT NULL constraint"
+        },
+        {
+          "t": "p",
+          "x": "Although the four main focus constraints are PRIMARY KEY, FOREIGN KEY, UNIQUE, and CHECK, NOT NULL is another fundamental integrity constraint."
+        },
+        {
+          "t": "p",
+          "x": "NOT NULL means a column must have a non-NULL value."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "name TEXT NOT NULL"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This is useful when a name is required by the business rule. However, NOT NULL only guarantees that the value is not NULL. It does not guarantee that a text field contains meaningful text; an empty string or a string of spaces may still be accepted unless other validation is added."
+        },
+        {
+          "t": "h",
+          "x": "5.8 DEFAULT values"
+        },
+        {
+          "t": "p",
+          "x": "A DEFAULT clause supplies a value when an INSERT statement does not explicitly provide one for that column."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "status TEXT NOT NULL DEFAULT 'Active'"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A default is not the same as a constraint. It provides a value when omitted; it does not necessarily prevent someone from explicitly inserting another value. Combine DEFAULT with CHECK or another rule when only certain values are allowed."
+        },
+        {
+          "t": "h",
+          "x": "5.9 How the four main constraints work together"
+        },
+        {
+          "t": "h",
+          "x": "Consider a simplified enrolment database"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "STUDENT has a primary key student_id.",
+            "COURSE has a primary key course_id.",
+            "ENROLMENT has foreign keys to STUDENT and COURSE.",
+            "ENROLMENT uses a composite primary key (student_id, course_id) if each student can enrol in each course only once.",
+            "marks has a CHECK constraint between 0 and 100, if marks are stored in that table.",
+            "institutional_email may have a UNIQUE constraint in STUDENT.",
+            "required values may use NOT NULL."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Each constraint protects a different aspect of the data"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "PRIMARY KEY: identifies rows.",
+            "FOREIGN KEY: validates relationships.",
+            "UNIQUE: prevents duplicate values for selected attributes or combinations.",
+            "CHECK: restricts values according to a condition.",
+            "NOT NULL: requires a value to be present."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Together, these constraints reduce common data errors. They do not prove that all information is true in the real world. A mark of 85 may satisfy the database rules but still be incorrect if it was entered for the wrong student."
+        },
+        {
+          "t": "h",
+          "x": "5.10 Integrity constraints and security"
+        },
+        {
+          "t": "p",
+          "x": "Data integrity and security overlap but are not identical."
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Integrity asks",
+              "Is the stored value valid and consistent with the rules?"
+            ],
+            [
+              "Security asks",
+              "Who is allowed to access or change the data, and under what conditions?"
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A CHECK constraint can stop an invalid mark, but it cannot determine whether the person entering the mark is an authorized teacher. A foreign key can stop an enrolment from referring to a nonexistent student, but it cannot decide whether the student is permitted to enrol in that course. Authorization logic may need to enforce those rules."
+        },
+        {
+          "t": "h",
+          "x": "A layered defense may include"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Input validation in the user interface.",
+            "Server-side validation in the backend.",
+            "Database constraints.",
+            "Authentication to identify users.",
+            "Authorization to control actions.",
+            "Parameterized SQL queries to reduce SQL injection risk.",
+            "Least-privilege database accounts.",
+            "Secure configuration and patching.",
+            "Monitoring and auditing.",
+            "Backups and tested recovery procedures."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Each layer serves a different purpose. Client-side validation improves usability but can be bypassed. Backend validation is essential, and database constraints provide a final line of defense for the rules they can express."
+        },
+        {
+          "t": "h",
+          "x": "5.11 Common constraint mistakes"
+        },
+        {
+          "t": "p",
+          "x": "Mistake 1: Assuming a primary key is the same as a foreign key."
+        },
+        {
+          "t": "p",
+          "x": "A primary key identifies a row in its own table. A foreign key refers to a key in a related table."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 2: Assuming UNIQUE always behaves identically across DBMS products."
+        },
+        {
+          "t": "p",
+          "x": "NULL handling, collations, and comparison rules can vary."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 3: Using CHECK without NOT NULL when a value is required."
+        },
+        {
+          "t": "p",
+          "x": "A CHECK condition may not reject NULL. Add NOT NULL if missing values are not allowed."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 4: Forgetting to enable foreign-key enforcement in SQLite."
+        },
+        {
+          "t": "p",
+          "x": "Define the foreign key and verify that enforcement is active on the connection."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 5: Adding constraints that contradict real requirements."
+        },
+        {
+          "t": "p",
+          "x": "For example, CHECK(age ≥ 18) is incorrect if the database must store students younger than 18."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 6: Using cascading deletes without considering consequences."
+        },
+        {
+          "t": "p",
+          "x": "Deleting a parent row may affect many child rows. Understand the consequences before selecting CASCADE."
+        },
+        {
+          "t": "p",
+          "x": "Mistake 7: Believing constraints make an entire application secure."
+        },
+        {
+          "t": "p",
+          "x": "Constraints protect specific data rules. They do not replace access control, safe application code, or operational security."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "t": "Practical SQL Walkthrough",
+      "k": "th",
+      "s": "The following examples use broadly familiar SQL syntax.",
+      "b": [
+        {
+          "t": "p",
+          "x": "The following examples use broadly familiar SQL syntax. Exact syntax and behavior may differ among SQLite, MySQL, PostgreSQL, SQL Server, and Oracle. For a learning exercise in SQLite, run commands in a test database and check the result of each operation."
+        },
+        {
+          "t": "h",
+          "x": "6.1 Create a database file in SQLite"
+        },
+        {
+          "t": "p",
+          "x": "From a Termux shell, a learner can open or create a database file by running:"
+        },
+        {
+          "t": "p",
+          "x": "sqlite3 college.db"
+        },
+        {
+          "t": "p",
+          "x": "If the file does not exist, SQLite normally creates it in the current directory. If the file already exists, SQLite opens it. Check your current directory before running the command so that you know where the file will be stored."
+        },
+        {
+          "t": "p",
+          "x": "Inside the SQLite prompt, SQL statements end with a semicolon. SQLite shell dot-commands, such as .tables and .schema, are shell commands rather than SQL statements."
+        },
+        {
+          "t": "h",
+          "x": "Useful SQLite shell commands"
+        },
+        {
+          "t": "ln",
+          "x": [
+            ".tables",
+            ".schema",
+            ".schema Student",
+            ".headers on",
+            ".mode column",
+            "\u0001SELECT sqlite_version();",
+            ".exit"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The exact shell output depends on what has been created and on the SQLite version."
+        },
+        {
+          "t": "h",
+          "x": "6.2 Create a Student table"
+        },
+        {
+          "t": "code",
+          "x": [
+            "CREATE TABLE Student (",
+            "    student_id INTEGER PRIMARY KEY,",
+            "    name TEXT NOT NULL,",
+            "    age INTEGER CHECK (age >= 0),",
+            "    email TEXT UNIQUE",
+            ");"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Explanation"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "CREATE TABLE Student creates a table named Student.",
+            "student_id is the row identifier.",
+            "name must not be NULL.",
+            "age cannot be negative when a non-NULL value is supplied.",
+            "email must be unique among non-NULL values according to SQLite's UNIQUE behavior."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This design allows age and email to be NULL. If the college requires every student to have both values, the schema should declare them NOT NULL and use appropriate validation."
+        },
+        {
+          "t": "h",
+          "x": "6.3 Insert valid data"
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Student (student_id, name, age, email)",
+            "VALUES (1, 'Aarav', 19, 'aarav@example.test');"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Student (student_id, name, age, email)",
+            "VALUES (2, 'Meera', 18, 'meera@example.test');"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Student (student_id, name, age, email)",
+            "VALUES (3, 'Kabir', 20, 'kabir@example.test');"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The example addresses use the reserved .test domain for illustrative data. Do not treat them as real contact details."
+        },
+        {
+          "t": "h",
+          "x": "6.4 Retrieve data"
+        },
+        {
+          "t": "code",
+          "x": [
+            "SELECT * FROM Student;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The asterisk means all columns. In production queries, listing only the needed columns is often clearer and can avoid transferring unnecessary data."
+        },
+        {
+          "t": "code",
+          "x": [
+            "SELECT name, age",
+            "FROM Student",
+            "WHERE age >= 19;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This query returns the names and ages of students whose age is at least 19."
+        },
+        {
+          "t": "h",
+          "x": "6.5 Test the primary key"
+        },
+        {
+          "t": "p",
+          "x": "Try inserting another row with student_id 1:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Student (student_id, name, age, email)",
+            "VALUES (1, 'Duplicate ID', 21, 'different@example.test');"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The database should reject the duplicate primary-key value. This demonstrates that the primary key is enforced by the database, not merely by the form used to enter data."
+        },
+        {
+          "t": "h",
+          "x": "6.6 Test UNIQUE"
+        },
+        {
+          "t": "p",
+          "x": "Try inserting another student using an email address already stored:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Student (student_id, name, age, email)",
+            "VALUES (4, 'Riya', 19, 'aarav@example.test');"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The UNIQUE constraint should reject the duplicate non-NULL email. If the statement fails, the database has preserved the uniqueness rule."
+        },
+        {
+          "t": "h",
+          "x": "6.7 Test CHECK"
+        },
+        {
+          "t": "p",
+          "x": "Try:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Student (student_id, name, age, email)",
+            "VALUES (5, 'Invalid Age', -3, 'invalid-age@example.test');"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The CHECK constraint should reject the negative age. The row should not be accepted as a valid Student row."
+        },
+        {
+          "t": "h",
+          "x": "6.8 Create a Course table"
+        },
+        {
+          "t": "code",
+          "x": [
+            "CREATE TABLE Course (",
+            "    course_id INTEGER PRIMARY KEY,",
+            "    course_name TEXT NOT NULL UNIQUE,",
+            "    credits INTEGER NOT NULL CHECK (credits > 0)",
+            ");"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This table assigns each course a unique identifier, requires a course name, prevents duplicate course names under the database's comparison rules, and requires credits to be positive."
+        },
+        {
+          "t": "h",
+          "x": "6.9 Create an Enrolment table with foreign keys"
+        },
+        {
+          "t": "code",
+          "x": [
+            "PRAGMA foreign_keys = ON;"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "CREATE TABLE Enrolment (",
+            "    student_id INTEGER NOT NULL,",
+            "    course_id INTEGER NOT NULL,",
+            "    enrolment_date TEXT NOT NULL,",
+            "    status TEXT NOT NULL DEFAULT 'Active'",
+            "        CHECK (status IN ('Active', 'Completed', 'Withdrawn')),",
+            "    PRIMARY KEY (student_id, course_id),",
+            "    FOREIGN KEY (student_id) REFERENCES Student(student_id),",
+            "    FOREIGN KEY (course_id) REFERENCES Course(course_id)",
+            ");"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Explanation"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "student_id must have a value and refer to an existing Student.",
+            "course_id must have a value and refer to an existing Course.",
+            "enrolment_date is required in this example.",
+            "status defaults to Active when omitted and is limited to three allowed values.",
+            "the composite primary key prevents duplicate student-course pairs."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "If students may retake a course, this composite key may be too restrictive. A more suitable design might include academic_year or term_id in the key, or use a separate enrolment_id and an additional uniqueness rule for the intended combination."
+        },
+        {
+          "t": "h",
+          "x": "6.10 Insert courses and enrolments"
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Course (course_id, course_name, credits)",
+            "VALUES (10, 'Database Foundations', 4);"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Course (course_id, course_name, credits)",
+            "VALUES (20, 'Web Development', 3);"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Enrolment (student_id, course_id, enrolment_date)",
+            "VALUES (1, 10, '2026-08-01');"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Enrolment (student_id, course_id, enrolment_date)",
+            "VALUES (1, 20, '2026-08-02');"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Enrolment (student_id, course_id, enrolment_date)",
+            "VALUES (2, 10, '2026-08-03');"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The foreign keys ensure that the student and course identifiers refer to existing rows, provided foreign-key enforcement is active."
+        },
+        {
+          "t": "h",
+          "x": "6.11 Test a foreign key"
+        },
+        {
+          "t": "p",
+          "x": "Try inserting an enrolment for a student that does not exist:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "INSERT INTO Enrolment (student_id, course_id, enrolment_date)",
+            "VALUES (999, 10, '2026-08-04');"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "With foreign-key enforcement active, this should fail because student 999 is not present in Student."
+        },
+        {
+          "t": "h",
+          "x": "6.12 Join related tables"
+        },
+        {
+          "t": "h",
+          "x": "Select"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "    Student.name,",
+            "    Course.course_name,",
+            "    Enrolment.enrolment_date,",
+            "    Enrolment.status",
+            "FROM Enrolment",
+            "JOIN Student",
+            "    ON Enrolment.student_id = Student.student_id",
+            "JOIN Course",
+            "    ON Enrolment.course_id = Course.course_id;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This query combines enrolment records with student and course details. The join conditions match identifiers across tables. The output can display a student's name and course name even though those facts are stored in separate tables."
+        },
+        {
+          "t": "p",
+          "x": "This is one of the main benefits of a relational design: separate tables can store each type of fact while keys connect the information when needed."
+        },
+        {
+          "t": "h",
+          "x": "6.13 Update a record"
+        },
+        {
+          "t": "code",
+          "x": [
+            "UPDATE Student",
+            "SET age = 20",
+            "WHERE student_id = 1;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The WHERE clause identifies the intended row. Without a suitable WHERE clause, an UPDATE may affect every row in the table. Always inspect the condition before running updates against important data."
+        },
+        {
+          "t": "h",
+          "x": "6.14 Delete a record"
+        },
+        {
+          "t": "code",
+          "x": [
+            "DELETE FROM Enrolment",
+            "WHERE student_id = 2 AND course_id = 10;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This deletes the enrolment matching both identifiers. It does not delete the student or the course. Related rows and delete behavior depend on the schema's foreign keys and actions."
+        },
+        {
+          "t": "h",
+          "x": "6.15 Transactions"
+        },
+        {
+          "t": "p",
+          "x": "A transaction can group several changes:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "BEGIN TRANSACTION;"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "UPDATE Student",
+            "SET age = 20",
+            "WHERE student_id = 1;"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "UPDATE Student",
+            "SET age = 19",
+            "WHERE student_id = 2;"
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
+            "COMMIT;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "COMMIT makes the transaction's changes permanent according to the DBMS's transaction semantics. If an error occurs and the transaction should not proceed, a ROLLBACK can cancel uncommitted changes:"
+        },
+        {
+          "t": "code",
+          "x": [
+            "ROLLBACK;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Do not issue ROLLBACK after COMMIT expecting it to undo the committed transaction. Recovery of committed changes requires a separate compensating operation or restore procedure, depending on the situation."
+        },
+        {
+          "t": "h",
+          "x": "6.16 Practical SQLite checks"
+        },
+        {
+          "t": "h",
+          "x": "To inspect the schema"
+        },
+        {
+          "t": "p",
+          "x": ".schema Student"
+        },
+        {
+          "t": "p",
+          "x": ".schema Course"
+        },
+        {
+          "t": "p",
+          "x": ".schema Enrolment"
+        },
+        {
+          "t": "h",
+          "x": "To view the tables"
+        },
+        {
+          "t": "p",
+          "x": ".tables"
+        },
+        {
+          "t": "h",
+          "x": "To inspect the data"
+        },
+        {
+          "t": "code",
+          "x": [
+            "SELECT * FROM Student;",
+            "SELECT * FROM Course;",
+            "SELECT * FROM Enrolment;"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "To check foreign-key configuration"
+        },
+        {
+          "t": "code",
+          "x": [
+            "PRAGMA foreign_keys;"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "To check foreign-key violations in the database"
+        },
+        {
+          "t": "code",
+          "x": [
+            "PRAGMA foreign_key_check;"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These commands are useful for learning and debugging. A successful CREATE TABLE statement does not prove that the entire design is correct; test both valid and invalid cases."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "t": "From Requirements to a Good Database Design",
+      "k": "th",
+      "s": "Before creating tables, write down the purpose of the application.",
+      "b": [
+        {
+          "t": "h",
+          "x": "7.1 Start with the real problem"
+        },
+        {
+          "t": "p",
+          "x": "Before creating tables, write down the purpose of the application. For a college system, requirements might include:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Store student details.",
+            "Store courses and credits.",
+            "Record student enrolments.",
+            "Prevent enrolments for nonexistent students.",
+            "Prevent duplicate enrolment records for the same student and course within a defined term.",
+            "Record examination marks.",
+            "Retrieve the courses taken by a student.",
+            "List students enrolled in a particular course.",
+            "Calculate results and reports."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Requirements should describe what users need to do and what rules must be followed."
+        },
+        {
+          "t": "h",
+          "x": "7.2 Identify entities"
+        },
+        {
+          "t": "h",
+          "x": "From the requirements, possible entities are"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "STUDENT",
+            "COURSE",
+            "ENROLMENT",
+            "EXAM",
+            "RESULT",
+            "TEACHER",
+            "DEPARTMENT"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Not every possible concept must become a table. Some may be attributes, views, or derived outputs. The decision depends on whether the concept has its own identity, properties, relationships, and lifecycle."
+        },
+        {
+          "t": "h",
+          "x": "7.3 Identify attributes"
+        },
+        {
+          "t": "h",
+          "x": "For STUDENT"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "student_id",
+            "full_name",
+            "date_of_birth",
+            "institutional_email",
+            "admission_date"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "For COURSE"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "course_id",
+            "course_name",
+            "credits",
+            "department_id"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "For ENROLMENT"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "enrolment_id or a suitable composite key",
+            "student_id",
+            "course_id",
+            "term_id",
+            "enrolment_date",
+            "status"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "For RESULT"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "result_id or a defined composite key",
+            "student_id or enrolment_id",
+            "exam_id",
+            "marks or grade"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The exact design should avoid storing the same fact in several places unless there is a clear reason."
+        },
+        {
+          "t": "h",
+          "x": "7.4 Identify keys"
+        },
+        {
+          "t": "p",
+          "x": "Every table should have a reliable way to identify its rows. Decide:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Which attributes uniquely identify each record?",
+            "Can those attributes change?",
+            "Can they be NULL?",
+            "Are multiple attributes needed together?",
+            "Do other tables need to refer to this record?"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Choose primary keys carefully. A key that looks unique in a small sample may not remain unique as the system grows."
+        },
+        {
+          "t": "h",
+          "x": "7.5 Identify relationships"
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A department offers many courses.",
+            "A student enrols in many courses.",
+            "A course has many enrolments.",
+            "An exam belongs to a course.",
+            "A result belongs to a student and an exam, or to a particular enrolment and exam."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Define cardinality and participation explicitly. Ask whether a course can exist before any student enrols, whether a student can be registered without a course, and whether one student can take the same course in multiple terms."
+        },
+        {
+          "t": "h",
+          "x": "7.6 Define domains and constraints"
+        },
+        {
+          "t": "h",
+          "x": "For each attribute, decide"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Data type.",
+            "Whether NULL is allowed.",
+            "Whether the value must be unique.",
+            "Whether a CHECK condition applies.",
+            "Whether a default is appropriate.",
+            "Whether a foreign key is needed.",
+            "What happens when related records are deleted or updated."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "credits must be greater than zero.",
+            "marks must fall within the grading scale.",
+            "status must be one of the approved values.",
+            "enrolment must refer to an existing student and course.",
+            "institutional email must be unique if it serves as a unique identifier for communication or login."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "7.7 Reduce anomalies through normalization"
+        },
+        {
+          "t": "p",
+          "x": "Normalization is a family of principles for organizing relational data to reduce avoidable redundancy and modification anomalies."
+        },
+        {
+          "t": "h",
+          "x": "Insertion anomaly"
+        },
+        {
+          "t": "p",
+          "x": "A system cannot store one fact without also supplying an unrelated fact."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "if course details are stored only inside enrolment rows, it may be difficult to add a new course before a student enrols."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Update anomaly"
+        },
+        {
+          "t": "p",
+          "x": "The same fact is repeated in many rows, and some copies are not updated."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "changing a course name requires editing every enrolment row that repeats that name."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Deletion anomaly"
+        },
+        {
+          "t": "p",
+          "x": "Deleting one record accidentally removes another fact that should have been retained."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "deleting the last enrolment row may also remove the only stored copy of a course's details."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A better design stores course facts in COURSE and student-course participation in ENROLMENT. This separates distinct kinds of facts."
+        },
+        {
+          "t": "p",
+          "x": "Normalization should be applied thoughtfully. Real systems sometimes intentionally duplicate or precompute data for performance, but those decisions should be deliberate and supported by rules for keeping the duplicated values consistent."
+        },
+        {
+          "t": "h",
+          "x": "7.8 Test the design"
+        },
+        {
+          "t": "h",
+          "x": "Use sample data and test questions"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Can the system list every student?",
+            "Can it show every course taken by one student?",
+            "Can it show all students in a course?",
+            "Can it reject a duplicate identifier?",
+            "Can it reject an invalid foreign key?",
+            "Can it reject a negative mark?",
+            "Can it represent a student who has not enrolled yet?",
+            "Can it represent a course that currently has no students?",
+            "Can it support a student retaking a course in a later term if required?"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Test both the normal path and the failure path. Constraints are most clearly understood by deliberately attempting invalid operations in a disposable learning database."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "t": "Practical Examples and Mini Case Studies",
+      "k": "ex",
+      "s": "A college wants to store students, courses, and enrolments.",
+      "b": [
+        {
+          "t": "h",
+          "x": "8.1 College database"
+        },
+        {
+          "t": "h",
+          "x": "Requirements"
+        },
+        {
+          "t": "p",
+          "x": "A college wants to store students, courses, and enrolments."
+        },
+        {
+          "t": "h",
+          "x": "Suggested design"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "STUDENT(student_id, name, email)",
+            "COURSE(course_id, course_name, credits)",
+            "ENROLMENT(student_id, course_id, enrolment_date)"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Rules"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "student_id is the primary key of STUDENT.",
+            "course_id is the primary key of COURSE.",
+            "ENROLMENT references STUDENT and COURSE.",
+            "a student-course pair must be unique if repeated enrolment is not allowed.",
+            "credits must be positive."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Why it works"
+        },
+        {
+          "t": "p",
+          "x": "Each table represents a distinct concept. The junction table handles the many-to-many relationship. Foreign keys help prevent enrolments from referring to missing records."
+        },
+        {
+          "t": "h",
+          "x": "8.2 Online shopping database"
+        },
+        {
+          "t": "h",
+          "x": "Possible entities"
+        },
+        {
+          "t": "p",
+          "x": "CUSTOMER, PRODUCT, ORDER, ORDER_ITEM, PAYMENT."
+        },
+        {
+          "t": "p",
+          "x": "A customer can place many orders. An order can contain multiple products, and a product can appear in many orders. Therefore, ORDER_ITEM connects ORDER and PRODUCT."
+        },
+        {
+          "t": "h",
+          "x": "ORDER_ITEM may contain"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "order_id",
+            "product_id",
+            "quantity",
+            "unit_price_at_purchase"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The unit price at purchase may be stored on ORDER_ITEM because the price charged for an earlier purchase should usually remain historically accurate even if the current PRODUCT price changes. This is an example of a deliberate stored value that represents a historical fact, not accidental duplication."
+        },
+        {
+          "t": "h",
+          "x": "Possible constraints"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "quantity > 0.",
+            "product_id references PRODUCT.",
+            "order_id references ORDER.",
+            "payment amount must be non-negative, subject to the business rules.",
+            "order identifiers must be unique."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "8.3 Library management database"
+        },
+        {
+          "t": "h",
+          "x": "Possible entities"
+        },
+        {
+          "t": "p",
+          "x": "MEMBER, BOOK, COPY, LOAN."
+        },
+        {
+          "t": "p",
+          "x": "A title may have several physical copies. A loan usually refers to one copy and one member. Separating BOOK from COPY helps distinguish the abstract title from individual physical items."
+        },
+        {
+          "t": "h",
+          "x": "Possible rules"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "each copy has a unique copy_id.",
+            "each loan references an existing member and copy.",
+            "return_date should not be earlier than loan_date when both are present.",
+            "a copy should not have more than one active loan at a time."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The last rule may require a database-specific index, a carefully designed status representation, a transaction, or additional logic. A simple row-level CHECK may not be enough because the rule concerns multiple rows."
+        },
+        {
+          "t": "h",
+          "x": "8.4 Student marks database"
+        },
+        {
+          "t": "h",
+          "x": "Possible entities"
+        },
+        {
+          "t": "p",
+          "x": "STUDENT, COURSE, EXAM, RESULT."
+        },
+        {
+          "t": "p",
+          "x": "A result may refer to a student and an exam. The schema should ensure that the result belongs to the correct course or enrolment, depending on the rules."
+        },
+        {
+          "t": "h",
+          "x": "Possible constraints"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "marks between 0 and 100, if that is the scale.",
+            "every result references a valid student and exam.",
+            "the same student should not have duplicate result records for the same exam unless attempts are explicitly tracked.",
+            "missing, absent, and not-yet-graded statuses should be modelled clearly rather than confused with a mark of zero."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This example shows why domain knowledge matters. A zero mark, an absent student, and an ungraded exam are different states."
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "t": "Exam-Oriented Revision Notes",
+      "k": "sum",
+      "s": "Quick reference sheet",
+      "b": [
+        {
+          "t": "h",
+          "x": "9.1 Short definitions"
+        },
+        {
+          "t": "h",
+          "x": "Data"
+        },
+        {
+          "t": "p",
+          "x": "Raw recorded facts, values, observations, or symbols."
+        },
+        {
+          "t": "h",
+          "x": "Information"
+        },
+        {
+          "t": "p",
+          "x": "Data organized or interpreted so that it has useful meaning in a context."
+        },
+        {
+          "t": "h",
+          "x": "Database"
+        },
+        {
+          "t": "p",
+          "x": "An organized collection of related data that can be accessed and managed."
+        },
+        {
+          "t": "h",
+          "x": "DBMS"
+        },
+        {
+          "t": "p",
+          "x": "Software used to define, create, query, update, secure, and administer databases."
+        },
+        {
+          "t": "h",
+          "x": "File system"
+        },
+        {
+          "t": "p",
+          "x": "An approach in which information is stored in files and managed by operating-system and application mechanisms."
+        },
+        {
+          "t": "h",
+          "x": "Data model"
+        },
+        {
+          "t": "p",
+          "x": "A conceptual structure that describes how data and relationships are organized."
+        },
+        {
+          "t": "h",
+          "x": "Hierarchical model"
+        },
+        {
+          "t": "p",
+          "x": "A model that organizes records in a tree, generally with one parent per child in the traditional form."
+        },
+        {
+          "t": "h",
+          "x": "Network model"
+        },
+        {
+          "t": "p",
+          "x": "A model that represents records through interconnected links and supports more complex connections than a strict tree."
+        },
+        {
+          "t": "h",
+          "x": "Relational model"
+        },
+        {
+          "t": "p",
+          "x": "A model that represents data as relations, commonly shown as tables, and connects them through keys."
+        },
+        {
+          "t": "h",
+          "x": "Entity"
+        },
+        {
+          "t": "p",
+          "x": "A distinguishable real-world object or concept about which data is stored."
+        },
+        {
+          "t": "h",
+          "x": "Attribute"
+        },
+        {
+          "t": "p",
+          "x": "A property describing an entity or relationship."
+        },
+        {
+          "t": "h",
+          "x": "Relationship"
+        },
+        {
+          "t": "p",
+          "x": "An association among entities."
+        },
+        {
+          "t": "h",
+          "x": "ER diagram"
+        },
+        {
+          "t": "p",
+          "x": "A graphical representation of entities, attributes, relationships, and their constraints."
+        },
+        {
+          "t": "h",
+          "x": "Primary key"
+        },
+        {
+          "t": "p",
+          "x": "The selected attribute or combination of attributes that uniquely identifies a row and does not permit NULL."
+        },
+        {
+          "t": "h",
+          "x": "Foreign key"
+        },
+        {
+          "t": "p",
+          "x": "An attribute or group of attributes that references a key in another or the same table."
+        },
+        {
+          "t": "h",
+          "x": "UNIQUE constraint"
+        },
+        {
+          "t": "p",
+          "x": "A rule that prevents duplicate values or duplicate combinations under the DBMS's comparison and NULL rules."
+        },
+        {
+          "t": "h",
+          "x": "CHECK constraint"
+        },
+        {
+          "t": "p",
+          "x": "A rule that requires a row-level condition to be satisfied, subject to SQL's expression and NULL semantics."
+        },
+        {
+          "t": "h",
+          "x": "NOT NULL"
+        },
+        {
+          "t": "p",
+          "x": "A rule that prevents a column from storing NULL."
+        },
+        {
+          "t": "h",
+          "x": "Referential integrity"
+        },
+        {
+          "t": "p",
+          "x": "The consistency rule that references between related records must remain valid according to the foreign-key definition."
+        },
+        {
+          "t": "h",
+          "x": "9.2 Important differences"
+        },
+        {
+          "t": "h",
+          "x": "Database versus DBMS"
+        },
+        {
+          "t": "p",
+          "x": "A database is the stored organized data; a DBMS is the software that manages it."
+        },
+        {
+          "t": "h",
+          "x": "Data versus information"
+        },
+        {
+          "t": "p",
+          "x": "Data is the recorded value; information is data given meaning through context or processing."
+        },
+        {
+          "t": "h",
+          "x": "File system versus DBMS"
+        },
+        {
+          "t": "p",
+          "x": "File systems can be simple and suitable for small tasks, while a DBMS offers integrated querying, constraints, transaction facilities, and shared management for more complex data needs."
+        },
+        {
+          "t": "h",
+          "x": "Primary key versus foreign key"
+        },
+        {
+          "t": "p",
+          "x": "A primary key identifies a row in its own table; a foreign key references a key to represent a relationship."
+        },
+        {
+          "t": "h",
+          "x": "Primary key versus UNIQUE"
+        },
+        {
+          "t": "p",
+          "x": "A primary key is the main row identifier and cannot be NULL. UNIQUE adds a uniqueness rule to other attributes or combinations; NULL behavior varies by DBMS."
+        },
+        {
+          "t": "h",
+          "x": "CHECK versus NOT NULL"
+        },
+        {
+          "t": "p",
+          "x": "CHECK enforces a condition; NOT NULL requires a value to be present. Use both if the value must exist and satisfy a condition."
+        },
+        {
+          "t": "h",
+          "x": "Hierarchical versus network"
+        },
+        {
+          "t": "p",
+          "x": "A hierarchical model is tree-shaped, while a network model permits richer links among records."
+        },
+        {
+          "t": "h",
+          "x": "ER model versus relational model"
+        },
+        {
+          "t": "p",
+          "x": "The ER model is commonly used to describe requirements conceptually; the relational model organizes implementation data into relations or tables."
+        },
+        {
+          "t": "h",
+          "x": "9.3 Benefits of a DBMS"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Reduces avoidable data redundancy.",
+            "Helps improve consistency.",
+            "Makes retrieval and reporting easier.",
+            "Supports relationships between data.",
+            "Enforces integrity constraints.",
+            "Supports controlled concurrent access.",
+            "Commonly provides transaction processing.",
+            "Offers security and access-control facilities.",
+            "Supports backup and recovery features.",
+            "Separates applications from some storage details."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "9.4 Limitations or costs of a DBMS"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Software and administration can add complexity.",
+            "Learning SQL and database design takes time.",
+            "A DBMS may use more resources than a simple file for a tiny task.",
+            "Poorly designed schemas and queries can perform badly.",
+            "Database failures or misconfiguration can affect many applications.",
+            "Backups, access controls, upgrades, and monitoring require responsible management.",
+            "Using a DBMS does not automatically guarantee correct or secure data."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "9.5 Memory aid for constraints"
+        },
+        {
+          "t": "ln",
+          "x": [
+            "PRIMARY KEY = identify each row.",
+            "FOREIGN KEY = validate a relationship.",
+            "UNIQUE = prevent duplicate values for a chosen key or attribute.",
+            "CHECK = restrict values by a condition.",
+            "NOT NULL = require a value."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Remember the example"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Student.student_id: PRIMARY KEY.",
+            "Student.email: UNIQUE, if each email must be distinct.",
+            "Enrolment.student_id: FOREIGN KEY to Student.",
+            "ExamResult.marks: CHECK between 0 and 100.",
+            "Student.name: NOT NULL, if every student must have a name recorded."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "t": "Practice Questions",
+      "k": "qa",
+      "s": "Practice and self-check",
+      "b": [
+        {
+          "t": "h",
+          "x": "A. Very short-answer questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "What is data?",
+            "How is information different from data?",
+            "Expand DBMS.",
+            "Define a database.",
+            "What is a database schema?",
+            "What is a row in a relational table?",
+            "What is an attribute?",
+            "What is a primary key?",
+            "What is a foreign key?",
+            "What does UNIQUE do?",
+            "What does CHECK do?",
+            "What does NOT NULL do?",
+            "What is referential integrity?",
+            "What is an ER diagram?",
+            "What is a many-to-many relationship?"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "B. Short-answer questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Explain any five functions of a DBMS.",
+            "Describe data redundancy with an example.",
+            "Explain how data inconsistency can arise in a file-based system.",
+            "State five advantages of a DBMS over a file system.",
+            "Explain the hierarchical data model with a diagram.",
+            "Explain the network data model and compare it with the hierarchical model.",
+            "Explain the relational data model using a student-course example.",
+            "Define entity, entity type, entity instance, and entity set.",
+            "Explain simple, composite, multivalued, and derived attributes.",
+            "Explain 1:1, 1:N, and M:N relationships.",
+            "Explain total and partial participation.",
+            "Differentiate a primary key and a UNIQUE constraint.",
+            "Explain the role of foreign keys in referential integrity.",
+            "Why might a CHECK constraint need to be combined with NOT NULL?",
+            "Why are database constraints not a complete security solution?"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "C. Long-answer questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Define data, information, database, and DBMS. Explain the role of a DBMS in a modern application.",
+            "Compare file processing systems with DBMSs in terms of redundancy, consistency, data access, security, concurrency, integrity, and recovery.",
+            "Explain the hierarchical, network, and relational data models with suitable diagrams, advantages, and limitations.",
+            "Explain the ER model in detail, including entities, entity sets, attributes, relationships, cardinality, participation, and ER diagram symbols.",
+            "Design an ER model for a college database that stores students, courses, teachers, and enrolments. Explain the relationships and constraints.",
+            "Explain primary key, foreign key, UNIQUE, and CHECK constraints with SQL examples.",
+            "Discuss integrity constraints as the first level of data defense and explain why they do not replace authentication and authorization.",
+            "Explain the steps for converting an ER diagram into relational tables.",
+            "Explain insertion, update, and deletion anomalies and how database design can reduce them.",
+            "Design tables for an online shopping system and identify suitable primary keys, foreign keys, UNIQUE constraints, and CHECK constraints."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "D. Practical SQL exercises"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Create a Student table with student_id, name, age, and email.",
+            "Make student_id the primary key.",
+            "Require name to be NOT NULL.",
+            "Add a CHECK constraint that does not allow negative ages.",
+            "Add a UNIQUE constraint to email.",
+            "Insert three valid students.",
+            "Try inserting a duplicate primary key and observe the error.",
+            "Try inserting a duplicate email and observe the error.",
+            "Try inserting a negative age and observe the error.",
+            "Create a Course table with a primary key and positive credits.",
+            "Create an Enrolment table that references Student and Course.",
+            "Insert a valid enrolment.",
+            "Try inserting an enrolment for a nonexistent student.",
+            "Query all students enrolled in a given course using JOIN.",
+            "Update one student's age and verify the result.",
+            "Delete one enrolment and verify that the student and course still exist.",
+            "Inspect the schema using the DBMS's schema tools.",
+            "In SQLite, check whether foreign-key enforcement is enabled and test it."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "t": "Answer Guidelines for Selected Questions",
+      "k": "qa",
+      "s": "Practice and self-check",
+      "b": [
+        {
+          "t": "qa",
+          "x": [
+            [
+              "Why is a DBMS generally better than a collection of files for a shared college database?",
+              "Start by defining a DBMS. Explain that it centralizes the management of related data and supports querying, integrity constraints, access control, transactions, concurrency control, and recovery features. Give an example of storing student details once and referring to students by student_id in enrolment and marks tables. Mention that a file-based system can still be suitable for small or isolated tasks, so the choice depends on requirements."
+            ],
+            [
+              "Explain the relational model.",
+              "Define a relation as a table-like structure, a tuple as a row, and an attribute as a column. Explain that keys identify rows and connect related tables. Use STUDENT, COURSE, and ENROLMENT as the example. State advantages such as familiar tabular representation, SQL, and constraints, then mention possible complexity from joins and poor design."
+            ],
+            [
+              "Explain the four main integrity constraints.",
+              "Define PRIMARY KEY as a unique, non-NULL row identifier; FOREIGN KEY as a reference to a key in a related table; UNIQUE as a restriction on duplicate values; and CHECK as a condition that row values must satisfy. Provide one example of each. Add that DBMS-specific behavior, especially NULL handling and foreign-key configuration, should be understood."
+            ],
+            [
+              "Explain the ER model.",
+              "Define the ER model as a conceptual tool for representing entities, attributes, and relationships. Describe strong and weak entities, common attribute types, relationship degree, cardinality, and participation. Explain traditional diagram symbols, while noting that notations vary. Show how a Student-Course M:N relationship becomes an Enrolment table."
+            ],
+            [
+              "What does it mean to call constraints a first level of data defense?",
+              "Explain that constraints reject certain invalid writes close to the stored data, including writes that may bypass a user-interface validation step. Give examples of duplicate identifiers, missing references, and out-of-range marks. Clarify that constraints do not determine whether a user is authorized and do not replace secure application code, permissions, backups, or monitoring."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "t": "Final Summary",
+      "k": "fin",
+      "s": "Revision checklist",
+      "b": [
+        {
+          "t": "p",
+          "x": "Database foundations begin with understanding the difference between data, information, a database, and the software that manages it. A DBMS provides structured ways to define, query, update, protect, and recover data. It can reduce common weaknesses of file-based approaches, especially when several users and applications share related information."
+        },
+        {
+          "t": "p",
+          "x": "Data models describe the organization of data. The hierarchical model arranges records in a tree. The network model represents richer links among records. The relational model uses tables and keys and is widely used in business and application development."
+        },
+        {
+          "t": "p",
+          "x": "The ER model helps designers describe a system before implementation. Entities represent the important things, attributes describe their properties, and relationships express how they are associated. Cardinality and participation capture important rules about how many entities can participate and whether participation is mandatory. An ER model can be mapped into relational tables using primary keys, foreign keys, and junction tables."
+        },
+        {
+          "t": "p",
+          "x": "Integrity constraints help ensure that stored data follows defined rules:"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "PRIMARY KEY identifies rows uniquely and does not allow NULL.",
+            "FOREIGN KEY maintains valid references between related tables.",
+            "UNIQUE prevents duplicate values or combinations according to the DBMS's rules.",
+            "CHECK enforces a condition on values in a row.",
+            "NOT NULL requires a value to be present."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These constraints are essential, but they are only one part of reliable database engineering. Good design also requires understanding the real problem, choosing appropriate data types, modelling relationships accurately, avoiding unnecessary redundancy, using safe queries, controlling access, testing failure cases, and maintaining backups."
+        },
+        {
+          "t": "p",
+          "x": "For practical learning, create a small database, define tables, insert valid data, deliberately try invalid values, inspect the errors, and query related tables with JOIN. This turns abstract concepts into observable behavior and builds the foundation for later work with APIs and backend applications."
+        }
+      ]
+    }
+  ]
+}

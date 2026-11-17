@@ -1,0 +1,1935 @@
+{
+  "title": "Machine Learning & AI Ethics",
+  "intro": "Learning types, everyday ML applications, bias, privacy and responsible AI.",
+  "sec": [
+    {
+      "n": 1,
+      "t": "Introduction",
+      "k": "th",
+      "s": "Artificial intelligence (AI) is a broad area of computing concerned with building systems that perform…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Artificial intelligence (AI) is a broad area of computing concerned with building systems that perform tasks associated with abilities such as perception, language processing, prediction, planning, and decision support. Machine learning (ML) is one important approach within AI. Instead of writing a separate rule for every possible situation, developers provide data and a learning method so that a system can discover patterns useful for a particular task."
+        },
+        {
+          "t": "p",
+          "x": "Machine learning is used in many everyday services. A music app may recommend songs, an email service may identify spam, a phone may recognize speech, a map may estimate travel time, and a shopping site may rank products that could interest a customer. These systems can be useful, but they can also make errors, learn unfair patterns, collect sensitive information, or be misused."
+        },
+        {
+          "t": "p",
+          "x": "Therefore, learning machine learning involves more than learning algorithms and writing code. A responsible developer must also understand the data, evaluate model performance, protect privacy, consider fairness, and think about the consequences of deploying the system."
+        },
+        {
+          "t": "p",
+          "x": "This chapter explains the basic idea of machine learning, the difference between learning-based systems and traditional rule-based programming, the three commonly taught types of machine learning, everyday applications, and key ethical issues including bias, privacy, deepfakes, employment, and social impact."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "t": "What is Artificial Intelligence?",
+      "k": "th",
+      "s": "Artificial intelligence is a field of computing that develops systems capable of performing tasks that may…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Artificial intelligence is a field of computing that develops systems capable of performing tasks that may require abilities such as reasoning, recognizing patterns, understanding language, solving problems, or making predictions."
+        },
+        {
+          "t": "h",
+          "x": "AI is not a single technique. It includes many approaches, such as"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Rule-based systems that apply explicitly written rules.",
+            "Search and planning methods that explore possible actions.",
+            "Machine-learning systems that learn patterns from data.",
+            "Computer vision systems that process images and videos.",
+            "Natural language processing systems that work with human language.",
+            "Robotics systems that sense and act in physical environments."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A system does not need to think or feel like a human to be called an AI system. Many AI applications are specialized tools designed for one task, such as classifying emails or predicting demand."
+        },
+        {
+          "t": "h",
+          "x": "2.1 Artificial intelligence and machine learning"
+        },
+        {
+          "t": "p",
+          "x": "Machine learning is a subset of AI. AI is the broader field, while ML focuses on methods that learn patterns from data or experience."
+        },
+        {
+          "t": "p",
+          "x": "For example, a rule-based chatbot might respond to a message because it matches a keyword and a developer has written a corresponding rule. A machine-learning language system may instead use patterns learned during training to predict a suitable response. Some real applications combine rules, databases, and learned models."
+        },
+        {
+          "t": "p",
+          "x": "Deep learning is a subset of machine learning that uses neural networks with multiple processing layers. It has been important in image recognition, speech processing, and modern language systems. Not every machine-learning model uses deep learning."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "t": "What is Machine Learning?",
+      "k": "th",
+      "s": "Machine learning is a collection of methods that enable a computer system to improve its performance on a…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Machine learning is a collection of methods that enable a computer system to improve its performance on a task by learning patterns from data or experience rather than relying entirely on manually written rules for each case."
+        },
+        {
+          "t": "p",
+          "x": "A simple example is spam detection. Instead of asking a developer to list every possible spam phrase, a learning system can be trained on many examples of messages labeled “spam” or “not spam.” It learns statistical patterns that help classify new messages. It may still make mistakes, especially when messages differ from the training examples."
+        },
+        {
+          "t": "h",
+          "x": "3.1 Important terms"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Dataset",
+              "A collection of examples used for training, validation, or testing."
+            ],
+            [
+              "Example or sample",
+              "One item in a dataset, such as a single email, image, transaction, or customer record."
+            ],
+            [
+              "Feature",
+              "An input variable used by a model. For an email, possible features might include the sender, words in the message, or the number of links. In modern systems, features may be learned automatically rather than designed manually."
+            ],
+            [
+              "Label or target",
+              "The answer a supervised model is trained to predict, such as “spam,” “not spam,” or a house’s sale price."
+            ],
+            [
+              "Model",
+              "The learned mathematical or computational system that maps inputs to predictions or other outputs."
+            ],
+            [
+              "Training",
+              "The process of adjusting a model’s parameters using data and a learning algorithm."
+            ],
+            [
+              "Inference",
+              "Using a trained model to produce a prediction or output for new input."
+            ],
+            [
+              "Prediction",
+              "The model’s estimated answer, such as a category, score, probability, or numerical value."
+            ],
+            [
+              "Loss function",
+              "A measure of how far a model’s prediction is from the desired target under a particular training objective."
+            ],
+            [
+              "Evaluation",
+              "Measuring how well the model performs on suitable data, ideally including examples not used to train it."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "3.2 A simple learning example"
+        },
+        {
+          "t": "p",
+          "x": "Suppose a developer wants to predict whether a student is likely to pass a practice test. The available dataset might contain the number of practice questions completed, time spent studying, and the eventual result. A model may learn relationships between these inputs and the result."
+        },
+        {
+          "t": "p",
+          "x": "The model does not automatically discover the true causes of academic success. The data may omit factors such as prior knowledge, test difficulty, health, or access to resources. Its output should be treated as an estimate, not a judgment about the student’s ability or future."
+        },
+        {
+          "t": "p",
+          "x": "This example shows a central principle: a model learns patterns that are present in its training process. The quality and suitability of those patterns depend on data, assumptions, training methods, and evaluation."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "t": "Machine Learning Versus Traditional Rule-Based Programming",
+      "k": "th",
+      "s": "In traditional programming, developers write explicit instructions describing what the program should do.",
+      "b": [
+        {
+          "t": "h",
+          "x": "4.1 Traditional rule-based programming"
+        },
+        {
+          "t": "p",
+          "x": "In traditional programming, developers write explicit instructions describing what the program should do. The program applies those instructions to its inputs and produces outputs."
+        },
+        {
+          "t": "h",
+          "x": "For example"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "IF a student’s marks are at least 40, THEN mark the result as passed.",
+            "IF the entered password is incorrect, THEN deny login.",
+            "IF an item’s stock quantity is zero, THEN display “Out of stock.”"
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Rule-based programming is effective when the required behavior can be specified clearly and when the rules are known. It is often easier to inspect and test because the instructions are explicit."
+        },
+        {
+          "t": "p",
+          "x": "However, writing rules for every possible case can be difficult. In spam detection, for example, unwanted messages continually change their wording. A long list of manually written rules may become hard to maintain and may miss new patterns."
+        },
+        {
+          "t": "h",
+          "x": "4.2 Machine-learning approach"
+        },
+        {
+          "t": "p",
+          "x": "In machine learning, developers choose a learning method and provide examples relevant to the task. The algorithm adjusts model parameters to capture patterns that help it perform the target task."
+        },
+        {
+          "t": "p",
+          "x": "For spam detection, the developer may supply thousands of messages labeled spam or not spam. The model learns patterns from the examples and then predicts labels for new messages."
+        },
+        {
+          "t": "p",
+          "x": "The developer still makes many important choices: how to collect and label data, which model to use, what objective to optimize, how to evaluate it, and how to handle errors. Machine learning does not remove the need for programming or human judgment; it changes where some of the task logic comes from."
+        },
+        {
+          "t": "h",
+          "x": "4.3 Key differences"
+        },
+        {
+          "t": "h",
+          "x": "Source of behavior"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Rule-based program: behavior is largely specified through explicit instructions.",
+            "ML system: some behavior is represented by parameters learned from examples."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Best-suited situations"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Rules: clear policies, calculations, validation, and requirements that can be stated precisely.",
+            "ML: tasks where useful patterns exist but manually describing every case is difficult, such as recognizing objects or estimating demand."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Data requirements"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Rules may work with little training data, though they still need correct facts and careful testing.",
+            "ML often requires representative data, and data needs vary by task and model."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Explainability"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A simple rule can often be explained directly.",
+            "Some ML models are easy to interpret, while complex models can be difficult to explain in detail."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Handling new cases"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "A rule-based program handles cases covered by its rules and may fail on unanticipated cases.",
+            "An ML model may generalize to similar new examples, but it can also fail when new cases differ significantly from its training data."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Maintenance"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Rule-based systems require updates when rules or policies change.",
+            "ML systems may require retraining, monitoring, or recalibration when data patterns change."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Reliability: - Neither approach is automatically reliable. Rules can be wrong or incomplete; ML can learn misleading patterns or produce inaccurate predictions."
+        },
+        {
+          "t": "h",
+          "x": "4.4 Combining rules and machine learning"
+        },
+        {
+          "t": "p",
+          "x": "Many practical systems combine both methods. An ML model may classify a document, while explicit rules check permissions before the document can be shared. A fraud model may produce a risk score, while business rules decide when to request extra verification. This combination can use pattern recognition where helpful and clear rules where requirements must be enforced."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "t": "How a Machine-Learning System is Developed",
+      "k": "th",
+      "s": "A typical machine-learning workflow includes the following stages.",
+      "b": [
+        {
+          "t": "p",
+          "x": "A typical machine-learning workflow includes the following stages."
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Step 1",
+              "Define the problem. Specify the task, intended users, inputs, desired output, and what counts as success. “Use AI to improve education” is too broad; “estimate which practice questions a learner may need to review” is more specific."
+            ],
+            [
+              "Step 2",
+              "Collect data. Gather examples from appropriate sources. The collection process should respect privacy, permissions, legal requirements, and the intended use of the data."
+            ],
+            [
+              "Step 3",
+              "Inspect and clean data. Check for missing values, duplicates, inconsistent labels, incorrect formats, outliers, and possible bias. Cleaning should not remove valid examples simply because they are unusual."
+            ],
+            [
+              "Step 4",
+              "Prepare the data. Convert data into suitable forms, encode categories, normalize values when appropriate, and transform text or images into inputs the model can process."
+            ],
+            [
+              "Step 5",
+              "Split the dataset. Training data is used to fit model parameters. Validation data helps compare choices and tune settings. Test data provides a final evaluation on examples kept separate from the training process. For time-dependent tasks, the split may need to preserve chronological order."
+            ],
+            [
+              "Step 6",
+              "Choose a model and train it. Select an algorithm appropriate for the problem and use training data to learn patterns."
+            ],
+            [
+              "Step 7",
+              "Evaluate performance. Use metrics appropriate to the task. Accuracy alone may be insufficient, especially for imbalanced classification problems or high-cost errors."
+            ],
+            [
+              "Step 8",
+              "Improve carefully. Investigate errors, revise features or data, compare models, and check whether improvements hold on suitable validation data. Repeatedly tuning to the test set undermines its role as an independent evaluation."
+            ],
+            [
+              "Step 9",
+              "Deploy. Integrate the model into an application, API, device, or workflow. Deployment also requires monitoring, security, and a plan for failures."
+            ],
+            [
+              "Step 10",
+              "Monitor and maintain. Real-world data may change. Monitor performance, fairness, reliability, and user feedback. Retrain or revise the system when justified, and retire it if it is no longer safe or useful."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "t": "The Three Main Types of Machine Learning",
+      "k": "th",
+      "s": "Introductory courses commonly group machine learning into supervised learning, unsupervised learning, and…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Introductory courses commonly group machine learning into supervised learning, unsupervised learning, and reinforcement learning. This classification is useful, although the field also includes semi-supervised learning, self-supervised learning, and other approaches."
+        },
+        {
+          "t": "h",
+          "x": "The key difference is the kind of learning signal available"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Supervised learning uses labeled examples.",
+            "Unsupervised learning searches for structure in data without target labels.",
+            "Reinforcement learning learns through interaction and reward signals."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "t": "Supervised Learning",
+      "k": "th",
+      "s": "Supervised learning trains a model using examples that include input data and a desired target or label.",
+      "b": [
+        {
+          "t": "h",
+          "x": "7.1 Meaning"
+        },
+        {
+          "t": "p",
+          "x": "Supervised learning trains a model using examples that include input data and a desired target or label. During training, the model compares its predictions with the target values and adjusts its parameters to reduce a chosen error measure."
+        },
+        {
+          "t": "ex",
+          "h": "Example",
+          "x": [
+            "Input: An email’s text and other features. Label: Spam or not spam. Goal: Learn to classify new emails."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "The label acts like an answer key during training. It tells the system what output is associated with each training example, though labels can be inaccurate or subjective."
+        },
+        {
+          "t": "h",
+          "x": "7.2 Classification"
+        },
+        {
+          "t": "p",
+          "x": "Classification predicts a category or class."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Spam versus not spam.",
+            "A photograph containing a cat, dog, or bird.",
+            "A transaction classified as potentially fraudulent or not flagged.",
+            "A support ticket classified as billing, technical support, or account access."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Binary classification involves two categories. Multiclass classification involves more than two mutually exclusive categories. Multilabel classification allows one example to belong to multiple categories at once, such as an image labeled “outdoor,” “person,” and “bicycle.”"
+        },
+        {
+          "t": "p",
+          "x": "A classifier may output a class label, a score, or estimated probabilities. Those probabilities are not automatically guaranteed to be well calibrated."
+        },
+        {
+          "t": "h",
+          "x": "7.3 Regression"
+        },
+        {
+          "t": "p",
+          "x": "Regression predicts a numerical value."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Predicting a home’s estimated price.",
+            "Forecasting electricity demand.",
+            "Estimating delivery time.",
+            "Predicting next week’s sales."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "A prediction is an estimate, not a promise. A house-price model can be wrong because of missing information, unusual market conditions, or changes in the housing market."
+        },
+        {
+          "t": "h",
+          "x": "7.4 Common supervised-learning process"
+        },
+        {
+          "t": "p",
+          "x": "1.  Gather examples with useful inputs and reliable labels. 2.  Inspect and clean the data. 3.  Separate training, validation, and test data appropriately. 4.  Select an algorithm. 5.  Train the model on the training examples. 6.  Tune choices using validation data. 7.  Evaluate the final model on the test set. 8.  Monitor its performance after deployment."
+        },
+        {
+          "t": "h",
+          "x": "7.5 Advantages"
+        },
+        {
+          "t": "p",
+          "x": "Supervised learning can perform well when a clear target exists and sufficient representative labeled data is available. It supports direct evaluation against known answers. It is used in classification, prediction, recognition, and many business tasks."
+        },
+        {
+          "t": "h",
+          "x": "7.6 Limitations"
+        },
+        {
+          "t": "p",
+          "x": "Labeling data may be expensive. Labels may reflect human mistakes or historical discrimination. A model may memorize training examples instead of learning patterns that generalize; this is called overfitting. A model can also underfit when it fails to capture important patterns. Performance may decline when real-world data differs from the training data."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "t": "Unsupervised Learning",
+      "k": "th",
+      "s": "Unsupervised learning works with data that does not provide the target labels required by ordinary…",
+      "b": [
+        {
+          "t": "h",
+          "x": "8.1 Meaning"
+        },
+        {
+          "t": "p",
+          "x": "Unsupervised learning works with data that does not provide the target labels required by ordinary supervised learning. The goal is to discover structure, similarities, groupings, or compact representations."
+        },
+        {
+          "t": "p",
+          "x": "For example, a retailer may have purchase records but no labels describing customer types. A clustering algorithm can group customers with similar purchasing patterns. The groups may help analysts form hypotheses about shopping behavior, but they do not automatically reveal a customer’s true identity or motivation."
+        },
+        {
+          "t": "h",
+          "x": "8.2 Clustering"
+        },
+        {
+          "t": "p",
+          "x": "Clustering groups examples according to a similarity measure or model."
+        },
+        {
+          "t": "h",
+          "x": "Examples"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Grouping customers with similar purchasing patterns.",
+            "Grouping news articles with related themes.",
+            "Exploring patterns in sensor readings.",
+            "Organizing images by visual similarity."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Different clustering algorithms define similarity and cluster structure differently. Results can change depending on the features, scaling, algorithm, and parameters. A cluster is a mathematical grouping, not necessarily a meaningful real-world category."
+        },
+        {
+          "t": "h",
+          "x": "8.3 Dimensionality reduction"
+        },
+        {
+          "t": "p",
+          "x": "Dimensionality reduction represents data using fewer variables or dimensions while attempting to preserve useful structure. It can help visualize high-dimensional data, reduce redundancy, or support later analysis."
+        },
+        {
+          "t": "p",
+          "x": "For example, a dataset may contain hundreds of measurements for each object. A dimensionality-reduction method can create a lower-dimensional representation that captures some important variation. Information may be lost, so the result must be interpreted carefully."
+        },
+        {
+          "t": "h",
+          "x": "8.4 Anomaly detection"
+        },
+        {
+          "t": "p",
+          "x": "Anomaly detection identifies examples that differ from common patterns. It may be used to flag unusual sensor readings, unexpected network activity, or transactions requiring review."
+        },
+        {
+          "t": "p",
+          "x": "An unusual event is not necessarily malicious or incorrect. A rare but legitimate activity may be flagged, while a subtle harmful event may not be detected. Anomaly detection is often used to prioritize human review rather than make an unquestionable final decision."
+        },
+        {
+          "t": "h",
+          "x": "8.5 Advantages and limitations"
+        },
+        {
+          "t": "h",
+          "x": "Advantages"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Can explore data when target labels are unavailable.",
+            "May reveal groups or patterns that were not anticipated.",
+            "Can support exploratory analysis and data understanding."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Limitations"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Evaluation can be difficult without known target labels.",
+            "Results may be sensitive to feature choices and algorithm settings.",
+            "The discovered groups may not have a useful interpretation.",
+            "A model can find accidental patterns in noisy data."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "t": "Reinforcement Learning",
+      "k": "th",
+      "s": "Reinforcement learning (RL) is a machine-learning approach in which an agent learns how to act by…",
+      "b": [
+        {
+          "t": "h",
+          "x": "9.1 Meaning"
+        },
+        {
+          "t": "p",
+          "x": "Reinforcement learning (RL) is a machine-learning approach in which an agent learns how to act by interacting with an environment and receiving rewards or penalties, often over a sequence of steps."
+        },
+        {
+          "t": "p",
+          "x": "The agent tries to learn a policy: a strategy for choosing actions in different situations. The aim is generally to maximize cumulative reward over time, not simply to obtain the largest immediate reward at every step."
+        },
+        {
+          "t": "h",
+          "x": "9.2 Main components"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Agent",
+              "The learner or decision-making system."
+            ],
+            [
+              "Environment",
+              "The world or simulated process with which the agent interacts."
+            ],
+            [
+              "State",
+              "A representation of the current situation available to the agent."
+            ],
+            [
+              "Action",
+              "A choice the agent can make."
+            ],
+            [
+              "Reward",
+              "A numerical signal that indicates how desirable an outcome or transition is according to the designed objective."
+            ],
+            [
+              "Policy",
+              "A strategy mapping states to actions or action probabilities."
+            ],
+            [
+              "Return",
+              "The cumulative reward over a period, often with future rewards discounted."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "9.3 A simple game example"
+        },
+        {
+          "t": "p",
+          "x": "Imagine an agent learning to play a small game. It observes the current board state, selects a move, and receives a positive reward for winning, a negative reward for losing, and perhaps a smaller signal for other outcomes. By playing many episodes or using simulated experience, the agent adjusts its strategy."
+        },
+        {
+          "t": "p",
+          "x": "The reward design is crucial. If the reward encourages only a narrow short-term objective, the agent may find an unintended way to maximize it. This is an example of reward hacking or specification problems: the system optimizes the signal it was given, which may not fully capture the designer’s real intention."
+        },
+        {
+          "t": "h",
+          "x": "9.4 Exploration and exploitation"
+        },
+        {
+          "t": "p",
+          "x": "Exploration means trying actions to discover their consequences. Exploitation means choosing actions currently believed to produce good results. An agent that only exploits early assumptions may miss better strategies. An agent that explores too much may fail to make effective use of what it has learned. RL methods must balance the two."
+        },
+        {
+          "t": "h",
+          "x": "9.5 Applications"
+        },
+        {
+          "t": "h",
+          "x": "Reinforcement learning has been studied and used in"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Game-playing systems.",
+            "Simulated robotics and control.",
+            "Resource allocation and scheduling.",
+            "Some optimization and decision-making tasks."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Real-world use requires care. Exploration can be costly or dangerous in physical, medical, or financial environments. Developers may train in simulation, impose safety constraints, and validate thoroughly before allowing a system to act in the real world."
+        },
+        {
+          "t": "h",
+          "x": "9.6 Advantages and limitations"
+        },
+        {
+          "t": "p",
+          "x": "RL can learn sequential strategies when actions influence future states and rewards. However, it may require substantial interaction or simulation, careful reward design, and extensive testing. Results may be unstable or fail to transfer from a simulation to the real environment. It is not the right choice for every prediction or classification task."
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "t": "Comparing the Three Types",
+      "k": "sum",
+      "s": "Quick reference",
+      "b": [
+        {
+          "t": "h",
+          "x": "Supervised learning"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Training signal: labeled examples.",
+            "Main objective: predict a known target.",
+            "Typical tasks: classification and regression.",
+            "Example: predict whether a message is spam."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Unsupervised learning"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Training signal: data without target labels.",
+            "Main objective: discover structure or representations.",
+            "Typical tasks: clustering, dimensionality reduction, anomaly exploration.",
+            "Example: group products by patterns in customer purchases."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Reinforcement learning"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Training signal: rewards from actions and interactions.",
+            "Main objective: learn a strategy that maximizes cumulative reward.",
+            "Typical tasks: sequential decision-making and control.",
+            "Example: learn a strategy for a game through repeated play."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These categories describe broad learning setups, not strict boundaries around every modern system. Some projects combine them. A system may use unsupervised methods to explore data, supervised learning for prediction, and reinforcement learning for a later decision-making stage."
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "t": "Everyday Applications of Machine Learning",
+      "k": "th",
+      "s": "Email providers can train classifiers on examples of spam and legitimate messages.",
+      "b": [
+        {
+          "t": "h",
+          "x": "11.1 Email spam filtering"
+        },
+        {
+          "t": "p",
+          "x": "Email providers can train classifiers on examples of spam and legitimate messages. The model may use message text, sender information, links, and other signals. False positives can send a legitimate email to spam; false negatives can allow unwanted messages into the inbox. Because the patterns of spam change, systems need monitoring and updates."
+        },
+        {
+          "t": "h",
+          "x": "11.2 Maps and route planning"
+        },
+        {
+          "t": "p",
+          "x": "Mapping services combine geographic data, road networks, traffic observations, and algorithms. Machine learning may estimate travel times or predict traffic conditions, while search algorithms compare possible routes. This is an example of multiple techniques working together rather than one model doing everything."
+        },
+        {
+          "t": "h",
+          "x": "11.3 Keyboard suggestions and autocorrect"
+        },
+        {
+          "t": "p",
+          "x": "A keyboard may use language patterns to suggest the next word or correct a likely typing error. The system may consider the current text and, depending on the product, personal vocabulary or language settings. Suggestions can be wrong, especially for names, technical terms, and multilingual writing."
+        },
+        {
+          "t": "h",
+          "x": "11.4 Fraud detection"
+        },
+        {
+          "t": "p",
+          "x": "Financial services may use models to flag transactions whose patterns differ from typical legitimate activity. A flag is not proof of fraud. Systems need to manage false alarms, monitor performance across different users, protect financial data, and provide suitable review procedures."
+        },
+        {
+          "t": "h",
+          "x": "11.5 Image recognition"
+        },
+        {
+          "t": "p",
+          "x": "Computer-vision models can classify images, detect objects, or identify visual patterns. Applications include photo organization, quality inspection, accessibility tools, and assistance with document processing. Performance can vary with lighting, image quality, camera angle, and representation in the training data."
+        },
+        {
+          "t": "h",
+          "x": "11.6 Predictive maintenance"
+        },
+        {
+          "t": "p",
+          "x": "Industrial systems may analyze sensor readings to estimate whether equipment is likely to require maintenance. The model can help schedule inspections, but incorrect predictions may cause unnecessary costs or missed failures. Reliable deployment requires good sensors, appropriate data, and operational validation."
+        },
+        {
+          "t": "h",
+          "x": "11.7 Healthcare support"
+        },
+        {
+          "t": "p",
+          "x": "ML may assist with image analysis, risk estimation, administrative work, and research. Healthcare data is sensitive, and models can perform unevenly across populations or clinical settings. A model’s output must be validated for its intended use and interpreted by appropriately qualified professionals where required."
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "t": "Recommendation Engines",
+      "k": "th",
+      "s": "A recommendation engine predicts or ranks items that may be relevant to a user.",
+      "b": [
+        {
+          "t": "h",
+          "x": "12.1 Meaning"
+        },
+        {
+          "t": "p",
+          "x": "A recommendation engine predicts or ranks items that may be relevant to a user. It is used in streaming platforms, online shops, news feeds, music services, and learning platforms."
+        },
+        {
+          "t": "h",
+          "x": "A recommendation system may use"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "The user’s past interactions.",
+            "Similarities between items.",
+            "Patterns among users with similar behavior.",
+            "Explicit ratings or preferences.",
+            "Context such as time, device, or the current task, where appropriate and permitted."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "12.2 Content-based filtering"
+        },
+        {
+          "t": "p",
+          "x": "Content-based filtering recommends items that resemble items a user previously liked. For example, if a user often listens to acoustic music, the system may recommend other tracks with similar musical characteristics."
+        },
+        {
+          "t": "p",
+          "x": "Its strength is that it can use item features directly. Its limitation is that it may repeatedly recommend similar content and provide little variety."
+        },
+        {
+          "t": "h",
+          "x": "12.3 Collaborative filtering"
+        },
+        {
+          "t": "p",
+          "x": "Collaborative filtering uses patterns in interactions among many users and items. If people who liked certain films also tended to like another film, the system may recommend that film to someone with a similar pattern."
+        },
+        {
+          "t": "p",
+          "x": "This approach can discover useful relationships even when item descriptions are limited. However, it can struggle with new users or new items that have little interaction history. This is known as the cold-start problem."
+        },
+        {
+          "t": "h",
+          "x": "12.4 Hybrid recommendations"
+        },
+        {
+          "t": "p",
+          "x": "Hybrid systems combine content-based and collaborative methods or other signals. Combining approaches can improve coverage, but does not guarantee better recommendations in every setting."
+        },
+        {
+          "t": "h",
+          "x": "12.5 Benefits and risks"
+        },
+        {
+          "t": "p",
+          "x": "Recommendations can save time, help users discover content, and improve personalization. They can also narrow a user’s exposure, reinforce past interests, encourage excessive engagement, or prioritize commercially valuable content over user welfare."
+        },
+        {
+          "t": "p",
+          "x": "A responsible system should consider user control, transparency, diversity, privacy, and the possibility of manipulation. Users should be able to understand important personalization settings and adjust them when the service offers those controls."
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "t": "Virtual Assistants and Conversational Systems",
+      "k": "th",
+      "s": "Virtual assistants accept user requests through text or speech and help perform tasks such as answering…",
+      "b": [
+        {
+          "t": "h",
+          "x": "13.1 What virtual assistants do"
+        },
+        {
+          "t": "p",
+          "x": "Virtual assistants accept user requests through text or speech and help perform tasks such as answering questions, setting reminders, searching for information, or controlling compatible devices."
+        },
+        {
+          "t": "h",
+          "x": "A typical voice assistant may involve several stages"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Speech recognition converts audio into text or another representation.",
+            "Language processing estimates the user’s intent and relevant details.",
+            "A dialogue component manages context or determines what information is missing.",
+            "A tool or service may perform an action, such as setting a reminder.",
+            "The system produces a response, which may be displayed as text or converted into speech."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Different products use different architectures. Some rely heavily on predefined intents and rules; others use large machine-learning models. Many use a combination."
+        },
+        {
+          "t": "h",
+          "x": "13.2 How machine learning helps"
+        },
+        {
+          "t": "p",
+          "x": "Machine learning can support speech recognition, language understanding, intent classification, personalization, and response generation. Training data helps models learn patterns in speech and language. Yet language is ambiguous, context-dependent, and culturally varied, so systems can misunderstand users."
+        },
+        {
+          "t": "h",
+          "x": "13.3 Limitations"
+        },
+        {
+          "t": "p",
+          "x": "A virtual assistant may mishear an accent, misunderstand a request, provide outdated information, or generate an incorrect answer. A fluent response is not proof that the information is true. High-impact actions should require suitable confirmation and safeguards."
+        },
+        {
+          "t": "h",
+          "x": "13.4 Privacy considerations"
+        },
+        {
+          "t": "p",
+          "x": "Voice and conversation data may contain sensitive information. Users should understand when microphones or recordings are active, what data is stored, how it is used, and what controls are available. Developers should minimize unnecessary collection and protect stored information."
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "t": "AI Ethics: Meaning and Importance",
+      "k": "th",
+      "s": "AI ethics is the study and practical application of principles concerning the responsible development,…",
+      "b": [
+        {
+          "t": "h",
+          "x": "14.1 Definition"
+        },
+        {
+          "t": "p",
+          "x": "AI ethics is the study and practical application of principles concerning the responsible development, deployment, and use of AI systems. It asks not only whether a system can perform a task, but whether it should be used for that task, who may benefit, who may be harmed, and how accountability should work."
+        },
+        {
+          "t": "p",
+          "x": "Ethical issues arise throughout the AI lifecycle: defining the problem, collecting data, training a model, evaluating it, deploying it, and monitoring its effects."
+        },
+        {
+          "t": "h",
+          "x": "14.2 Why AI ethics matters"
+        },
+        {
+          "t": "p",
+          "x": "AI systems can influence access to education, jobs, loans, healthcare, information, and public services. An inaccurate or unfair system can affect many people, especially when it is used at scale or when people cannot challenge its decisions."
+        },
+        {
+          "t": "p",
+          "x": "A model may achieve high average accuracy while performing poorly for a particular group. A system may also be technically effective but used in a context that violates privacy or undermines people’s ability to make informed choices."
+        },
+        {
+          "t": "h",
+          "x": "14.3 Important principles"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Fairness",
+              "Avoid unjustified differences in treatment or outcomes."
+            ],
+            [
+              "Privacy",
+              "Respect people’s rights and expectations concerning personal information."
+            ],
+            [
+              "Transparency",
+              "Explain the system’s purpose, relevant limitations, and important decisions in a way suitable for the audience."
+            ],
+            [
+              "Accountability",
+              "Assign responsibility for decisions, monitoring, correction, and harm."
+            ],
+            [
+              "Safety and reliability",
+              "Test the system under realistic conditions and prepare for failures."
+            ],
+            [
+              "Human oversight",
+              "Ensure people can review or intervene where appropriate, especially for high-impact decisions."
+            ],
+            [
+              "Security",
+              "Protect models, data, and connected services from unauthorized access or manipulation."
+            ],
+            [
+              "Inclusiveness and accessibility",
+              "Consider the needs of people with different abilities, languages, resources, and backgrounds."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "These principles can conflict. For example, making more data available may improve a model but increase privacy risk. Responsible design requires evaluating trade-offs rather than assuming that one principle automatically solves every problem."
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "t": "Data Bias and Fairness",
+      "k": "th",
+      "s": "In machine learning, bias can refer to several different concepts.",
+      "b": [
+        {
+          "t": "h",
+          "x": "15.1 What is data bias?"
+        },
+        {
+          "t": "p",
+          "x": "In machine learning, bias can refer to several different concepts. In AI ethics, data bias often means systematic distortions or gaps in data that lead a model to produce unfair or inaccurate outcomes for some people or situations."
+        },
+        {
+          "t": "p",
+          "x": "Bias can enter through the collection process, the labels, the features, historical decisions, the model objective, or the way a system is deployed. It is not always deliberate. Even a dataset that appears large may fail to represent the people affected by the system."
+        },
+        {
+          "t": "h",
+          "x": "15.2 Types and sources of bias"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Historical bias",
+              "Data reflects existing inequalities or discriminatory decisions. A model trained to imitate past decisions may reproduce them."
+            ],
+            [
+              "Representation bias",
+              "Some groups or situations are missing or underrepresented in the training data. A facial-analysis model trained on a narrow population may perform worse on people not well represented."
+            ],
+            [
+              "Measurement bias",
+              "The measured variable does not accurately represent the concept of interest. For example, spending on healthcare is not necessarily a fair measure of how much healthcare a person needs, because access and past treatment differ."
+            ],
+            [
+              "Label bias",
+              "Labels may be subjective or systematically incorrect. Human annotators may disagree, or historical labels may encode prejudice."
+            ],
+            [
+              "Sampling bias",
+              "The way examples are selected makes the dataset unrepresentative of the target population."
+            ],
+            [
+              "Selection bias",
+              "The data available for analysis may include only people who passed an earlier selection process, leaving out others whose outcomes matter."
+            ],
+            [
+              "Deployment bias",
+              "A system is used in a context different from the one for which it was designed or validated."
+            ],
+            [
+              "Automation bias",
+              "People may trust a computer’s recommendation too readily simply because it appears authoritative or numerical."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "15.3 Example: recruitment"
+        },
+        {
+          "t": "p",
+          "x": "Imagine a company trains a model using historical hiring decisions. If previous hiring favored certain backgrounds, the model may learn patterns associated with those historical choices instead of measuring job-relevant ability fairly. Removing an explicitly sensitive attribute does not necessarily eliminate the problem because other features may act as proxies."
+        },
+        {
+          "t": "p",
+          "x": "A more responsible approach includes defining job-related criteria, examining data sources, evaluating performance across relevant groups, testing for disparate impacts, involving human reviewers, documenting limitations, and providing ways to challenge mistakes. Fairness is context-dependent and cannot be guaranteed by one metric or one simple technical adjustment."
+        },
+        {
+          "t": "h",
+          "x": "15.4 Detecting and reducing bias"
+        },
+        {
+          "t": "h",
+          "x": "Useful practices include"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Inspect who is represented and who is missing.",
+            "Review how labels were created.",
+            "Check whether the target variable genuinely matches the intended goal.",
+            "Measure error rates across relevant groups when appropriate and legally permissible.",
+            "Ask affected communities and domain experts for input.",
+            "Test the system in realistic deployment conditions.",
+            "Document known limitations and decisions.",
+            "Monitor outcomes after deployment.",
+            "Provide appeal or correction processes for important decisions."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "No single fairness measure captures every ethical concern. Some fairness definitions can conflict, especially when group base rates differ. Technical measurements should therefore be combined with domain knowledge, legal requirements, and careful ethical reasoning."
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "t": "Privacy and Personal Data",
+      "k": "th",
+      "s": "AI systems may process personal data such as names, location histories, voice recordings, photographs,…",
+      "b": [
+        {
+          "t": "h",
+          "x": "16.1 What is privacy in AI?"
+        },
+        {
+          "t": "p",
+          "x": "AI systems may process personal data such as names, location histories, voice recordings, photographs, browsing behavior, health records, financial information, or messages. Privacy concerns arise when data is collected without appropriate justification, used beyond its intended purpose, exposed to unauthorized people, or retained longer than necessary."
+        },
+        {
+          "t": "p",
+          "x": "Even data that does not contain a person’s name may sometimes be linked back to individuals when combined with other information."
+        },
+        {
+          "t": "h",
+          "x": "16.2 Data collection and consent"
+        },
+        {
+          "t": "p",
+          "x": "Organizations should be clear about what they collect, why they collect it, and how it will be used. Consent can be important, but ethical and legal responsibilities may extend beyond obtaining a checkbox or accepting a lengthy policy. People should not be misled about data practices or pressured into unnecessary collection."
+        },
+        {
+          "t": "h",
+          "x": "16.3 Data minimization"
+        },
+        {
+          "t": "p",
+          "x": "Data minimization means collecting and retaining only the information needed for a legitimate purpose. If a task can be performed without storing a user’s precise location or full identity, avoiding unnecessary data can reduce risk."
+        },
+        {
+          "t": "h",
+          "x": "16.4 Anonymization and pseudonymization"
+        },
+        {
+          "t": "p",
+          "x": "Anonymization aims to make data no longer reasonably identifiable to a person. Effective anonymization can be difficult because different datasets may be combined to re-identify individuals."
+        },
+        {
+          "t": "p",
+          "x": "Pseudonymization replaces direct identifiers with substitutes, such as a code. It can reduce exposure, but the data may still be personal if a link back to the individual exists or can be restored."
+        },
+        {
+          "t": "h",
+          "x": "16.5 Security"
+        },
+        {
+          "t": "p",
+          "x": "Protective measures can include access controls, encryption, secure storage, audit logs, careful vendor management, and incident-response plans. Security also involves limiting who can view training data, model outputs, and logs."
+        },
+        {
+          "t": "h",
+          "x": "16.6 Privacy in machine learning"
+        },
+        {
+          "t": "p",
+          "x": "Training data can sometimes be memorized by a model, and model outputs may reveal information about training examples under certain circumstances. Privacy-preserving methods, such as differential privacy, can offer formal protections in suitable settings, but they require careful implementation and often involve trade-offs."
+        },
+        {
+          "t": "p",
+          "x": "Federated learning allows some training to occur across devices or organizations without collecting all raw data in one central location. However, federated learning does not automatically guarantee privacy; additional protections may still be necessary."
+        },
+        {
+          "t": "h",
+          "x": "16.7 Practical example"
+        },
+        {
+          "t": "p",
+          "x": "A learning app wants to recommend practice exercises. It may need to know which questions a learner answered correctly and which topics they studied. It may not need access to the learner’s contacts, precise location, or unrelated private messages. A privacy-conscious design collects only justified information, explains the purpose, secures the records, and provides suitable retention and deletion controls."
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "t": "Deepfakes and Synthetic Media",
+      "k": "th",
+      "s": "A deepfake is synthetic or manipulated media—often audio, images, or video—created or altered using AI…",
+      "b": [
+        {
+          "t": "h",
+          "x": "17.1 What is a deepfake?"
+        },
+        {
+          "t": "p",
+          "x": "A deepfake is synthetic or manipulated media—often audio, images, or video—created or altered using AI techniques to make a person appear to say or do something they did not actually say or do. The term is often associated with realistic face swaps or generated speech, but synthetic media covers a wider range of uses."
+        },
+        {
+          "t": "p",
+          "x": "Not all synthetic media is harmful. It can be used for entertainment, film production, accessibility, education, translation, and creative work. The ethical risk depends on the purpose, consent, disclosure, and potential consequences."
+        },
+        {
+          "t": "h",
+          "x": "17.2 Potential harms"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Impersonation and fraud",
+              "A fake voice or video may be used to impersonate a family member, colleague, executive, or public figure."
+            ],
+            [
+              "Misinformation",
+              "Synthetic footage can be presented as genuine evidence of an event that did not occur."
+            ],
+            [
+              "Harassment",
+              "Non-consensual synthetic imagery can be used to humiliate, threaten, or target people."
+            ],
+            [
+              "Reputational damage",
+              "A fabricated recording may cause people to distrust or wrongly condemn someone."
+            ],
+            [
+              "Political manipulation",
+              "Misleading media may influence public debate, especially when shared rapidly before verification."
+            ],
+            [
+              "Erosion of trust",
+              "If people believe that any recording might be fake, they may dismiss authentic evidence as well as fabricated evidence."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "17.3 Detection is difficult"
+        },
+        {
+          "t": "p",
+          "x": "Some deepfakes contain visual or audio inconsistencies, but generative techniques improve over time. Compression, editing, and low-quality recordings can also make analysis difficult. A detector may produce false positives and false negatives. No single detector should be treated as a universal guarantee of authenticity."
+        },
+        {
+          "t": "h",
+          "x": "17.4 Ways to respond"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Verify surprising claims through multiple reliable sources.",
+            "Check the original source and context of the recording.",
+            "Contact the supposed speaker through a trusted, separate channel before acting on an urgent request.",
+            "Use agreed verification procedures for financial transfers and sensitive instructions.",
+            "Preserve relevant evidence if fraud or harassment occurs.",
+            "Clearly label synthetic content where disclosure is appropriate.",
+            "Obtain consent before using someone’s likeness or voice in sensitive contexts.",
+            "Support media literacy and responsible platform policies."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "Provenance systems and cryptographic signatures can help establish where some media came from and whether it has been modified. They do not solve every problem: genuine media may lack such records, and a signed source does not prove that every claim in the media is true."
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "t": "AI, Employment, and the Future of Work",
+      "k": "th",
+      "s": "AI can automate some tasks, augment others, create demand for new activities, and change how work is…",
+      "b": [
+        {
+          "t": "h",
+          "x": "18.1 How AI can affect jobs"
+        },
+        {
+          "t": "p",
+          "x": "AI can automate some tasks, augment others, create demand for new activities, and change how work is organized. It is important to distinguish a task from an entire occupation. A job usually contains multiple tasks, including communication, judgment, physical activity, collaboration, and accountability. AI may automate only part of the job."
+        },
+        {
+          "t": "p",
+          "x": "For example, an office worker may use AI to draft routine text or summarize documents while still needing to verify facts, communicate with colleagues, make decisions, and take responsibility for the final result."
+        },
+        {
+          "t": "h",
+          "x": "18.2 Potential benefits"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Productivity",
+              "AI can help people complete some tasks faster."
+            ],
+            [
+              "Accessibility",
+              "Speech recognition, translation, summarization, and assistive technologies can help people access information or communicate."
+            ],
+            [
+              "New services",
+              "AI may support new products, research methods, and business models."
+            ],
+            [
+              "Support for difficult work",
+              "AI can help identify patterns in large datasets or assist experts in exploring possibilities."
+            ],
+            [
+              "Reduced repetitive effort",
+              "Automating routine tasks may allow workers to focus on more complex, interpersonal, or creative activities, depending on how the organization redesigns work."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "18.3 Potential risks"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Job displacement",
+              "Some tasks or roles may shrink when automation becomes practical."
+            ],
+            [
+              "Job transformation",
+              "Workers may be expected to use AI tools or perform different responsibilities."
+            ],
+            [
+              "Unequal gains",
+              "Productivity benefits may not be shared evenly among workers, firms, and communities."
+            ],
+            [
+              "Work intensification",
+              "Employers may use AI to increase monitoring, speed up work, or demand more output without adequate support."
+            ],
+            [
+              "Skill gaps",
+              "Workers may need training to adapt to changing job requirements."
+            ],
+            [
+              "Entry-level disruption",
+              "Automating basic tasks may reduce some opportunities through which beginners traditionally gained experience."
+            ],
+            [
+              "Surveillance",
+              "AI-based productivity monitoring can threaten privacy and create pressure when poorly governed."
+            ]
+          ]
+        },
+        {
+          "t": "h",
+          "x": "18.4 Will AI replace all jobs?"
+        },
+        {
+          "t": "p",
+          "x": "There is no reliable basis for claiming that all jobs will definitely disappear or that no jobs will be affected. Outcomes depend on technical capability, cost, reliability, laws, customer preferences, organizational choices, and the creation of new tasks and industries."
+        },
+        {
+          "t": "p",
+          "x": "Some work is easier to automate because it is repetitive and digitally accessible. Other work relies heavily on physical dexterity in unpredictable settings, human trust, interpersonal care, complex responsibility, or context that is difficult to formalize. These differences are not permanent guarantees; technology and work practices can change."
+        },
+        {
+          "t": "h",
+          "x": "A useful question is not simply “Will AI replace this occupation?” but"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Which tasks can be automated?",
+            "Which tasks can be assisted?",
+            "Which tasks still require human judgment or responsibility?",
+            "How might demand for the service change?",
+            "What training and safeguards will workers need?"
+          ]
+        },
+        {
+          "t": "h",
+          "x": "18.5 Preparing for change"
+        },
+        {
+          "t": "h",
+          "x": "Useful strategies include"
+        },
+        {
+          "t": "ul",
+          "x": [
+            "Build foundational digital and data skills.",
+            "Learn to use AI tools critically rather than accepting every output.",
+            "Strengthen communication, collaboration, creativity, and problem-solving.",
+            "Develop domain knowledge in a field where AI tools may be used.",
+            "Practice checking sources, testing outputs, and identifying errors.",
+            "Continue learning as tools and workplace expectations evolve.",
+            "Support accessible training and fair transitions for affected workers."
+          ]
+        },
+        {
+          "t": "p",
+          "x": "For a student learning computing, understanding programming, databases, statistics, data preparation, model evaluation, security, and ethical design can provide a useful foundation. Tools change quickly, but the ability to reason about systems and validate results remains important."
+        }
+      ]
+    },
+    {
+      "n": 19,
+      "t": "AI’s Wider Impact on Society",
+      "k": "th",
+      "s": "AI tools can explain concepts, provide practice questions, translate materials, and support accessibility.",
+      "b": [
+        {
+          "t": "h",
+          "x": "19.1 Education"
+        },
+        {
+          "t": "p",
+          "x": "AI tools can explain concepts, provide practice questions, translate materials, and support accessibility. Risks include incorrect explanations, overreliance, unequal access, privacy problems, and the temptation to submit generated work without understanding it. Education should use AI in ways that support learning and preserve honest assessment."
+        },
+        {
+          "t": "h",
+          "x": "19.2 Healthcare"
+        },
+        {
+          "t": "p",
+          "x": "AI can assist with research, image analysis, administration, and decision support. Poorly validated systems can create serious harm, especially if clinicians or patients over-trust their outputs. Medical use requires suitable testing, privacy protection, professional oversight, and clarity about intended use."
+        },
+        {
+          "t": "h",
+          "x": "19.3 Public services and law enforcement"
+        },
+        {
+          "t": "p",
+          "x": "AI may be used to prioritize cases, analyze documents, or allocate resources. When systems affect liberty, benefits, or legal rights, errors and biased data can have major consequences. Decisions should be subject to appropriate oversight, transparency, and routes for challenge."
+        },
+        {
+          "t": "h",
+          "x": "19.4 Information and public debate"
+        },
+        {
+          "t": "p",
+          "x": "Recommendation algorithms can influence what people see. They may help users find relevant information, but engagement-focused ranking can also amplify sensational or misleading content. Media literacy, platform accountability, source verification, and transparent governance can help reduce harm."
+        },
+        {
+          "t": "h",
+          "x": "19.5 Environment and resources"
+        },
+        {
+          "t": "p",
+          "x": "AI can help model weather, optimize energy use, and analyze environmental data. Training and operating large systems can also consume energy, water, and computing resources. Responsible development should consider the full costs and compare them with the benefits."
+        },
+        {
+          "t": "h",
+          "x": "19.6 Concentration of power"
+        },
+        {
+          "t": "p",
+          "x": "Large AI systems can require extensive data, computing infrastructure, and specialized expertise. These requirements may concentrate influence among a small number of organizations. Competition, public-interest research, access to education, appropriate regulation, and accountable procurement can help address some concerns."
+        }
+      ]
+    },
+    {
+      "n": 20,
+      "t": "Responsible AI Principles",
+      "k": "th",
+      "s": "Responsible AI means designing, developing, deploying, and maintaining AI in ways that are appropriate to…",
+      "b": [
+        {
+          "t": "p",
+          "x": "Responsible AI means designing, developing, deploying, and maintaining AI in ways that are appropriate to the task and attentive to the people affected."
+        },
+        {
+          "t": "h",
+          "x": "20.1 Define the purpose and limits"
+        },
+        {
+          "t": "p",
+          "x": "State what the system is intended to do, what it must not do, who will use it, and what kinds of errors matter most. A model designed to suggest music should not automatically be reused to make high-stakes decisions about people."
+        },
+        {
+          "t": "h",
+          "x": "20.2 Use suitable data"
+        },
+        {
+          "t": "p",
+          "x": "Collect data lawfully and ethically, inspect its quality, document its origin, and consider whose experiences are missing. Ensure labels and target variables fit the real objective."
+        },
+        {
+          "t": "h",
+          "x": "20.3 Evaluate beyond average accuracy"
+        },
+        {
+          "t": "p",
+          "x": "Choose metrics that match the task and consider different error types. For an imbalanced dataset, a model that always predicts the majority class may have high accuracy while being useless for detecting the minority class. Examine performance across relevant groups and deployment conditions."
+        },
+        {
+          "t": "h",
+          "x": "20.4 Protect privacy and security"
+        },
+        {
+          "t": "p",
+          "x": "Limit access, use appropriate security controls, avoid unnecessary retention, and consider privacy risks in training and inference. Make data practices understandable to affected users."
+        },
+        {
+          "t": "h",
+          "x": "20.5 Keep humans meaningfully involved"
+        },
+        {
+          "t": "p",
+          "x": "Human oversight should be more than a symbolic approval step. Reviewers need enough information, authority, time, and training to question a model’s output. High-impact actions may require confirmation or a formal appeal process."
+        },
+        {
+          "t": "h",
+          "x": "20.6 Document and monitor"
+        },
+        {
+          "t": "p",
+          "x": "Record the model’s intended use, data limitations, evaluation results, and known failure modes. Monitor performance after release because real-world conditions can change. Provide a process for reporting issues and correcting harmful outcomes."
+        },
+        {
+          "t": "h",
+          "x": "20.7 Plan for misuse"
+        },
+        {
+          "t": "p",
+          "x": "Consider whether the system could be used for fraud, impersonation, surveillance, discrimination, or other harms. Appropriate safeguards may include rate limits, access controls, verification, user education, content labeling, or restrictions on particularly risky uses."
+        },
+        {
+          "t": "h",
+          "x": "20.8 Make accountability clear"
+        },
+        {
+          "t": "p",
+          "x": "Organizations should identify who is responsible for data, model decisions, security, monitoring, and incident response. “The AI did it” is not an adequate substitute for human and organizational accountability."
+        }
+      ]
+    },
+    {
+      "n": 21,
+      "t": "A Worked Example: Building a Study-Resource Recommender",
+      "k": "ex",
+      "s": "Imagine a student app that recommends practice questions based on a learner’s recent performance.",
+      "b": [
+        {
+          "t": "p",
+          "x": "Imagine a student app that recommends practice questions based on a learner’s recent performance."
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Step 1",
+              "Define the goal. Recommend relevant practice questions that help students improve understanding, not simply maximize time spent in the app."
+            ],
+            [
+              "Step 2",
+              "Collect appropriate data. The app records which questions were attempted, the topic, and whether the answer was correct. It avoids collecting unrelated personal information."
+            ],
+            [
+              "Step 3",
+              "Choose an approach. A supervised model might predict which topic a learner is likely to struggle with, using labeled historical examples. A recommendation method may then rank practice questions associated with that topic."
+            ],
+            [
+              "Step 4",
+              "Evaluate. Check whether the recommendations help students answer similar questions correctly later. Do not judge success only by clicks or minutes spent in the app."
+            ],
+            [
+              "Step 5",
+              "Consider bias. Some students may have less time, slower internet, different language backgrounds, or fewer opportunities to practice. The model should not interpret a lack of activity as lack of ability."
+            ],
+            [
+              "Step 6",
+              "Protect privacy. Limit access to student records, explain what is collected, and provide suitable controls for retention and deletion."
+            ],
+            [
+              "Step 7",
+              "Preserve learner agency. Allow students and instructors to adjust recommendations. Avoid presenting predictions as permanent judgments about a student’s intelligence."
+            ],
+            [
+              "Step 8",
+              "Monitor. Check whether the recommendations remain useful as courses and learners change. Provide a way to report errors."
+            ]
+          ]
+        },
+        {
+          "t": "p",
+          "x": "This example shows that machine learning, evaluation, privacy, fairness, and human-centered design are interconnected. A technically accurate model can still be poorly designed if it optimizes the wrong goal or uses data irresponsibly."
+        }
+      ]
+    },
+    {
+      "n": 22,
+      "t": "Common Misunderstandings",
+      "k": "warn",
+      "s": "Common pitfalls and corrections",
+      "b": [
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Machine learning means the computer learns exactly",
+          "x": [
+            "like a human. Correction: ML systems adjust parameters or",
+            "representations according to specific training procedures. This is not",
+            "the same as human understanding, experience, or consciousness."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "AI always requires a large neural network.",
+          "x": [
+            "Correction: AI includes rules, search, optimization, statistical models,",
+            "and many other methods. A small decision tree or a set of rules can be",
+            "appropriate for some tasks."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Supervised learning always gives correct answers.",
+          "x": [
+            "Correction: A model learns from examples and can make mistakes,",
+            "especially when labels are inaccurate or new data differs from training",
+            "data."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Unsupervised learning discovers the true meaning of",
+          "x": [
+            "every group. Correction: It finds patterns according to a chosen",
+            "representation and method. Human interpretation is often needed to",
+            "decide whether a grouping is useful."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Reinforcement learning simply means punishing a bad",
+          "x": [
+            "action. Correction: RL learns from reward signals over time. Reward",
+            "design, exploration, delayed consequences, and safety constraints are",
+            "all important."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "High accuracy proves a model is fair. Correction:",
+          "x": [
+            "Overall accuracy can hide unequal error rates or harmful effects.",
+            "Fairness requires context-specific analysis."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Removing names guarantees privacy. Correction: Other",
+          "x": [
+            "details may identify people when combined. Privacy requires a broader",
+            "assessment of collection, access, retention, linkage, and model",
+            "behavior."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "Every deepfake is easy to detect. Correction:",
+          "x": [
+            "Detection is an evolving technical challenge, and detectors can make",
+            "mistakes. Source verification and cautious judgment remain important."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "AI will either replace every job or have no effect",
+          "x": [
+            "on employment. Correction: Effects vary by task, occupation, industry,",
+            "and social choices. Automation, augmentation, job creation, and",
+            "displacement can happen together."
+          ]
+        },
+        {
+          "t": "note",
+          "k": "warn",
+          "h": "A human reviewer automatically makes an AI system",
+          "x": [
+            "safe. Correction: Oversight works only when reviewers can understand the",
+            "situation, challenge the system, and act meaningfully."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 23,
+      "t": "Summary and Key Terms",
+      "k": "fin",
+      "s": "Revision recap",
+      "b": [
+        {
+          "t": "p",
+          "x": "Machine learning enables systems to learn useful patterns from data or experience. It differs from traditional rule-based programming because some of its behavior is learned from examples rather than fully specified through explicit rules. The three introductory learning categories are supervised learning, unsupervised learning, and reinforcement learning. Supervised learning uses labeled examples for tasks such as classification and regression. Unsupervised learning explores patterns without target labels. Reinforcement learning learns strategies through interaction and reward signals."
+        },
+        {
+          "t": "p",
+          "x": "Machine learning appears in spam filters, route estimation, image recognition, recommendation engines, virtual assistants, and many other applications. These systems can provide value but may make mistakes or behave poorly outside the conditions in which they were evaluated."
+        },
+        {
+          "t": "p",
+          "x": "AI ethics considers fairness, privacy, transparency, safety, accountability, and social consequences. Data bias can lead to unequal performance or unfair outcomes. Privacy requires careful handling of personal information. Deepfakes can support creative work but can also enable impersonation and misinformation. AI can automate or augment tasks and may transform employment, but the outcomes depend on technical, economic, and social factors."
+        },
+        {
+          "t": "p",
+          "x": "Responsible AI requires clear goals, appropriate data, careful evaluation, safeguards, meaningful oversight, documentation, monitoring, and accountability."
+        },
+        {
+          "t": "h",
+          "x": "Key Terms"
+        },
+        {
+          "t": "gl",
+          "x": [
+            [
+              "Artificial intelligence (AI)",
+              "A field of computing concerned with systems that perform tasks associated with abilities such as reasoning, perception, language processing, or decision support."
+            ],
+            [
+              "Machine learning (ML)",
+              "Methods that learn patterns from data or experience to perform a task."
+            ],
+            [
+              "Deep learning",
+              "A subset of ML based on neural networks with multiple processing layers."
+            ],
+            [
+              "Dataset",
+              "A collection of examples used for analysis or model development."
+            ],
+            [
+              "Feature",
+              "An input variable or representation used by a model."
+            ],
+            [
+              "Label",
+              "The target answer associated with an example in supervised learning."
+            ],
+            [
+              "Model",
+              "A learned system that produces predictions or other outputs from inputs."
+            ],
+            [
+              "Training",
+              "Adjusting a model using data and a learning procedure."
+            ],
+            [
+              "Inference",
+              "Using a trained model to produce an output for new input."
+            ],
+            [
+              "Supervised learning",
+              "Learning from labeled examples."
+            ],
+            [
+              "Classification",
+              "Predicting a category."
+            ],
+            [
+              "Regression",
+              "Predicting a numerical value."
+            ],
+            [
+              "Unsupervised learning",
+              "Discovering structure in data without target labels."
+            ],
+            [
+              "Clustering",
+              "Grouping examples according to similarity."
+            ],
+            [
+              "Dimensionality reduction",
+              "Representing data using fewer dimensions while preserving selected structure."
+            ],
+            [
+              "Anomaly detection",
+              "Identifying examples that differ from expected patterns."
+            ],
+            [
+              "Reinforcement learning",
+              "Learning a policy through interaction and reward signals."
+            ],
+            [
+              "Agent",
+              "The learner or decision-maker in reinforcement learning."
+            ],
+            [
+              "Environment",
+              "The world or process with which the agent interacts."
+            ],
+            [
+              "Reward",
+              "A numerical signal used to guide learning in reinforcement learning."
+            ],
+            [
+              "Policy",
+              "A strategy for choosing actions."
+            ],
+            [
+              "Rule-based programming",
+              "Programming in which explicit rules define behavior."
+            ],
+            [
+              "Recommendation engine",
+              "A system that ranks or suggests items for users."
+            ],
+            [
+              "Content-based filtering",
+              "Recommendation using item characteristics and user preferences."
+            ],
+            [
+              "Collaborative filtering",
+              "Recommendation using patterns across user-item interactions."
+            ],
+            [
+              "Cold-start problem",
+              "Difficulty making recommendations when a user or item has little interaction history."
+            ],
+            [
+              "AI ethics",
+              "Principles and practices for responsible AI development and use."
+            ],
+            [
+              "Data bias",
+              "Systematic distortions or gaps in data that may lead to inaccurate or unfair outcomes."
+            ],
+            [
+              "Privacy",
+              "Appropriate control and protection of information about people."
+            ],
+            [
+              "Anonymization",
+              "Transforming data so individuals are no longer reasonably identifiable, though the effectiveness depends on context."
+            ],
+            [
+              "Pseudonymization",
+              "Replacing direct identifiers with substitutes while a link may still exist."
+            ],
+            [
+              "Deepfake",
+              "AI-generated or manipulated media that can make a person appear to say or do something they did not."
+            ],
+            [
+              "Automation",
+              "Using technology to perform tasks with less direct human effort."
+            ],
+            [
+              "Augmentation",
+              "Using technology to support or enhance human work."
+            ],
+            [
+              "Responsible AI",
+              "Developing and using AI with attention to reliability, fairness, privacy, safety, transparency, and accountability."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "n": 24,
+      "t": "Review Questions",
+      "k": "qa",
+      "s": "Practice and self-check",
+      "b": [
+        {
+          "t": "h",
+          "x": "Short-answer questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Define machine learning.",
+            "How does machine learning differ from traditional rule-based programming?",
+            "What is the difference between a feature and a label?",
+            "What is the purpose of training, validation, and test datasets?",
+            "Define supervised learning and give two examples.",
+            "What is the difference between classification and regression?",
+            "Define unsupervised learning.",
+            "What is clustering, and where might it be useful?",
+            "Explain reinforcement learning using the terms agent, environment, action, and reward.",
+            "What is the difference between exploration and exploitation?",
+            "Give five everyday applications of machine learning.",
+            "What is a recommendation engine?",
+            "Compare content-based filtering and collaborative filtering.",
+            "How can machine learning contribute to a virtual assistant?",
+            "Define AI ethics.",
+            "Name four sources of data bias.",
+            "Why does removing names not always guarantee privacy?",
+            "What is a deepfake, and how might it be misused?",
+            "Explain the difference between job automation and job augmentation.",
+            "Name five principles of responsible AI."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Long-answer questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Explain the machine-learning workflow from defining a problem to monitoring a deployed model.",
+            "Compare supervised, unsupervised, and reinforcement learning with examples.",
+            "Discuss the advantages and limitations of rule-based systems and machine-learning systems.",
+            "Explain how recommendation engines work and discuss their social risks.",
+            "Describe the main components of a virtual assistant and the role of ML in each stage.",
+            "Discuss how historical, representation, measurement, and label bias can affect AI systems.",
+            "Explain privacy risks in AI and describe practical methods for reducing them.",
+            "Discuss the benefits and harms of deepfakes and methods for verifying suspicious media.",
+            "Analyze how AI may change employment and explain why effects will differ across occupations.",
+            "Explain the principles of responsible AI and why monitoring after deployment matters."
+          ]
+        },
+        {
+          "t": "h",
+          "x": "Practical thinking questions"
+        },
+        {
+          "t": "ol",
+          "x": [
+            "Design a supervised-learning project to classify messages as spam or not spam.",
+            "Suggest an unsupervised-learning task for a small shop and explain how its results would be interpreted.",
+            "Describe a simple reinforcement-learning game and propose a reward function.",
+            "Imagine a music recommender. Identify useful data, privacy risks, and ways to avoid overly repetitive recommendations.",
+            "Imagine an AI recruitment tool. List possible sources of bias and safeguards that should be tested before use.",
+            "Create a checklist for verifying an audio message that appears to come from a family member asking for urgent money.",
+            "Choose a job and divide its tasks into those AI might automate, those it might assist, and those likely to require human responsibility.",
+            "Propose responsible-AI safeguards for a student learning app that stores practice results."
+          ]
+        }
+      ]
+    }
+  ]
+}
