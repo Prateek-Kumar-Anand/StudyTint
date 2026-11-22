@@ -486,14 +486,49 @@
           "x": "Example rows:"
         },
         {
-          "t": "code",
-          "x": [
-            "StudentID | StudentName | CourseID | CourseName | InstructorName | Grade",
-            "----------|-------------|----------|------------|----------------|------",
-            "101       | Asha        | C1       | DBMS       | Mr. Rao        | A",
-            "101       | Asha        | C2       | Python     | Ms. Sen        | B",
-            "102       | Kabir       | C1       | DBMS       | Mr. Rao        | A-",
-            "103       | Meera       | C1       | DBMS       | Mr. Rao        | B+"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "StudentID",
+            "StudentName",
+            "CourseID",
+            "CourseName",
+            "InstructorName",
+            "Grade"
+          ],
+          "r": [
+            [
+              "101",
+              "Asha",
+              "C1",
+              "DBMS",
+              "Mr. Rao",
+              "A"
+            ],
+            [
+              "101",
+              "Asha",
+              "C2",
+              "Python",
+              "Ms. Sen",
+              "B"
+            ],
+            [
+              "102",
+              "Kabir",
+              "C1",
+              "DBMS",
+              "Mr. Rao",
+              "A-"
+            ],
+            [
+              "103",
+              "Meera",
+              "C1",
+              "DBMS",
+              "Mr. Rao",
+              "B+"
+            ]
           ]
         },
         {
@@ -592,12 +627,24 @@
           ]
         },
         {
-          "t": "code",
-          "x": [
-            "StudentID | StudentName | PhoneNumbers",
-            "----------|-------------|--------------------",
-            "1         | Asha        | 9876, 9123",
-            "2         | Kabir       | 8765"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "StudentID",
+            "StudentName",
+            "PhoneNumbers"
+          ],
+          "r": [
+            [
+              "1",
+              "Asha",
+              "9876, 9123"
+            ],
+            [
+              "2",
+              "Kabir",
+              "8765"
+            ]
           ]
         },
         {
@@ -613,13 +660,29 @@
           "x": "Option A: One phone number per student row:"
         },
         {
-          "t": "code",
-          "x": [
-            "StudentID | StudentName | PhoneNumber",
-            "----------|-------------|------------",
-            "1         | Asha        | 9876",
-            "1         | Asha        | 9123",
-            "2         | Kabir       | 8765"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "StudentID",
+            "StudentName",
+            "PhoneNumber"
+          ],
+          "r": [
+            [
+              "1",
+              "Asha",
+              "9876"
+            ],
+            [
+              "1",
+              "Asha",
+              "9123"
+            ],
+            [
+              "2",
+              "Kabir",
+              "8765"
+            ]
           ]
         },
         {
@@ -647,12 +710,21 @@
           "x": "STUDENT"
         },
         {
-          "t": "code",
-          "x": [
-            "StudentID | StudentName",
-            "----------|------------",
-            "1         | Asha",
-            "2         | Kabir"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "StudentID",
+            "StudentName"
+          ],
+          "r": [
+            [
+              "1",
+              "Asha"
+            ],
+            [
+              "2",
+              "Kabir"
+            ]
           ]
         },
         {
@@ -660,13 +732,25 @@
           "x": "STUDENT_PHONE"
         },
         {
-          "t": "code",
-          "x": [
-            "StudentID | PhoneNumber",
-            "----------|------------",
-            "1         | 9876",
-            "1         | 9123",
-            "2         | 8765"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "StudentID",
+            "PhoneNumber"
+          ],
+          "r": [
+            [
+              "1",
+              "9876"
+            ],
+            [
+              "1",
+              "9123"
+            ],
+            [
+              "2",
+              "8765"
+            ]
           ]
         },
         {
@@ -1652,14 +1736,34 @@
           "x": "11.6 ACID summary"
         },
         {
-          "t": "code",
-          "x": [
-            "Property | Main question | Typical support",
-            "---------|--------------|----------------",
-            "Atomicity | Did all transaction operations happen as one unit? | Undo, rollback, recovery",
-            "Consistency | Were integrity rules preserved? | Constraints, application logic, correct transactions",
-            "Isolation | Did concurrent transactions interfere incorrectly? | Locks, MVCC, serializable scheduling",
-            "Durability | Do committed changes survive covered failures? | Logs, stable storage, redo, recovery"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Property",
+            "Main question",
+            "Typical support"
+          ],
+          "r": [
+            [
+              "Atomicity",
+              "Did all transaction operations happen as one unit?",
+              "Undo, rollback, recovery"
+            ],
+            [
+              "Consistency",
+              "Were integrity rules preserved?",
+              "Constraints, application logic, correct transactions"
+            ],
+            [
+              "Isolation",
+              "Did concurrent transactions interfere incorrectly?",
+              "Locks, MVCC, serializable scheduling"
+            ],
+            [
+              "Durability",
+              "Do committed changes survive covered failures?",
+              "Logs, stable storage, redo, recovery"
+            ]
           ]
         }
       ]
@@ -2010,12 +2114,24 @@
           "x": "Basic compatibility table:"
         },
         {
-          "t": "code",
-          "x": [
-            "Requested/Held | Shared (S) | Exclusive (X)",
-            "---------------|------------|--------------",
-            "Shared (S)     | Compatible | Not compatible",
-            "Exclusive (X)  | Not compatible | Not compatible"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Requested/Held",
+            "Shared (S)",
+            "Exclusive (X)"
+          ],
+          "r": [
+            [
+              "Shared (S)",
+              "Compatible",
+              "Not compatible"
+            ],
+            [
+              "Exclusive (X)",
+              "Not compatible",
+              "Not compatible"
+            ]
           ]
         },
         {
@@ -3626,14 +3742,34 @@
           "x": "23.7 Deadlock handling comparison"
         },
         {
-          "t": "code",
-          "x": [
-            "Method | Description | Main drawback",
-            "-------|-------------|--------------",
-            "Detection and recovery | Find cycles and abort a victim | Work is wasted when a transaction is rolled back",
-            "Prevention | Make a necessary deadlock condition impossible | May reduce concurrency",
-            "Avoidance | Grant requests only when the resulting state is safe | May need knowledge of future resource requirements",
-            "Timeout | Cancel transactions that wait too long | May confuse a long wait with a deadlock"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Method",
+            "Description",
+            "Main drawback"
+          ],
+          "r": [
+            [
+              "Detection and recovery",
+              "Find cycles and abort a victim",
+              "Work is wasted when a transaction is rolled back"
+            ],
+            [
+              "Prevention",
+              "Make a necessary deadlock condition impossible",
+              "May reduce concurrency"
+            ],
+            [
+              "Avoidance",
+              "Grant requests only when the resulting state is safe",
+              "May need knowledge of future resource requirements"
+            ],
+            [
+              "Timeout",
+              "Cancel transactions that wait too long",
+              "May confuse a long wait with a deadlock"
+            ]
           ]
         },
         {
@@ -3641,17 +3777,41 @@
           "x": "23.8 Recovery mechanisms"
         },
         {
-          "t": "code",
-          "x": [
-            "Mechanism | Purpose",
-            "----------|--------",
-            "Transaction log | Records changes and transaction outcomes",
-            "Write-ahead logging | Ensures required log records are persisted before relevant data-page writes",
-            "Checkpoint | Helps reduce restart recovery work",
-            "Undo | Removes effects of incomplete transactions",
-            "Redo | Reapplies changes that should be present",
-            "Backup | Provides a separate copy for recovery from data loss",
-            "Replication | Maintains copies to support availability or distribution"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Mechanism",
+            "Purpose"
+          ],
+          "r": [
+            [
+              "Transaction log",
+              "Records changes and transaction outcomes"
+            ],
+            [
+              "Write-ahead logging",
+              "Ensures required log records are persisted before relevant data-page writes"
+            ],
+            [
+              "Checkpoint",
+              "Helps reduce restart recovery work"
+            ],
+            [
+              "Undo",
+              "Removes effects of incomplete transactions"
+            ],
+            [
+              "Redo",
+              "Reapplies changes that should be present"
+            ],
+            [
+              "Backup",
+              "Provides a separate copy for recovery from data loss"
+            ],
+            [
+              "Replication",
+              "Maintains copies to support availability or distribution"
+            ]
           ]
         }
       ]
@@ -4773,14 +4933,39 @@
           "x": "Consider COURSE(Course, Teacher, Textbook). Assume a course can be taught by several teachers and can use several textbooks, and the choice of teacher is independent of the choice of textbook. To record that fact, we must store every combination."
         },
         {
-          "t": "code",
-          "x": [
-            "Course | Teacher | Textbook",
-            "DBMS   | Rao     | Korth",
-            "DBMS   | Rao     | Navathe",
-            "DBMS   | Sen     | Korth",
-            "DBMS   | Sen     | Navathe",
-            "OS     | Das     | Galvin"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Course",
+            "Teacher",
+            "Textbook"
+          ],
+          "r": [
+            [
+              "DBMS",
+              "Rao",
+              "Korth"
+            ],
+            [
+              "DBMS",
+              "Rao",
+              "Navathe"
+            ],
+            [
+              "DBMS",
+              "Sen",
+              "Korth"
+            ],
+            [
+              "DBMS",
+              "Sen",
+              "Navathe"
+            ],
+            [
+              "OS",
+              "Das",
+              "Galvin"
+            ]
           ]
         },
         {
@@ -4868,12 +5053,47 @@
           "x": "If X ↠ Y violates 4NF, split R into R1(X, Y) and R2(X, R − Y). The decomposition is lossless because X ↠ Y holds. For the COURSE relation:"
         },
         {
-          "t": "code",
-          "x": [
-            "COURSE_TEACHER (Course, Teacher)     COURSE_BOOK (Course, Textbook)",
-            "DBMS | Rao                           DBMS | Korth",
-            "DBMS | Sen                           DBMS | Navathe",
-            "OS   | Das                           OS   | Galvin"
+          "t": "tb",
+          "c": "COURSE_TEACHER",
+          "h": [
+            "Course",
+            "Teacher"
+          ],
+          "r": [
+            [
+              "DBMS",
+              "Rao"
+            ],
+            [
+              "DBMS",
+              "Sen"
+            ],
+            [
+              "OS",
+              "Das"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "COURSE_BOOK",
+          "h": [
+            "Course",
+            "Textbook"
+          ],
+          "r": [
+            [
+              "DBMS",
+              "Korth"
+            ],
+            [
+              "DBMS",
+              "Navathe"
+            ],
+            [
+              "OS",
+              "Galvin"
+            ]
           ]
         },
         {
@@ -4950,13 +5170,34 @@
           "x": "A company has a business rule: if supplier S supplies part P, and part P is used by project J, and project J buys from supplier S, then S supplies P to J. (A cyclic rule.) Relation SPJ records actual supplies:"
         },
         {
-          "t": "code",
-          "x": [
-            "SPJ (Supplier, Part, Project)",
-            "S1 | P1 | J2",
-            "S1 | P2 | J1",
-            "S2 | P1 | J1",
-            "S1 | P1 | J1"
+          "t": "tb",
+          "c": "SPJ",
+          "h": [
+            "Supplier",
+            "Part",
+            "Project"
+          ],
+          "r": [
+            [
+              "S1",
+              "P1",
+              "J2"
+            ],
+            [
+              "S1",
+              "P2",
+              "J1"
+            ],
+            [
+              "S2",
+              "P1",
+              "J1"
+            ],
+            [
+              "S1",
+              "P1",
+              "J1"
+            ]
           ]
         },
         {
@@ -5816,15 +6057,49 @@
           "x": "35.4 The SQL-standard isolation levels"
         },
         {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Level",
+            "Dirty read",
+            "Non-repeatable",
+            "Phantom",
+            "Write skew*"
+          ],
+          "r": [
+            [
+              "READ UNCOMMITTED",
+              "possible",
+              "possible",
+              "possible",
+              "possible"
+            ],
+            [
+              "READ COMMITTED",
+              "no",
+              "possible",
+              "possible",
+              "possible"
+            ],
+            [
+              "REPEATABLE READ",
+              "no",
+              "no",
+              "possible",
+              "possible"
+            ],
+            [
+              "SERIALIZABLE",
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
+          ]
+        },
+        {
           "t": "code",
           "x": [
-            "Level               | Dirty read | Non-repeatable | Phantom   | Write skew*",
-            "--------------------+------------+----------------+-----------+------------",
-            "READ UNCOMMITTED    | possible   | possible       | possible  | possible",
-            "READ COMMITTED      | no         | possible       | possible  | possible",
-            "REPEATABLE READ     | no         | no             | possible  | possible",
-            "SERIALIZABLE        | no         | no             | no        | no",
-            "",
             "* The standard's table lists the first three phenomena; serialization anomalies",
             "  such as write skew are ruled out only at SERIALIZABLE."
           ]
@@ -6178,15 +6453,57 @@
           "x": "37.4 Compatibility matrix"
         },
         {
-          "t": "code",
-          "x": [
-            "Requested ->  IS   IX   S    SIX  X",
-            "Held (by other):",
-            "IS           yes  yes  yes  yes  no",
-            "IX           yes  yes  no   no   no",
-            "S            yes  no   yes  no   no",
-            "SIX          yes  no   no   no   no",
-            "X            no   no   no   no   no"
+          "t": "tb",
+          "c": "Lock compatibility",
+          "h": [
+            "Held ↓ / Requested →",
+            "IS",
+            "IX",
+            "S",
+            "SIX",
+            "X"
+          ],
+          "r": [
+            [
+              "IS",
+              "yes",
+              "yes",
+              "yes",
+              "yes",
+              "no"
+            ],
+            [
+              "IX",
+              "yes",
+              "yes",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "S",
+              "yes",
+              "no",
+              "yes",
+              "no",
+              "no"
+            ],
+            [
+              "SIX",
+              "yes",
+              "no",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "X",
+              "no",
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
           ]
         },
         {
@@ -7065,14 +7382,57 @@
           "x": "41.8 Multiple-granularity lock compatibility"
         },
         {
-          "t": "code",
-          "x": [
-            "      IS   IX   S    SIX  X",
-            "IS    yes  yes  yes  yes  no",
-            "IX    yes  yes  no   no   no",
-            "S     yes  no   yes  no   no",
-            "SIX   yes  no   no   no   no",
-            "X     no   no   no   no   no"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Held ↓ / Requested →",
+            "IS",
+            "IX",
+            "S",
+            "SIX",
+            "X"
+          ],
+          "r": [
+            [
+              "IS",
+              "yes",
+              "yes",
+              "yes",
+              "yes",
+              "no"
+            ],
+            [
+              "IX",
+              "yes",
+              "yes",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "S",
+              "yes",
+              "no",
+              "yes",
+              "no",
+              "no"
+            ],
+            [
+              "SIX",
+              "yes",
+              "no",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "X",
+              "no",
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
           ]
         },
         {

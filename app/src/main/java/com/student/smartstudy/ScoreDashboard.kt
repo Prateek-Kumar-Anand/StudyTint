@@ -47,7 +47,7 @@ fun Donut(frac: Float, dia: Dp, color: Color, label: String, sub: String) {
         Canvas(Modifier.fillMaxSize()) {
             val w = 14.dp.toPx()
             val box = Size(this.size.width - w, this.size.height - w)
-            drawArc(color = Color(0xFFE9E9F2), startAngle = 0f, sweepAngle = 360f, useCenter = false, topLeft = Offset(w / 2, w / 2), size = box, style = Stroke(w))
+            drawArc(color = Color(0xFFF0E5BF), startAngle = 0f, sweepAngle = 360f, useCenter = false, topLeft = Offset(w / 2, w / 2), size = box, style = Stroke(w))
             drawArc(color = color, startAngle = -90f, sweepAngle = 360f * frac, useCenter = false, topLeft = Offset(w / 2, w / 2), size = box, style = Stroke(w, cap = StrokeCap.Round))
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -59,7 +59,7 @@ fun Donut(frac: Float, dia: Dp, color: Color, label: String, sub: String) {
 
 @Composable
 fun StatTile(value: String, label: String, color: Color, modifier: Modifier) {
-    Card(modifier, shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+    Card(modifier, shape = RoundedCornerShape(20.dp), colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)) {
         Column(Modifier.fillMaxWidth().padding(vertical = 14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(value, fontSize = 24.sp, fontWeight = FontWeight.Medium, color = color)
             Text(label, fontSize = 12.sp, color = Color.Gray)
@@ -75,7 +75,7 @@ fun MiniBar(label: String, frac: Float, right: String, color: Color) {
             Text(right, fontSize = 12.sp, color = Ink, fontWeight = FontWeight.Medium)
         }
         Spacer(Modifier.height(4.dp))
-        LinearProgressIndicator(progress = { frac.coerceIn(0f, 1f) }, color = color, trackColor = Color(0xFFE9E9F2), modifier = Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)))
+        LinearProgressIndicator(progress = { frac.coerceIn(0f, 1f) }, color = color, trackColor = Color(0xFFF0E5BF), modifier = Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)))
     }
 }
 
@@ -84,9 +84,9 @@ fun MiniBar(label: String, frac: Float, right: String, color: Color) {
 // a ranked topic list with progress rings and a petal "heat" chart of accuracy per subject.
 // ---------------------------------------------------------------------------------------------------------------------
 
-private val Tile = Color(0xFFF1F4F9)
+private val Tile = Color(0xFFFFF7E0)
 private val GoodGreen = Color(0xFF2E9E6B)
-private val NoData = Color(0xFFB8BEC9)
+private val NoData = Color(0xFFCDBF93)
 private const val GRID_WEEKS = 15
 
 /** yyyyMMdd for the day [daysAgo] days before today (java.util.Calendar works on every supported Android version). */
@@ -123,7 +123,7 @@ private fun activityCells(activity: Map<String, Int>): List<Int> {
 
 @Composable
 private fun DashCard(title: String, dot: Color, trailing: @Composable () -> Unit = {}, content: @Composable ColumnScope.() -> Unit) {
-    Card(shape = RoundedCornerShape(28.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+    Card(shape = RoundedCornerShape(28.dp), colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)) {
         Column(Modifier.fillMaxWidth().padding(18.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.size(10.dp).clip(CircleShape).background(dot))
@@ -142,7 +142,7 @@ private fun Ring(fraction: Float, dia: Dp, color: Color, label: String) {
         Canvas(Modifier.fillMaxSize()) {
             val w = 4.dp.toPx()
             val box = Size(this.size.width - w, this.size.height - w)
-            drawArc(color = Color(0xFFE6E2F7), startAngle = 0f, sweepAngle = 360f, useCenter = false, topLeft = Offset(w / 2, w / 2), size = box, style = Stroke(w))
+            drawArc(color = Color(0xFFF0E5BF), startAngle = 0f, sweepAngle = 360f, useCenter = false, topLeft = Offset(w / 2, w / 2), size = box, style = Stroke(w))
             drawArc(color = color, startAngle = -90f, sweepAngle = 360f * fraction, useCenter = false, topLeft = Offset(w / 2, w / 2), size = box, style = Stroke(w, cap = StrokeCap.Round))
         }
         Text(label, fontSize = 10.sp, fontWeight = FontWeight.Medium, color = Ink)
@@ -173,11 +173,11 @@ private fun SmallTile(value: String, label: String, color: Color, modifier: Modi
 @Composable
 private fun Petal(s: Subject, answered: Int, correct: Int, modifier: Modifier) {
     val heat = if (answered == 0) NoData else accColor(pct(correct, answered))
-    Box(modifier.size(112.dp).clip(RoundedCornerShape(44.dp)).background(Color(0xFFF7F8FB)), contentAlignment = Alignment.Center) {
+    Box(modifier.size(112.dp).clip(RoundedCornerShape(44.dp)).background(Color(0xFFFFF9E8)), contentAlignment = Alignment.Center) {
         Box(Modifier.fillMaxSize().background(Brush.radialGradient(listOf(heat.copy(alpha = if (answered == 0) 0.25f else 0.6f), Color.Transparent))))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(if (answered == 0) "—" else "${pct(correct, answered)}%", fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink)
-            Text(shortName(s), fontSize = 12.sp, color = Color(0xFF6B7080), maxLines = 1)
+            Text(shortName(s), fontSize = 12.sp, color = Color(0xFF8A7B52), maxLines = 1)
         }
     }
 }
@@ -229,7 +229,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                     Box(Modifier.fillMaxWidth().height(56.dp).clip(RoundedCornerShape(16.dp)).background(Tile)) {
                         Box(
                             Modifier.fillMaxWidth(f.coerceAtLeast(0.03f)).fillMaxHeight()
-                                .background(Brush.horizontalGradient(listOf(Color(0xFFFF8A80), Color(0xFFFFD27F), Color(0xFF8EE59B))))
+                                .background(Brush.horizontalGradient(listOf(Color(0xFFF8DE7E), Color(0xFFE2AA2C))))
                         )
                         Box(Modifier.fillMaxWidth(f.coerceAtLeast(0.03f)).fillMaxHeight(), contentAlignment = Alignment.CenterEnd) {
                             Box(Modifier.width(3.dp).fillMaxHeight(0.8f).clip(RoundedCornerShape(2.dp)).background(Ink))
@@ -242,10 +242,10 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                     }
                     Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Tile).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFD5DAE3)))
+                            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFE6D9A8)))
                             Text("  no activity", fontSize = 12.sp, color = Color.Gray)
                             Spacer(Modifier.width(12.dp))
-                            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFF49C97A)))
+                            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFD4A017)))
                             Text("  active", fontSize = 12.sp, color = Color.Gray)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -260,7 +260,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                                     if (n >= 0) {
                                         val col = idx / 7
                                         val row = idx % 7
-                                        val color = when { n == 0 -> Color(0xFFD5DAE3); n < 4 -> Color(0xFF6FD694); else -> Color(0xFF2FAE5E) }
+                                        val color = when { n == 0 -> Color(0xFFE6D9A8); n < 4 -> Color(0xFFF0C94F); else -> Color(0xFFC98A0A) }
                                         drawCircle(color, radius = cell * (if (n == 0) 0.14f else 0.24f), center = Offset(left + cell * (col + 0.5f), cell * (row + 0.5f)))
                                     }
                                 }
@@ -272,7 +272,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
 
             // ---- 2. Subjects ------------------------------------------------------------------------------------------
             item {
-                DashCard("Subjects", Color(0xFFF2894E)) {
+                DashCard("Subjects", Color(0xFFE07B39)) {
                     Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Tile).padding(horizontal = 16.dp, vertical = 8.dp)) {
                         perSubject.forEachIndexed { n, (s, a, c) ->
                             val rd = s.units.indices.sumOf { readOf(s, it, p).first }
@@ -286,7 +286,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                                 }
                                 Text(if (a == 0) "—" else "${pct(c, a)}%", fontSize = 15.sp, fontWeight = FontWeight.Medium, color = if (a == 0) Color.Gray else accColor(pct(c, a)))
                             }
-                            if (n < perSubject.size - 1) HorizontalDivider(color = Color(0xFFE3E8F0))
+                            if (n < perSubject.size - 1) HorizontalDivider(color = Color(0xFFEFE3BC))
                         }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -333,7 +333,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
 
             // ---- 4. Subject trends (petal heat chart) -----------------------------------------------------------------
             item {
-                DashCard("Subject Trends", Color(0xFFC2457F)) {
+                DashCard("Subject Trends", Color(0xFFB5651D)) {
                     Box(Modifier.fillMaxWidth().height(296.dp), contentAlignment = Alignment.Center) {
                         perSubject.forEachIndexed { k, (s, a, c) ->
                             val ang = Math.toRadians(-90.0 + 72.0 * k)
@@ -352,7 +352,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                                 readPct < 50 -> "Your accuracy is good. Read more notes to cover every unit."
                                 else -> "Great balance. Try harder practice questions to keep the pace."
                             },
-                            fontSize = 13.sp, color = Color(0xFF4A4F5C), modifier = Modifier.weight(1f)
+                            fontSize = 13.sp, color = Color(0xFF5A4A1E), modifier = Modifier.weight(1f)
                         )
                     }
                 }
@@ -390,7 +390,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                                 }
                             }
                         }
-                        if (n < subjects.size - 1) HorizontalDivider(color = Color(0xFFEDEDF2))
+                        if (n < subjects.size - 1) HorizontalDivider(color = Color(0xFFEFE3BC))
                     }
                 }
             }

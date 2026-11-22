@@ -559,7 +559,7 @@ fun PyLabScreen(back: () -> Unit) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 pySymbols.forEach { sym ->
                     Surface(
-                        shape = RoundedCornerShape(8.dp), color = Color(0xFFE9E9FA),
+                        shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF1C9),
                         modifier = Modifier.tap(RoundedCornerShape(8.dp)) { insert(sym) }
                     ) {
                         Text(if (sym.isBlank()) "Tab" else sym, Modifier.padding(horizontal = 14.dp, vertical = 8.dp), fontFamily = mono, fontSize = 14.sp, color = Ink)
@@ -584,7 +584,7 @@ fun PyLabScreen(back: () -> Unit) {
                 Button(
                     onClick = { runCode() }, enabled = !running,
                     shape = RoundedCornerShape(16.dp), modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3776AB))
+                    colors = ButtonDefaults.buttonColors(containerColor = Accent)
                 ) { Text(if (running) "Running…" else "▶  Run", fontSize = 16.sp) }
                 OutlinedButton(
                     onClick = { PyEngine.stop() }, enabled = running,
@@ -795,7 +795,7 @@ fun PyLabScreen(back: () -> Unit) {
             text = {
                 BasicTextField(
                     value = saveName, onValueChange = { saveName = it },
-                    modifier = Modifier.fillMaxWidth().background(Color(0xFFF1F1F6), RoundedCornerShape(12.dp)).padding(12.dp),
+                    modifier = Modifier.fillMaxWidth().background(Color(0xFFFBF3DC), RoundedCornerShape(12.dp)).padding(12.dp),
                     textStyle = TextStyle(fontFamily = mono, fontSize = 15.sp, color = Ink), singleLine = true
                 )
             },

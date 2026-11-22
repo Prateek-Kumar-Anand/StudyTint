@@ -137,15 +137,33 @@
           "x": "Student"
         },
         {
-          "t": "code",
-          "x": [
-            "+------------+-----------+-----+--------+",
-            "| student_id | name      | age | course |",
-            "+------------+-----------+-----+--------+",
-            "| 1          | Aarav     | 19  | BCA    |",
-            "| 2          | Meera     | 18  | BCA    |",
-            "| 3          | Kabir     | 20  | BBA    |",
-            "+------------+-----------+-----+--------+"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "name",
+            "age",
+            "course"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav",
+              "19",
+              "BCA"
+            ],
+            [
+              "2",
+              "Meera",
+              "18",
+              "BCA"
+            ],
+            [
+              "3",
+              "Kabir",
+              "20",
+              "BBA"
+            ]
           ]
         },
         {
@@ -555,56 +573,75 @@
           "x": "2.13 Comparison table"
         },
         {
-          "t": "p",
-          "x": "Aspect | File-based approach | DBMS approach"
-        },
-        {
-          "t": "p",
-          "x": "Storage | Separate files managed by programs | Managed database structures"
-        },
-        {
-          "t": "p",
-          "x": "Redundancy | Often difficult to control | Can be reduced through design"
-        },
-        {
-          "t": "p",
-          "x": "Consistency | Depends heavily on application logic | Constraints and central management help"
-        },
-        {
-          "t": "p",
-          "x": "Querying | Often requires custom parsing and code | Query language and query engine"
-        },
-        {
-          "t": "p",
-          "x": "Relationships | May be manually encoded in files | Can be modelled and enforced"
-        },
-        {
-          "t": "p",
-          "x": "Integrity | Usually implemented in application code | Database constraints can enforce rules"
-        },
-        {
-          "t": "p",
-          "x": "Concurrency | Must be handled by application design or file mechanisms | DBMS provides concurrency mechanisms"
-        },
-        {
-          "t": "p",
-          "x": "Transactions | Often must be built manually | Transaction facilities commonly available"
-        },
-        {
-          "t": "p",
-          "x": "Security | File and application permissions | Database privileges plus system security"
-        },
-        {
-          "t": "p",
-          "x": "Backup/recovery | Depends on file and application procedures | Database-specific backup and recovery tools"
-        },
-        {
-          "t": "p",
-          "x": "Data independence | Often limited | Supported through database architecture"
-        },
-        {
-          "t": "p",
-          "x": "Cost/complexity | Simple for small tasks | May require setup, administration, and learning"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Aspect",
+            "File-based approach",
+            "DBMS approach"
+          ],
+          "r": [
+            [
+              "Storage",
+              "Separate files managed by programs",
+              "Managed database structures"
+            ],
+            [
+              "Redundancy",
+              "Often difficult to control",
+              "Can be reduced through design"
+            ],
+            [
+              "Consistency",
+              "Depends heavily on application logic",
+              "Constraints and central management help"
+            ],
+            [
+              "Querying",
+              "Often requires custom parsing and code",
+              "Query language and query engine"
+            ],
+            [
+              "Relationships",
+              "May be manually encoded in files",
+              "Can be modelled and enforced"
+            ],
+            [
+              "Integrity",
+              "Usually implemented in application code",
+              "Database constraints can enforce rules"
+            ],
+            [
+              "Concurrency",
+              "Must be handled by application design or file mechanisms",
+              "DBMS provides concurrency mechanisms"
+            ],
+            [
+              "Transactions",
+              "Often must be built manually",
+              "Transaction facilities commonly available"
+            ],
+            [
+              "Security",
+              "File and application permissions",
+              "Database privileges plus system security"
+            ],
+            [
+              "Backup/recovery",
+              "Depends on file and application procedures",
+              "Database-specific backup and recovery tools"
+            ],
+            [
+              "Data independence",
+              "Often limited",
+              "Supported through database architecture"
+            ],
+            [
+              "Cost/complexity",
+              "Simple for small tasks",
+              "May require setup, administration, and learning"
+            ]
+          ]
         },
         {
           "t": "h",
@@ -853,13 +890,29 @@
           "x": "Student"
         },
         {
-          "t": "code",
-          "x": [
-            "student_id | name  | age",
-            "-----------|-------|----",
-            "1          | Aarav | 19",
-            "2          | Meera | 18",
-            "3          | Kabir | 20"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "name",
+            "age"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav",
+              "19"
+            ],
+            [
+              "2",
+              "Meera",
+              "18"
+            ],
+            [
+              "3",
+              "Kabir",
+              "20"
+            ]
           ]
         },
         {
@@ -867,12 +920,21 @@
           "x": "Course"
         },
         {
-          "t": "code",
-          "x": [
-            "course_id | course_name",
-            "----------|------------",
-            "10        | BCA",
-            "20        | BBA"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "course_id",
+            "course_name"
+          ],
+          "r": [
+            [
+              "10",
+              "BCA"
+            ],
+            [
+              "20",
+              "BBA"
+            ]
           ]
         },
         {
@@ -880,13 +942,25 @@
           "x": "Enrolment"
         },
         {
-          "t": "code",
-          "x": [
-            "student_id | course_id",
-            "-----------|----------",
-            "1          | 10",
-            "2          | 10",
-            "3          | 20"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "course_id"
+          ],
+          "r": [
+            [
+              "1",
+              "10"
+            ],
+            [
+              "2",
+              "10"
+            ],
+            [
+              "3",
+              "20"
+            ]
           ]
         },
         {
@@ -968,40 +1042,64 @@
           "x": "3.5 Comparison of the three models"
         },
         {
-          "t": "p",
-          "x": "Feature | Hierarchical | Network | Relational"
-        },
-        {
-          "t": "p",
-          "x": "Basic structure | Tree | Linked graph-like records | Tables"
-        },
-        {
-          "t": "p",
-          "x": "Typical relationship strength | One-to-many | Multiple connected relationships | Relationships through keys"
-        },
-        {
-          "t": "p",
-          "x": "Child's connections | Usually one parent | May have multiple connections | Depends on keys and relationship tables"
-        },
-        {
-          "t": "p",
-          "x": "Access | Often navigational along hierarchy | Often navigational along links | Declarative queries commonly used"
-        },
-        {
-          "t": "p",
-          "x": "Many-to-many support | Awkward in a strict tree | More natural | Usually represented with a junction table"
-        },
-        {
-          "t": "p",
-          "x": "Ease of understanding | Simple for tree data | Can become complex | Familiar tabular representation"
-        },
-        {
-          "t": "p",
-          "x": "Flexibility for ad hoc queries | Often limited | Can be path-dependent | Generally strong with SQL"
-        },
-        {
-          "t": "p",
-          "x": "Common use today | Legacy or naturally hierarchical systems | Historical model; related concepts persist | Widely used in business applications"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Feature",
+            "Hierarchical",
+            "Network",
+            "Relational"
+          ],
+          "r": [
+            [
+              "Basic structure",
+              "Tree",
+              "Linked graph-like records",
+              "Tables"
+            ],
+            [
+              "Typical relationship strength",
+              "One-to-many",
+              "Multiple connected relationships",
+              "Relationships through keys"
+            ],
+            [
+              "Child's connections",
+              "Usually one parent",
+              "May have multiple connections",
+              "Depends on keys and relationship tables"
+            ],
+            [
+              "Access",
+              "Often navigational along hierarchy",
+              "Often navigational along links",
+              "Declarative queries commonly used"
+            ],
+            [
+              "Many-to-many support",
+              "Awkward in a strict tree",
+              "More natural",
+              "Usually represented with a junction table"
+            ],
+            [
+              "Ease of understanding",
+              "Simple for tree data",
+              "Can become complex",
+              "Familiar tabular representation"
+            ],
+            [
+              "Flexibility for ad hoc queries",
+              "Often limited",
+              "Can be path-dependent",
+              "Generally strong with SQL"
+            ],
+            [
+              "Common use today",
+              "Legacy or naturally hierarchical systems",
+              "Historical model; related concepts persist",
+              "Widely used in business applications"
+            ]
+          ]
         },
         {
           "t": "h",
@@ -1567,12 +1665,21 @@
           "x": "Student"
         },
         {
-          "t": "code",
-          "x": [
-            "student_id | name",
-            "-----------|------",
-            "1          | Aarav",
-            "2          | Meera"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "name"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav"
+            ],
+            [
+              "2",
+              "Meera"
+            ]
           ]
         },
         {
@@ -1580,12 +1687,21 @@
           "x": "Course"
         },
         {
-          "t": "code",
-          "x": [
-            "course_id | course_name",
-            "----------|------------",
-            "10        | Database Systems",
-            "20        | Web Development"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "course_id",
+            "course_name"
+          ],
+          "r": [
+            [
+              "10",
+              "Database Systems"
+            ],
+            [
+              "20",
+              "Web Development"
+            ]
           ]
         },
         {
@@ -1593,13 +1709,29 @@
           "x": "Enrolment"
         },
         {
-          "t": "code",
-          "x": [
-            "student_id | course_id | enrolment_date",
-            "-----------|-----------|---------------",
-            "1          | 10        | 2026-08-01",
-            "1          | 20        | 2026-08-02",
-            "2          | 10        | 2026-08-03"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "course_id",
+            "enrolment_date"
+          ],
+          "r": [
+            [
+              "1",
+              "10",
+              "2026-08-01"
+            ],
+            [
+              "1",
+              "20",
+              "2026-08-02"
+            ],
+            [
+              "2",
+              "10",
+              "2026-08-03"
+            ]
           ]
         },
         {
@@ -5599,10 +5731,33 @@
         {
           "t": "code",
           "x": [
-            "-- EAV (avoid for core data)",
-            "entity_id | attribute | value",
-            "101       | name      | Aarav",
-            "101       | age       | 19",
+            "-- EAV (avoid for core data)"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "entity_id",
+            "attribute",
+            "value"
+          ],
+          "r": [
+            [
+              "101",
+              "name",
+              "Aarav"
+            ],
+            [
+              "101",
+              "age",
+              "19"
+            ]
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
             "-- Retrieve one student as a row: pivot with many self-joins"
           ]
         },

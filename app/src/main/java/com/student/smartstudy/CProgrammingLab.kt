@@ -432,7 +432,7 @@ fun CLabScreen(back: () -> Unit) {
                 listOf(true to "Turbo C", false to "gcc style").forEach { (tc, label) ->
                     Surface(
                         shape = RoundedCornerShape(20.dp),
-                        color = if (turboC == tc) Color(0xFF2FA37A) else Color.White,
+                        color = if (turboC == tc) Accent else Color.White,
                         modifier = Modifier.clickable(enabled = !running) {
                             turboC = tc
                             prefs.edit().putBoolean("turbo_c", tc).apply()
@@ -469,7 +469,7 @@ fun CLabScreen(back: () -> Unit) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 symbols.forEach { sym ->
                     Surface(
-                        shape = RoundedCornerShape(8.dp), color = Color(0xFFE9E9FA),
+                        shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF1C9),
                         modifier = Modifier.clickable { insert(if (sym == "\\n") "\\n" else sym) }
                     ) {
                         Text(if (sym.isBlank()) "Tab" else sym, Modifier.padding(horizontal = 14.dp, vertical = 8.dp), fontFamily = mono, fontSize = 14.sp, color = Ink)
@@ -481,7 +481,7 @@ fun CLabScreen(back: () -> Unit) {
                 Button(
                     onClick = { runCode() }, enabled = !running,
                     shape = RoundedCornerShape(16.dp), modifier = Modifier.weight(1f),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2FA37A))
+                    colors = ButtonDefaults.buttonColors(containerColor = Accent)
                 ) { Text(if (running) "Running…" else "▶  Run", fontSize = 16.sp) }
                 OutlinedButton(
                     onClick = { current[0]?.stop() }, enabled = running,

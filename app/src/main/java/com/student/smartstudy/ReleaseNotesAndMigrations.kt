@@ -19,6 +19,13 @@ object Updates {
 
     val changelog = listOf(
         Release(
+            "1.5.3",
+            listOf(
+                "Real tables: comparison tables, truth tables and example data tables in every module now show as proper tables with a header row and grid lines, instead of lines of text separated by | signs",
+                "New white and gold look: cream pages, white cards with gold edges, a gold header on Home and on every unit, gold tables, and a gold logo"
+            )
+        ),
+        Release(
             "1.5.2",
             listOf(
                 "Security: library downloads only come from PyPI, every file must match its checksum, and C programs can only use files in their own folder",

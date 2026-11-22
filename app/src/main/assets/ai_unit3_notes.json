@@ -430,23 +430,113 @@
           "x": "A truth table lists all possible combinations of input truth values and the resulting output."
         },
         {
-          "t": "gl",
-          "x": [
+          "t": "tb",
+          "c": "NOT",
+          "h": [
+            "P",
+            "NOT P"
+          ],
+          "r": [
             [
-              "NOT",
-              "P | NOT P True | False False | True"
+              "True",
+              "False"
             ],
             [
-              "AND",
-              "P | Q | P AND Q False | False | False False | True | False True | False | False True | True | True"
+              "False",
+              "True"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "AND",
+          "h": [
+            "P",
+            "Q",
+            "P AND Q"
+          ],
+          "r": [
+            [
+              "False",
+              "False",
+              "False"
             ],
             [
-              "OR",
-              "P | Q | P OR Q False | False | False False | True | True True | False | True True | True | True"
+              "False",
+              "True",
+              "False"
             ],
             [
-              "IMPLICATION",
-              "P | Q | P implies Q False | False | True False | True | True True | False | False True | True | True"
+              "True",
+              "False",
+              "False"
+            ],
+            [
+              "True",
+              "True",
+              "True"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "OR",
+          "h": [
+            "P",
+            "Q",
+            "P OR Q"
+          ],
+          "r": [
+            [
+              "False",
+              "False",
+              "False"
+            ],
+            [
+              "False",
+              "True",
+              "True"
+            ],
+            [
+              "True",
+              "False",
+              "True"
+            ],
+            [
+              "True",
+              "True",
+              "True"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "IMPLICATION",
+          "h": [
+            "P",
+            "Q",
+            "P implies Q"
+          ],
+          "r": [
+            [
+              "False",
+              "False",
+              "True"
+            ],
+            [
+              "False",
+              "True",
+              "True"
+            ],
+            [
+              "True",
+              "False",
+              "False"
+            ],
+            [
+              "True",
+              "True",
+              "True"
             ]
           ]
         },

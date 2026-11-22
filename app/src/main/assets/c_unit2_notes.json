@@ -350,13 +350,39 @@
           "x": "Logical AND (&&) is true only if both operands are true. Logical OR (||) is true if at least one operand is true. Logical NOT (!) reverses truth: !0 is 1, and !nonzero is 0. Truth table:"
         },
         {
-          "t": "code",
-          "x": [
-            "A  B  |  A && B  |  A || B",
-            "0  0  |    0     |    0",
-            "0  1  |    0     |    1",
-            "1  0  |    0     |    1",
-            "1  1  |    1     |    1"
+          "t": "tb",
+          "c": "AND / OR",
+          "h": [
+            "A",
+            "B",
+            "A && B",
+            "A || B"
+          ],
+          "r": [
+            [
+              "0",
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "1",
+              "0",
+              "1"
+            ],
+            [
+              "1",
+              "0",
+              "0",
+              "1"
+            ],
+            [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
           ]
         },
         {
@@ -364,11 +390,21 @@
           "x": "For NOT:"
         },
         {
-          "t": "code",
-          "x": [
-            "A  |  !A",
-            "0  |  1",
-            "1  |  0"
+          "t": "tb",
+          "c": "NOT",
+          "h": [
+            "A",
+            "!A"
+          ],
+          "r": [
+            [
+              "0",
+              "1"
+            ],
+            [
+              "1",
+              "0"
+            ]
           ]
         },
         {

@@ -1783,17 +1783,49 @@
       "s": "Quick reference",
       "b": [
         {
-          "t": "code",
-          "x": [
-            "Feature           | NumPy                                  | pandas",
-            "------------------|----------------------------------------|--------------------------------",
-            "Main structure    | ndarray                                | Series, DataFrame",
-            "Best suited for   | Numerical arrays and mathematics       | Labelled tables and time series",
-            "Column names      | Not core to plain arrays               | Built in",
-            "CSV tools         | Often needs additional parsing         | read_csv() and to_csv()",
-            "Grouped summaries | More manual                            | groupby()",
-            "Missing data      | Often np.nan for floating-point arrays | Richer missing-data tools",
-            "Machine learning  | Numerical calculations                 | Tabular preprocessing"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Feature",
+            "NumPy",
+            "pandas"
+          ],
+          "r": [
+            [
+              "Main structure",
+              "ndarray",
+              "Series, DataFrame"
+            ],
+            [
+              "Best suited for",
+              "Numerical arrays and mathematics",
+              "Labelled tables and time series"
+            ],
+            [
+              "Column names",
+              "Not core to plain arrays",
+              "Built in"
+            ],
+            [
+              "CSV tools",
+              "Often needs additional parsing",
+              "read_csv() and to_csv()"
+            ],
+            [
+              "Grouped summaries",
+              "More manual",
+              "groupby()"
+            ],
+            [
+              "Missing data",
+              "Often np.nan for floating-point arrays",
+              "Richer missing-data tools"
+            ],
+            [
+              "Machine learning",
+              "Numerical calculations",
+              "Tabular preprocessing"
+            ]
           ]
         },
         {

@@ -810,17 +810,49 @@
       "s": "",
       "b": [
         {
-          "t": "code",
-          "x": [
-            "Feature | DAC | RBAC",
-            "-------|-----|-----",
-            "Main basis | Owner/controller grants | Roles and job responsibilities",
-            "Permission assignment | Often object-specific grants | Permissions assigned to roles, then users assigned to roles",
-            "Flexibility | Can be flexible for resource sharing | Consistent across users with similar duties",
-            "Scalability | Individual grants can become complex | Roles simplify large-scale administration when designed well",
-            "Common risk | Uncontrolled or excessive delegation | Overly broad roles or role explosion",
-            "Best fit | Situations requiring owner-controlled sharing | Organizations with repeatable job functions",
-            "Can coexist? | Yes | Yes"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Feature",
+            "DAC",
+            "RBAC"
+          ],
+          "r": [
+            [
+              "Main basis",
+              "Owner/controller grants",
+              "Roles and job responsibilities"
+            ],
+            [
+              "Permission assignment",
+              "Often object-specific grants",
+              "Permissions assigned to roles, then users assigned to roles"
+            ],
+            [
+              "Flexibility",
+              "Can be flexible for resource sharing",
+              "Consistent across users with similar duties"
+            ],
+            [
+              "Scalability",
+              "Individual grants can become complex",
+              "Roles simplify large-scale administration when designed well"
+            ],
+            [
+              "Common risk",
+              "Uncontrolled or excessive delegation",
+              "Overly broad roles or role explosion"
+            ],
+            [
+              "Best fit",
+              "Situations requiring owner-controlled sharing",
+              "Organizations with repeatable job functions"
+            ],
+            [
+              "Can coexist?",
+              "Yes",
+              "Yes"
+            ]
           ]
         },
         {
@@ -1875,11 +1907,19 @@
           "x": "STUDENT table"
         },
         {
-          "t": "code",
-          "x": [
-            "StudentID | Name | Course",
-            "----------|------|-------",
-            "1         | Asha | BCA"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "StudentID",
+            "Name",
+            "Course"
+          ],
+          "r": [
+            [
+              "1",
+              "Asha",
+              "BCA"
+            ]
           ]
         },
         {
@@ -2352,19 +2392,59 @@
       "s": "Neither system is universally superior.",
       "b": [
         {
-          "t": "code",
-          "x": [
-            "Feature | MongoDB | Apache Cassandra",
-            "--------|---------|-----------------",
-            "Primary model | Document database | Distributed wide-column database",
-            "Typical record | BSON document | Row organized by partition and clustering keys",
-            "Schema | Flexible document structure, with optional validation | Table schema designed around partition keys and query patterns",
-            "Query interface | MongoDB query and aggregation APIs | CQL and supported data-access mechanisms",
-            "Common strengths | Nested documents, application objects, flexible data structures | Distributed write workloads, large datasets, high availability",
-            "Data modeling | Embedding and referencing | Query-oriented, often denormalized tables",
-            "Distribution | Supports sharding and replication | Distributed partitioning and replication are central design concepts",
-            "Consistency | Depends on read/write concerns, transactions, and deployment settings | Tunable consistency levels for operations",
-            "Best fit | Workloads that fit document retrieval and document updates | Workloads that fit known partition-oriented access patterns at distributed scale"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Feature",
+            "MongoDB",
+            "Apache Cassandra"
+          ],
+          "r": [
+            [
+              "Primary model",
+              "Document database",
+              "Distributed wide-column database"
+            ],
+            [
+              "Typical record",
+              "BSON document",
+              "Row organized by partition and clustering keys"
+            ],
+            [
+              "Schema",
+              "Flexible document structure, with optional validation",
+              "Table schema designed around partition keys and query patterns"
+            ],
+            [
+              "Query interface",
+              "MongoDB query and aggregation APIs",
+              "CQL and supported data-access mechanisms"
+            ],
+            [
+              "Common strengths",
+              "Nested documents, application objects, flexible data structures",
+              "Distributed write workloads, large datasets, high availability"
+            ],
+            [
+              "Data modeling",
+              "Embedding and referencing",
+              "Query-oriented, often denormalized tables"
+            ],
+            [
+              "Distribution",
+              "Supports sharding and replication",
+              "Distributed partitioning and replication are central design concepts"
+            ],
+            [
+              "Consistency",
+              "Depends on read/write concerns, transactions, and deployment settings",
+              "Tunable consistency levels for operations"
+            ],
+            [
+              "Best fit",
+              "Workloads that fit document retrieval and document updates",
+              "Workloads that fit known partition-oriented access patterns at distributed scale"
+            ]
           ]
         },
         {
@@ -4680,11 +4760,29 @@
           "x": "In a multilevel secure database, different rows (or even cells) have different labels. A Secret user sees all rows up to Secret, while an Unclassified user sees only Unclassified rows. A problem appears when a low user inserts a row whose primary key already exists as a higher-level row. Refusing the insert would tell the low user that a secret row exists (a covert channel). Polyinstantiation solves this by letting both rows exist with the same key but different labels."
         },
         {
+          "t": "tb",
+          "c": "MISSION",
+          "h": [
+            "Code",
+            "Target",
+            "Label"
+          ],
+          "r": [
+            [
+              "X7",
+              "Training exercise",
+              "U"
+            ],
+            [
+              "X7",
+              "Border operation",
+              "S"
+            ]
+          ]
+        },
+        {
           "t": "code",
           "x": [
-            "MISSION(Code, Target, Label)",
-            "  X7 | Training exercise | U",
-            "  X7 | Border operation  | S",
             "Unclassified user sees  : X7 | Training exercise",
             "Secret user sees both   : two different rows for key X7"
           ]
@@ -5135,25 +5233,85 @@
           "x": "A released table satisfies k-anonymity if every combination of quasi-identifier values appears in at least k rows. Each person is then hidden in a crowd of at least k people with identical quasi-identifiers. The usual tools are generalisation (replace values by wider ranges) and suppression (remove rare rows or cells)."
         },
         {
-          "t": "code",
-          "x": [
-            "Original (quasi-identifiers: Age, PIN; sensitive: Disease)",
-            "Age  PIN     Disease",
-            "23   110011  Flu",
-            "27   110013  Cancer",
-            "25   110012  Flu",
-            "41   560001  Diabetes",
-            "44   560002  Flu",
-            "47   560003  Cancer",
-            "",
-            "3-anonymous version (Age generalised, PIN truncated)",
-            "Age     PIN     Disease",
-            "20-29   1100XX  Flu",
-            "20-29   1100XX  Cancer",
-            "20-29   1100XX  Flu",
-            "40-49   5600XX  Diabetes",
-            "40-49   5600XX  Flu",
-            "40-49   5600XX  Cancer"
+          "t": "tb",
+          "c": "Original (quasi-identifiers: Age, PIN; sensitive: Disease)",
+          "h": [
+            "Age",
+            "PIN",
+            "Disease"
+          ],
+          "r": [
+            [
+              "23",
+              "110011",
+              "Flu"
+            ],
+            [
+              "27",
+              "110013",
+              "Cancer"
+            ],
+            [
+              "25",
+              "110012",
+              "Flu"
+            ],
+            [
+              "41",
+              "560001",
+              "Diabetes"
+            ],
+            [
+              "44",
+              "560002",
+              "Flu"
+            ],
+            [
+              "47",
+              "560003",
+              "Cancer"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "3-anonymous version (Age generalised, PIN truncated)",
+          "h": [
+            "Age",
+            "PIN",
+            "Disease"
+          ],
+          "r": [
+            [
+              "20-29",
+              "1100XX",
+              "Flu"
+            ],
+            [
+              "20-29",
+              "1100XX",
+              "Cancer"
+            ],
+            [
+              "20-29",
+              "1100XX",
+              "Flu"
+            ],
+            [
+              "40-49",
+              "5600XX",
+              "Diabetes"
+            ],
+            [
+              "40-49",
+              "5600XX",
+              "Flu"
+            ],
+            [
+              "40-49",
+              "5600XX",
+              "Cancer"
+            ]
           ]
         },
         {
@@ -6799,13 +6957,38 @@
             "FROM fact_sales f",
             "JOIN dim_date d USING (date_id)",
             "JOIN dim_product p USING (product_id)",
-            "GROUP BY d.quarter, p.category ORDER BY d.quarter, p.category;",
-            "",
-            "quarter | category    | total",
-            "Q1      | Accessories | 800",
-            "Q1      | Stationery  | 550",
-            "Q2      | Accessories | 400",
-            "Q2      | Stationery  | 200"
+            "GROUP BY d.quarter, p.category ORDER BY d.quarter, p.category;"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "quarter",
+            "category",
+            "total"
+          ],
+          "r": [
+            [
+              "Q1",
+              "Accessories",
+              "800"
+            ],
+            [
+              "Q1",
+              "Stationery",
+              "550"
+            ],
+            [
+              "Q2",
+              "Accessories",
+              "400"
+            ],
+            [
+              "Q2",
+              "Stationery",
+              "200"
+            ]
           ]
         },
         {
@@ -6865,12 +7048,45 @@
         {
           "t": "code",
           "x": [
-            "SCD Type 2: customer Asha moves from Patna to Delhi on 2026-06-01",
-            "",
-            "cust_key | cust_id | name | city  | valid_from | valid_to   | current",
-            "   101   |   C7    | Asha | Patna | 2024-01-01 | 2026-05-31 |  N",
-            "   205   |   C7    | Asha | Delhi | 2026-06-01 | 9999-12-31 |  Y",
-            "",
+            "SCD Type 2: customer Asha moves from Patna to Delhi on 2026-06-01"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "cust_key",
+            "cust_id",
+            "name",
+            "city",
+            "valid_from",
+            "valid_to",
+            "current"
+          ],
+          "r": [
+            [
+              "101",
+              "C7",
+              "Asha",
+              "Patna",
+              "2024-01-01",
+              "2026-05-31",
+              "N"
+            ],
+            [
+              "205",
+              "C7",
+              "Asha",
+              "Delhi",
+              "2026-06-01",
+              "9999-12-31",
+              "Y"
+            ]
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
             "Sales before June point to key 101 (Patna); later sales point to key 205."
           ]
         },
@@ -7752,16 +7968,85 @@
           "x": "A hospital wants to publish a table. ZIP code and age are quasi-identifiers (they can be combined with outside data to re-identify people). Original data and the generalised version:"
         },
         {
-          "t": "code",
-          "x": [
-            "Original                          Generalised (ZIP to 4 digits + *, age to decade)",
-            "ZIP    Age  Disease               ZIP    Age  Disease",
-            "47906  29   Heart                 4790*  2*   Heart",
-            "47909  22   Flu                   4790*  2*   Flu",
-            "47905  27   Flu                   4790*  2*   Flu",
-            "47677  35   Cancer                4767*  3*   Cancer",
-            "47602  36   Cancer                4767*  3*   Cancer",
-            "47678  32   Cancer                4767*  3*   Cancer"
+          "t": "tb",
+          "c": "Original",
+          "h": [
+            "ZIP",
+            "Age",
+            "Disease"
+          ],
+          "r": [
+            [
+              "47906",
+              "29",
+              "Heart"
+            ],
+            [
+              "47909",
+              "22",
+              "Flu"
+            ],
+            [
+              "47905",
+              "27",
+              "Flu"
+            ],
+            [
+              "47677",
+              "35",
+              "Cancer"
+            ],
+            [
+              "47602",
+              "36",
+              "Cancer"
+            ],
+            [
+              "47678",
+              "32",
+              "Cancer"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "Generalised (ZIP to 4 digits + *, age to decade)",
+          "h": [
+            "ZIP",
+            "Age",
+            "Disease"
+          ],
+          "r": [
+            [
+              "4790*",
+              "2*",
+              "Heart"
+            ],
+            [
+              "4790*",
+              "2*",
+              "Flu"
+            ],
+            [
+              "4790*",
+              "2*",
+              "Flu"
+            ],
+            [
+              "4767*",
+              "3*",
+              "Cancer"
+            ],
+            [
+              "4767*",
+              "3*",
+              "Cancer"
+            ],
+            [
+              "4767*",
+              "3*",
+              "Cancer"
+            ]
           ]
         },
         {
@@ -7869,16 +8154,41 @@
           "x": "46.8 Choosing a data store"
         },
         {
-          "t": "code",
-          "x": [
-            "Requirement                                     Choice",
-            "Orders with transactions and joins              PostgreSQL / MySQL (B-tree, ACID)",
-            "Shopping-cart sessions, sub-millisecond reads   Redis (key-value, in memory)",
-            "Product catalogue with varying attributes       MongoDB (document)",
-            "Who-knows-whom, fraud rings, recommendations    Neo4j (graph, Cypher)",
-            "Billions of sensor writes per day               Cassandra (LSM, wide-column)",
-            "Monthly management reports on years of data     Warehouse / lakehouse, star schema",
-            "Question answering over company documents       Vector index + RAG"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "Requirement",
+            "Choice"
+          ],
+          "r": [
+            [
+              "Orders with transactions and joins",
+              "PostgreSQL / MySQL (B-tree, ACID)"
+            ],
+            [
+              "Shopping-cart sessions, sub-millisecond reads",
+              "Redis (key-value, in memory)"
+            ],
+            [
+              "Product catalogue with varying attributes",
+              "MongoDB (document)"
+            ],
+            [
+              "Who-knows-whom, fraud rings, recommendations",
+              "Neo4j (graph, Cypher)"
+            ],
+            [
+              "Billions of sensor writes per day",
+              "Cassandra (LSM, wide-column)"
+            ],
+            [
+              "Monthly management reports on years of data",
+              "Warehouse / lakehouse, star schema"
+            ],
+            [
+              "Question answering over company documents",
+              "Vector index + RAG"
+            ]
           ]
         }
       ]

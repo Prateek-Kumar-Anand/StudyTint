@@ -31,11 +31,31 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-val Accent = Color(0xFF5B5BD6)
-val Bg = Color(0xFFF4F4F6)
-val Ink = Color(0xFF1E1E24)
+// White and gold palette. Accent is a deep gold that stays readable as text on white and under white button labels;
+// Gold / GoldLight are the bright decorative golds (bars, gradients, headers).
+val Accent = Color(0xFF9A6B00)
+val Gold = Color(0xFFD4A017)
+val GoldLight = Color(0xFFF6D874)
+val GoldSoft = Color(0xFFFFF4D1)
+val GoldRow = Color(0xFFFFFAEB)
+val GoldLine = Color(0xFFEBD9A4)
+val HeroInk = Color(0xFF2A1D00)
+val GoldHeroColors = listOf(Color(0xFFF8DE7E), Color(0xFFE9B63A), Color(0xFFCF9519))
+val CodePanel = Color(0xFF2B2418)
+val CodeInk = Color(0xFFFFF1CC)
+val Bg = Color(0xFFFFFBF0)
+val Ink = Color(0xFF2A2008)
 val Good = Color(0xFFD7F5E0)
 val Bad = Color(0xFFFBDADA)
+
+/** The Material colour scheme: gold primary on white and cream, so default buttons, text buttons, dialogs and fields all follow the theme. */
+val GoldColorScheme = lightColorScheme(
+    primary = Accent, onPrimary = Color.White, primaryContainer = GoldSoft, onPrimaryContainer = HeroInk,
+    secondary = Gold, onSecondary = HeroInk, secondaryContainer = GoldSoft, onSecondaryContainer = HeroInk,
+    tertiary = Color(0xFFB5651D), background = Bg, onBackground = Ink, surface = Color.White, onSurface = Ink,
+    surfaceVariant = GoldSoft, onSurfaceVariant = Color(0xFF6B5A2A), outline = Color(0xFFD9BE72), outlineVariant = GoldLine,
+    surfaceTint = Gold
+)
 
 enum class Mode { Study, Practise }
 
@@ -83,7 +103,8 @@ fun SubjectBadge(s: Subject) {
 
 @Composable
 fun App(p: Progress) {
-    var screen by remember { mutableStateOf<Screen>(Screen.Welcome) }
+    // No welcome screen: open straight on Home, or on profile set-up the very first time (it has "Skip for now").
+    var screen by remember { mutableStateOf<Screen>(if (p.profile.isComplete || p.profileSkipped) Screen.Home else Screen.Setup(false)) }
     val listStates = remember { mutableMapOf<String, LazyListState>() }
     fun st(k: String): LazyListState = listStates.getOrPut(k) { LazyListState() }
     fun parent(s: Screen): Screen = when (s) {
@@ -91,7 +112,7 @@ fun App(p: Progress) {
         is Screen.RichNotes -> s.prev
         is Screen.Topic -> Screen.RichNotes(s.s, s.i, s.prev)
         is Screen.Quiz -> s.prev
-        is Screen.Setup -> if (s.edit) Screen.Home else Screen.Welcome
+        is Screen.Setup -> Screen.Home
         else -> Screen.Home
     }
     BackHandler(screen != Screen.Welcome && screen != Screen.Home) { screen = parent(screen) }
@@ -133,7 +154,7 @@ fun App(p: Progress) {
 fun Orb(size: Dp) {
     Box(
         Modifier.size(size).clip(CircleShape).background(
-            Brush.linearGradient(listOf(Color(0xFFFF8A4C), Color(0xFFC2185B), Color(0xFF7C4DFF)))
+            Brush.linearGradient(listOf(Color(0xFFFBE38A), Color(0xFFE2AA2C), Color(0xFFB27A0B)))
         ),
         contentAlignment = Alignment.Center
     ) {
@@ -154,14 +175,14 @@ fun Welcome(onStart: () -> Unit) {
             Modifier.fillMaxWidth(0.88f), contentScale = ContentScale.FillWidth
         )
         Spacer(Modifier.height(12.dp))
-        Text("Your smart study companion", color = Color(0xFFB4B4BE), fontSize = 15.sp)
+        Text("Your smart study companion", color = GoldLight, fontSize = 15.sp)
         Spacer(Modifier.weight(1f))
-        Text("Python  •  Maths  •  C  •  Exploration in AI  •  DBMS", color = Color(0xFF8A8A94), textAlign = TextAlign.Center, fontSize = 13.sp)
+        Text("Python  •  Maths  •  C  •  Exploration in AI  •  DBMS", color = Color(0xFFB9A56A), textAlign = TextAlign.Center, fontSize = 13.sp)
         Spacer(Modifier.height(16.dp))
         Button(
             onStart, Modifier.fillMaxWidth().height(60.dp), shape = CircleShape,
-            colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Ink)
-        ) { Text("Get started  →", fontSize = 17.sp) }
+            colors = ButtonDefaults.buttonColors(containerColor = Gold, contentColor = HeroInk)
+        ) { Text("Get started  →", fontSize = 17.sp, fontWeight = FontWeight.SemiBold) }
     }
 }
 
@@ -169,13 +190,13 @@ fun Welcome(onStart: () -> Unit) {
 fun OptionCard(title: String, sub: String, tint: Color, modifier: Modifier, onClick: () -> Unit) {
     Card(
         modifier.tap(RoundedCornerShape(22.dp), onClick), shape = RoundedCornerShape(22.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)
     ) {
         Column(Modifier.padding(16.dp)) {
-            Box(Modifier.width(28.dp).height(4.dp).clip(CircleShape).background(tint))
+            Box(Modifier.width(34.dp).height(5.dp).clip(CircleShape).background(tint))
             Spacer(Modifier.height(18.dp))
             Text(title, fontWeight = FontWeight.Medium, fontSize = 17.sp, color = Ink)
-            Text(sub, color = Color.Gray, fontSize = 13.sp)
+            Text(sub, color = Color(0xFF8A7B52), fontSize = 13.sp)
         }
     }
 }
@@ -184,8 +205,12 @@ fun OptionCard(title: String, sub: String, tint: Color, modifier: Modifier, onCl
 fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
     LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item(key = "greeting") {
-            Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}", fontSize = 24.sp, fontWeight = FontWeight.Medium, color = Ink)
-            Text("What shall we do today?", color = Color.Gray)
+            Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(26.dp)).background(Brush.linearGradient(GoldHeroColors)).padding(horizontal = 22.dp, vertical = 20.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}", fontSize = 26.sp, fontWeight = FontWeight.SemiBold, color = HeroInk)
+                    Text("What shall we do today?", color = HeroInk.copy(alpha = 0.8f), fontSize = 14.sp)
+                }
+            }
         }
         item(key = "profile") {
             if (p.profile.isComplete) ProfileCard(p.profile, p.photo) { go(Screen.Setup(true)) }
@@ -193,25 +218,25 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OptionCard("Study", "Read unit notes", Color(0xFF7C6CF0), Modifier.weight(1f)) { go(Screen.Pick(Mode.Study)) }
-                OptionCard("Practise", "Quiz yourself", Color(0xFFF2894E), Modifier.weight(1f)) { go(Screen.Pick(Mode.Practise)) }
+                OptionCard("Study", "Read unit notes", Color(0xFFD4A017), Modifier.weight(1f)) { go(Screen.Pick(Mode.Study)) }
+                OptionCard("Practise", "Quiz yourself", Color(0xFFE07B39), Modifier.weight(1f)) { go(Screen.Pick(Mode.Practise)) }
             }
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OptionCard("Score", "Your results", Color(0xFF3B9BE0), Modifier.weight(1f)) { go(Screen.Score) }
-                OptionCard("C Lab", "Write & run C code", Color(0xFF2FA37A), Modifier.weight(1f)) { go(Screen.CLab) }
+                OptionCard("Score", "Your results", Color(0xFFB5651D), Modifier.weight(1f)) { go(Screen.Score) }
+                OptionCard("C Lab", "Write & run C code", Color(0xFFC9A227), Modifier.weight(1f)) { go(Screen.CLab) }
             }
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                OptionCard("Python Lab", "Write & run Python", Color(0xFF3776AB), Modifier.weight(1f)) { go(Screen.PyLab) }
+                OptionCard("Python Lab", "Write & run Python", Color(0xFFE8A93B), Modifier.weight(1f)) { go(Screen.PyLab) }
                 OptionCard("DBMS Lab", "Write & run SQL", DbColor, Modifier.weight(1f)) { go(Screen.DbLab) }
             }
         }
         item(key = "version") {
             val vctx = androidx.compose.ui.platform.LocalContext.current
-            Text("StudyTint v${Updates.versionName(vctx)}", Modifier.fillMaxWidth().padding(top = 4.dp), color = Color.Gray, fontSize = 12.sp, textAlign = TextAlign.Center)
+            Text("StudyTint v${Updates.versionName(vctx)}", Modifier.fillMaxWidth().padding(top = 4.dp), color = Color(0xFFB09A5A), fontSize = 12.sp, textAlign = TextAlign.Center)
         }
     }
 }
@@ -219,8 +244,8 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
 @Composable
 fun TopBar(title: String, onBack: () -> Unit) {
     Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-        Surface(shape = CircleShape, color = Color.White, modifier = Modifier.size(42.dp).tap(CircleShape, onBack)) {
-            Box(contentAlignment = Alignment.Center) { Text("←", fontSize = 20.sp) }
+        Surface(shape = CircleShape, color = Color.White, border = BorderStroke(1.dp, GoldLine), modifier = Modifier.size(42.dp).tap(CircleShape, onBack)) {
+            Box(contentAlignment = Alignment.Center) { Text("←", fontSize = 20.sp, color = Accent, fontWeight = FontWeight.Bold) }
         }
         Text(title, Modifier.weight(1f).padding(end = 42.dp), textAlign = TextAlign.Center, fontSize = 18.sp, fontWeight = FontWeight.Medium, color = Ink)
     }
@@ -245,7 +270,8 @@ fun PickScreen(m: Mode, p: Progress, back: () -> Unit, listState: LazyListState,
                     else p.scores[key]?.let { "$it%" } ?: "›"
                     Card(
                         Modifier.fillMaxWidth().tap(RoundedCornerShape(20.dp)) { open(s, i) }, shape = RoundedCornerShape(20.dp),
-                        colors = CardDefaults.cardColors(containerColor = if (m == Mode.Study && rich["${s.id}:$i"] != null) Color(0xFFEDEBFF) else Color.White)
+                        colors = CardDefaults.cardColors(containerColor = if (m == Mode.Study && rich["${s.id}:$i"] != null) GoldSoft else Color.White),
+                        border = BorderStroke(1.dp, GoldLine)
                     ) {
                         Row(Modifier.padding(18.dp), verticalAlignment = Alignment.CenterVertically) {
                             Column(Modifier.weight(1f)) {
@@ -276,14 +302,14 @@ fun NotesScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
                 }
             }
             items(u.notes) { n ->
-                Surface(shape = RoundedCornerShape(18.dp), color = Color.White) {
+                Surface(shape = RoundedCornerShape(18.dp), color = Color.White, border = BorderStroke(1.dp, GoldLine)) {
                     Text(n, Modifier.fillMaxWidth().padding(16.dp), fontSize = 15.sp, color = Ink)
                 }
             }
         }
         Button(
             { p.toggle(key) }, Modifier.fillMaxWidth().padding(20.dp).height(56.dp), shape = CircleShape,
-            colors = ButtonDefaults.buttonColors(containerColor = if (ok) Color.White else Accent, contentColor = if (ok) Accent else Color.White)
+            colors = ButtonDefaults.buttonColors(containerColor = if (ok) GoldSoft else Accent, contentColor = if (ok) Accent else Color.White)
         ) { Text(if (ok) "Completed ✓ (tap to undo)" else "Mark as completed") }
     }
 }
@@ -317,7 +343,7 @@ fun QuizScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
                 }
                 item { Text("Topics", Modifier.padding(top = 6.dp), fontSize = 16.sp, fontWeight = FontWeight.Medium, color = Ink) }
                 items(topics) { t ->
-                    Card(Modifier.fillMaxWidth().tap(RoundedCornerShape(18.dp)) { start(t) }, shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                    Card(Modifier.fillMaxWidth().tap(RoundedCornerShape(18.dp)) { start(t) }, shape = RoundedCornerShape(18.dp), colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)) {
                         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                             Text(t, Modifier.weight(1f), color = Ink)
                             Text("${unitQs.count { it.topic == t }}", color = Accent, fontWeight = FontWeight.Medium)
@@ -355,11 +381,11 @@ fun QuizScreen(s: Subject, i: Int, p: Progress, back: () -> Unit) {
                         val cc by animateColorAsState(c, tween(250), label = "opt")
                         Surface(
                             Modifier.fillMaxWidth().clickable(enabled = sel == -1) { if (sel == -1) { sel = n; val ok = if (q.a == -1) n == 0 else n == q.a; if (ok) right++; p.record("${s.id}:$i", q.topic, ok) } },
-                            shape = RoundedCornerShape(16.dp), color = cc
+                            shape = RoundedCornerShape(16.dp), color = cc, border = BorderStroke(1.dp, GoldLine)
                         ) { Text(label, Modifier.padding(16.dp), color = Ink) }
                     }
                     AnimatedVisibility(visible = sel != -1 && q.sol.isNotEmpty(), enter = fadeIn(tween(250)) + expandVertically(tween(250))) {
-                        Surface(shape = RoundedCornerShape(16.dp), color = Color(0xFFE9E9FA)) {
+                        Surface(shape = RoundedCornerShape(16.dp), color = GoldSoft, border = BorderStroke(1.dp, GoldLine)) {
                             Column(Modifier.fillMaxWidth().padding(14.dp)) {
                                 Text("Explanation", fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Accent)
                                 Text(q.sol, fontSize = 14.sp, lineHeight = 20.sp, color = Ink)

@@ -21,14 +21,39 @@
           "x": "Student"
         },
         {
-          "t": "code",
-          "x": [
-            "student_id | name  | age | department",
-            "-----------|-------|-----|-----------",
-            "1          | Aarav | 19  | BCA",
-            "2          | Meera | 18  | BCA",
-            "3          | Kabir | 20  | BBA",
-            "4          | Riya  | 19  | BCA"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "name",
+            "age",
+            "department"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav",
+              "19",
+              "BCA"
+            ],
+            [
+              "2",
+              "Meera",
+              "18",
+              "BCA"
+            ],
+            [
+              "3",
+              "Kabir",
+              "20",
+              "BBA"
+            ],
+            [
+              "4",
+              "Riya",
+              "19",
+              "BCA"
+            ]
           ]
         },
         {
@@ -36,13 +61,29 @@
           "x": "Course"
         },
         {
-          "t": "code",
-          "x": [
-            "course_id | course_name        | credits",
-            "----------|--------------------|--------",
-            "10        | Database Systems   | 4",
-            "20        | Web Development    | 3",
-            "30        | Business Analytics | 3"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "course_id",
+            "course_name",
+            "credits"
+          ],
+          "r": [
+            [
+              "10",
+              "Database Systems",
+              "4"
+            ],
+            [
+              "20",
+              "Web Development",
+              "3"
+            ],
+            [
+              "30",
+              "Business Analytics",
+              "3"
+            ]
           ]
         },
         {
@@ -50,14 +91,34 @@
           "x": "Enrolment"
         },
         {
-          "t": "code",
-          "x": [
-            "student_id | course_id | status",
-            "-----------|-----------|--------",
-            "1          | 10        | Active",
-            "1          | 20        | Active",
-            "2          | 10        | Active",
-            "3          | 30        | Active"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "course_id",
+            "status"
+          ],
+          "r": [
+            [
+              "1",
+              "10",
+              "Active"
+            ],
+            [
+              "1",
+              "20",
+              "Active"
+            ],
+            [
+              "2",
+              "10",
+              "Active"
+            ],
+            [
+              "3",
+              "30",
+              "Active"
+            ]
           ]
         },
         {
@@ -168,13 +229,33 @@
           "x": "Result"
         },
         {
-          "t": "code",
-          "x": [
-            "student_id | name  | age | department",
-            "-----------|-------|-----|-----------",
-            "1          | Aarav | 19  | BCA",
-            "3          | Kabir | 20  | BBA",
-            "4          | Riya  | 19  | BCA"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "student_id",
+            "name",
+            "age",
+            "department"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav",
+              "19",
+              "BCA"
+            ],
+            [
+              "3",
+              "Kabir",
+              "20",
+              "BBA"
+            ],
+            [
+              "4",
+              "Riya",
+              "19",
+              "BCA"
+            ]
           ]
         },
         {
@@ -417,14 +498,29 @@
           "x": "Result"
         },
         {
-          "t": "code",
-          "x": [
-            "name  | department",
-            "------|-----------",
-            "Aarav | BCA",
-            "Meera | BCA",
-            "Kabir | BBA",
-            "Riya  | BCA"
+          "t": "tb",
+          "c": "",
+          "h": [
+            "name",
+            "department"
+          ],
+          "r": [
+            [
+              "Aarav",
+              "BCA"
+            ],
+            [
+              "Meera",
+              "BCA"
+            ],
+            [
+              "Kabir",
+              "BBA"
+            ],
+            [
+              "Riya",
+              "BCA"
+            ]
           ]
         },
         {
@@ -3680,20 +3776,78 @@
           ]
         },
         {
-          "t": "code",
-          "x": [
-            "STUDENT            ENROLMENT",
-            "sid  name         sid  course",
-            "1    Aarav        1    DBMS",
-            "2    Meera        1    C",
-            "3    Kabir        2    DBMS",
-            "",
-            "STUDENT ⟕ ENROLMENT",
-            "sid  name   course",
-            "1    Aarav  DBMS",
-            "1    Aarav  C",
-            "2    Meera  DBMS",
-            "3    Kabir  NULL"
+          "t": "tb",
+          "c": "STUDENT",
+          "h": [
+            "sid",
+            "name"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav"
+            ],
+            [
+              "2",
+              "Meera"
+            ],
+            [
+              "3",
+              "Kabir"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "ENROLMENT",
+          "h": [
+            "sid",
+            "course"
+          ],
+          "r": [
+            [
+              "1",
+              "DBMS"
+            ],
+            [
+              "1",
+              "C"
+            ],
+            [
+              "2",
+              "DBMS"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "STUDENT ⟕ ENROLMENT",
+          "h": [
+            "sid",
+            "name",
+            "course"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav",
+              "DBMS"
+            ],
+            [
+              "1",
+              "Aarav",
+              "C"
+            ],
+            [
+              "2",
+              "Meera",
+              "DBMS"
+            ],
+            [
+              "3",
+              "Kabir",
+              "NULL"
+            ]
           ]
         },
         {
@@ -4012,15 +4166,60 @@
           "x": "Joins combine rows from two or more tables. Section 5 explained the idea; this section shows the exact result of every join type, the traps that cause wrong answers, and the semi-join and anti-join patterns. All examples use these small tables."
         },
         {
-          "t": "code",
-          "x": [
-            "Student                     Enrolment",
-            "sid | name                  eid | sid | course",
-            "----+-------                ----+-----+--------",
-            " 1  | Aarav                  1  |  1  | DBMS",
-            " 2  | Meera                  2  |  1  | C",
-            " 3  | Kabir                  3  |  2  | DBMS",
-            " 4  | Isha                   4  |  5  | Python"
+          "t": "tb",
+          "c": "Student",
+          "h": [
+            "sid",
+            "name"
+          ],
+          "r": [
+            [
+              "1",
+              "Aarav"
+            ],
+            [
+              "2",
+              "Meera"
+            ],
+            [
+              "3",
+              "Kabir"
+            ],
+            [
+              "4",
+              "Isha"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "Enrolment",
+          "h": [
+            "eid",
+            "sid",
+            "course"
+          ],
+          "r": [
+            [
+              "1",
+              "1",
+              "DBMS"
+            ],
+            [
+              "2",
+              "1",
+              "C"
+            ],
+            [
+              "3",
+              "2",
+              "DBMS"
+            ],
+            [
+              "4",
+              "5",
+              "Python"
+            ]
           ]
         },
         {
@@ -4039,13 +4238,29 @@
           "t": "code",
           "x": [
             "SELECT s.name, e.course",
-            "FROM Student s INNER JOIN Enrolment e ON e.sid = s.sid;",
-            "",
-            "name  | course",
-            "------+-------",
-            "Aarav | DBMS",
-            "Aarav | C",
-            "Meera | DBMS"
+            "FROM Student s INNER JOIN Enrolment e ON e.sid = s.sid;"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "name",
+            "course"
+          ],
+          "r": [
+            [
+              "Aarav",
+              "DBMS"
+            ],
+            [
+              "Aarav",
+              "C"
+            ],
+            [
+              "Meera",
+              "DBMS"
+            ]
           ]
         },
         {
@@ -4423,13 +4638,85 @@
           "x": "A comparison involving NULL is neither true nor false; it is UNKNOWN. SQL logic therefore has three truth values. WHERE keeps only the rows for which the condition is TRUE; both FALSE and UNKNOWN rows are discarded."
         },
         {
-          "t": "code",
-          "x": [
-            "  AND  | T  F  U         OR  | T  F  U        NOT",
-            "  -----+---------        ----+---------        T -> F",
-            "   T   | T  F  U          T  | T  T  T        F -> T",
-            "   F   | F  F  F          F  | T  F  U        U -> U",
-            "   U   | U  F  U          U  | T  U  U"
+          "t": "tb",
+          "c": "AND",
+          "h": [
+            "AND",
+            "T",
+            "F",
+            "U"
+          ],
+          "r": [
+            [
+              "T",
+              "T",
+              "F",
+              "U"
+            ],
+            [
+              "F",
+              "F",
+              "F",
+              "F"
+            ],
+            [
+              "U",
+              "U",
+              "F",
+              "U"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "OR",
+          "h": [
+            "OR",
+            "T",
+            "F",
+            "U"
+          ],
+          "r": [
+            [
+              "T",
+              "T",
+              "T",
+              "T"
+            ],
+            [
+              "F",
+              "T",
+              "F",
+              "U"
+            ],
+            [
+              "U",
+              "T",
+              "U",
+              "U"
+            ]
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "NOT",
+          "h": [
+            "x",
+            "NOT x"
+          ],
+          "r": [
+            [
+              "T",
+              "F"
+            ],
+            [
+              "F",
+              "T"
+            ],
+            [
+              "U",
+              "U"
+            ]
           ]
         },
         {
@@ -4517,13 +4804,34 @@
           "x": "Section 10 introduced GROUP BY and the five aggregate functions. This section goes deeper: the rules that catch beginners, ways to compute several summaries in one pass, and the OLAP-style extensions ROLLUP, CUBE and GROUPING SETS used in reporting."
         },
         {
-          "t": "code",
-          "x": [
-            "Sales(region, product, amount)",
-            "North | Laptop | 500",
-            "North | Phone  | 300",
-            "South | Laptop | 400",
-            "South | Phone  | 200"
+          "t": "tb",
+          "c": "Sales",
+          "h": [
+            "region",
+            "product",
+            "amount"
+          ],
+          "r": [
+            [
+              "North",
+              "Laptop",
+              "500"
+            ],
+            [
+              "North",
+              "Phone",
+              "300"
+            ],
+            [
+              "South",
+              "Laptop",
+              "400"
+            ],
+            [
+              "South",
+              "Phone",
+              "200"
+            ]
           ]
         },
         {
@@ -4546,10 +4854,21 @@
             "FROM Sales",
             "WHERE product = 'Laptop'          -- row filter, before grouping",
             "GROUP BY region",
-            "HAVING SUM(amount) > 450;         -- group filter, after grouping",
-            "",
-            "region | total",
-            "North  | 500"
+            "HAVING SUM(amount) > 450;         -- group filter, after grouping"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "region",
+            "total"
+          ],
+          "r": [
+            [
+              "North",
+              "500"
+            ]
           ]
         },
         {
@@ -4590,11 +4909,31 @@
             "  SUM(CASE WHEN product = 'Laptop' THEN amount ELSE 0 END) AS laptops,",
             "  SUM(CASE WHEN product = 'Phone'  THEN amount ELSE 0 END) AS phones,",
             "  SUM(amount) AS total",
-            "FROM Sales GROUP BY region;",
-            "",
-            "region | laptops | phones | total",
-            "North  |    500  |   300  |  800",
-            "South  |    400  |   200  |  600"
+            "FROM Sales GROUP BY region;"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "region",
+            "laptops",
+            "phones",
+            "total"
+          ],
+          "r": [
+            [
+              "North",
+              "500",
+              "300",
+              "800"
+            ],
+            [
+              "South",
+              "400",
+              "200",
+              "600"
+            ]
           ]
         },
         {
@@ -4657,16 +4996,61 @@
             "-- PostgreSQL / Oracle / SQL Server",
             "SELECT region, product, SUM(amount) AS total",
             "FROM Sales GROUP BY ROLLUP (region, product);",
-            "-- MySQL 8: GROUP BY region, product WITH ROLLUP",
-            "",
-            "region | product | total",
-            "North  | Laptop  |  500",
-            "North  | Phone   |  300",
-            "North  | NULL    |  800     <- subtotal for North",
-            "South  | Laptop  |  400",
-            "South  | Phone   |  200",
-            "South  | NULL    |  600     <- subtotal for South",
-            "NULL   | NULL    | 1400     <- grand total"
+            "-- MySQL 8: GROUP BY region, product WITH ROLLUP"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "region",
+            "product",
+            "total",
+            "Note"
+          ],
+          "r": [
+            [
+              "North",
+              "Laptop",
+              "500",
+              ""
+            ],
+            [
+              "North",
+              "Phone",
+              "300",
+              ""
+            ],
+            [
+              "North",
+              "NULL",
+              "800",
+              "subtotal for North"
+            ],
+            [
+              "South",
+              "Laptop",
+              "400",
+              ""
+            ],
+            [
+              "South",
+              "Phone",
+              "200",
+              ""
+            ],
+            [
+              "South",
+              "NULL",
+              "600",
+              "subtotal for South"
+            ],
+            [
+              "NULL",
+              "NULL",
+              "1400",
+              "grand total"
+            ]
           ]
         },
         {
@@ -4743,13 +5127,49 @@
           ]
         },
         {
-          "t": "code",
-          "x": [
-            "Employee(name, dept, salary)",
-            "Meera | IT | 60000     Sana  | HR | 52000",
-            "Kabir | IT | 60000     Rohan | HR | 45000",
-            "Aarav | IT | 50000     Isha  | HR | 40000",
-            "Dev   | IT | 45000"
+          "t": "tb",
+          "c": "Employee",
+          "h": [
+            "name",
+            "dept",
+            "salary"
+          ],
+          "r": [
+            [
+              "Meera",
+              "IT",
+              "60000"
+            ],
+            [
+              "Kabir",
+              "IT",
+              "60000"
+            ],
+            [
+              "Aarav",
+              "IT",
+              "50000"
+            ],
+            [
+              "Dev",
+              "IT",
+              "45000"
+            ],
+            [
+              "Sana",
+              "HR",
+              "52000"
+            ],
+            [
+              "Rohan",
+              "HR",
+              "45000"
+            ],
+            [
+              "Isha",
+              "HR",
+              "40000"
+            ]
           ]
         },
         {
@@ -4762,14 +5182,54 @@
             "-- Each employee together with the department average",
             "SELECT name, dept, salary,",
             "       AVG(salary) OVER (PARTITION BY dept) AS dept_avg",
-            "FROM Employee;",
-            "",
-            "name  | dept | salary | dept_avg",
-            "Meera | IT   | 60000  | 53750",
-            "Kabir | IT   | 60000  | 53750",
-            "Aarav | IT   | 50000  | 53750",
-            "Dev   | IT   | 45000  | 53750",
-            "Sana  | HR   | 52000  | 45666.67",
+            "FROM Employee;"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "name",
+            "dept",
+            "salary",
+            "dept_avg"
+          ],
+          "r": [
+            [
+              "Meera",
+              "IT",
+              "60000",
+              "53750"
+            ],
+            [
+              "Kabir",
+              "IT",
+              "60000",
+              "53750"
+            ],
+            [
+              "Aarav",
+              "IT",
+              "50000",
+              "53750"
+            ],
+            [
+              "Dev",
+              "IT",
+              "45000",
+              "53750"
+            ],
+            [
+              "Sana",
+              "HR",
+              "52000",
+              "45666.67"
+            ]
+          ]
+        },
+        {
+          "t": "code",
+          "x": [
             "..."
           ]
         },
@@ -4788,13 +5248,48 @@
             "  ROW_NUMBER() OVER (ORDER BY salary DESC, name) AS rn,",
             "  RANK()       OVER (ORDER BY salary DESC)       AS rnk,",
             "  DENSE_RANK() OVER (ORDER BY salary DESC)       AS drnk",
-            "FROM Employee WHERE dept = 'IT';",
-            "",
-            "name  | salary | rn | rnk | drnk",
-            "Kabir | 60000  | 1  |  1  |  1",
-            "Meera | 60000  | 2  |  1  |  1",
-            "Aarav | 50000  | 3  |  3  |  2",
-            "Dev   | 45000  | 4  |  4  |  3"
+            "FROM Employee WHERE dept = 'IT';"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "name",
+            "salary",
+            "rn",
+            "rnk",
+            "drnk"
+          ],
+          "r": [
+            [
+              "Kabir",
+              "60000",
+              "1",
+              "1",
+              "1"
+            ],
+            [
+              "Meera",
+              "60000",
+              "2",
+              "1",
+              "1"
+            ],
+            [
+              "Aarav",
+              "50000",
+              "3",
+              "3",
+              "2"
+            ],
+            [
+              "Dev",
+              "45000",
+              "4",
+              "4",
+              "3"
+            ]
           ]
         },
         {
@@ -4851,13 +5346,48 @@
             "  LAG(amount)  OVER (ORDER BY month) AS prev,",
             "  LEAD(amount) OVER (ORDER BY month) AS next,",
             "  amount - LAG(amount) OVER (ORDER BY month) AS change",
-            "FROM MonthlySales;",
-            "",
-            "month | amount | prev | next | change",
-            "Jan   |  100   | NULL | 150  | NULL",
-            "Feb   |  150   | 100  | 120  |  50",
-            "Mar   |  120   | 150  | 200  | -30",
-            "Apr   |  200   | 120  | NULL |  80"
+            "FROM MonthlySales;"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "month",
+            "amount",
+            "prev",
+            "next",
+            "change"
+          ],
+          "r": [
+            [
+              "Jan",
+              "100",
+              "NULL",
+              "150",
+              "NULL"
+            ],
+            [
+              "Feb",
+              "150",
+              "100",
+              "120",
+              "50"
+            ],
+            [
+              "Mar",
+              "120",
+              "150",
+              "200",
+              "-30"
+            ],
+            [
+              "Apr",
+              "200",
+              "120",
+              "NULL",
+              "80"
+            ]
           ]
         },
         {
@@ -4889,13 +5419,48 @@
             "  ROUND(AVG(amount) OVER (ORDER BY month",
             "     ROWS BETWEEN 2 PRECEDING AND CURRENT ROW), 2)   AS avg3,",
             "  ROUND(100.0 * amount / SUM(amount) OVER (), 1)     AS pct",
-            "FROM MonthlySales;",
-            "",
-            "month | amount | running | avg3   | pct",
-            "Jan   |  100   |   100   | 100.0  | 17.5",
-            "Feb   |  150   |   250   | 125.0  | 26.3",
-            "Mar   |  120   |   370   | 123.33 | 21.1",
-            "Apr   |  200   |   570   | 156.67 | 35.1"
+            "FROM MonthlySales;"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "month",
+            "amount",
+            "running",
+            "avg3",
+            "pct"
+          ],
+          "r": [
+            [
+              "Jan",
+              "100",
+              "100",
+              "100.0",
+              "17.5"
+            ],
+            [
+              "Feb",
+              "150",
+              "250",
+              "125.0",
+              "26.3"
+            ],
+            [
+              "Mar",
+              "120",
+              "370",
+              "123.33",
+              "21.1"
+            ],
+            [
+              "Apr",
+              "200",
+              "570",
+              "156.67",
+              "35.1"
+            ]
           ]
         },
         {
@@ -6376,15 +6941,76 @@
             "  ROW_NUMBER() OVER (PARTITION BY dept ORDER BY score DESC) AS rn,",
             "  RANK()       OVER (PARTITION BY dept ORDER BY score DESC) AS rk,",
             "  DENSE_RANK() OVER (PARTITION BY dept ORDER BY score DESC) AS dr",
-            "FROM marks ORDER BY dept, rn;",
-            "",
-            "roll | dept | score | rn | rk | dr",
-            "  1  | CSE  |  92   | 1  | 1  | 1",
-            "  3  | CSE  |  92   | 2  | 1  | 1      <- tie for first",
-            "  2  | CSE  |  85   | 3  | 3  | 2      <- RANK skips 2, DENSE_RANK does not",
-            "  5  | ECE  |  88   | 1  | 1  | 1",
-            "  4  | ECE  |  70   | 2  | 2  | 2",
-            "  6  | ECE  |  70   | 3  | 2  | 2"
+            "FROM marks ORDER BY dept, rn;"
+          ]
+        },
+        {
+          "t": "tb",
+          "c": "",
+          "h": [
+            "roll",
+            "dept",
+            "score",
+            "rn",
+            "rk",
+            "dr",
+            "Note"
+          ],
+          "r": [
+            [
+              "1",
+              "CSE",
+              "92",
+              "1",
+              "1",
+              "1",
+              ""
+            ],
+            [
+              "3",
+              "CSE",
+              "92",
+              "2",
+              "1",
+              "1",
+              "tie for first"
+            ],
+            [
+              "2",
+              "CSE",
+              "85",
+              "3",
+              "3",
+              "2",
+              "RANK skips 2, DENSE_RANK does not"
+            ],
+            [
+              "5",
+              "ECE",
+              "88",
+              "1",
+              "1",
+              "1",
+              ""
+            ],
+            [
+              "4",
+              "ECE",
+              "70",
+              "2",
+              "2",
+              "2",
+              ""
+            ],
+            [
+              "6",
+              "ECE",
+              "70",
+              "3",
+              "2",
+              "2",
+              ""
+            ]
           ]
         },
         {

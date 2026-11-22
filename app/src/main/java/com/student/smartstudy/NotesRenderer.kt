@@ -16,6 +16,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
@@ -23,8 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private val MathInk = Color(0xFF2B2B6B)
-private val MathBg = Color(0xFFEEF0FF)
+private val MathInk = Color(0xFF4A3300)
+private val MathBg = GoldSoft
 private val QA_NUM = Regex("^(\\d+)\\. ")
 private val SCHEMA = Regex("^[A-Z_][A-Za-z_0-9]*\\(.*\\)$")
 
@@ -37,11 +39,11 @@ private fun isMathLine(s: String): Boolean {
 }
 
 private fun kindStyle(k: String): Pair<String, Color> = when (k) {
-    "qa" -> "?" to Color(0xFF3B9BE0)
-    "gl" -> "Aa" to Color(0xFF7C6CF0)
-    "sum" -> "Σ" to Color(0xFFE0A800)
+    "qa" -> "?" to Color(0xFFC98A0A)
+    "gl" -> "Aa" to Color(0xFFB5651D)
+    "sum" -> "Σ" to Color(0xFFD4A017)
     "cs" -> "</>" to Color(0xFF2E9E6B)
-    "ex" -> "Ex" to Color(0xFFF2894E)
+    "ex" -> "Ex" to Color(0xFFE07B39)
     "warn" -> "!" to Color(0xFFD64545)
     "fin" -> "✓" to Color(0xFF2E9E6B)
     else -> "" to Accent
@@ -61,10 +63,10 @@ fun Lines(lines: List<String>, tint: Color = MathBg) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         groups.forEach { (kind, ls) ->
             when (kind) {
-                2 -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = Color(0xFF23233A)) {
+                2 -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = CodePanel) {
                     Text(
                         ls.joinToString("\n"), Modifier.padding(12.dp).horizontalScroll(rememberScrollState()),
-                        fontFamily = FontFamily.Monospace, fontSize = 12.5.sp, lineHeight = 19.sp, color = Color(0xFFE6E6FF), softWrap = false
+                        fontFamily = FontFamily.Monospace, fontSize = 12.5.sp, lineHeight = 19.sp, color = CodeInk, softWrap = false
                     )
                 }
                 1 -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp), color = tint) {
@@ -84,7 +86,7 @@ fun QaCard(n: String, q: String, a: String) {
     var open by remember { mutableStateOf(false) }
     Card(
         Modifier.fillMaxWidth().animateContentSize(tween(220)).tap(RoundedCornerShape(18.dp)) { if (a.isNotEmpty()) open = !open }, shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(verticalAlignment = Alignment.Top) {
@@ -130,38 +132,38 @@ fun BlockView(b: Blk) {
             }
         }
         is BLn -> Lines(b.x)
-        is BCode -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp), color = Color(0xFF23233A)) {
+        is BCode -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp), color = CodePanel) {
             Text(
                 b.x.joinToString("\n"), Modifier.padding(14.dp).horizontalScroll(rememberScrollState()),
-                fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 20.sp, color = Color(0xFFE6E6FF), softWrap = false
+                fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 20.sp, color = CodeInk, softWrap = false
             )
         }
-        is BEx -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = Color(0xFFFFF4E6)) {
+        is BEx -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = Color(0xFFFFF4D6), border = BorderStroke(1.dp, GoldLine)) {
             Row(Modifier.height(IntrinsicSize.Min)) {
-                Box(Modifier.width(4.dp).fillMaxHeight().background(Color(0xFFF2894E)))
+                Box(Modifier.width(4.dp).fillMaxHeight().background(Gold))
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(b.h, fontWeight = FontWeight.SemiBold, color = Color(0xFFB45A12), fontSize = 14.sp)
-                    Lines(b.x, Color(0xFFFFE6C8))
+                    Text(b.h, fontWeight = FontWeight.SemiBold, color = Color(0xFF8A5A00), fontSize = 14.sp)
+                    Lines(b.x, Color(0xFFFFE9B0))
                 }
             }
         }
         is BNote -> {
             val (bg, fg, _) = when (b.k) {
                 "warn" -> Triple(Color(0xFFFDECEC), Color(0xFFC62828), "")
-                "key" -> Triple(Color(0xFFEEE9FF), Accent, "")
-                else -> Triple(Color(0xFFE8F3FD), Color(0xFF1565C0), "")
+                "key" -> Triple(Color(0xFFFFF0C2), Accent, "")
+                else -> Triple(Color(0xFFFFF8E3), Color(0xFF8A5A00), "")
             }
-            Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = bg) {
+            Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = bg, border = BorderStroke(1.dp, fg.copy(alpha = 0.25f))) {
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(b.h, fontWeight = FontWeight.SemiBold, color = fg, fontSize = 14.sp)
                     Lines(b.x, Color.White.copy(alpha = 0.7f))
                 }
             }
         }
-        is BKv -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), color = Color.White) {
+        is BKv -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), color = Color.White, border = BorderStroke(1.dp, GoldLine)) {
             Column(Modifier.padding(horizontal = 14.dp)) {
                 b.x.forEachIndexed { n, (l, r) ->
-                    if (n > 0) HorizontalDivider(color = Color(0xFFEDEDF2))
+                    if (n > 0) HorizontalDivider(color = GoldLine)
                     Row(Modifier.padding(vertical = 10.dp), verticalAlignment = Alignment.Top) {
                         if (l.isNotEmpty()) Text(l, Modifier.weight(0.4f), fontWeight = FontWeight.Medium, color = Accent, fontSize = 14.sp)
                         Text(
@@ -174,7 +176,7 @@ fun BlockView(b: Blk) {
         }
         is BGl -> Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             b.x.forEach { (t, d) ->
-                Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), color = Color.White) {
+                Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), color = Color.White, border = BorderStroke(1.dp, GoldLine)) {
                     Column(Modifier.padding(14.dp)) {
                         Text(t, fontWeight = FontWeight.SemiBold, color = Accent, fontSize = 14.sp)
                         Text(d, fontSize = 14.sp, lineHeight = 20.sp, color = Ink)
@@ -182,6 +184,7 @@ fun BlockView(b: Blk) {
                 }
             }
         }
+        is BTb -> TableView(b)
         is BQa -> Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
             b.x.forEachIndexed { n, (q, a) ->
                 val m = QA_NUM.find(q)
@@ -191,10 +194,65 @@ fun BlockView(b: Blk) {
     }
 }
 
+/**
+ * A real table: gold header, alternating cream rows, thin gold grid lines. Column widths follow the text length; a table that is
+ * narrower than the screen is stretched to fill it, a wider one scrolls sideways.
+ */
+@Composable
+fun TableView(b: BTb) {
+    val cols = maxOf(b.h.size, b.r.maxOfOrNull { it.size } ?: 0)
+    if (cols == 0) return
+    val base = remember(b) {
+        (0 until cols).map { c ->
+            val longest = maxOf(b.h.getOrNull(c)?.length ?: 0, b.r.maxOfOrNull { it.getOrNull(c)?.length ?: 0 } ?: 0)
+            (longest.coerceAtMost(26) * 8f + 30f).coerceIn(76f, 230f)
+        }
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        if (b.c.isNotEmpty()) Text(b.c, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Accent, letterSpacing = 0.6.sp)
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+            val total = base.sum()
+            val avail = maxWidth.value - (cols - 1) - 2f   // minus the grid lines and the border, so a table that fits never scrolls
+            val scale = if (total < avail) avail / total else 1f
+            val widths = base.map { (it * scale).dp }
+            Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp), color = Color.White, border = BorderStroke(1.dp, GoldLine)) {
+                Column(Modifier.horizontalScroll(rememberScrollState())) {
+                    if (b.h.isNotEmpty()) {
+                        Row(Modifier.height(IntrinsicSize.Min).background(Brush.horizontalGradient(listOf(GoldLight, Gold)))) {
+                            for (c in 0 until cols) {
+                                Box(Modifier.width(widths[c]).fillMaxHeight().padding(horizontal = 12.dp, vertical = 10.dp)) {
+                                    Text(b.h.getOrElse(c) { "" }, fontSize = 13.sp, lineHeight = 17.sp, fontWeight = FontWeight.Bold, color = HeroInk)
+                                }
+                            }
+                        }
+                    }
+                    b.r.forEachIndexed { n, row ->
+                        Row(
+                            Modifier.height(IntrinsicSize.Min).background(if (n % 2 == 0) Color.White else GoldRow).drawBehind {
+                                if (n < b.r.size - 1) drawLine(GoldLine, Offset(0f, size.height), Offset(size.width, size.height), strokeWidth = 1.dp.toPx())
+                            }
+                        ) {
+                            for (c in 0 until cols) {
+                                if (c > 0) Box(Modifier.width(1.dp).fillMaxHeight().background(GoldLine))
+                                Box(Modifier.width(widths[c]).fillMaxHeight().padding(horizontal = 12.dp, vertical = 9.dp)) {
+                                    Text(
+                                        row.getOrElse(c) { "" }, fontSize = 13.sp, lineHeight = 18.sp, color = Ink,
+                                        fontWeight = if (c == 0) FontWeight.Medium else FontWeight.Normal
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @Composable
 fun Chip(t: String) {
-    Surface(shape = CircleShape, color = Color.White.copy(alpha = 0.22f)) {
-        Text(t, Modifier.padding(horizontal = 12.dp, vertical = 5.dp), color = Color.White, fontSize = 12.sp)
+    Surface(shape = CircleShape, color = Color.White.copy(alpha = 0.55f)) {
+        Text(t, Modifier.padding(horizontal = 12.dp, vertical = 5.dp), color = HeroInk, fontSize = 12.sp, fontWeight = FontWeight.Medium)
     }
 }
 
@@ -211,17 +269,17 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
             item(key = "hero", contentType = "hero") {
                 Box(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))
-                        .background(Brush.linearGradient(listOf(Color(0xFF5B5BD6), Color(0xFF9B59D0), Color(0xFFE0568B))))
+                        .background(Brush.linearGradient(GoldHeroColors))
                         .padding(22.dp)
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         Row(verticalAlignment = Alignment.Top) {
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text("UNIT ${i + 1}  ·  DETAILED NOTES", color = Color.White.copy(alpha = 0.8f), fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
+                                    Text("UNIT ${i + 1}  ·  DETAILED NOTES", color = HeroInk.copy(alpha = 0.75f), fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
                                 }
-                                Text(r.title, color = Color.White, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.Medium)
-                                Text(r.intro, color = Color.White.copy(alpha = 0.88f), fontSize = 13.sp, lineHeight = 19.sp)
+                                Text(r.title, color = HeroInk, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.SemiBold)
+                                Text(r.intro, color = HeroInk.copy(alpha = 0.85f), fontSize = 13.sp, lineHeight = 19.sp)
                             }
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -229,10 +287,10 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
                             Chip("~$mins min read")
                         }
                         LinearProgressIndicator(
-                            progress = { prog }, color = Color.White, trackColor = Color.White.copy(alpha = 0.3f),
+                            progress = { prog }, color = HeroInk, trackColor = Color.White.copy(alpha = 0.5f),
                             modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape)
                         )
-                        Text("$read of ${r.sec.size} topics read", color = Color.White.copy(alpha = 0.85f), fontSize = 12.sp)
+                        Text("$read of ${r.sec.size} topics read", color = HeroInk.copy(alpha = 0.85f), fontSize = 12.sp)
                     }
                 }
             }
@@ -241,7 +299,7 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
                 val (glyph, tint) = kindStyle(sec.k)
                 Card(
                     Modifier.fillMaxWidth().tap(RoundedCornerShape(20.dp)) { open(idx) }, shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                    colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)
                 ) {
                     Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                         Box(Modifier.size(42.dp).clip(RoundedCornerShape(14.dp)).background(tint.copy(alpha = 0.15f)), contentAlignment = Alignment.Center) {
@@ -272,6 +330,7 @@ private fun blockWords(b: Blk): Int = when (b) {
     is BKv -> b.x.sumOf { it.first.split(" ").size + it.second.split(" ").size }
     is BGl -> b.x.sumOf { it.first.split(" ").size + it.second.split(" ").size }
     is BQa -> b.x.sumOf { it.first.split(" ").size }
+    is BTb -> b.h.sumOf { it.split(" ").size } + b.r.sumOf { row -> row.sumOf { it.split(" ").size } }
 }
 
 @Composable

@@ -32,6 +32,9 @@ data class BKv(val x: List<Pair<String, String>>) : Blk
 data class BGl(val x: List<Pair<String, String>>) : Blk
 @Immutable
 data class BQa(val x: List<Pair<String, String>>) : Blk
+/** A real table: optional caption [c], header cells [h] (may be empty) and body rows [r]. */
+@Immutable
+data class BTb(val c: String, val h: List<String>, val r: List<List<String>>) : Blk
 
 @Immutable
 data class Sec(val n: Int, val t: String, val k: String, val s: String, val b: List<Blk>)
@@ -43,6 +46,7 @@ var rich: Map<String, Rich> by mutableStateOf(emptyMap())
     private set
 
 private fun strs(a: JSONArray) = (0 until a.length()).map { a.getString(it) }
+private fun rows(a: JSONArray) = (0 until a.length()).map { strs(a.getJSONArray(it)) }
 private fun pairs(a: JSONArray) = (0 until a.length()).map { a.getJSONArray(it).let { p -> p.getString(0) to p.getString(1) } }
 
 private fun blk(o: JSONObject): Blk = when (o.getString("t")) {
@@ -57,6 +61,7 @@ private fun blk(o: JSONObject): Blk = when (o.getString("t")) {
     "kv" -> BKv(pairs(o.getJSONArray("x")))
     "gl" -> BGl(pairs(o.getJSONArray("x")))
     "qa" -> BQa(pairs(o.getJSONArray("x")))
+    "tb" -> BTb(o.optString("c"), strs(o.getJSONArray("h")), rows(o.getJSONArray("r")))
     else -> BP(o.optString("x"))
 }
 

@@ -82,7 +82,7 @@ import kotlinx.coroutines.delay
 
 private val SqlBg = Color(0xFF1E1E2E)
 private val SqlFg = Color(0xFFE6E6F0)
-val DbColor = Color(0xFF2E86DE)
+val DbColor = Color(0xFFA85F12)
 
 // ------------------------------------------------------------------------------------------ SQL words
 
@@ -585,7 +585,7 @@ fun DbLabScreen(back: () -> Unit) {
                         decorationBox = { inner ->
                             Box {
                                 if (code.text.isEmpty()) {
-                                    Text("Write SQL here, for example:\nSELECT * FROM Student;", fontFamily = mono, fontSize = 14.sp, lineHeight = 20.sp, color = Color(0xFF6B6B78))
+                                    Text("Write SQL here, for example:\nSELECT * FROM Student;", fontFamily = mono, fontSize = 14.sp, lineHeight = 20.sp, color = Color(0xFF7A6B3A))
                                 }
                                 inner()
                             }
@@ -597,7 +597,7 @@ fun DbLabScreen(back: () -> Unit) {
                             sg.items.forEach { cand ->
                                 val isKw = cand in sqlKeywordSet
                                 Surface(
-                                    shape = RoundedCornerShape(8.dp), color = if (isKw) Color(0xFFE9E9FA) else Color(0xFFD9ECFF),
+                                    shape = RoundedCornerShape(8.dp), color = if (isKw) Color(0xFFFFF1C9) else Color(0xFFFFEBB5),
                                     modifier = Modifier.clickable {
                                         val tx = code.text
                                         val put = cand + (if (isKw) " " else "")
@@ -609,7 +609,7 @@ fun DbLabScreen(back: () -> Unit) {
                     } else {
                         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                             keywordChips.forEach { kw ->
-                                Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFE9E9FA), modifier = Modifier.clickable { insertText(if (kw.endsWith("(")) kw else "$kw ") }) {
+                                Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF1C9), modifier = Modifier.clickable { insertText(if (kw.endsWith("(")) kw else "$kw ") }) {
                                     Text(kw, Modifier.padding(horizontal = 10.dp, vertical = 7.dp), fontFamily = mono, fontSize = 12.sp, color = Ink)
                                 }
                             }
@@ -617,7 +617,7 @@ fun DbLabScreen(back: () -> Unit) {
                     }
                     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         symbolChips.forEach { sym ->
-                            Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFE9E9FA), modifier = Modifier.clickable { insertText(sym) }) {
+                            Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF1C9), modifier = Modifier.clickable { insertText(sym) }) {
                                 Text(sym, Modifier.padding(horizontal = 14.dp, vertical = 7.dp), fontFamily = mono, fontSize = 14.sp, color = Ink)
                             }
                         }
@@ -637,7 +637,7 @@ fun DbLabScreen(back: () -> Unit) {
 
                     Column(Modifier.onGloballyPositioned { resultsY = it.positionInParent().y.toInt() }, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         if (running) {
-                            LinearProgressIndicator(Modifier.fillMaxWidth(), color = DbColor, trackColor = Color(0xFFD9ECFF))
+                            LinearProgressIndicator(Modifier.fillMaxWidth(), color = DbColor, trackColor = Color(0xFFFFEBB5))
                             Text("Running…", fontSize = 12.sp, color = Color.Gray)
                         }
                         val r = lastRun
@@ -655,8 +655,8 @@ fun DbLabScreen(back: () -> Unit) {
                                     Text("• Tap the database name to open a sample college, company, library or bank database", fontSize = 13.sp, color = Color.Gray)
                                     Text("• SHOW TABLES, DESC table and BEGIN / COMMIT / ROLLBACK all work", fontSize = 13.sp, color = Color.Gray)
                                     val v = schema?.version ?: ""
-                                    if (v.isNotEmpty()) Text("Engine: SQLite $v", fontSize = 12.sp, color = Color(0xFF9A9AA8))
-                                    else if (schemaLoading) Text("Starting the SQL engine…", fontSize = 12.sp, color = Color(0xFF9A9AA8))
+                                    if (v.isNotEmpty()) Text("Engine: SQLite $v", fontSize = 12.sp, color = Color(0xFF9A8B5E))
+                                    else if (schemaLoading) Text("Starting the SQL engine…", fontSize = 12.sp, color = Color(0xFF9A8B5E))
                                 }
                             }
                         }
@@ -701,7 +701,7 @@ fun DbLabScreen(back: () -> Unit) {
                                         Text(if (open) "▴" else "▾", color = Color.Gray)
                                     }
                                     if (open) {
-                                        HorizontalDivider(color = Color(0xFFEDEDF2))
+                                        HorizontalDivider(color = Color(0xFFEFE3BC))
                                         Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                             t.columns.forEach { c ->
                                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -713,14 +713,14 @@ fun DbLabScreen(back: () -> Unit) {
                                                         if (t.fks.any { it.from == c.name }) add("FK")
                                                         if (c.default != null) add("DEFAULT ${c.default}")
                                                     }
-                                                    Text(flags.joinToString("  "), fontSize = 11.sp, color = Color(0xFF6B6B78))
+                                                    Text(flags.joinToString("  "), fontSize = 11.sp, color = Color(0xFF7A6B3A))
                                                 }
                                             }
                                             t.fks.forEach { f -> Text("↳ ${f.from} → ${f.table}(${f.to})", fontSize = 12.sp, color = DbColor, fontFamily = mono) }
                                             if (t.indexes.isNotEmpty()) Text("Indexes: " + t.indexes.joinToString(), fontSize = 12.sp, color = Color.Gray)
                                             if (t.triggers.isNotEmpty()) Text("Triggers: " + t.triggers.joinToString(), fontSize = 12.sp, color = Color.Gray)
                                             Row(Modifier.horizontalScroll(rememberScrollState()).padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                val chipColor = Color(0xFFE9E9FA)
+                                                val chipColor = Color(0xFFFFF1C9)
                                                 Surface(shape = RoundedCornerShape(10.dp), color = DbColor, modifier = Modifier.clickable(enabled = !running) { runText("SELECT *\nFROM $q;") }) {
                                                     Text("SELECT *", Modifier.padding(horizontal = 12.dp, vertical = 8.dp), color = Color.White, fontSize = 13.sp)
                                                 }
@@ -748,7 +748,7 @@ fun DbLabScreen(back: () -> Unit) {
                             }
                         }
                         item {
-                            Text("SQLite ${sc.version}", Modifier.fillMaxWidth().padding(top = 4.dp), textAlign = TextAlign.Center, fontSize = 11.sp, color = Color(0xFF9A9AA8))
+                            Text("SQLite ${sc.version}", Modifier.fillMaxWidth().padding(top = 4.dp), textAlign = TextAlign.Center, fontSize = 11.sp, color = Color(0xFF9A8B5E))
                         }
                     }
                 }
@@ -814,7 +814,7 @@ fun DbLabScreen(back: () -> Unit) {
                             if (n != dbName) {
                                 if (inTx) confirm = "Switching now rolls back the open transaction. Continue?" to { switchTo(n) } else switchTo(n)
                             }
-                        }.background(if (n == dbName) Color(0xFFE8F1FD) else Color.Transparent, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp),
+                        }.background(if (n == dbName) Color(0xFFFFF3D0) else Color.Transparent, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp),
                             verticalAlignment = Alignment.CenterVertically) {
                             Text(if (n == dbName) "●" else "○", color = DbColor)
                             Spacer(Modifier.width(10.dp))
@@ -825,12 +825,12 @@ fun DbLabScreen(back: () -> Unit) {
                             }.padding(6.dp), fontSize = 12.sp, color = Color(0xFFD64545))
                         }
                     }
-                    HorizontalDivider(Modifier.padding(vertical = 4.dp), color = Color(0xFFEDEDF2))
+                    HorizontalDivider(Modifier.padding(vertical = 4.dp), color = Color(0xFFEFE3BC))
                     Text("New database", fontWeight = FontWeight.Medium, color = Ink)
                     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         DbStore.templates.keys.forEach { t ->
                             Surface(
-                                shape = RoundedCornerShape(16.dp), color = if (tpl == t) DbColor else Color(0xFFEFEFF6),
+                                shape = RoundedCornerShape(16.dp), color = if (tpl == t) DbColor else Color(0xFFFBF3DC),
                                 modifier = Modifier.clickable {
                                     if (newName.isBlank() || newName == tpl.lowercase() || newName == "new_database") newName = if (t == "Empty") "new_database" else t.lowercase()
                                     tpl = t
@@ -874,7 +874,7 @@ private fun ResultsView(dbRun: DbRun, onCopy: (String) -> Unit) {
         dbRun.results.forEachIndexed { i, r ->
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 if (r.sql.isNotBlank()) {
-                    Text("${i + 1}.  " + oneLine(r.sql), fontFamily = FontFamily.Monospace, fontSize = 11.sp, color = Color(0xFF6B6B78), maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Text("${i + 1}.  " + oneLine(r.sql), fontFamily = FontFamily.Monospace, fontSize = 11.sp, color = Color(0xFF7A6B3A), maxLines = 2, overflow = TextOverflow.Ellipsis)
                 }
                 when (r.kind) {
                     "rows" -> RowsTable(r, onCopy)
@@ -892,7 +892,7 @@ private fun ResultsView(dbRun: DbRun, onCopy: (String) -> Unit) {
                                 fontWeight = FontWeight.Bold, fontSize = 13.sp, color = Color(0xFFB02A2A)
                             )
                             SelectionContainer { Text(r.message, fontFamily = FontFamily.Monospace, fontSize = 13.sp, color = Ink) }
-                            if (r.hint.isNotBlank()) Text("💡  " + r.hint, fontSize = 13.sp, color = Color(0xFF1F4E8C))
+                            if (r.hint.isNotBlank()) Text("💡  " + r.hint, fontSize = 13.sp, color = Color(0xFF7A5200))
                         }
                     }
                 }
@@ -934,20 +934,20 @@ private fun RowsTable(r: DbResult, onCopy: (String) -> Unit) {
             if (r.message.isNotBlank()) Text(r.message, Modifier.padding(horizontal = 12.dp, vertical = 2.dp), fontSize = 12.sp, color = Color(0xFF8A5200))
             Box(Modifier.horizontalScroll(rememberScrollState())) {
                 Column {
-                    Row(Modifier.background(Color(0xFFEDEBFF))) {
+                    Row(Modifier.background(Color(0xFFFFF0C2))) {
                         Text("#", Modifier.width(40.dp).padding(horizontal = 8.dp, vertical = 8.dp), fontFamily = mono, fontSize = 12.sp, color = Color.Gray)
                         r.columns.forEachIndexed { i, c ->
                             Text(c, Modifier.width(widths[i]).padding(horizontal = 8.dp, vertical = 8.dp), fontFamily = mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Ink)
                         }
                     }
                     r.rows.take(shown).forEachIndexed { ri, row ->
-                        Row(Modifier.background(if (ri % 2 == 0) Color.White else Color(0xFFF6F6FB))) {
-                            Text("${ri + 1}", Modifier.width(40.dp).padding(horizontal = 8.dp, vertical = 7.dp), fontFamily = mono, fontSize = 11.sp, color = Color(0xFF9A9AA8))
+                        Row(Modifier.background(if (ri % 2 == 0) Color.White else Color(0xFFFFFAEB))) {
+                            Text("${ri + 1}", Modifier.width(40.dp).padding(horizontal = 8.dp, vertical = 7.dp), fontFamily = mono, fontSize = 11.sp, color = Color(0xFF9A8B5E))
                             r.columns.indices.forEach { ci ->
                                 val v = row.getOrNull(ci)
                                 Text(
                                     v ?: "NULL", Modifier.width(widths[ci]).padding(horizontal = 8.dp, vertical = 7.dp),
-                                    fontFamily = mono, fontSize = 12.sp, color = if (v == null) Color(0xFF9A9AA8) else Ink,
+                                    fontFamily = mono, fontSize = 12.sp, color = if (v == null) Color(0xFF9A8B5E) else Ink,
                                     fontStyle = if (v == null) FontStyle.Italic else FontStyle.Normal,
                                     textAlign = if (v != null && isNumber(v)) TextAlign.End else TextAlign.Start,
                                     maxLines = 6, overflow = TextOverflow.Ellipsis
@@ -957,7 +957,7 @@ private fun RowsTable(r: DbResult, onCopy: (String) -> Unit) {
                     }
                 }
             }
-            if (r.rows.isEmpty()) Text("No rows", Modifier.padding(12.dp), fontSize = 13.sp, color = Color(0xFF9A9AA8), fontStyle = FontStyle.Italic)
+            if (r.rows.isEmpty()) Text("No rows", Modifier.padding(12.dp), fontSize = 13.sp, color = Color(0xFF9A8B5E), fontStyle = FontStyle.Italic)
             if (r.rows.size > shown) TextButton(onClick = { shown += 50 }) { Text("Show 50 more  (${r.rows.size - shown} left)", fontSize = 13.sp) }
             if (r.truncated) Text("Only the first ${r.rows.size} of ${r.total} rows are loaded. Use LIMIT or WHERE to narrow the query.", Modifier.padding(12.dp), fontSize = 12.sp, color = Color.Gray)
         }

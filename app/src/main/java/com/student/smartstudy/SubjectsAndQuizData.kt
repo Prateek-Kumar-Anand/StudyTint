@@ -11,7 +11,7 @@ data class Subject(val id: String, val name: String, val mark: String, val color
 private fun c(t: String, vararg n: String) = Chap(t, n.toList())
 
 val subjects = listOf(
-    Subject("py", "Python", "Py", Color(0xFF7C6CF0), listOf(
+    Subject("py", "Python", "Py", Color(0xFFD4A017), listOf(
         c(
             "Unit 1: Python Programming Fundamentals",
             "Setting up Python, IDEs, the interpreter, pip and virtual environments.",
@@ -37,7 +37,7 @@ val subjects = listOf(
             "NumPy arrays and pandas DataFrames for data analysis."
         )
     )),
-    Subject("ma", "Maths", "∑", Color(0xFFF2894E), listOf(
+    Subject("ma", "Maths", "∑", Color(0xFFE07B39), listOf(
         c(
             "Unit 1: Sets, Relations & Functions",
             "Sets, subsets, Venn diagrams and Cartesian products.",
@@ -63,7 +63,7 @@ val subjects = listOf(
             "Trees, spanning trees and planar graphs."
         )
     )),
-    Subject("c", "C", "C", Color(0xFF2FA37A), listOf(
+    Subject("c", "C", "C", Color(0xFF8F7A1E), listOf(
         c(
             "Unit 1: Problem Solving & C Fundamentals",
             "Algorithms, flowcharts and pseudocode; history, features and structure of a C program.",
@@ -89,7 +89,7 @@ val subjects = listOf(
             "File handling and the preprocessor: macros, include guards and conditional compilation."
         )
     )),
-    Subject("ai", "Exploration in AI", "AI", Color(0xFFC2457F), listOf(
+    Subject("ai", "Exploration in AI", "AI", Color(0xFFB5651D), listOf(
         c(
             "Unit 1: Artificial Intelligence Foundations",
             "Human versus machine intelligence; defining AI and the Turing Test.",
@@ -115,7 +115,7 @@ val subjects = listOf(
             "Bias, privacy, deepfakes and responsible AI."
         )
     )),
-    Subject("db", "DBMS", "DB", Color(0xFF3B9BE0), listOf(
+    Subject("db", "DBMS", "DB", Color(0xFF6B4E16), listOf(
         c(
             "Unit 1: Database Foundations & Design",
             "DBMS versus file systems; hierarchical, network and relational models.",

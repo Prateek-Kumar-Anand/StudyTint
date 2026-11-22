@@ -100,7 +100,7 @@ fun ProfileCard(pf: Profile, photo: ImageBitmap?, onEdit: () -> Unit) {
     val initials = pf.name.trim().split(" ").filter { it.isNotEmpty() }.take(2).joinToString("") { it.first().uppercase() }
     Card(
         Modifier.fillMaxWidth().tap(RoundedCornerShape(24.dp), onEdit), shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -111,9 +111,9 @@ fun ProfileCard(pf: Profile, photo: ImageBitmap?, onEdit: () -> Unit) {
                     )
                 } else {
                     Box(
-                        Modifier.size(48.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Color(0xFF5B5BD6), Color(0xFFE0568B)))),
+                        Modifier.size(48.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Color(0xFFF2CB5A), Color(0xFFC98A0A)))),
                         contentAlignment = Alignment.Center
-                    ) { Text(initials, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 17.sp) }
+                    ) { Text(initials, color = HeroInk, fontWeight = FontWeight.SemiBold, fontSize = 17.sp) }
                 }
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
@@ -122,7 +122,7 @@ fun ProfileCard(pf: Profile, photo: ImageBitmap?, onEdit: () -> Unit) {
                 }
                 Text("Edit", color = Accent, fontSize = 13.sp)
             }
-            HorizontalDivider(color = Color(0xFFEDEDF2))
+            HorizontalDivider(color = GoldLine)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 ProfileField("Father", pf.father, Modifier.weight(1.2f))
                 ProfileField("LURN No.", pf.lurn, Modifier.weight(1f))
@@ -194,7 +194,7 @@ fun SetupScreen(p: Progress, edit: Boolean, onDone: () -> Unit, onBack: () -> Un
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 Box(
                     Modifier.size(88.dp).clip(CircleShape)
-                        .background(Brush.linearGradient(listOf(Color(0xFF5B5BD6), Color(0xFFE0568B))))
+                        .background(Brush.linearGradient(listOf(Color(0xFFF2CB5A), Color(0xFFC98A0A))))
                         .clickable { picker.launch("image/*") },
                     contentAlignment = Alignment.Center
                 ) {
@@ -202,7 +202,7 @@ fun SetupScreen(p: Progress, edit: Boolean, onDone: () -> Unit, onBack: () -> Un
                         Image(bitmap = shown, contentDescription = "Profile photo", contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
                     } else {
                         val initials = name.trim().split(" ").filter { it.isNotEmpty() }.take(2).joinToString("") { it.first().uppercase() }
-                        Text(initials.ifEmpty { "+" }, color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 28.sp)
+                        Text(initials.ifEmpty { "+" }, color = HeroInk, fontWeight = FontWeight.SemiBold, fontSize = 28.sp)
                     }
                 }
                 Column {
@@ -238,13 +238,13 @@ fun SetupScreen(p: Progress, edit: Boolean, onDone: () -> Unit, onBack: () -> Un
 fun ProfilePromptCard(onClick: () -> Unit) {
     Card(
         Modifier.fillMaxWidth().tap(RoundedCornerShape(24.dp), onClick), shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)
     ) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Box(
-                Modifier.size(48.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Color(0xFF5B5BD6), Color(0xFFE0568B)))),
+                Modifier.size(48.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Color(0xFFF2CB5A), Color(0xFFC98A0A)))),
                 contentAlignment = Alignment.Center
-            ) { Text("+", color = Color.White, fontWeight = FontWeight.SemiBold, fontSize = 24.sp) }
+            ) { Text("+", color = HeroInk, fontWeight = FontWeight.SemiBold, fontSize = 24.sp) }
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text("Set up your profile", fontSize = 17.sp, fontWeight = FontWeight.Medium, color = Ink)

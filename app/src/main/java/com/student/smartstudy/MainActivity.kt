@@ -121,6 +121,6 @@ class MainActivity : ComponentActivity() {
         Updates.migrate(applicationContext)
         loadQuestionBanks(applicationContext)
         loadRich(applicationContext)
-        setContent { MaterialTheme { App(remember { Progress(applicationContext) }) } }
+        setContent { MaterialTheme(colorScheme = GoldColorScheme) { App(remember { Progress(applicationContext) }) } }
     }
 }
