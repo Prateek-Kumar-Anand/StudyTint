@@ -597,7 +597,7 @@ fun DbLabScreen(back: () -> Unit) {
                             sg.items.forEach { cand ->
                                 val isKw = cand in sqlKeywordSet
                                 Surface(
-                                    shape = RoundedCornerShape(8.dp), color = if (isKw) Color(0xFFFFF1C9) else Color(0xFFFFEBB5),
+                                    shape = RoundedCornerShape(8.dp), color = if (isKw) Color(0xFFFFF8E3) else Color(0xFFFFF3CF),
                                     modifier = Modifier.clickable {
                                         val tx = code.text
                                         val put = cand + (if (isKw) " " else "")
@@ -609,7 +609,7 @@ fun DbLabScreen(back: () -> Unit) {
                     } else {
                         Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                             keywordChips.forEach { kw ->
-                                Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF1C9), modifier = Modifier.clickable { insertText(if (kw.endsWith("(")) kw else "$kw ") }) {
+                                Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF8E3), modifier = Modifier.clickable { insertText(if (kw.endsWith("(")) kw else "$kw ") }) {
                                     Text(kw, Modifier.padding(horizontal = 10.dp, vertical = 7.dp), fontFamily = mono, fontSize = 12.sp, color = Ink)
                                 }
                             }
@@ -617,7 +617,7 @@ fun DbLabScreen(back: () -> Unit) {
                     }
                     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         symbolChips.forEach { sym ->
-                            Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF1C9), modifier = Modifier.clickable { insertText(sym) }) {
+                            Surface(shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF8E3), modifier = Modifier.clickable { insertText(sym) }) {
                                 Text(sym, Modifier.padding(horizontal = 14.dp, vertical = 7.dp), fontFamily = mono, fontSize = 14.sp, color = Ink)
                             }
                         }
@@ -637,7 +637,7 @@ fun DbLabScreen(back: () -> Unit) {
 
                     Column(Modifier.onGloballyPositioned { resultsY = it.positionInParent().y.toInt() }, verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         if (running) {
-                            LinearProgressIndicator(Modifier.fillMaxWidth(), color = DbColor, trackColor = Color(0xFFFFEBB5))
+                            LinearProgressIndicator(Modifier.fillMaxWidth(), color = DbColor, trackColor = Color(0xFFFFF3CF))
                             Text("Running…", fontSize = 12.sp, color = Color.Gray)
                         }
                         val r = lastRun
@@ -720,7 +720,7 @@ fun DbLabScreen(back: () -> Unit) {
                                             if (t.indexes.isNotEmpty()) Text("Indexes: " + t.indexes.joinToString(), fontSize = 12.sp, color = Color.Gray)
                                             if (t.triggers.isNotEmpty()) Text("Triggers: " + t.triggers.joinToString(), fontSize = 12.sp, color = Color.Gray)
                                             Row(Modifier.horizontalScroll(rememberScrollState()).padding(top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                val chipColor = Color(0xFFFFF1C9)
+                                                val chipColor = Color(0xFFFFF8E3)
                                                 Surface(shape = RoundedCornerShape(10.dp), color = DbColor, modifier = Modifier.clickable(enabled = !running) { runText("SELECT *\nFROM $q;") }) {
                                                     Text("SELECT *", Modifier.padding(horizontal = 12.dp, vertical = 8.dp), color = Color.White, fontSize = 13.sp)
                                                 }
@@ -814,7 +814,7 @@ fun DbLabScreen(back: () -> Unit) {
                             if (n != dbName) {
                                 if (inTx) confirm = "Switching now rolls back the open transaction. Continue?" to { switchTo(n) } else switchTo(n)
                             }
-                        }.background(if (n == dbName) Color(0xFFFFF3D0) else Color.Transparent, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp),
+                        }.background(if (n == dbName) Color(0xFFFFF8E6) else Color.Transparent, RoundedCornerShape(12.dp)).padding(horizontal = 12.dp, vertical = 10.dp),
                             verticalAlignment = Alignment.CenterVertically) {
                             Text(if (n == dbName) "●" else "○", color = DbColor)
                             Spacer(Modifier.width(10.dp))
@@ -830,7 +830,7 @@ fun DbLabScreen(back: () -> Unit) {
                     Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         DbStore.templates.keys.forEach { t ->
                             Surface(
-                                shape = RoundedCornerShape(16.dp), color = if (tpl == t) DbColor else Color(0xFFFBF3DC),
+                                shape = RoundedCornerShape(16.dp), color = if (tpl == t) DbColor else Color(0xFFF7F5EE),
                                 modifier = Modifier.clickable {
                                     if (newName.isBlank() || newName == tpl.lowercase() || newName == "new_database") newName = if (t == "Empty") "new_database" else t.lowercase()
                                     tpl = t
@@ -934,14 +934,14 @@ private fun RowsTable(r: DbResult, onCopy: (String) -> Unit) {
             if (r.message.isNotBlank()) Text(r.message, Modifier.padding(horizontal = 12.dp, vertical = 2.dp), fontSize = 12.sp, color = Color(0xFF8A5200))
             Box(Modifier.horizontalScroll(rememberScrollState())) {
                 Column {
-                    Row(Modifier.background(Color(0xFFFFF0C2))) {
+                    Row(Modifier.background(Color(0xFFFFF7DD))) {
                         Text("#", Modifier.width(40.dp).padding(horizontal = 8.dp, vertical = 8.dp), fontFamily = mono, fontSize = 12.sp, color = Color.Gray)
                         r.columns.forEachIndexed { i, c ->
                             Text(c, Modifier.width(widths[i]).padding(horizontal = 8.dp, vertical = 8.dp), fontFamily = mono, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Ink)
                         }
                     }
                     r.rows.take(shown).forEachIndexed { ri, row ->
-                        Row(Modifier.background(if (ri % 2 == 0) Color.White else Color(0xFFFFFAEB))) {
+                        Row(Modifier.background(if (ri % 2 == 0) Color.White else Color(0xFFFCFBF6))) {
                             Text("${ri + 1}", Modifier.width(40.dp).padding(horizontal = 8.dp, vertical = 7.dp), fontFamily = mono, fontSize = 11.sp, color = Color(0xFF9A8B5E))
                             r.columns.indices.forEach { ci ->
                                 val v = row.getOrNull(ci)

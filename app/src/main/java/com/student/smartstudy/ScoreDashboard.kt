@@ -84,7 +84,7 @@ fun MiniBar(label: String, frac: Float, right: String, color: Color) {
 // a ranked topic list with progress rings and a petal "heat" chart of accuracy per subject.
 // ---------------------------------------------------------------------------------------------------------------------
 
-private val Tile = Color(0xFFFFF7E0)
+private val Tile = Color(0xFFF7F5EE)
 private val GoodGreen = Color(0xFF2E9E6B)
 private val NoData = Color(0xFFCDBF93)
 private const val GRID_WEEKS = 15
@@ -194,8 +194,6 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
     val readPct = pct(readDone, readTotal)
     val unitsStarted = units.count { (s, i) -> readOf(s, i, p).first > 0 }
     val topics = p.stats.entries.filter { '#' in it.key && it.value.first >= 3 }.map { parseTopic(it.key, it.value) }
-    val cells = remember(p.activity) { activityCells(p.activity) }
-    val activeDays = cells.count { it > 0 }
     val perSubject = subjects.map { s ->
         val a = s.units.indices.sumOf { p.stats["${s.id}:$it"]?.first ?: 0 }
         val c = s.units.indices.sumOf { p.stats["${s.id}:$it"]?.second ?: 0 }
@@ -240,33 +238,7 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                         Text("$unitsStarted of ${units.size} units started", fontSize = 12.sp, color = Color.Gray)
                         Text("$readTotal", Modifier.weight(1f), fontSize = 12.sp, color = Color.Gray, textAlign = androidx.compose.ui.text.style.TextAlign.End)
                     }
-                    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Tile).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFE6D9A8)))
-                            Text("  no activity", fontSize = 12.sp, color = Color.Gray)
-                            Spacer(Modifier.width(12.dp))
-                            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFD4A017)))
-                            Text("  active", fontSize = 12.sp, color = Color.Gray)
-                        }
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Column(Modifier.width(92.dp)) {
-                                Text("Daily activity", fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink, lineHeight = 24.sp)
-                                Text("$activeDays active days", Modifier.padding(top = 4.dp), fontSize = 11.sp, color = Color.Gray)
-                            }
-                            Canvas(Modifier.weight(1f).height(98.dp)) {
-                                val cell = minOf(this.size.width / GRID_WEEKS, this.size.height / 7f)
-                                val left = this.size.width - cell * GRID_WEEKS
-                                cells.forEachIndexed { idx, n ->
-                                    if (n >= 0) {
-                                        val col = idx / 7
-                                        val row = idx % 7
-                                        val color = when { n == 0 -> Color(0xFFE6D9A8); n < 4 -> Color(0xFFF0C94F); else -> Color(0xFFC98A0A) }
-                                        drawCircle(color, radius = cell * (if (n == 0) 0.14f else 0.24f), center = Offset(left + cell * (col + 0.5f), cell * (row + 0.5f)))
-                                    }
-                                }
-                            }
-                        }
-                    }
+
                 }
             }
 
@@ -391,6 +363,40 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
                             }
                         }
                         if (n < subjects.size - 1) HorizontalDivider(color = Color(0xFFEFE3BC))
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** The "Daily activity" dot grid (last 15 weeks). Shown at the bottom of Home. */
+@Composable
+fun ActivityBox(activity: Map<String, Int>, modifier: Modifier = Modifier) {
+    val cells = remember(activity) { activityCells(activity) }
+    val activeDays = cells.count { it > 0 }
+    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Tile).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFE6D9A8)))
+            Text("  no activity", fontSize = 12.sp, color = Color.Gray)
+            Spacer(Modifier.width(12.dp))
+            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFD4A017)))
+            Text("  active", fontSize = 12.sp, color = Color.Gray)
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.width(92.dp)) {
+                Text("Daily activity", fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink, lineHeight = 24.sp)
+                Text("$activeDays active days", Modifier.padding(top = 4.dp), fontSize = 11.sp, color = Color.Gray)
+            }
+            Canvas(Modifier.weight(1f).height(98.dp)) {
+                val cell = minOf(this.size.width / GRID_WEEKS, this.size.height / 7f)
+                val left = this.size.width - cell * GRID_WEEKS
+                cells.forEachIndexed { idx, n ->
+                    if (n >= 0) {
+                        val col = idx / 7
+                        val row = idx % 7
+                        val color = when { n == 0 -> Color(0xFFE6D9A8); n < 4 -> Color(0xFFF0C94F); else -> Color(0xFFC98A0A) }
+                        drawCircle(color, radius = cell * (if (n == 0) 0.14f else 0.24f), center = Offset(left + cell * (col + 0.5f), cell * (row + 0.5f)))
                     }
                 }
             }

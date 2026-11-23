@@ -138,20 +138,20 @@ fun BlockView(b: Blk) {
                 fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 20.sp, color = CodeInk, softWrap = false
             )
         }
-        is BEx -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = Color(0xFFFFF4D6), border = BorderStroke(1.dp, GoldLine)) {
+        is BEx -> Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = Color(0xFFFFFAEB), border = BorderStroke(1.dp, GoldLine)) {
             Row(Modifier.height(IntrinsicSize.Min)) {
                 Box(Modifier.width(4.dp).fillMaxHeight().background(Gold))
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(b.h, fontWeight = FontWeight.SemiBold, color = Color(0xFF8A5A00), fontSize = 14.sp)
-                    Lines(b.x, Color(0xFFFFE9B0))
+                    Lines(b.x, Color(0xFFFFF1CC))
                 }
             }
         }
         is BNote -> {
             val (bg, fg, _) = when (b.k) {
                 "warn" -> Triple(Color(0xFFFDECEC), Color(0xFFC62828), "")
-                "key" -> Triple(Color(0xFFFFF0C2), Accent, "")
-                else -> Triple(Color(0xFFFFF8E3), Color(0xFF8A5A00), "")
+                "key" -> Triple(Color(0xFFFFF7DD), Accent, "")
+                else -> Triple(Color(0xFFFCFAF2), Color(0xFF8A5A00), "")
             }
             Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(18.dp), color = bg, border = BorderStroke(1.dp, fg.copy(alpha = 0.25f))) {
                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -218,7 +218,7 @@ fun TableView(b: BTb) {
             Surface(Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp), color = Color.White, border = BorderStroke(1.dp, GoldLine)) {
                 Column(Modifier.horizontalScroll(rememberScrollState())) {
                     if (b.h.isNotEmpty()) {
-                        Row(Modifier.height(IntrinsicSize.Min).background(Brush.horizontalGradient(listOf(GoldLight, Gold)))) {
+                        Row(Modifier.height(IntrinsicSize.Min).background(Color(0xFFFBF1D2)).drawBehind { drawLine(Gold, Offset(0f, size.height), Offset(size.width, size.height), strokeWidth = 2.dp.toPx()) }) {
                             for (c in 0 until cols) {
                                 Box(Modifier.width(widths[c]).fillMaxHeight().padding(horizontal = 12.dp, vertical = 10.dp)) {
                                     Text(b.h.getOrElse(c) { "" }, fontSize = 13.sp, lineHeight = 17.sp, fontWeight = FontWeight.Bold, color = HeroInk)
@@ -251,8 +251,8 @@ fun TableView(b: BTb) {
 
 @Composable
 fun Chip(t: String) {
-    Surface(shape = CircleShape, color = Color.White.copy(alpha = 0.55f)) {
-        Text(t, Modifier.padding(horizontal = 12.dp, vertical = 5.dp), color = HeroInk, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+    Surface(shape = CircleShape, color = GoldSoft, border = BorderStroke(1.dp, GoldLine)) {
+        Text(t, Modifier.padding(horizontal = 12.dp, vertical = 5.dp), color = Accent, fontSize = 12.sp, fontWeight = FontWeight.Medium)
     }
 }
 
@@ -269,17 +269,18 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
             item(key = "hero", contentType = "hero") {
                 Box(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(28.dp))
-                        .background(Brush.linearGradient(GoldHeroColors))
+                        .background(Color.White)
+                        .border(1.dp, GoldLine, RoundedCornerShape(28.dp))
                         .padding(22.dp)
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         Row(verticalAlignment = Alignment.Top) {
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text("UNIT ${i + 1}  ·  DETAILED NOTES", color = HeroInk.copy(alpha = 0.75f), fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
+                                    Text("UNIT ${i + 1}  ·  DETAILED NOTES", color = Accent, fontSize = 11.sp, letterSpacing = 1.2.sp, fontWeight = FontWeight.Medium)
                                 }
-                                Text(r.title, color = HeroInk, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.SemiBold)
-                                Text(r.intro, color = HeroInk.copy(alpha = 0.85f), fontSize = 13.sp, lineHeight = 19.sp)
+                                Text(r.title, color = Ink, fontSize = 26.sp, lineHeight = 31.sp, fontWeight = FontWeight.SemiBold)
+                                Text(r.intro, color = Color(0xFF6B5F3E), fontSize = 13.sp, lineHeight = 19.sp)
                             }
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -287,10 +288,10 @@ fun RichHome(s: Subject, i: Int, p: Progress, back: () -> Unit, listState: LazyL
                             Chip("~$mins min read")
                         }
                         LinearProgressIndicator(
-                            progress = { prog }, color = HeroInk, trackColor = Color.White.copy(alpha = 0.5f),
+                            progress = { prog }, color = Gold, trackColor = GoldLine,
                             modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape)
                         )
-                        Text("$read of ${r.sec.size} topics read", color = HeroInk.copy(alpha = 0.85f), fontSize = 12.sp)
+                        Text("$read of ${r.sec.size} topics read", color = Color(0xFF6B5F3E), fontSize = 12.sp)
                     }
                 }
             }

@@ -36,15 +36,15 @@ import androidx.compose.ui.unit.sp
 val Accent = Color(0xFF9A6B00)
 val Gold = Color(0xFFD4A017)
 val GoldLight = Color(0xFFF6D874)
-val GoldSoft = Color(0xFFFFF4D1)
-val GoldRow = Color(0xFFFFFAEB)
-val GoldLine = Color(0xFFEBD9A4)
+val GoldSoft = Color(0xFFFFF9E6)
+val GoldRow = Color(0xFFFDFBF4)
+val GoldLine = Color(0xFFEEE5CC)
 val HeroInk = Color(0xFF2A1D00)
 val GoldHeroColors = listOf(Color(0xFFF8DE7E), Color(0xFFE9B63A), Color(0xFFCF9519))
-val CodePanel = Color(0xFF2B2418)
-val CodeInk = Color(0xFFFFF1CC)
-val Bg = Color(0xFFFFFBF0)
-val Ink = Color(0xFF2A2008)
+val CodePanel = Color(0xFF24252B)
+val CodeInk = Color(0xFFF1EBD8)
+val Bg = Color(0xFFFAFAF7)
+val Ink = Color(0xFF24211A)
 val Good = Color(0xFFD7F5E0)
 val Bad = Color(0xFFFBDADA)
 
@@ -205,10 +205,12 @@ fun OptionCard(title: String, sub: String, tint: Color, modifier: Modifier, onCl
 fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
     LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item(key = "greeting") {
-            Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(26.dp)).background(Brush.linearGradient(GoldHeroColors)).padding(horizontal = 22.dp, vertical = 20.dp)) {
-                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                    Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}", fontSize = 26.sp, fontWeight = FontWeight.SemiBold, color = HeroInk)
-                    Text("What shall we do today?", color = HeroInk.copy(alpha = 0.8f), fontSize = 14.sp)
+            Row(Modifier.height(IntrinsicSize.Min), verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.width(4.dp).fillMaxHeight().clip(CircleShape).background(Gold))
+                Spacer(Modifier.width(12.dp))
+                Column {
+                    Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}", fontSize = 26.sp, fontWeight = FontWeight.SemiBold, color = Ink)
+                    Text("What shall we do today?", color = Color(0xFF8A7B52), fontSize = 14.sp)
                 }
             }
         }
@@ -234,6 +236,7 @@ fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
                 OptionCard("DBMS Lab", "Write & run SQL", DbColor, Modifier.weight(1f)) { go(Screen.DbLab) }
             }
         }
+        item(key = "activity") { ActivityBox(p.activity) }
         item(key = "version") {
             val vctx = androidx.compose.ui.platform.LocalContext.current
             Text("StudyTint v${Updates.versionName(vctx)}", Modifier.fillMaxWidth().padding(top = 4.dp), color = Color(0xFFB09A5A), fontSize = 12.sp, textAlign = TextAlign.Center)

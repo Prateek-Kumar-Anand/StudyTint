@@ -469,7 +469,7 @@ fun CLabScreen(back: () -> Unit) {
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 symbols.forEach { sym ->
                     Surface(
-                        shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF1C9),
+                        shape = RoundedCornerShape(8.dp), color = Color(0xFFFFF8E3),
                         modifier = Modifier.clickable { insert(if (sym == "\\n") "\\n" else sym) }
                     ) {
                         Text(if (sym.isBlank()) "Tab" else sym, Modifier.padding(horizontal = 14.dp, vertical = 8.dp), fontFamily = mono, fontSize = 14.sp, color = Ink)
