@@ -1,0 +1,2628 @@
+[
+ {
+  "u": 1,
+  "q": "Who created Python?",
+  "o": [
+   "Guido van Rossum",
+   "James Gosling",
+   "Dennis Ritchie",
+   "Bjarne Stroustrup"
+  ],
+  "a": 0,
+  "s": "Guido van Rossum started Python in the late 1980s, and it was first released in 1991.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "Python was first released in:",
+  "o": [
+   "1972",
+   "2008",
+   "1991",
+   "1995"
+  ],
+  "a": 2,
+  "s": "Python 0.9.0 appeared in 1991.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "The name Python comes from:",
+  "o": [
+   "The snake",
+   "The comedy group Monty Python",
+   "A Greek myth",
+   "A programming book"
+  ],
+  "a": 1,
+  "s": "Guido named it after Monty Python's Flying Circus.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "Python 3 was released in:",
+  "o": [
+   "1991",
+   "2015",
+   "2008",
+   "2000"
+  ],
+  "a": 2,
+  "s": "Python 3.0 came in December 2008 and is not backward compatible with Python 2.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "Python is best described as:",
+  "o": [
+   "A markup language",
+   "A database",
+   "An interpreted, high-level, general-purpose language",
+   "A low-level assembly language"
+  ],
+  "a": 2,
+  "s": "It is interpreted and high level.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "Which of these is a feature of Python?",
+  "o": [
+   "Compulsory curly braces",
+   "Manual memory management",
+   "Mandatory semicolons",
+   "Dynamic typing"
+  ],
+  "a": 3,
+  "s": "Types are checked at run time, so you need not declare them.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "Python uses ___ to define blocks of code.",
+  "o": [
+   "begin/end",
+   "Curly braces",
+   "Semicolons",
+   "Indentation"
+  ],
+  "a": 3,
+  "s": "Consistent indentation is part of the syntax.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "Which area commonly uses Python?",
+  "o": [
+   "Data science, web development and automation",
+   "Only embedded firmware",
+   "Only game consoles",
+   "Only hardware design"
+  ],
+  "a": 0,
+  "s": "Python is widely used in data science, AI, web, scripting and automation.",
+  "t": "Introduction & History"
+ },
+ {
+  "u": 1,
+  "q": "Which command shows the installed Python version?",
+  "o": [
+   "python -show",
+   "python --version",
+   "python list",
+   "python --ver-all"
+  ],
+  "a": 1,
+  "s": "python --version (or python3 --version) prints the version.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "pip is:",
+  "o": [
+   "A text editor",
+   "A database",
+   "The package installer for Python",
+   "A compiler"
+  ],
+  "a": 2,
+  "s": "pip installs packages from PyPI.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "Which command installs the requests library?",
+  "o": [
+   "install pip requests",
+   "pip install requests",
+   "pip get requests",
+   "python install requests"
+  ],
+  "a": 1,
+  "s": "pip install package_name.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "What is a virtual environment?",
+  "o": [
+   "A type of loop",
+   "A copy of the operating system",
+   "An isolated Python environment with its own packages",
+   "A cloud server"
+  ],
+  "a": 2,
+  "s": "It keeps project dependencies separate.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "Which command creates a virtual environment named venv?",
+  "o": [
+   "python venv create",
+   "pip venv",
+   "python -v venv",
+   "python -m venv venv"
+  ],
+  "a": 3,
+  "s": "The venv module ships with Python.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "The Python interpreter executes code:",
+  "o": [
+   "Only on servers",
+   "Only after producing a native .exe",
+   "Only from databases",
+   "Line by line (translating to bytecode first)"
+  ],
+  "a": 3,
+  "s": "Source is compiled to bytecode and run by the Python virtual machine.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "Which of these is a popular Python IDE or editor?",
+  "o": [
+   "PyCharm",
+   "Oracle",
+   "Photoshop",
+   "Excel"
+  ],
+  "a": 0,
+  "s": "PyCharm, VS Code and IDLE are common choices.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "The interactive prompt of Python is shown as:",
+  "o": [
+   "###",
+   "$$$",
+   "???",
+   ">>>"
+  ],
+  "a": 3,
+  "s": "The REPL prompt is >>>.",
+  "t": "Setup & Tools"
+ },
+ {
+  "u": 1,
+  "q": "Which is a valid variable name?",
+  "o": [
+   "_total",
+   "total-marks",
+   "class",
+   "2total"
+  ],
+  "a": 0,
+  "s": "Names cannot start with a digit, contain hyphens or be keywords.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "Are Python variable names case-sensitive?",
+  "o": [
+   "No",
+   "Only for functions",
+   "Yes",
+   "Only for classes"
+  ],
+  "a": 2,
+  "s": "Age and age are different names.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  x = 5; print(type(x))",
+  "o": [
+   "<class 'float'>",
+   "<class 'int'>",
+   "<class 'str'>",
+   "<class 'number'>"
+  ],
+  "a": 1,
+  "s": "5 is an int.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(type(3.0))",
+  "o": [
+   "<class 'decimal'>",
+   "<class 'int'>",
+   "<class 'float'>",
+   "<class 'double'>"
+  ],
+  "a": 2,
+  "s": "3.0 is a float.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "Which data type is immutable?",
+  "o": [
+   "list",
+   "tuple",
+   "set",
+   "dict"
+  ],
+  "a": 1,
+  "s": "Tuples (like strings and numbers) cannot be changed in place.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(type(True))",
+  "o": [
+   "<class 'str'>",
+   "<class 'bool'>",
+   "<class 'int'>",
+   "<class 'true'>"
+  ],
+  "a": 1,
+  "s": "True and False are of type bool.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  a, b = 3, 4; print(a * b)",
+  "o": [
+   "12",
+   "34",
+   "7",
+   "Error"
+  ],
+  "a": 0,
+  "s": "Multiple assignment gives a = 3 and b = 4.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "Which keyword is used to check the type of an object?",
+  "o": [
+   "check()",
+   "typeof",
+   "kind()",
+   "type()"
+  ],
+  "a": 3,
+  "s": "type(obj) returns its class.",
+  "t": "Variables & Types"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(int('12') + 3)",
+  "o": [
+   "15",
+   "'15'",
+   "Error",
+   "123"
+  ],
+  "a": 0,
+  "s": "int('12') is 12.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(int(3.9))",
+  "o": [
+   "3",
+   "3.9",
+   "Error",
+   "4"
+  ],
+  "a": 0,
+  "s": "int() truncates towards zero.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(float(5))",
+  "o": [
+   "5.0",
+   "Error",
+   "05",
+   "5"
+  ],
+  "a": 0,
+  "s": "float(5) gives 5.0.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print('5' + '3')",
+  "o": [
+   "Error",
+   "53",
+   "'8'",
+   "8"
+  ],
+  "a": 1,
+  "s": "+ joins strings.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(bool(0), bool('a'))",
+  "o": [
+   "True True",
+   "False False",
+   "True False",
+   "False True"
+  ],
+  "a": 3,
+  "s": "0 is falsy, a non-empty string is truthy.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "Which function reads text input from the user?",
+  "o": [
+   "read()",
+   "scan()",
+   "input()",
+   "get()"
+  ],
+  "a": 2,
+  "s": "input() always returns a string.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "What does input() return?",
+  "o": [
+   "An integer",
+   "A boolean",
+   "A float",
+   "A string"
+  ],
+  "a": 3,
+  "s": "Convert with int() or float() when needed.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(str(10) + '5')",
+  "o": [
+   "15",
+   "10 5",
+   "Error",
+   "105"
+  ],
+  "a": 3,
+  "s": "str(10) is '10', then '5' is joined.",
+  "t": "Type Casting"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(7 // 2)",
+  "o": [
+   "3",
+   "2",
+   "3.5",
+   "4"
+  ],
+  "a": 0,
+  "s": "// is floor division.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(7 / 2)",
+  "o": [
+   "Error",
+   "4",
+   "3.5",
+   "3"
+  ],
+  "a": 2,
+  "s": "/ always gives a float in Python 3.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(2 ** 3)",
+  "o": [
+   "8",
+   "9",
+   "6",
+   "23"
+  ],
+  "a": 0,
+  "s": "** is exponentiation.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(10 % 3)",
+  "o": [
+   "1",
+   "3",
+   "0",
+   "3.33"
+  ],
+  "a": 0,
+  "s": "% is the remainder.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(-7 // 2)",
+  "o": [
+   "4",
+   "-3",
+   "-3.5",
+   "-4"
+  ],
+  "a": 3,
+  "s": "Floor division rounds down towards negative infinity.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(2 + 3 * 4)",
+  "o": [
+   "24",
+   "14",
+   "20",
+   "9"
+  ],
+  "a": 1,
+  "s": "* is evaluated before +.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(2 ** 3 ** 2)",
+  "o": [
+   "512",
+   "64",
+   "36",
+   "Error"
+  ],
+  "a": 0,
+  "s": "** is right-associative: 3 ** 2 = 9, then 2 ** 9 = 512.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "Which operator tests whether two names refer to the same object?",
+  "o": [
+   "is",
+   "==",
+   "=",
+   "equals"
+  ],
+  "a": 0,
+  "s": "is compares identity. == compares values.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(True and False or True)",
+  "o": [
+   "True",
+   "False",
+   "None",
+   "Error"
+  ],
+  "a": 0,
+  "s": "and is evaluated before or: (True and False) or True.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(not 0)",
+  "o": [
+   "False",
+   "Error",
+   "0",
+   "True"
+  ],
+  "a": 3,
+  "s": "not 0 is True.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(5 & 3, 5 | 3, 5 ^ 3)",
+  "o": [
+   "7 1 6",
+   "5 3 2",
+   "1 7 6",
+   "1 6 7"
+  ],
+  "a": 2,
+  "s": "101 & 011 = 1, 101 | 011 = 7, 101 ^ 011 = 6.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(1 << 3)",
+  "o": [
+   "3",
+   "8",
+   "1",
+   "16"
+  ],
+  "a": 1,
+  "s": "Shifting 1 left by 3 bits gives 8.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  x = 10; x += 5; x *= 2; print(x)",
+  "o": [
+   "30",
+   "20",
+   "15",
+   "25"
+  ],
+  "a": 0,
+  "s": "10 + 5 = 15, 15 * 2 = 30.",
+  "t": "Operators"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  x = 7\nif x > 5: print('big')\nelse: print('small')",
+  "o": [
+   "Error",
+   "big small",
+   "big",
+   "small"
+  ],
+  "a": 2,
+  "s": "7 > 5 is true.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "Which keyword is used for an additional condition after if?",
+  "o": [
+   "elsif",
+   "elif",
+   "elseif",
+   "else if"
+  ],
+  "a": 1,
+  "s": "Python uses elif.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  for i in range(3): print(i, end=' ')",
+  "o": [
+   "1 2",
+   "0 1 2",
+   "1 2 3",
+   "0 1 2 3"
+  ],
+  "a": 1,
+  "s": "range(3) gives 0, 1, 2.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  print(list(range(2, 10, 3)))",
+  "o": [
+   "[2, 5, 8]",
+   "[2, 3, 10]",
+   "[2, 5, 8, 11]",
+   "[3, 6, 9]"
+  ],
+  "a": 0,
+  "s": "Start 2, step 3, stop before 10.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  i = 0\nwhile i < 3: i += 1\nprint(i)",
+  "o": [
+   "3",
+   "2",
+   "0",
+   "Infinite loop"
+  ],
+  "a": 0,
+  "s": "The loop ends when i reaches 3.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  for i in range(5):\n    if i == 3: break\n    print(i, end='')",
+  "o": [
+   "0123",
+   "01234",
+   "012",
+   "12"
+  ],
+  "a": 2,
+  "s": "break leaves the loop when i is 3.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  for i in range(5):\n    if i % 2: continue\n    print(i, end='')",
+  "o": [
+   "04",
+   "01234",
+   "13",
+   "024"
+  ],
+  "a": 3,
+  "s": "continue skips odd numbers.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "The pass statement:",
+  "o": [
+   "Does nothing and acts as a placeholder",
+   "Ends the program",
+   "Raises an error",
+   "Skips the loop"
+  ],
+  "a": 0,
+  "s": "It is a null statement.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  for i in range(2):\n    for j in range(2): print(i, j)  (number of lines printed)",
+  "o": [
+   "4",
+   "3",
+   "6",
+   "2"
+  ],
+  "a": 0,
+  "s": "2 × 2 = 4 iterations.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "The else block of a for loop runs when:",
+  "o": [
+   "The loop finishes without break",
+   "An error occurs",
+   "The loop hits break",
+   "The loop never starts only"
+  ],
+  "a": 0,
+  "s": "for-else runs if no break occurred.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 1,
+  "q": "What is the output?  for i in range(3):\n    pass\nelse:\n    print('done')",
+  "o": [
+   "0 1 2",
+   "Error",
+   "done",
+   "Nothing"
+  ],
+  "a": 2,
+  "s": "The loop completes without break, so else runs.",
+  "t": "Control Flow"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2, 3]; a.append(4); print(a)",
+  "o": [
+   "[1, 2, 3, 4]",
+   "[4, 1, 2, 3]",
+   "Error",
+   "[1, 2, 3]"
+  ],
+  "a": 0,
+  "s": "append adds at the end.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [3, 1, 2]; a.sort(); print(a)",
+  "o": [
+   "[3, 2, 1]",
+   "[3, 1, 2]",
+   "[1, 2, 3]",
+   "None"
+  ],
+  "a": 2,
+  "s": "sort() sorts the list in place.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print([1, 2, 3].sort())",
+  "o": [
+   "None",
+   "True",
+   "Error",
+   "[1, 2, 3]"
+  ],
+  "a": 0,
+  "s": "sort() returns None because it works in place.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2, 3, 4]; print(a[1:3])",
+  "o": [
+   "[1, 2]",
+   "[2, 3, 4]",
+   "[1, 2, 3]",
+   "[2, 3]"
+  ],
+  "a": 3,
+  "s": "The slice starts at index 1 and stops before 3.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2, 3, 4]; print(a[::-1])",
+  "o": [
+   "[4, 3, 2, 1]",
+   "[1, 2, 3, 4]",
+   "Error",
+   "[4]"
+  ],
+  "a": 0,
+  "s": "A step of -1 reverses the list.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2, 3]; print(a[-1])",
+  "o": [
+   "1",
+   "2",
+   "3",
+   "Error"
+  ],
+  "a": 2,
+  "s": "Index -1 is the last element.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2, 3]; a.insert(1, 9); print(a)",
+  "o": [
+   "[1, 2, 3, 9]",
+   "[1, 2, 9, 3]",
+   "[9, 1, 2, 3]",
+   "[1, 9, 2, 3]"
+  ],
+  "a": 3,
+  "s": "insert(i, x) puts x before index i.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2, 3]; print(a.pop(), a)",
+  "o": [
+   "1 [2, 3]",
+   "3 [1, 2, 3]",
+   "[3] [1, 2]",
+   "3 [1, 2]"
+  ],
+  "a": 3,
+  "s": "pop() removes and returns the last element.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print([i * i for i in range(4)])",
+  "o": [
+   "[0, 2, 4, 6]",
+   "[1, 4, 9, 16]",
+   "[0, 1, 4, 9]",
+   "[0, 1, 2, 3]"
+  ],
+  "a": 2,
+  "s": "List comprehension squares 0 to 3.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print([x for x in range(6) if x % 2 == 0])",
+  "o": [
+   "[0, 2, 4]",
+   "[1, 3, 5]",
+   "[0, 1, 2]",
+   "[2, 4]"
+  ],
+  "a": 0,
+  "s": "The condition keeps even numbers.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2]; b = a; b.append(3); print(a)",
+  "o": [
+   "[1, 2]",
+   "[1, 2, 3]",
+   "[3]",
+   "Error"
+  ],
+  "a": 1,
+  "s": "b and a refer to the same list object.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a = [1, 2]; b = a.copy(); b.append(3); print(a)",
+  "o": [
+   "[1, 2]",
+   "[1, 2, 3]",
+   "[3]",
+   "Error"
+  ],
+  "a": 0,
+  "s": "copy() creates a separate list.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(len([1, [2, 3], 4]))",
+  "o": [
+   "5",
+   "4",
+   "2",
+   "3"
+  ],
+  "a": 3,
+  "s": "The inner list counts as one element.",
+  "t": "Lists"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  t = (1, 2, 3); t[0] = 9",
+  "o": [
+   "TypeError",
+   "9",
+   "None",
+   "(9, 2, 3)"
+  ],
+  "a": 0,
+  "s": "Tuples are immutable.",
+  "t": "Tuples"
+ },
+ {
+  "u": 2,
+  "q": "Which is a one-element tuple?",
+  "o": [
+   "(5,)",
+   "{5}",
+   "[5]",
+   "(5)"
+  ],
+  "a": 0,
+  "s": "The trailing comma makes it a tuple.",
+  "t": "Tuples"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  a, b = (1, 2); a, b = b, a; print(a, b)",
+  "o": [
+   "1 1",
+   "2 1",
+   "1 2",
+   "2 2"
+  ],
+  "a": 1,
+  "s": "Swapping with tuple unpacking.",
+  "t": "Tuples"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(len({1, 2, 2, 3}))",
+  "o": [
+   "3",
+   "2",
+   "1",
+   "4"
+  ],
+  "a": 0,
+  "s": "Sets ignore duplicates.",
+  "t": "Sets"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print({1, 2, 3} & {2, 3, 4})",
+  "o": [
+   "{4}",
+   "{1}",
+   "{1, 2, 3, 4}",
+   "{2, 3}"
+  ],
+  "a": 3,
+  "s": "& is intersection.",
+  "t": "Sets"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(sorted({1, 2} | {2, 3}))",
+  "o": [
+   "[1, 2, 3]",
+   "[2]",
+   "[1, 3]",
+   "[1, 2, 2, 3]"
+  ],
+  "a": 0,
+  "s": "| is union.",
+  "t": "Sets"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print({1, 2, 3} - {2})",
+  "o": [
+   "{1, 2, 3}",
+   "{3}",
+   "{1, 3}",
+   "{2}"
+  ],
+  "a": 2,
+  "s": "- is set difference.",
+  "t": "Sets"
+ },
+ {
+  "u": 2,
+  "q": "What does {} create?",
+  "o": [
+   "An empty set",
+   "An empty list",
+   "An empty dictionary",
+   "An empty tuple"
+  ],
+  "a": 2,
+  "s": "Use set() for an empty set.",
+  "t": "Sets"
+ },
+ {
+  "u": 2,
+  "q": "Which statement is true about sets?",
+  "o": [
+   "They are immutable",
+   "They keep insertion duplicates",
+   "They are unordered and hold unique elements",
+   "They support indexing"
+  ],
+  "a": 2,
+  "s": "Sets do not allow duplicates or indexing.",
+  "t": "Sets"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  d = {'a': 1, 'b': 2}; print(d['b'])",
+  "o": [
+   "1",
+   "Error",
+   "2",
+   "'b'"
+  ],
+  "a": 2,
+  "s": "Values are looked up by key.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  d = {'a': 1}; print(d.get('z', 0))",
+  "o": [
+   "'z'",
+   "None",
+   "Error",
+   "0"
+  ],
+  "a": 3,
+  "s": "get returns the default when the key is missing.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  d = {'a': 1}; print(d['z'])",
+  "o": [
+   "KeyError",
+   "''",
+   "0",
+   "None"
+  ],
+  "a": 0,
+  "s": "Indexing a missing key raises KeyError.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  d = {'a': 1, 'b': 2}; print(list(d.keys()))",
+  "o": [
+   "['a', 'b']",
+   "{'a', 'b'}",
+   "[('a', 1), ('b', 2)]",
+   "[1, 2]"
+  ],
+  "a": 0,
+  "s": "keys() gives the keys.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  d = {'a': 1, 'b': 2}; print(list(d.items()))",
+  "o": [
+   "[('a', 1), ('b', 2)]",
+   "{'a': 1}",
+   "['a', 'b']",
+   "[1, 2]"
+  ],
+  "a": 0,
+  "s": "items() gives (key, value) pairs.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print({k: k * 2 for k in range(3)})",
+  "o": [
+   "{1: 2, 2: 4, 3: 6}",
+   "[0, 2, 4]",
+   "{0: 0, 1: 2, 2: 4}",
+   "{0, 2, 4}"
+  ],
+  "a": 2,
+  "s": "Dictionary comprehension.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "Which can be a dictionary key?",
+  "o": [
+   "A dictionary",
+   "A list",
+   "A tuple of numbers",
+   "A set"
+  ],
+  "a": 2,
+  "s": "Keys must be hashable. Lists, sets and dicts are not.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  d = {'a': 1}; d.update({'b': 2}); print(len(d))",
+  "o": [
+   "Error",
+   "3",
+   "2",
+   "1"
+  ],
+  "a": 2,
+  "s": "update adds a new key.",
+  "t": "Dictionaries"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  def f(x): return x * 2\nprint(f(4))",
+  "o": [
+   "Error",
+   "None",
+   "4",
+   "8"
+  ],
+  "a": 3,
+  "s": "The function returns twice its argument.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What does a function return if it has no return statement?",
+  "o": [
+   "0",
+   "''",
+   "Error",
+   "None"
+  ],
+  "a": 3,
+  "s": "It returns None.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  def f(a, b=2): return a + b\nprint(f(1))",
+  "o": [
+   "1",
+   "3",
+   "Error",
+   "2"
+  ],
+  "a": 1,
+  "s": "b has the default value 2.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  def f(a, b=2): return a - b\nprint(f(b=1, a=5))",
+  "o": [
+   "4",
+   "-4",
+   "3",
+   "Error"
+  ],
+  "a": 0,
+  "s": "Keyword arguments can be given in any order.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  def f(*args): return sum(args)\nprint(f(1, 2, 3))",
+  "o": [
+   "3",
+   "(1, 2, 3)",
+   "6",
+   "Error"
+  ],
+  "a": 2,
+  "s": "*args collects extra positional arguments into a tuple.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  def f(**kw): return sorted(kw)\nprint(f(a=1, b=2))",
+  "o": [
+   "{'a': 1, 'b': 2}",
+   "Error",
+   "['a', 'b']",
+   "[1, 2]"
+  ],
+  "a": 2,
+  "s": "**kwargs collects keyword arguments into a dict.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  x = 10\ndef f():\n    x = 5\nf()\nprint(x)",
+  "o": [
+   "10",
+   "None",
+   "Error",
+   "5"
+  ],
+  "a": 0,
+  "s": "The x inside f is a separate local variable.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  x = 1\ndef f():\n    global x\n    x = 2\nf()\nprint(x)",
+  "o": [
+   "1",
+   "None",
+   "2",
+   "Error"
+  ],
+  "a": 2,
+  "s": "global makes f change the module-level x.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the problem with def f(a, L=[]): L.append(a); return L ?",
+  "o": [
+   "L is read-only",
+   "It raises SyntaxError",
+   "The default list is shared between calls",
+   "It cannot append"
+  ],
+  "a": 2,
+  "s": "Mutable default arguments are created once and reused.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  def f(a, L=[]):\n    L.append(a)\n    return L\nf(1)\nprint(f(2))",
+  "o": [
+   "[1]",
+   "Error",
+   "[1, 2]",
+   "[2]"
+  ],
+  "a": 2,
+  "s": "The same list is reused across calls.",
+  "t": "Functions"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print((lambda x: x + 1)(4))",
+  "o": [
+   "4",
+   "5",
+   "Error",
+   "lambda"
+  ],
+  "a": 1,
+  "s": "A lambda is an anonymous function.",
+  "t": "Functional Tools"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(list(map(lambda x: x * 2, [1, 2, 3])))",
+  "o": [
+   "6",
+   "[2, 4, 6]",
+   "[1, 4, 9]",
+   "[1, 2, 3]"
+  ],
+  "a": 1,
+  "s": "map applies the function to every item.",
+  "t": "Functional Tools"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(list(filter(lambda x: x > 1, [1, 2, 3])))",
+  "o": [
+   "[1, 2, 3]",
+   "[1]",
+   "[3]",
+   "[2, 3]"
+  ],
+  "a": 3,
+  "s": "filter keeps items for which the function is true.",
+  "t": "Functional Tools"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  from functools import reduce\nprint(reduce(lambda a, b: a + b, [1, 2, 3, 4]))",
+  "o": [
+   "24",
+   "4",
+   "[1, 2, 3, 4]",
+   "10"
+  ],
+  "a": 3,
+  "s": "reduce folds the list into one value.",
+  "t": "Functional Tools"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(sorted(['b', 'a', 'c'], reverse=True))",
+  "o": [
+   "['a', 'b', 'c']",
+   "['c', 'b', 'a']",
+   "None",
+   "['b', 'a', 'c']"
+  ],
+  "a": 1,
+  "s": "reverse=True sorts in descending order.",
+  "t": "Functional Tools"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(list(zip([1, 2], ['a', 'b'])))",
+  "o": [
+   "[(1, 'a'), (2, 'b')]",
+   "{1: 'a', 2: 'b'}",
+   "[[1, 2], ['a', 'b']]",
+   "[1, 2, 'a', 'b']"
+  ],
+  "a": 0,
+  "s": "zip pairs elements together.",
+  "t": "Functional Tools"
+ },
+ {
+  "u": 2,
+  "q": "What is the output?  print(list(enumerate(['x', 'y'])))",
+  "o": [
+   "['x', 'y']",
+   "[0, 1]",
+   "[(0, 'x'), (1, 'y')]",
+   "[('x', 0), ('y', 1)]"
+  ],
+  "a": 2,
+  "s": "enumerate adds an index starting from 0.",
+  "t": "Functional Tools"
+ },
+ {
+  "u": 3,
+  "q": "What is a class?",
+  "o": [
+   "A blueprint for creating objects",
+   "A function",
+   "A loop",
+   "A file"
+  ],
+  "a": 0,
+  "s": "A class defines attributes and methods. Objects are instances of it.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "What is an object?",
+  "o": [
+   "A module",
+   "An instance of a class",
+   "A comment",
+   "A keyword"
+  ],
+  "a": 1,
+  "s": "An object is a concrete instance with its own data.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "Which method is the constructor in Python?",
+  "o": [
+   "init",
+   "__init__",
+   "__start__",
+   "__new_object__"
+  ],
+  "a": 1,
+  "s": "__init__ initialises a new object.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "What does self refer to?",
+  "o": [
+   "The current instance",
+   "The class itself",
+   "The module",
+   "The parent class"
+  ],
+  "a": 0,
+  "s": "self is the first parameter of instance methods.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  class A:\n    def __init__(self, n): self.n = n\nprint(A(5).n)",
+  "o": [
+   "n",
+   "Error",
+   "5",
+   "A"
+  ],
+  "a": 2,
+  "s": "The constructor stores n on the instance.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  class A:\n    c = 0\n    def __init__(self): A.c += 1\nA(); A(); print(A.c)",
+  "o": [
+   "Error",
+   "2",
+   "1",
+   "0"
+  ],
+  "a": 1,
+  "s": "c is a class attribute shared by all instances.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "Which decorator defines a method that does not receive self or cls?",
+  "o": [
+   "@property",
+   "@abstractmethod",
+   "@classmethod",
+   "@staticmethod"
+  ],
+  "a": 3,
+  "s": "A static method behaves like a plain function inside the class.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "Which decorator defines a method whose first parameter is the class?",
+  "o": [
+   "@property",
+   "@classmethod",
+   "@self",
+   "@staticmethod"
+  ],
+  "a": 1,
+  "s": "A class method receives cls.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "What does the __str__ method control?",
+  "o": [
+   "Deleting the object",
+   "Importing the class",
+   "The object's size",
+   "The text returned by str(obj) and print(obj)"
+  ],
+  "a": 3,
+  "s": "__str__ returns a readable string for the object.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  class A:\n    def __str__(self): return 'hi'\nprint(A())",
+  "o": [
+   "A",
+   "Error",
+   "<A object>",
+   "hi"
+  ],
+  "a": 3,
+  "s": "print uses __str__.",
+  "t": "OOP Basics"
+ },
+ {
+  "u": 3,
+  "q": "In Python, a name starting with a single underscore (_x) means:",
+  "o": [
+   "It is a constant",
+   "It is intended for internal use by convention",
+   "It is truly private",
+   "It is a keyword"
+  ],
+  "a": 1,
+  "s": "It is a convention, not enforced.",
+  "t": "Encapsulation"
+ },
+ {
+  "u": 3,
+  "q": "A name starting with double underscores (__x) inside a class undergoes:",
+  "o": [
+   "Deletion",
+   "Compilation",
+   "Encryption",
+   "Name mangling"
+  ],
+  "a": 3,
+  "s": "Python renames it to _ClassName__x to avoid accidental clashes.",
+  "t": "Encapsulation"
+ },
+ {
+  "u": 3,
+  "q": "Encapsulation means:",
+  "o": [
+   "Writing comments",
+   "Copying a class",
+   "Using many modules",
+   "Bundling data with methods and controlling access to it"
+  ],
+  "a": 3,
+  "s": "Data and the operations on it live together.",
+  "t": "Encapsulation"
+ },
+ {
+  "u": 3,
+  "q": "What does the @property decorator do?",
+  "o": [
+   "Lets a method be accessed like an attribute",
+   "Deletes an attribute",
+   "Makes an attribute private",
+   "Creates a class"
+  ],
+  "a": 0,
+  "s": "It enables getters (and with setters, controlled assignment).",
+  "t": "Encapsulation"
+ },
+ {
+  "u": 3,
+  "q": "What does class B(A): mean?",
+  "o": [
+   "B imports A",
+   "B and A are the same",
+   "A inherits from B",
+   "B inherits from A"
+  ],
+  "a": 3,
+  "s": "A is the parent (base) class and B the child (derived) class.",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  class A:\n    def hi(self): return 'A'\nclass B(A): pass\nprint(B().hi())",
+  "o": [
+   "Error",
+   "B",
+   "None",
+   "A"
+  ],
+  "a": 3,
+  "s": "B inherits hi from A.",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  class A:\n    def hi(self): return 'A'\nclass B(A):\n    def hi(self): return 'B'\nprint(B().hi())",
+  "o": [
+   "AB",
+   "Error",
+   "A",
+   "B"
+  ],
+  "a": 3,
+  "s": "B overrides the parent's method.",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "Which function lets a child class call the parent's method?",
+  "o": [
+   "super()",
+   "parent()",
+   "base()",
+   "upper()"
+  ],
+  "a": 0,
+  "s": "super().method() calls the parent's version.",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "Polymorphism means:",
+  "o": [
+   "Hiding data",
+   "The same interface behaving differently for different object types",
+   "Using many variables",
+   "Having many files"
+  ],
+  "a": 1,
+  "s": "For example, different classes each provide their own speak() method.",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "Multiple inheritance means a class:",
+  "o": [
+   "Has no parent",
+   "Has many methods",
+   "Has more than one parent class",
+   "Has many instances"
+  ],
+  "a": 2,
+  "s": "Python supports class C(A, B).",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  print(isinstance(5, int))",
+  "o": [
+   "Error",
+   "True",
+   "int",
+   "False"
+  ],
+  "a": 1,
+  "s": "isinstance checks the type.",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  class A: pass\nclass B(A): pass\nprint(issubclass(B, A))",
+  "o": [
+   "Error",
+   "B",
+   "False",
+   "True"
+  ],
+  "a": 3,
+  "s": "B derives from A.",
+  "t": "Inheritance & Polymorphism"
+ },
+ {
+  "u": 3,
+  "q": "Abstraction means:",
+  "o": [
+   "Writing long code",
+   "Using only functions",
+   "Copying objects",
+   "Exposing essential features and hiding details"
+  ],
+  "a": 3,
+  "s": "Users interact with a simple interface.",
+  "t": "Abstraction & Composition"
+ },
+ {
+  "u": 3,
+  "q": "Composition means:",
+  "o": [
+   "A class holds objects of other classes (has-a relationship)",
+   "A module is imported",
+   "A class is deleted",
+   "A class inherits from another (is-a)"
+  ],
+  "a": 0,
+  "s": "For example, a Car has an Engine.",
+  "t": "Abstraction & Composition"
+ },
+ {
+  "u": 3,
+  "q": "Which module provides abstract base classes?",
+  "o": [
+   "json",
+   "math",
+   "abc",
+   "os"
+  ],
+  "a": 2,
+  "s": "abc defines ABC and @abstractmethod.",
+  "t": "Abstraction & Composition"
+ },
+ {
+  "u": 3,
+  "q": "What is a module?",
+  "o": [
+   "A loop",
+   "A variable",
+   "A Python file containing definitions and statements",
+   "A class"
+  ],
+  "a": 2,
+  "s": "Any .py file can be imported as a module.",
+  "t": "Modules & Packages"
+ },
+ {
+  "u": 3,
+  "q": "Which statement imports the math module?",
+  "o": [
+   "load math",
+   "using math",
+   "import math",
+   "include math"
+  ],
+  "a": 2,
+  "s": "import module_name.",
+  "t": "Modules & Packages"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  import math\nprint(math.sqrt(16))",
+  "o": [
+   "4.0",
+   "4",
+   "Error",
+   "16"
+  ],
+  "a": 0,
+  "s": "sqrt returns a float.",
+  "t": "Modules & Packages"
+ },
+ {
+  "u": 3,
+  "q": "What does from math import pi do?",
+  "o": [
+   "Imports only pi into the current namespace",
+   "Deletes pi",
+   "Imports the whole module",
+   "Creates a class"
+  ],
+  "a": 0,
+  "s": "You can then use pi without the math. prefix.",
+  "t": "Modules & Packages"
+ },
+ {
+  "u": 3,
+  "q": "What is a package?",
+  "o": [
+   "A type of loop",
+   "A single function",
+   "A list of numbers",
+   "A folder of modules (usually with __init__.py)"
+  ],
+  "a": 3,
+  "s": "Packages organise modules into a hierarchy.",
+  "t": "Modules & Packages"
+ },
+ {
+  "u": 3,
+  "q": "What does if __name__ == '__main__': do?",
+  "o": [
+   "Runs code always",
+   "Runs code only when the file is executed directly, not imported",
+   "Imports the module",
+   "Defines a class"
+  ],
+  "a": 1,
+  "s": "When imported, __name__ is the module's name.",
+  "t": "Modules & Packages"
+ },
+ {
+  "u": 3,
+  "q": "In which order does Python look for a module to import?",
+  "o": [
+   "Only the desktop",
+   "Only the internet",
+   "Alphabetical order of all files",
+   "Built-in/loaded modules, then directories in sys.path"
+  ],
+  "a": 3,
+  "s": "sys.path lists the search locations.",
+  "t": "Modules & Packages"
+ },
+ {
+  "u": 3,
+  "q": "Which mode opens a file for reading text?",
+  "o": [
+   "'r'",
+   "'w'",
+   "'a'",
+   "'x'"
+  ],
+  "a": 0,
+  "s": "'r' is the default mode.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "Which mode erases existing content and writes new content?",
+  "o": [
+   "'r'",
+   "'w'",
+   "'r+'",
+   "'a'"
+  ],
+  "a": 1,
+  "s": "'w' truncates the file.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "Which mode adds content at the end of a file?",
+  "o": [
+   "'x'",
+   "'r'",
+   "'w'",
+   "'a'"
+  ],
+  "a": 3,
+  "s": "'a' appends.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "Why is with open(...) as f: preferred?",
+  "o": [
+   "It makes the file bigger",
+   "It closes the file automatically, even on errors",
+   "It encrypts the file",
+   "It is faster than all methods"
+  ],
+  "a": 1,
+  "s": "The context manager releases the file.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "Which method reads the entire file as one string?",
+  "o": [
+   "seek()",
+   "readline()",
+   "read()",
+   "write()"
+  ],
+  "a": 2,
+  "s": "readline() reads one line.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "What does readlines() return?",
+  "o": [
+   "One string",
+   "An integer",
+   "A list of lines",
+   "A dictionary"
+  ],
+  "a": 2,
+  "s": "Each element is one line including the newline.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "Which module reads and writes CSV files?",
+  "o": [
+   "json",
+   "csv",
+   "random",
+   "math"
+  ],
+  "a": 1,
+  "s": "csv.reader and csv.writer.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "Which function converts a Python dict to a JSON string?",
+  "o": [
+   "json.read()",
+   "json.parse()",
+   "json.loads()",
+   "json.dumps()"
+  ],
+  "a": 3,
+  "s": "dumps serialises. loads parses.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  import json\nprint(json.loads('{\"a\": 1}')['a'])",
+  "o": [
+   "1",
+   "Error",
+   "a",
+   "{'a': 1}"
+  ],
+  "a": 0,
+  "s": "loads turns JSON text into a dict.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  import json\nprint(json.dumps({'a': 1}))",
+  "o": [
+   "{\"a\": 1}",
+   "a: 1",
+   "Error",
+   "{'a': 1}"
+  ],
+  "a": 0,
+  "s": "JSON uses double quotes.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  import io\nf = io.StringIO('a\\nb\\n')\nprint(f.readlines())",
+  "o": [
+   "Error",
+   "'a\\nb\\n'",
+   "['a\\n', 'b\\n']",
+   "['a', 'b']"
+  ],
+  "a": 2,
+  "s": "Newline characters are kept.",
+  "t": "File I/O"
+ },
+ {
+  "u": 3,
+  "q": "In log analysis, a failed login pattern repeated many times from one IP could indicate:",
+  "o": [
+   "A normal backup",
+   "A font change",
+   "A disk upgrade",
+   "A brute-force attempt"
+  ],
+  "a": 3,
+  "s": "Counting failures per IP is a basic detection.",
+  "t": "Log Analysis"
+ },
+ {
+  "u": 3,
+  "q": "Which structure is ideal for counting events per IP address?",
+  "o": [
+   "A tuple",
+   "A string",
+   "A set",
+   "A dictionary"
+  ],
+  "a": 3,
+  "s": "Keys are IPs and values are counts.",
+  "t": "Log Analysis"
+ },
+ {
+  "u": 3,
+  "q": "Which module helps match patterns such as IP addresses in log lines?",
+  "o": [
+   "math",
+   "random",
+   "re",
+   "time"
+  ],
+  "a": 2,
+  "s": "re provides regular expressions.",
+  "t": "Log Analysis"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  from collections import Counter\nprint(Counter(['a', 'b', 'a']).most_common(1))",
+  "o": [
+   "Error",
+   "[('a', 2)]",
+   "['a']",
+   "[('b', 1)]"
+  ],
+  "a": 1,
+  "s": "Counter counts occurrences.",
+  "t": "Log Analysis"
+ },
+ {
+  "u": 3,
+  "q": "What is the output?  import re\nprint(re.findall(r'\\d+', 'a12b345'))",
+  "o": [
+   "['12', '345']",
+   "12345",
+   "['1', '2', '3', '4', '5']",
+   "['a', 'b']"
+  ],
+  "a": 0,
+  "s": "\\d+ matches runs of digits.",
+  "t": "Log Analysis"
+ },
+ {
+  "u": 3,
+  "q": "Why must logs containing personal data be handled carefully?",
+  "o": [
+   "They cannot be read",
+   "They may contain private information that must be protected",
+   "They never contain user data",
+   "They are always public"
+  ],
+  "a": 1,
+  "s": "Logs should be access-controlled and minimised.",
+  "t": "Log Analysis"
+ },
+ {
+  "u": 4,
+  "q": "What is an exception?",
+  "o": [
+   "An error event raised at run time that can be handled",
+   "A type of loop",
+   "A syntax rule",
+   "A module"
+  ],
+  "a": 0,
+  "s": "Exceptions interrupt normal flow unless handled.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "Which block catches exceptions?",
+  "o": [
+   "catch",
+   "rescue",
+   "except",
+   "handle"
+  ],
+  "a": 2,
+  "s": "try ... except.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  try:\n    print(1 / 0)\nexcept ZeroDivisionError:\n    print('zero')",
+  "o": [
+   "Error",
+   "inf",
+   "1",
+   "zero"
+  ],
+  "a": 3,
+  "s": "Division by zero raises ZeroDivisionError.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  try:\n    int('x')\nexcept ValueError:\n    print('bad')",
+  "o": [
+   "Nothing",
+   "0",
+   "bad",
+   "x"
+  ],
+  "a": 2,
+  "s": "int('x') raises ValueError.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  try:\n    [][1]\nexcept IndexError:\n    print('idx')",
+  "o": [
+   "None",
+   "idx",
+   "0",
+   "Nothing"
+  ],
+  "a": 1,
+  "s": "Out-of-range list index raises IndexError.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "The else block of try runs when:",
+  "o": [
+   "Never",
+   "An exception occurred",
+   "Always",
+   "No exception occurred"
+  ],
+  "a": 3,
+  "s": "try-else runs only if the try block succeeded.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "The finally block runs:",
+  "o": [
+   "Only without errors",
+   "Always, whether or not an exception occurred",
+   "Only on errors",
+   "Never"
+  ],
+  "a": 1,
+  "s": "It is used for cleanup.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  try:\n    x = 1\nexcept:\n    print('e')\nelse:\n    print('ok')\nfinally:\n    print('end')",
+  "o": [
+   "ok",
+   "e end",
+   "end",
+   "ok end"
+  ],
+  "a": 3,
+  "s": "No error: else runs, then finally. Output is two lines, ok then end.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "Which keyword raises an exception?",
+  "o": [
+   "error",
+   "except",
+   "raise",
+   "throw"
+  ],
+  "a": 2,
+  "s": "raise ValueError('message').",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  try:\n    raise ValueError('oops')\nexcept ValueError as e:\n    print(e)",
+  "o": [
+   "Nothing",
+   "Error",
+   "ValueError",
+   "oops"
+  ],
+  "a": 3,
+  "s": "The exception object prints its message.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "How is a custom exception defined?",
+  "o": [
+   "With def custom():",
+   "With raise only",
+   "By subclassing Exception",
+   "With import exception"
+  ],
+  "a": 2,
+  "s": "class MyError(Exception): pass.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "Why is a bare except: usually discouraged?",
+  "o": [
+   "It cannot be used with finally",
+   "It hides unexpected errors and even catches KeyboardInterrupt",
+   "It is a syntax error",
+   "It is faster"
+  ],
+  "a": 1,
+  "s": "Catch specific exceptions instead.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  try:\n    {}['k']\nexcept KeyError:\n    print('missing')",
+  "o": [
+   "missing",
+   "k",
+   "Nothing",
+   "None"
+  ],
+  "a": 0,
+  "s": "A missing dict key raises KeyError.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "Which exception is raised when opening a file that does not exist?",
+  "o": [
+   "ValueError",
+   "FileNotFoundError",
+   "IndexError",
+   "KeyError"
+  ],
+  "a": 1,
+  "s": "It is a subclass of OSError.",
+  "t": "Exceptions"
+ },
+ {
+  "u": 4,
+  "q": "Which module gives access to operating-system functions such as listing directories?",
+  "o": [
+   "math",
+   "json",
+   "os",
+   "random"
+  ],
+  "a": 2,
+  "s": "os.listdir(), os.getcwd(), os.path and more.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "What does os.getcwd() return?",
+  "o": [
+   "The Python version",
+   "The file size",
+   "The current working directory",
+   "The user name"
+  ],
+  "a": 2,
+  "s": "cwd = current working directory.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "What does os.path.join('a', 'b') produce on Linux?",
+  "o": [
+   "a b",
+   "a/b",
+   "ab",
+   "b/a"
+  ],
+  "a": 1,
+  "s": "It joins path parts with the correct separator.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "What does os.path.exists(p) tell you?",
+  "o": [
+   "The file size",
+   "Whether the file is text",
+   "The owner of the file",
+   "Whether the path exists"
+  ],
+  "a": 3,
+  "s": "It returns True or False.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "Which sys attribute holds the command-line arguments?",
+  "o": [
+   "sys.cmd",
+   "sys.input",
+   "sys.argv",
+   "sys.args"
+  ],
+  "a": 2,
+  "s": "sys.argv[0] is the script name.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "What does sys.exit() do?",
+  "o": [
+   "Restarts the program",
+   "Terminates the program",
+   "Imports a module",
+   "Closes a file"
+  ],
+  "a": 1,
+  "s": "It raises SystemExit.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "Which module runs external commands?",
+  "o": [
+   "subprocess",
+   "csv",
+   "sys",
+   "time"
+  ],
+  "a": 0,
+  "s": "subprocess.run([...]).",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "Why is subprocess.run(['ls', '-l']) safer than building a shell string from user input?",
+  "o": [
+   "It is shorter",
+   "It avoids shell injection",
+   "It always runs faster",
+   "It needs no import"
+  ],
+  "a": 1,
+  "s": "With a list and no shell, user input cannot add extra commands.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "What does subprocess.run(..., capture_output=True, text=True).stdout give?",
+  "o": [
+   "The return code",
+   "The environment",
+   "The command name",
+   "The program's output as a string"
+  ],
+  "a": 3,
+  "s": "capture_output stores stdout and stderr.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import subprocess\nprint(subprocess.run(['echo', 'hi'], capture_output=True, text=True).stdout.strip())",
+  "o": [
+   "echo hi",
+   "Error",
+   "None",
+   "hi"
+  ],
+  "a": 3,
+  "s": "echo prints hi.",
+  "t": "os / sys / subprocess"
+ },
+ {
+  "u": 4,
+  "q": "Which library is commonly used for HTTP requests in Python?",
+  "o": [
+   "turtle",
+   "requests",
+   "math",
+   "random"
+  ],
+  "a": 1,
+  "s": "pip install requests.",
+  "t": "HTTP & requests"
+ },
+ {
+  "u": 4,
+  "q": "Which method sends an HTTP GET with requests?",
+  "o": [
+   "requests.fetch(url)",
+   "requests.get(url)",
+   "requests.open(url)",
+   "requests.read(url)"
+  ],
+  "a": 1,
+  "s": "requests.get returns a Response.",
+  "t": "HTTP & requests"
+ },
+ {
+  "u": 4,
+  "q": "What does HTTP status code 200 mean?",
+  "o": [
+   "OK (success)",
+   "Not found",
+   "Server error",
+   "Forbidden"
+  ],
+  "a": 0,
+  "s": "2xx codes mean success.",
+  "t": "HTTP & requests"
+ },
+ {
+  "u": 4,
+  "q": "What does HTTP status code 404 mean?",
+  "o": [
+   "Not found",
+   "Unauthorized",
+   "Server error",
+   "OK"
+  ],
+  "a": 0,
+  "s": "The resource does not exist.",
+  "t": "HTTP & requests"
+ },
+ {
+  "u": 4,
+  "q": "Which Response method parses a JSON body?",
+  "o": [
+   "response.parse()",
+   "response.json()",
+   "response.dict()",
+   "response.read_json()"
+  ],
+  "a": 1,
+  "s": "It returns Python objects.",
+  "t": "HTTP & requests"
+ },
+ {
+  "u": 4,
+  "q": "Why set a timeout in requests.get(url, timeout=5)?",
+  "o": [
+   "To change the URL",
+   "To make the request faster",
+   "To encrypt data",
+   "To avoid waiting forever for a slow server"
+  ],
+  "a": 3,
+  "s": "Without a timeout the call can hang indefinitely.",
+  "t": "HTTP & requests"
+ },
+ {
+  "u": 4,
+  "q": "Which method checks for HTTP errors and raises an exception?",
+  "o": [
+   "response.raise_for_status()",
+   "response.fail()",
+   "response.check()",
+   "response.error()"
+  ],
+  "a": 0,
+  "s": "It raises HTTPError for 4xx/5xx responses.",
+  "t": "HTTP & requests"
+ },
+ {
+  "u": 4,
+  "q": "What is the main object of NumPy?",
+  "o": [
+   "DataFrame",
+   "tuple",
+   "ndarray (n-dimensional array)",
+   "dict"
+  ],
+  "a": 2,
+  "s": "NumPy arrays hold elements of the same type.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import numpy as np\nprint(np.array([1, 2, 3]) * 2)",
+  "o": [
+   "[2 4 6]",
+   "[1, 2, 3, 1, 2, 3]",
+   "[1 2 3 2]",
+   "Error"
+  ],
+  "a": 0,
+  "s": "Array operations are element-wise.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  print([1, 2, 3] * 2)",
+  "o": [
+   "[1, 2, 3, 1, 2, 3]",
+   "[1, 2, 3, 2]",
+   "[2, 4, 6]",
+   "Error"
+  ],
+  "a": 0,
+  "s": "Repeating a Python list concatenates copies.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import numpy as np\nprint(np.arange(6).reshape(2, 3).shape)",
+  "o": [
+   "(3, 2)",
+   "(6,)",
+   "(2, 3, 1)",
+   "(2, 3)"
+  ],
+  "a": 3,
+  "s": "reshape gives 2 rows and 3 columns.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import numpy as np\nprint(np.array([1, 2, 3, 4]).mean())",
+  "o": [
+   "10",
+   "2",
+   "4",
+   "2.5"
+  ],
+  "a": 3,
+  "s": "The mean of 1, 2, 3 and 4 is 2.5.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import numpy as np\na = np.array([1, 5, 8])\nprint(a[a > 3])",
+  "o": [
+   "[1]",
+   "[5 8]",
+   "[False  True  True]",
+   "[1 5 8]"
+  ],
+  "a": 1,
+  "s": "Boolean indexing keeps elements where the condition is true.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What does np.zeros((2, 2)) create?",
+  "o": [
+   "A single zero",
+   "An error",
+   "A list of two zeros",
+   "A 2×2 array of zeros"
+  ],
+  "a": 3,
+  "s": "The argument is the shape.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What is the main advantage of NumPy over Python lists for numeric work?",
+  "o": [
+   "It stores mixed types easily",
+   "It needs no import",
+   "It is part of the language syntax",
+   "Fast vectorised operations on homogeneous data"
+  ],
+  "a": 3,
+  "s": "Operations run in compiled code on arrays.",
+  "t": "NumPy"
+ },
+ {
+  "u": 4,
+  "q": "What is a pandas DataFrame?",
+  "o": [
+   "A two-dimensional labelled table",
+   "A string",
+   "A file format",
+   "A one-dimensional list only"
+  ],
+  "a": 0,
+  "s": "Rows and columns with labels.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "What is a pandas Series?",
+  "o": [
+   "A package",
+   "A database",
+   "A table",
+   "A one-dimensional labelled array"
+  ],
+  "a": 3,
+  "s": "Each DataFrame column is a Series.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "Which function reads a CSV file into a DataFrame?",
+  "o": [
+   "pd.csv_read()",
+   "pd.open_csv()",
+   "pd.read_csv()",
+   "pd.load()"
+  ],
+  "a": 2,
+  "s": "pd.read_csv('file.csv').",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "Which method writes a DataFrame to CSV?",
+  "o": [
+   "df.write()",
+   "df.save()",
+   "df.export()",
+   "df.to_csv()"
+  ],
+  "a": 3,
+  "s": "Use index=False to omit the index column.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import pandas as pd\ndf = pd.DataFrame({'a': [1, 2, 3]})\nprint(df['a'].sum())",
+  "o": [
+   "Error",
+   "123",
+   "3",
+   "6"
+  ],
+  "a": 3,
+  "s": "Sum of the column.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import pandas as pd\ndf = pd.DataFrame({'a': [1, 2, 3]})\nprint(len(df[df['a'] > 1]))",
+  "o": [
+   "0",
+   "2",
+   "3",
+   "1"
+  ],
+  "a": 1,
+  "s": "Rows where a is 2 and 3.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "What is the output?  import pandas as pd\ndf = pd.DataFrame({'k': ['x', 'y', 'x'], 'v': [1, 2, 3]})\nprint(df.groupby('k')['v'].sum()['x'])",
+  "o": [
+   "4",
+   "3",
+   "1",
+   "6"
+  ],
+  "a": 0,
+  "s": "Group x has values 1 and 3.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "Which method shows the first rows of a DataFrame?",
+  "o": [
+   "top()",
+   "head()",
+   "first_rows()",
+   "start()"
+  ],
+  "a": 1,
+  "s": "df.head() shows 5 rows by default.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "Which method gives a quick statistical summary of numeric columns?",
+  "o": [
+   "describe()",
+   "summary_all()",
+   "stats()",
+   "explain()"
+  ],
+  "a": 0,
+  "s": "count, mean, std, min, quartiles and max.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "What does df.isna().sum() show?",
+  "o": [
+   "The number of missing values in each column",
+   "The sum of all values",
+   "The column names",
+   "The number of rows"
+  ],
+  "a": 0,
+  "s": "It counts NaN values per column.",
+  "t": "pandas"
+ },
+ {
+  "u": 4,
+  "q": "For files too large to fit in memory, pandas can read a CSV:",
+  "o": [
+   "Only with SQL",
+   "Not at all",
+   "Only after converting to Excel",
+   "In chunks with chunksize"
+  ],
+  "a": 3,
+  "s": "pd.read_csv(file, chunksize=100000) returns an iterator of DataFrames.",
+  "t": "pandas"
+ }
+]

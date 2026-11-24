@@ -8,6 +8,8 @@
 
 **Notes. Quizzes. Three live coding labs. One pocket-sized study companion.**
 
+**StudyTint version 1.02.1**
+
 Built for first-semester **BCA (AI & ML)** students, and it works offline.
 
 <br>
@@ -96,7 +98,7 @@ Five subjects, four units each, **570+ study sections** in total.
 ## 📲 Install
 
 1. Open the repository's **Actions** tab, choose the latest successful **Build APK** run, and download the **StudyTint-apk** artifact.
-   Tagged versions (`v1.5.2` and so on) are also published under **Releases**.
+   Tagged versions (`v1.02.1` and so on) are also published under **Releases**.
 2. Unzip if needed and open `StudyTint-vX.Y.Z-buildN.apk` on your phone.
 3. Allow *Install unknown apps* when Android asks.
 
@@ -128,25 +130,35 @@ Or just push the repository to GitHub: the **Build APK** workflow does the same 
 
 ```text
 StudyTint/
-├── version.properties            single source of truth for version name and code
-├── .github/workflows/android.yml CI: build, upload APK, release on tags
+├── version.properties                 single source of truth for version name and code
+├── .github/workflows/android.yml      CI: build, upload APK, release on tags
+├── tools/remove_old_files.sh          removes files left over from older layouts
 └── app/src/main/
     ├── java/com/student/smartstudy/
-    │   ├── MainActivity.kt                   entry point and saved progress
-    │   ├── AppScreens.kt, ScoreDashboard.kt  home, study, quiz and score screens
-    │   ├── UserProfile.kt                    profile set-up and photo
-    │   ├── NotesRenderer.kt, NotesLoader.kt  note renderer and loader
-    │   ├── SubjectsAndQuizData.kt            subjects, units and the question-bank loader
-    │   ├── CProgrammingLab.kt                C Lab
-    │   ├── TerminalConsole.kt                terminal-style output box
-    │   ├── PythonLab.kt                      Python Lab
-    │   ├── PythonOnlineLibraries.kt          PyPI search and checksum-verified downloads
-    │   ├── DbmsLab.kt, DbmsEngine.kt         DBMS Lab
-    │   ├── PressAnimation.kt                 press-down animation for cards
-    │   └── ReleaseNotesAndMigrations.kt      changelog and saved-data migrations
-    ├── cpp/                      native C engine (picoc, Turbo C checker, JNI)
-    ├── python/                   dbms_query_engine.py, python_lab_runner.py
-    └── assets/                   study notes (JSON), question banks, sample_databases/
+    │   ├── MainActivity.kt            entry point: theme and navigation host
+    │   ├── navigation/                Screens.kt (screen list), AppNavigation.kt (routing and transitions)
+    │   ├── data/                      ProgressStore, UserProfileData, SubjectCatalog, QuizBank,
+    │   │                              ReleaseNotesAndMigrations (changelog and saved-data migrations)
+    │   ├── notes/                     NotesModel (block types), NotesLoader (JSON), NotesRenderer (incl. tables)
+    │   ├── ui/
+    │   │   ├── theme/                 AppTheme (white and gold palette)
+    │   │   ├── components/            shared widgets and the press animation
+    │   │   ├── home/                  HomeScreen (incl. Daily activity box)
+    │   │   ├── study/                 PickScreen (subjects and units), NotesScreen
+    │   │   ├── quiz/                  QuizScreen
+    │   │   ├── score/                 ScoreDashboard, ActivityBox
+    │   │   └── profile/               UserProfile (set-up and photo)
+    │   └── labs/
+    │       ├── c/                     CProgrammingLab
+    │       ├── python/                PythonLab, PythonOnlineLibraries (PyPI downloads)
+    │       ├── dbms/                  DbmsLab, DbmsEngine
+    │       └── common/                TerminalConsole
+    ├── cpp/                           native C engine (picoc, Turbo C checker, JNI)
+    ├── python/                        dbms_query_engine.py, python_lab_runner.py
+    └── assets/
+        ├── notes/                     <subject>_unit<N>_notes.json
+        ├── questions/                 <subject>_questions.json
+        └── sample_databases/          *_database.sql
 ```
 
 </details>
@@ -156,9 +168,9 @@ StudyTint/
 
 <br>
 
-- **File names** follow one pattern: `<subject>_unit<N>_notes.json` (for example `python_unit2_notes.json`) and `<subject>_questions.json`, with subjects `python`, `maths`, `c`, `ai` and `dbms`. Files starting with `legacy_` are older copies that the app no longer loads.
-- **Notes** are JSON files in `app/src/main/assets/`, each a `title`, an `intro` and a list of `sec` sections made of simple blocks (paragraphs, lists, code, notes, tables and Q&A). Add new sections at the end of a file so existing reading progress stays correct.
-- **Questions** live in `maths_questions.json`, `c_questions.json`, `python_questions.json`, `dbms_questions.json` and `ai_questions.json`, as `{ "u": unit, "q": question, "o": [4 options], "a": answer index, "s": explanation, "t": topic }`. They are loaded by `loadQuestionBanks` in `SubjectsAndQuizData.kt`. To give a subject a bank, add a file and one `loadBank(...)` line.
+- **File names** follow one pattern: `<subject>_unit<N>_notes.json` (for example `python_unit2_notes.json`) and `<subject>_questions.json`, with subjects `python`, `maths`, `c`, `ai` and `dbms`.
+- **Notes** are JSON files in `app/src/main/assets/notes/`, each a `title`, an `intro` and a list of `sec` sections made of simple blocks (paragraphs, lists, code, notes, tables and Q&A). Add new sections at the end of a file so existing reading progress stays correct.
+- **Questions** live in `app/src/main/assets/questions/` as `maths_questions.json`, `c_questions.json`, `python_questions.json`, `dbms_questions.json` and `ai_questions.json`, as `{ "u": unit, "q": question, "o": [4 options], "a": answer index, "s": explanation, "t": topic }`. They are loaded by `loadQuestionBanks` in `data/QuizBank.kt`. To give a subject a bank, add a file and one `loadBank(...)` line.
 
 </details>
 
@@ -167,12 +179,12 @@ StudyTint/
 ## 🚀 Shipping an update
 
 1. Raise `VERSION_CODE` and set `VERSION_NAME` in `version.properties`.
-2. Add a release entry (newest first) to the changelog in `ReleaseNotesAndMigrations.kt`, so users see **What's new**.
+2. Add a release entry (newest first) to the changelog in `data/ReleaseNotesAndMigrations.kt`, so users see **What's new**.
 3. If the shape of saved data changes, raise `DATA_VERSION` and add a step to `migrate`.
 4. Push. To publish a GitHub Release with the APK, tag it:
 
 ```bash
-git tag v1.5.3 && git push origin v1.5.3
+git tag v1.02.1 && git push origin v1.02.1
 ```
 
 <br>

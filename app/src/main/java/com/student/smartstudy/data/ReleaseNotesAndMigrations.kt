@@ -1,0 +1,130 @@
+package com.student.smartstudy
+
+import android.content.Context
+
+/**
+ * Update support.
+ *
+ * To ship a new version:
+ *  1. Edit version.properties (raise VERSION_CODE, set VERSION_NAME).
+ *  2. Add a Release to [changelog] below (newest first) so users see "What's new".
+ *  3. If saved data changes shape, raise [DATA_VERSION] and add a step in [migrate].
+ *  4. Push (or tag vX.Y.Z to get a GitHub Release). The new APK installs over the old one and keeps all data.
+ */
+object Updates {
+    /** Bump when the format of saved data changes, then add a step in [migrate]. */
+    const val DATA_VERSION = 2
+
+    data class Release(val name: String, val notes: List<String>)
+
+    val changelog = listOf(
+        Release(
+            "1.02.1",
+            listOf(
+                "StudyTint version 1.02.1: the whole project is now organised into clear folders with descriptive file names, and the code is laid out in readable blocks",
+                "The Daily activity dot grid moved from Score to the bottom of Home",
+                "The app opens straight on Home (no Get started screen) and has a new graduation cap icon",
+                "Real tables: comparison tables, truth tables and example data tables in every module now show as proper tables with a header row and grid lines, instead of lines of text separated by | signs",
+                "New white and gold look: cream pages, white cards with gold edges, a gold header on Home and on every unit, gold tables, and a gold logo"
+            )
+        ),
+        Release(
+            "1.5.2",
+            listOf(
+                "Security: library downloads only come from PyPI, every file must match its checksum, and C programs can only use files in their own folder",
+                "Security: the SQL lab blocks ATTACH and extensions, so an imported database cannot touch other files; the app is no longer debuggable and has no cloud backup",
+                "Stability: a Python program that uses far too much memory is stopped instead of crashing the app, and notes load in the background so the app opens faster",
+                "Smoother scrolling: a faster release build, lighter press animations, and long program output no longer slows the screen"
+            )
+        ),
+        Release(
+            "1.5.1",
+            listOf(
+                "Removed the Highlighted topics screen and the star on units; the home screen now shows Score, C Lab, Python Lab and DBMS Lab"
+            )
+        ),
+        Release(
+            "1.5.0",
+            listOf(
+                "New DBMS Lab: write SQL and see the results as a table. Runs on a real, current SQLite (JOINs including RIGHT and FULL, window functions, views, triggers, transactions)",
+                "DBMS Lab: sample College, Company, Library and Bank databases, your own databases, a table browser, query history, name and keyword suggestions, and plain-English error hints",
+                "DBMS Lab: SHOW TABLES, DESC and TRUNCATE work like MySQL, BEGIN / COMMIT / ROLLBACK can be tried out safely, and .sql or .db files can be opened or shared"
+            )
+        ),
+        Release(
+            "1.4.0",
+            listOf(
+                "C Lab now works like Turbo C: the whole program is checked first and every error and warning is listed the way Turbo C words it (Error NONAME00.C 5: Undefined symbol 'x' in function main)",
+                "Turbo C extras: Linker Error messages, \"Function should return a value\", \"'x' is declared but never used\", \"Call to function 'f' with no prototype\" and more",
+                "Turbo C run-time messages: Divide error, Floating point error: Divide by 0., Stack overflow!, Null pointer assignment, sqrt: DOMAIN error",
+                "Turbo C library functions such as gotoxy, textcolor, cprintf, delay, strupr, strrev, itoa and randomize",
+                "Switch between Turbo C and the old gcc style at the top of C Lab. Also fixed comma in for loops, several variables in a struct line, const, and pointer subtraction"
+            )
+        ),
+        Release(
+            "1.3.0",
+            listOf(
+                "Python Lab: new \"Get online\" tab. Search PyPI or pick a popular library and save it, with the libraries it needs, straight to internal storage, phone storage or the SD card",
+                "Downloads are checked against PyPI's checksum, and only libraries that can run on a phone (pure Python) are offered"
+            )
+        ),
+        Release(
+            "1.2.0",
+            listOf(
+                "C Lab and Python Lab: type input right in the output box, like a terminal",
+                "C Lab: programs run without #include lines (printf, scanf, sqrt, bool and more are added for you)",
+                "C Lab: main() without a return type or return statement now works",
+                "Profile: add, change or remove a profile photo; it is saved on your device"
+            )
+        ),
+        Release(
+            "1.1.0",
+            listOf(
+                "New Python Lab: write and run Python with real error messages",
+                "Choose where Python files live: internal storage, phone storage or SD card",
+                "Import your own libraries from a folder, .py, .zip or .whl file",
+                "C Lab now shows compiler-style errors and input warnings",
+                "Smoother scrolling and nicer cards"
+            )
+        )
+    )
+
+    private const val PREF = "app_meta"
+
+    fun versionName(ctx: Context): String = try {
+        ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName ?: ""
+    } catch (e: Exception) { "" }
+
+    /** Runs once at start-up. Upgrades saved data step by step, never deleting anything. */
+    fun migrate(ctx: Context) {
+        val meta = ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE)
+        var v = meta.getInt("data_version", 1)
+        while (v < DATA_VERSION) {
+            when (v) {
+                1 -> { /* 1 -> 2: nothing to convert; Python Lab keeps its own preferences. */ }
+                // 2 -> { migrate from version 2 to 3 here }
+            }
+            v++
+        }
+        meta.edit().putInt("data_version", DATA_VERSION).apply()
+    }
+
+    /** The release notes to show once after an update, or null. */
+    fun pendingRelease(ctx: Context): Release? {
+        val meta = ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE)
+        val current = versionName(ctx)
+        val seen = meta.getString("seen_version", null)
+        if (seen == current) return null
+        val existingUser = ctx.getSharedPreferences("progress", Context.MODE_PRIVATE).contains("p_name")
+        if (seen == null && !existingUser) {
+            meta.edit().putString("seen_version", current).apply()
+            return null
+        }
+        return changelog.firstOrNull { it.name == current }
+    }
+
+    fun markSeen(ctx: Context) {
+        ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE).edit()
+            .putString("seen_version", versionName(ctx)).apply()
+    }
+}

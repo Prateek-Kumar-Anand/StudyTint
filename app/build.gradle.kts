@@ -68,10 +68,10 @@ dependencies {
     implementation("androidx.documentfile:documentfile:1.0.1")
 }
 
-// Some files were renamed to full, descriptive names (for example Ui.kt is now AppScreens.kt). If the old files are still in the
-// repository (for example the new files were copied over the old project without deleting anything), the old and new copies
-// declare the same things and the build fails with "Conflicting declarations". These leftovers are deleted before every build.
-// They are listed in tools/remove_old_files.sh too, which also removes them from Git.
+// Files were renamed and moved into folders (for example Ui.kt became ui/home/HomeScreen.kt and friends, and the notes JSON files
+// moved to assets/notes). If the old copies are still in the repository (for example the new files were copied over the old project
+// without deleting anything), the old and new copies declare the same things and the build fails with "Conflicting declarations".
+// These leftovers are deleted before every build. They are listed in tools/remove_old_files.sh too, which also removes them from Git.
 val outdatedFiles = listOf(
     "src/main/assets/Artificial_Intelligence_Foundations_Study_Notes.json",
     "src/main/assets/C_Arrays_Strings_Functions_Recursion_Notes.json",
@@ -137,6 +137,46 @@ val outdatedFiles = listOf(
     "src/main/python/pylab_runner.py",
     "src/main/assets/dbms",
     "src/main/python/__pycache__",
+    "src/main/java/com/student/smartstudy/AppScreens.kt",
+    "src/main/java/com/student/smartstudy/CProgrammingLab.kt",
+    "src/main/java/com/student/smartstudy/DbmsEngine.kt",
+    "src/main/java/com/student/smartstudy/DbmsLab.kt",
+    "src/main/java/com/student/smartstudy/NotesLoader.kt",
+    "src/main/java/com/student/smartstudy/NotesRenderer.kt",
+    "src/main/java/com/student/smartstudy/PressAnimation.kt",
+    "src/main/java/com/student/smartstudy/PythonLab.kt",
+    "src/main/java/com/student/smartstudy/PythonOnlineLibraries.kt",
+    "src/main/java/com/student/smartstudy/ReleaseNotesAndMigrations.kt",
+    "src/main/java/com/student/smartstudy/ScoreDashboard.kt",
+    "src/main/java/com/student/smartstudy/SubjectsAndQuizData.kt",
+    "src/main/java/com/student/smartstudy/TerminalConsole.kt",
+    "src/main/java/com/student/smartstudy/UserProfile.kt",
+    "src/main/assets/maths_unit1_notes.json",
+    "src/main/assets/maths_unit2_notes.json",
+    "src/main/assets/maths_unit3_notes.json",
+    "src/main/assets/maths_unit4_notes.json",
+    "src/main/assets/dbms_unit1_notes.json",
+    "src/main/assets/dbms_unit2_notes.json",
+    "src/main/assets/dbms_unit3_notes.json",
+    "src/main/assets/dbms_unit4_notes.json",
+    "src/main/assets/ai_unit1_notes.json",
+    "src/main/assets/ai_unit2_notes.json",
+    "src/main/assets/ai_unit3_notes.json",
+    "src/main/assets/ai_unit4_notes.json",
+    "src/main/assets/python_unit1_notes.json",
+    "src/main/assets/python_unit2_notes.json",
+    "src/main/assets/python_unit3_notes.json",
+    "src/main/assets/python_unit4_notes.json",
+    "src/main/assets/c_unit1_notes.json",
+    "src/main/assets/c_unit2_notes.json",
+    "src/main/assets/c_unit3_notes.json",
+    "src/main/assets/c_unit4_notes.json",
+    "src/main/assets/maths_questions.json",
+    "src/main/assets/dbms_questions.json",
+    "src/main/assets/ai_questions.json",
+    "src/main/assets/python_questions.json",
+    "src/main/assets/c_questions.json",
+    "src/main/assets/questions-c.json",
 )
 val removeOutdatedFiles = tasks.register("removeOutdatedFiles") {
     doLast {
