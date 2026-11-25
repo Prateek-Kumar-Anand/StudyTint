@@ -22,6 +22,8 @@ object Updates {
             "1.02.1",
             listOf(
                 "StudyTint version 1.02.1: the whole project is now organised into clear folders with descriptive file names, and the code is laid out in readable blocks",
+                "The clock, battery and notification icons in the status bar are visible again (dark icons on the light bar)",
+                "A tighter Home screen: smaller cards, profile details that are no longer cut off, and a full-width Daily activity grid",
                 "The Daily activity dot grid moved from Score to the bottom of Home",
                 "The app opens straight on Home (no Get started screen) and has a new graduation cap icon",
                 "Real tables: comparison tables, truth tables and example data tables in every module now show as proper tables with a header row and grid lines, instead of lines of text separated by | signs",

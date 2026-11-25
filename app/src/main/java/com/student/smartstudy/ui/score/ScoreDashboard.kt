@@ -128,11 +128,11 @@ private fun parseTopic(key: String, v: Pair<Int, Int>): TopicStat {
  * One count per cell of the activity grid, oldest column first, 7 rows per column (Sunday on top). -1 marks a
  * day in the future.
  */
-private fun activityCells(activity: Map<String, Int>): List<Int> {
+private fun activityCells(activity: Map<String, Int>, weeks: Int): List<Int> {
     val todayRow = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_WEEK) - 1
-    val out = ArrayList<Int>(GRID_WEEKS * 7)
-    for (c in 0 until GRID_WEEKS) for (r in 0 until 7) {
-        val ago = (GRID_WEEKS - 1 - c) * 7 + (todayRow - r)
+    val out = ArrayList<Int>(weeks * 7)
+    for (c in 0 until weeks) for (r in 0 until 7) {
+        val ago = (weeks - 1 - c) * 7 + (todayRow - r)
         out.add(if (ago < 0) -1 else activity[dayKey(ago)] ?: 0)
     }
     return out
@@ -439,38 +439,43 @@ fun ScoreScreen(p: Progress, listState: LazyListState, back: () -> Unit) {
     }
 }
 
-/** The "Daily activity" dot grid (last 15 weeks). Shown at the bottom of Home. */
+/**
+ * The "Daily activity" dot grid. Shown at the bottom of Home; it uses the full width and shows as many weeks
+ * as fit.
+ */
 @Composable
 fun ActivityBox(activity: Map<String, Int>, modifier: Modifier = Modifier) {
-    val cells = remember(activity) { activityCells(activity) }
-    val activeDays = cells.count { it > 0 }
-    Column(modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Tile).padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFE6D9A8)))
-            Text("  no activity", fontSize = 12.sp, color = Color.Gray)
-            Spacer(Modifier.width(12.dp))
-            Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFD4A017)))
-            Text("  active", fontSize = 12.sp, color = Color.Gray)
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.width(92.dp)) {
-                Text("Daily activity", fontSize = 20.sp, fontWeight = FontWeight.Medium, color = Ink,
-                    lineHeight = 24.sp)
-                Text("$activeDays active days", Modifier.padding(top = 4.dp), fontSize = 11.sp,
-                    color = Color.Gray)
+    BoxWithConstraints(modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Tile)) {
+        val weeks = ((maxWidth - 32.dp) / 15.dp).toInt().coerceIn(GRID_WEEKS, 26)
+        val cells = remember(activity, weeks) { activityCells(activity, weeks) }
+        val activeDays = cells.count { it > 0 }
+        Column(Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text("Daily activity", fontSize = 17.sp, fontWeight = FontWeight.Medium, color = Ink)
+                    Text("$activeDays active days in the last $weeks weeks", fontSize = 11.sp,
+                        color = Color.Gray)
+                }
+                Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFE6D9A8)))
+                Text("  none", fontSize = 11.sp, color = Color.Gray)
+                Spacer(Modifier.width(10.dp))
+                Box(Modifier.size(7.dp).clip(CircleShape).background(Color(0xFFD4A017)))
+                Text("  active", fontSize = 11.sp, color = Color.Gray)
             }
-            Canvas(Modifier.weight(1f).height(98.dp)) {
-                val cell = minOf(this.size.width / GRID_WEEKS, this.size.height / 7f)
-                val left = this.size.width - cell * GRID_WEEKS
+            Canvas(Modifier.fillMaxWidth().aspectRatio(weeks / 7f)) {
+                val cell = this.size.width / weeks
                 cells.forEachIndexed { idx, n ->
                     if (n >= 0) {
                         val col = idx / 7
                         val row = idx % 7
-                        val color = when { n == 0 -> Color(0xFFE6D9A8); n < 4 -> Color(0xFFF0C94F); else ->
-                            Color(0xFFC98A0A) }
-                        drawCircle(color, radius = cell * (if (n == 0) 0.14f else 0.24f),
-                            center = Offset(left + cell * (col + 0.5f), cell * (row + 0.5f)))
+                        val color = when {
+                            n == 0 -> Color(0xFFE6D9A8)
+                            n < 4 -> Color(0xFFF0C94F)
+                            else -> Color(0xFFC98A0A)
+                        }
+                        drawCircle(color, radius = cell * (if (n == 0) 0.14f else 0.26f),
+                            center = Offset(cell * (col + 0.5f), cell * (row + 0.5f)))
                     }
                 }
             }

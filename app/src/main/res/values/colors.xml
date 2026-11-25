@@ -1,3 +1,4 @@
 <resources>
     <color name="ic_bg">#FFFFFF</color>
+    <color name="app_bg">#FFFAFAF7</color>
 </resources>

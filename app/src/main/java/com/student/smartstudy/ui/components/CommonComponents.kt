@@ -26,6 +26,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -62,11 +63,12 @@ fun OptionCard(title: String, sub: String, tint: Color, modifier: Modifier, onCl
         modifier.tap(RoundedCornerShape(22.dp), onClick), shape = RoundedCornerShape(22.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)
     ) {
-        Column(Modifier.padding(16.dp)) {
-            Box(Modifier.width(34.dp).height(5.dp).clip(CircleShape).background(tint))
-            Spacer(Modifier.height(18.dp))
-            Text(title, fontWeight = FontWeight.Medium, fontSize = 17.sp, color = Ink)
-            Text(sub, color = Color(0xFF8A7B52), fontSize = 13.sp)
+        Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 14.dp)) {
+            Box(Modifier.width(30.dp).height(4.dp).clip(CircleShape).background(tint))
+            Spacer(Modifier.height(10.dp))
+            Text(title, fontWeight = FontWeight.Medium, fontSize = 16.sp, color = Ink, maxLines = 1)
+            Text(sub, color = Color(0xFF8A7B52), fontSize = 12.sp, maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
         }
     }
 }

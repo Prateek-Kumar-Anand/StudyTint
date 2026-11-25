@@ -33,16 +33,17 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Home(p: Progress, listState: LazyListState, go: (Screen) -> Unit) {
-    LazyColumn(Modifier.fillMaxSize(), state = listState, contentPadding = PaddingValues(20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    LazyColumn(Modifier.fillMaxSize(), state = listState,
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item(key = "greeting") {
             Row(Modifier.height(IntrinsicSize.Min), verticalAlignment = Alignment.CenterVertically) {
                 Box(Modifier.width(4.dp).fillMaxHeight().clip(CircleShape).background(Gold))
-                Spacer(Modifier.width(12.dp))
-                Column {
+                Spacer(Modifier.width(10.dp))
+                Column(Modifier.padding(vertical = 2.dp)) {
                     Text("Hi, ${p.profile.name.trim().substringBefore(' ').ifBlank { "Student" }}",
-                        fontSize = 26.sp, fontWeight = FontWeight.SemiBold, color = Ink)
-                    Text("What shall we do today?", color = Color(0xFF8A7B52), fontSize = 14.sp)
+                        fontSize = 24.sp, fontWeight = FontWeight.SemiBold, color = Ink)
+                    Text("What shall we do today?", color = Color(0xFF8A7B52), fontSize = 13.sp)
                 }
             }
         }

@@ -95,8 +95,8 @@ object ProfilePhoto {
 fun ProfileField(label: String, value: String, modifier: Modifier) {
     Column(modifier) {
         Text(label, fontSize = 11.sp, color = Color.Gray)
-        Text(value, fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Ink, maxLines = 1,
-            overflow = TextOverflow.Ellipsis)
+        Text(value, fontSize = 14.sp, fontWeight = FontWeight.Medium, color = Ink, maxLines = 2,
+            overflow = TextOverflow.Ellipsis, lineHeight = 17.sp)
     }
 }
 
@@ -108,7 +108,8 @@ fun ProfileCard(pf: Profile, photo: ImageBitmap?, onEdit: () -> Unit) {
         Modifier.fillMaxWidth().tap(RoundedCornerShape(24.dp), onEdit), shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White), border = BorderStroke(1.dp, GoldLine)
     ) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        Column(Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (photo != null) {
                     Image(
@@ -134,9 +135,9 @@ fun ProfileCard(pf: Profile, photo: ImageBitmap?, onEdit: () -> Unit) {
             }
             HorizontalDivider(color = GoldLine)
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                ProfileField("Father", pf.father, Modifier.weight(1.2f))
-                ProfileField("LURN No.", pf.lurn, Modifier.weight(1f))
-                ProfileField("Roll No.", pf.roll, Modifier.weight(0.8f))
+                ProfileField("Father", pf.father, Modifier.weight(1.4f))
+                ProfileField("LURN No.", pf.lurn, Modifier.weight(1.3f))
+                ProfileField("Roll No.", pf.roll, Modifier.weight(0.7f))
             }
         }
     }
