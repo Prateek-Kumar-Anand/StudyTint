@@ -23,4 +23,16 @@ class MainActivity : ComponentActivity() {
         loadRich(applicationContext)
         setContent { MaterialTheme(colorScheme = GoldColorScheme) { App(remember { Progress(applicationContext) }) } }
     }
+
+    override fun onStart() {
+        super.onStart()
+        DbEngine.foreground = true
+    }
+
+    override fun onStop() {
+        DbEngine.foreground = false
+        val app = applicationContext
+        Thread { DbEngine.sealAll(app) }.start()
+        super.onStop()
+    }
 }

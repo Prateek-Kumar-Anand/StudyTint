@@ -4,7 +4,6 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 import java.net.HttpURLConnection
-import java.net.URLEncoder
 import java.security.MessageDigest
 import java.util.zip.ZipFile
 
@@ -33,9 +32,10 @@ object PyOnline {
 
     private class OnlineException(message: String) : Exception(message)
 
-    @Volatile var baseUrl = "https://pypi.org"
-    /** Tests only: allow plain http against a local server. */
-    @Volatile var allowHttp = false
+    // Fixed on purpose: nothing, including code run in the Python Lab, can point downloads somewhere else
+    // through this object.
+    private const val BASE_URL = "https://pypi.org"
+    private val ALLOWED_HOSTS = setOf("pypi.org", "files.pythonhosted.org")
 
     private const val UA = "StudyTint-PythonLab/1.3 (Android)"
     private const val MAX_WHEEL = 60L * 1024 * 1024
@@ -75,47 +75,28 @@ object PyOnline {
         Hit("pyfiglet", "", "Big ASCII-art text")
     )
 
-    /** Searches PyPI. Falls back to looking up the exact name when the search page gives nothing. */
+    /**
+     * Looks for [query] among the popular libraries and asks PyPI for a library with exactly that name.
+     * (PyPI has no search API, and its search web page only answers real browsers.)
+     */
     fun search(query: String): List<Hit> {
         val q = query.trim()
         if (q.isEmpty()) return emptyList()
-        val fromPage = try {
-            parseSearchPage(getText("$baseUrl/search/?q=" + URLEncoder.encode(q, "UTF-8"), "text/html"))
-        } catch (e: OnlineException) {
-            throw e
-        } catch (e: IOException) {
-            if (e is java.net.UnknownHostException || e is java.net.SocketTimeoutException ||
-                e is java.net.ConnectException) throw e
-            emptyList()
-        }
-        if (fromPage.isNotEmpty()) return fromPage
-        if (q.contains(' ')) return emptyList()        // several words: nothing sensible to look up by name
-        return listOfNotNull(lookup(q))
+        val local = popular().filter { it.name.contains(q, true) || it.summary.contains(q, true) }
+        if (q.contains(' ')) return local              // several words cannot be a library name
+        val exact = lookup(q) ?: return local
+        return listOf(exact) + local.filter { normalize(it.name) != normalize(exact.name) }
     }
 
     /** Details of one exact library name, or null when PyPI has no such library. */
     fun lookup(name: String): Hit? {
         val n = normalize(name.trim().replace(Regex("[^A-Za-z0-9._-].*$"), ""))
         if (n.isEmpty()) return null
-        val text = try { getText("$baseUrl/pypi/$n/json",
+        val text = try { getText("$BASE_URL/pypi/$n/json",
             "application/json") } catch (e: NotFound) { return null }
         val info = JSONObject(text).optJSONObject("info") ?: return null
         return Hit(str(info, "name").ifEmpty { n }, str(info, "version"), str(info, "summary"))
     }
-
-    private val snippet = Regex(
-        "<a class=\"package-snippet\"[^>]*href=\"/project/([^/\"]+)/\"[\\s\\S]*?package-snippet__name\">([^<]*)</span>" +
-            "[\\s\\S]*?package-snippet__version\">([^<]*)</span>[\\s\\S]*?package-snippet__description\">([^<]*)</p>"
-    )
-
-    internal fun parseSearchPage(html: String): List<Hit> =
-        snippet.findAll(html).take(25).map {
-            Hit(unescape(it.groupValues[2]).trim(), unescape(it.groupValues[3]).trim(),
-                unescape(it.groupValues[4]).trim())
-        }.filter { it.name.isNotEmpty() }.toList()
-
-    private fun unescape(s: String) = s.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
-        .replace("&quot;", "\"").replace("&#39;", "'").replace("&#x27;", "'")
 
     // ------------------------------------------------------------------ what is installed
 
@@ -212,7 +193,7 @@ object PyOnline {
 
     private fun choose(req: Req): RemoteFile {
         val text = try {
-            getText("$baseUrl/simple/${normalize(req.name)}/", "application/vnd.pypi.simple.v1+json")
+            getText("$BASE_URL/simple/${normalize(req.name)}/", "application/vnd.pypi.simple.v1+json")
         } catch (e: NotFound) {
             throw OnlineException("There is no library called \"${req.name}\" on PyPI. Check the spelling.")
         }
@@ -338,22 +319,22 @@ object PyOnline {
     private class NotFound : IOException("Not found")
 
     /**
-     * Only PyPI itself and its file host may be contacted (a redirect or a link inside PyPI's answer cannot
-     * send us elsewhere).
+     * Only https to PyPI itself and its file host (a redirect or a link inside PyPI's answer cannot send us
+     * elsewhere).
      */
-    private fun hostAllowed(host: String): Boolean {
-        if (allowHttp) return true                       // tests only
-        val h = host.lowercase()
-        return h == "pypi.org" || h == "files.pythonhosted.org" || h.endsWith(".pypi.org")
+    private fun checkAddress(u: java.net.URL) {
+        if (u.protocol != "https") throw OnlineException("Only secure (https) downloads are allowed.")
+        val host = (u.host ?: "").lowercase()
+        if (host !in ALLOWED_HOSTS || (u.port != -1 && u.port != 443) || u.userInfo != null) {
+            throw OnlineException("Blocked a download from an unexpected server ($host).")
+        }
     }
 
     private fun open(url: String, accept: String?): HttpURLConnection {
         var current = url
         repeat(5) {
             val u = java.net.URI(current).toURL()
-            if (u.protocol != "https" && !(allowHttp &&
-                u.protocol == "http")) throw OnlineException("Only secure (https) downloads are allowed.")
-            if (!hostAllowed(u.host ?: "")) throw OnlineException("Blocked a download from an unexpected server (${u.host}).")
+            checkAddress(u)
             val c = u.openConnection() as HttpURLConnection
             c.connectTimeout = 15000
             c.readTimeout = 30000
@@ -427,7 +408,7 @@ object PyOnline {
 
     // ------------------------------------------------------------------ versions and requirements
 
-    internal class Ver(val parts: List<Int>, val pre: Boolean, val post: Int,
+    private class Ver(val parts: List<Int>, val pre: Boolean, val post: Int,
         val dev: Boolean) : Comparable<Ver> {
         override fun compareTo(other: Ver): Int {
             val n = maxOf(parts.size, other.parts.size)
@@ -448,7 +429,7 @@ object PyOnline {
             "((?:[-_.]?(?:post|rev|r)[-_.]?\\d*)?)((?:[-_.]?dev[-_.]?\\d*)?)(?:\\+[a-z0-9.]+)?$"
     )
 
-    internal fun parseVer(s: String): Ver? {
+    private fun parseVer(s: String): Ver? {
         val m = verRe.matchEntire(s.trim().lowercase()) ?: return null
         val parts = m.groupValues[1].split(".").map { it.toIntOrNull() ?: return null }
         val postText = m.groupValues[3]
@@ -456,16 +437,16 @@ object PyOnline {
         return Ver(parts, m.groupValues[2].isNotEmpty(), post, m.groupValues[4].isNotEmpty())
     }
 
-    internal class Spec(val op: String, val version: String)
+    private class Spec(val op: String, val version: String)
 
     private val specRe = Regex("^(===|==|!=|<=|>=|~=|<|>)\\s*([A-Za-z0-9.*+!_-]+)$")
 
-    internal fun parseSpecs(text: String): List<Spec> =
+    private fun parseSpecs(text: String): List<Spec> =
         text.trim().trim('(', ')').split(",").map { it.trim() }.filter { it.isNotEmpty() }.mapNotNull {
             specRe.matchEntire(it)?.let { m -> Spec(m.groupValues[1], m.groupValues[2]) }
         }
 
-    internal fun satisfies(version: String, specs: List<Spec>, allowPre: Boolean): Boolean {
+    private fun satisfies(version: String, specs: List<Spec>, allowPre: Boolean): Boolean {
         if (specs.isEmpty()) return true
         val v = parseVer(version) ?: return false
         if (v.pre && !allowPre) return false
@@ -504,11 +485,11 @@ object PyOnline {
         return (0 until n).all { a.parts.getOrElse(it) { 0 } == b.parts.getOrElse(it) { 0 } }
     }
 
-    internal class Req(val name: String, val specs: List<Spec>, val marker: String?)
+    private class Req(val name: String, val specs: List<Spec>, val marker: String?)
 
     private val reqRe = Regex("^([A-Za-z0-9][A-Za-z0-9._-]*)\\s*(?:\\[[^\\]]*\\])?\\s*(.*)$")
 
-    internal fun parseReq(line: String): Req? {
+    private fun parseReq(line: String): Req? {
         val semi = line.indexOf(';')
         val main = (if (semi >= 0) line.substring(0, semi) else line).trim()
         val marker = if (semi >= 0) line.substring(semi + 1).trim().ifEmpty { null } else null
@@ -523,7 +504,7 @@ object PyOnline {
     // ------------------------------------------------------------------ environment markers
 
     /** Evaluates the part after ';' in a requirement for this device (Python 3.12 on Android). */
-    internal object Marker {
+    private object Marker {
         private val env = mapOf(
             "python_version" to PY_MAJOR_MINOR, "python_full_version" to PY_VERSION, "os_name" to "posix",
             "sys_platform" to "linux", "platform_system" to "Linux", "platform_machine" to "aarch64",

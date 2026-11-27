@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 @Stable
 class Progress(ctx: Context) {
     private val appCtx = ctx.applicationContext
-    private val sp = ctx.getSharedPreferences("progress", Context.MODE_PRIVATE)
+    private val sp = SecureStore.of(ctx, "progress")
     var photo by mutableStateOf<ImageBitmap?>(ProfilePhoto.load(ctx))
         private set
     var profile by mutableStateOf(
@@ -23,12 +23,12 @@ class Progress(ctx: Context) {
         )
     )
         private set
-    var done by mutableStateOf(sp.getStringSet("done", emptySet())!!.toSet())
+    var done by mutableStateOf(sp.getStringSet("done", emptySet()).toSet())
         private set
-    var read by mutableStateOf(sp.getStringSet("read", emptySet())!!.toSet())
+    var read by mutableStateOf(sp.getStringSet("read", emptySet()).toSet())
         private set
     var stats by mutableStateOf(
-        sp.getStringSet("stats", emptySet())!!.mapNotNull { e ->
+        sp.getStringSet("stats", emptySet()).mapNotNull { e ->
             val k = e.lastIndexOf('=')
             if (k < 0) null else e.substring(0, k) to e.substring(k + 1).split(",")
                 .let { (it.getOrNull(0)?.toIntOrNull() ?: 0) to (it.getOrNull(1)?.toIntOrNull() ?: 0) }
@@ -40,14 +40,14 @@ class Progress(ctx: Context) {
      * activity grid on the Score screen.
      */
     var activity by mutableStateOf(
-        sp.getStringSet("activity", emptySet())!!.mapNotNull { e ->
+        sp.getStringSet("activity", emptySet()).mapNotNull { e ->
             val k = e.indexOf('=')
             if (k < 0) null else e.substring(0, k) to (e.substring(k + 1).toIntOrNull() ?: 0)
         }.toMap()
     )
         private set
     var scores by mutableStateOf(
-        sp.getStringSet("scores2", emptySet())!!.mapNotNull { e ->
+        sp.getStringSet("scores2", emptySet()).mapNotNull { e ->
             e.split("=").let { if (it.size == 2) it[0] to (it[1].toIntOrNull() ?: 0) else null }
         }.toMap()
     )

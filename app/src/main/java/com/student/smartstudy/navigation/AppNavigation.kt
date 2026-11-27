@@ -80,6 +80,15 @@ fun App(p: Progress) {
                 whatsNew = null }) { Text("Got it") } }
         )
     }
+    var locked by remember { mutableStateOf(Vault.problem) }
+    if (locked) {
+        AlertDialog(
+            onDismissRequest = { locked = false },
+            title = { Text("Saved data is locked") },
+            text = { Text("Some saved data could not be unlocked, so changes to it will not be saved. Nothing has been deleted. Restart the phone and open the app again. If this message stays, clearing the app's storage in Android settings starts fresh, but erases your saved data.", fontSize = 14.sp) },
+            confirmButton = { TextButton(onClick = { locked = false }) { Text("OK") } }
+        )
+    }
     val bg by animateColorAsState(if (screen == Screen.Welcome) Color(0xFF0B0B0B) else Bg, tween(400),
         label = "bg")
     Box(Modifier.fillMaxSize().background(bg).statusBarsPadding().navigationBarsPadding()) {

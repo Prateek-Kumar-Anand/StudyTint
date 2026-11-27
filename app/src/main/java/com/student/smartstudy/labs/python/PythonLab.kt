@@ -84,8 +84,7 @@ object PyStorage {
     }
 
     fun kind(ctx: Context): PyStore {
-        val name = ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE)
-            .getString("store", PyStore.Internal.name)
+        val name = SecureStore.of(ctx, PREF).getString("store", PyStore.Internal.name)
         val k = PyStore.values().firstOrNull { it.name == name } ?: PyStore.Internal
         return if (baseFor(ctx, k) != null) k else PyStore.Internal
     }
@@ -108,7 +107,7 @@ object PyStorage {
             val src = root(ctx, from)
             val dst = root(ctx, to)
             if (src.exists()) src.copyRecursively(dst, overwrite = false)
-            ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE).edit().putString("store", to.name).apply()
+            SecureStore.of(ctx, PREF).edit().putString("store", to.name).apply()
             "Now using ${to.label}. Your files were copied across."
         } catch (e: Exception) {
             "Could not switch: ${e.message}"
@@ -410,7 +409,7 @@ private val pySymbols = listOf(":", "    ", "(", ")", "[", "]", "{", "}", "\"", 
 @Composable
 fun PyLabScreen(back: () -> Unit) {
     val ctx = LocalContext.current
-    val prefs = remember { ctx.getSharedPreferences("pylab_prefs", Context.MODE_PRIVATE) }
+    val prefs = remember { SecureStore.of(ctx, "pylab_prefs") }
     var code by remember { mutableStateOf(TextFieldValue(prefs.getString("code", pySamples["Hello"]) ?: "")) }
     var timeout by remember { mutableStateOf(prefs.getInt("timeout", 15)) }
     var output by remember { mutableStateOf("") }
@@ -437,8 +436,7 @@ fun PyLabScreen(back: () -> Unit) {
     val root = remember(refresh) { PyStorage.root(ctx) }
     val libList = remember(refresh) { PyLibs.list(PyStorage.libs(root)) }
     val onlineInstalled = remember(refresh) { PyOnline.installedNames(PyStorage.libs(root)) }
-    val scriptList = remember(refresh) { (PyStorage.scripts(root).listFiles() ?: emptyArray())
-        .filter { it.isFile && it.name.endsWith(".py") }.sortedBy { it.name.lowercase() } }
+    val scriptList = remember(refresh) { ScriptVault.list(PyStorage.scripts(root)) }
 
     androidx.compose.runtime.LaunchedEffect(Unit) {
         pyVersion = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { PyEngine.version(ctx) }
@@ -568,7 +566,12 @@ fun PyLabScreen(back: () -> Unit) {
 
             BasicTextField(
                 value = code,
-                onValueChange = { setCode(it) },
+                onValueChange = { typed ->
+                    // pressing Enter indents the new line the way Python expects
+                    val auto = PythonAutoIndent.onEdit(code.text, code.selection.min, code.selection.max,
+                        typed.text, typed.selection.start)
+                    setCode(if (auto == null) typed else TextFieldValue(auto.text, TextRange(auto.cursor)))
+                },
                 modifier = Modifier.fillMaxWidth().heightIn(min = 280.dp)
                     .background(PyBg, RoundedCornerShape(16.dp)).padding(14.dp),
                 textStyle = TextStyle(fontFamily = mono, fontSize = 14.sp, color = PyFg, lineHeight = 20.sp),
@@ -769,7 +772,7 @@ fun PyLabScreen(back: () -> Unit) {
                                 autoCorrect = false, imeAction = ImeAction.Search),
                             keyboardActions = KeyboardActions(onSearch = { doOnlineSearch() }),
                             decorationBox = { inner ->
-                                if (onlineQuery.isEmpty()) Text("Search PyPI, e.g. requests",
+                                if (onlineQuery.isEmpty()) Text("Library name, e.g. requests",
                                     fontSize = 14.sp, color = Color.Gray)
                                 inner()
                             }
@@ -829,18 +832,25 @@ fun PyLabScreen(back: () -> Unit) {
                         colors = ButtonDefaults.buttonColors(containerColor = Accent)
                     ) { Text("Save current code") }
                     if (scriptList.isEmpty()) Text("No saved scripts yet.", fontSize = 13.sp, color = Ink)
-                    scriptList.forEach { f ->
+                    scriptList.forEach { script ->
                         Surface(shape = RoundedCornerShape(14.dp), color = Color.White,
                             modifier = Modifier.fillMaxWidth()) {
                             Row(Modifier.padding(start = 14.dp, end = 4.dp),
                                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
-                                Text(f.name, Modifier.weight(1f).padding(vertical = 12.dp), fontFamily = mono,
+                                Text(script, Modifier.weight(1f).padding(vertical = 12.dp), fontFamily = mono,
                                     fontSize = 14.sp, color = Ink)
                                 TextButton(onClick = {
-                                    val t = try { f.readText() } catch (e: Exception) { "" }
-                                    setCode(TextFieldValue(t, TextRange(t.length)))
+                                    // on failure the editor is left alone, so the current code is not lost
+                                    try {
+                                        val t = ScriptVault.read(PyStorage.scripts(root), script) { Vault.key(ctx) }
+                                        setCode(TextFieldValue(t, TextRange(t.length)))
+                                    } catch (e: Exception) {
+                                        note = "Could not open $script."
+                                    }
                                 }) { Text("Open") }
-                                TextButton(onClick = { f.delete(); refresh++ }) { Text("Delete") }
+                                TextButton(onClick = {
+                                    ScriptVault.delete(PyStorage.scripts(root), script); refresh++
+                                }) { Text("Delete") }
                             }
                         }
                     }
@@ -865,10 +875,11 @@ fun PyLabScreen(back: () -> Unit) {
             confirmButton = {
                 TextButton(onClick = {
                     val clean = saveName.trim().replace(Regex("[^A-Za-z0-9_\\- ]"), "_").ifEmpty { "script" }
-                    val file = File(PyStorage.scripts(root), if (clean.endsWith(".py")) clean
-                        else "$clean.py")
-                    note = try { file.writeText(code.text);
-                        "Saved ${file.name}." } catch (e: Exception) { "Could not save: ${e.message}" }
+                    val fileName = if (clean.endsWith(".py")) clean else "$clean.py"
+                    note = try {
+                        ScriptVault.save(PyStorage.scripts(root), fileName, code.text) { Vault.key(ctx) }
+                        "Saved $fileName."
+                    } catch (e: Exception) { "Could not save: ${e.message}" }
                     showSave = false
                     refresh++
                 }) { Text("Save") }

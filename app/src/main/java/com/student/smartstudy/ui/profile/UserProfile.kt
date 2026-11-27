@@ -31,30 +31,54 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/** The profile picture: picked from the gallery, cropped square and kept in the app's private storage. */
+/** The profile picture: picked from the gallery, cropped square and saved encrypted in private storage. */
 object ProfilePhoto {
     private const val SIZE = 512
+    private const val LABEL = "profile-photo"
 
-    private fun file(ctx: Context) = File(ctx.filesDir, "profile_photo.jpg")
+    private fun file(ctx: Context) = File(ctx.filesDir, "profile_photo.enc")
+    /** Where older versions kept the picture, readable. */
+    private fun oldFile(ctx: Context) = File(ctx.filesDir, "profile_photo.jpg")
 
     fun load(ctx: Context): ImageBitmap? = try {
-        val f = file(ctx)
-        if (f.exists()) BitmapFactory.decodeFile(f.absolutePath)?.asImageBitmap() else null
+        val old = oldFile(ctx)
+        val bytes = when {
+            old.exists() -> old.readBytes()
+            file(ctx).exists() -> SecureFiles.read(file(ctx), Vault.key(ctx), LABEL)
+            else -> null
+        }
+        bytes?.let { BitmapFactory.decodeByteArray(it, 0, it.size)?.asImageBitmap() }
     } catch (e: Throwable) { null }
 
+    /** The picture is encrypted in memory; a readable copy never touches storage. */
     fun write(ctx: Context, bmp: Bitmap) {
-        val tmp = File(ctx.filesDir, "profile_photo.tmp")
-        FileOutputStream(tmp).use { bmp.compress(Bitmap.CompressFormat.JPEG, 90, it) }
-        if (!tmp.renameTo(file(ctx))) { file(ctx).delete(); tmp.renameTo(file(ctx)) }
+        val jpeg = ByteArrayOutputStream()
+        bmp.compress(Bitmap.CompressFormat.JPEG, 90, jpeg)
+        SecureFiles.write(file(ctx), jpeg.toByteArray(), Vault.key(ctx), LABEL)
+        oldFile(ctx).delete()
     }
 
-    fun delete(ctx: Context) { file(ctx).delete() }
+    fun delete(ctx: Context) {
+        file(ctx).delete()
+        oldFile(ctx).delete()
+    }
+
+    fun encryptExisting(ctx: Context) {
+        File(ctx.filesDir, "profile_photo.tmp").delete()
+        try {
+            if (oldFile(ctx).exists()) {
+                SecureFiles.encryptInPlace(oldFile(ctx), file(ctx), Vault.key(ctx), LABEL)
+            }
+        } catch (e: Exception) {
+            Vault.reportProblem()
+        }
+    }
 
     private fun rotationOf(ctx: Context, uri: Uri): Int = try {
         ctx.contentResolver.openInputStream(uri)?.use { ins ->

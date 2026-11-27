@@ -272,7 +272,7 @@ private fun isNumber(v: String) = v.isNotEmpty() && v.length < 24 && v.toDoubleO
 fun DbLabScreen(back: () -> Unit) {
     val ctx = LocalContext.current
     val appCtx = ctx.applicationContext
-    val prefs = remember { ctx.getSharedPreferences("dbms_prefs", Context.MODE_PRIVATE) }
+    val prefs = remember { SecureStore.of(ctx, "dbms_prefs") }
     val clipboard = LocalClipboardManager.current
     val mono = FontFamily.Monospace
     val highlight = remember { SqlHighlight() }
@@ -296,7 +296,15 @@ fun DbLabScreen(back: () -> Unit) {
     var expanded by remember { mutableStateOf(setOf<String>()) }
     var resultsY by remember { mutableStateOf(0) }
 
-    DisposableEffect(Unit) { onDispose { DbEngine.stop() } }
+    // databases are readable only while the lab is open; leaving it encrypts them again
+    DisposableEffect(Unit) {
+        DbEngine.labOpen = true
+        onDispose {
+            DbEngine.labOpen = false
+            DbEngine.stop()
+            Thread { DbEngine.sealAll(appCtx) }.start()
+        }
+    }
 
     fun setCode(v: TextFieldValue) {
         code = v
@@ -388,7 +396,7 @@ fun DbLabScreen(back: () -> Unit) {
     fun switchTo(n: String) {
         if (n == dbName) return
         val old = DbStore.path(appCtx, dbName)
-        Thread { DbEngine.close(old) }.start()
+        Thread { DbEngine.seal(appCtx, old) }.start()
         dbName = n
         prefs.edit().putString("db", n).apply()
         inTx = false
@@ -498,7 +506,7 @@ fun DbLabScreen(back: () -> Unit) {
                 val isDb = bytes.size >= 16 && String(bytes, 0, 15, Charsets.ISO_8859_1) == "SQLite format 3"
                 if (isDb) {
                     val n = DbStore.uniqueName(appCtx, DbStore.cleanName(display.substringBeforeLast('.')))
-                    java.io.File(DbStore.path(appCtx, n)).writeBytes(bytes)
+                    DbEngine.importDatabase(appCtx, DbStore.path(appCtx, n), bytes)
                     switchTo(n)
                     toastOnMain(appCtx, "Imported database $n")
                 } else {

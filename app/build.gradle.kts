@@ -37,12 +37,14 @@ android {
     buildTypes {
         debug { signingConfig = signingConfigs.getByName("studytint") }
         // The release build is what CI ships: not debuggable (nobody can attach a debugger or read the app's data with run-as)
-        // and noticeably smoother than a debug build. Code shrinking stays off because the C engine is called through JNI by name.
+        // and noticeably smoother than a debug build. R8 removes unused code and renames the rest, so the APK does not
+        // show the app's class and method names. What must keep its name is listed in proguard-rules.pro.
         release {
             signingConfig = signingConfigs.getByName("studytint")
             isDebuggable = false
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             isShrinkResources = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }

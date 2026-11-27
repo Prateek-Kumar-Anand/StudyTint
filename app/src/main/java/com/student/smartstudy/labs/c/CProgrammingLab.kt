@@ -352,7 +352,7 @@ private val symbols = listOf("{", "}", "(", ")", "[", "]", ";", "\"", "'", "#", 
 @Composable
 fun CLabScreen(back: () -> Unit) {
     val ctx = LocalContext.current
-    val prefs = remember { ctx.getSharedPreferences("clab_prefs", Context.MODE_PRIVATE) }
+    val prefs = remember { SecureStore.of(ctx, "clab_prefs") }
     var code by remember { mutableStateOf(TextFieldValue(prefs.getString("code", samples["Hello"]) ?: "")) }
     var output by remember { mutableStateOf("") }
     var status by remember { mutableStateOf("") }

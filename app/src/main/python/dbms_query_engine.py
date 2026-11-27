@@ -3,6 +3,7 @@
 Every public function returns a JSON string so the Kotlin side only has to parse text.
 """
 import json
+import os
 import re
 import sqlite3
 import threading
@@ -73,6 +74,38 @@ def close_db(path):
             except Exception:
                 pass
     return "ok"
+
+
+def settle(path):
+    """Called before a database file is encrypted: folds any journal / WAL back into the file and closes it.
+    Returns False, leaving things as they are, while closing would lose work (an open transaction or temporary
+    tables) or while the journal cannot be folded back."""
+    with _lock:
+        conn = _conns.get(path)
+        if conn is not None:
+            if conn.in_transaction:
+                return False
+            if conn.execute("SELECT 1 FROM sqlite_temp_master LIMIT 1").fetchone() is not None:
+                return False
+        side = [path + s for s in ("-journal", "-wal")]
+        if not any(os.path.exists(p) for p in side):
+            close_db(path)
+            return True
+        try:
+            conn = _connect(path)
+            conn.execute("SELECT count(*) FROM sqlite_master").fetchone()     # recovers an interrupted write
+            mode = conn.execute("PRAGMA journal_mode = DELETE").fetchone()[0]
+            if mode.lower() != "delete":
+                return False
+        except sqlite3.Error:
+            return False
+        finally:
+            close_db(path)
+        # the file was read successfully, so a journal that is still there holds nothing that is needed
+        for p in side:
+            if os.path.exists(p):
+                os.remove(p)
+        return True
 
 
 def version():

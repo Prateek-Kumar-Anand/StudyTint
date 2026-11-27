@@ -40,6 +40,41 @@ class DbSchema(val tables: List<DbTable>, val inTx: Boolean, val version: String
 object DbEngine {
     private fun mod() = Python.getInstance().getModule("dbms_query_engine")
 
+    /** True while the DBMS Lab screen is shown / while the app is on screen. */
+    @Volatile var labOpen = false
+    @Volatile var foreground = false
+
+    @Volatile private var shared: DatabaseVault? = null
+
+    @Synchronized private fun vault(ctx: Context): DatabaseVault {
+        val app = ctx.applicationContext
+        return shared ?: DatabaseVault({ Vault.key(app) }) { settle(app, it) }.also { shared = it }
+    }
+
+    /** Closes the database and folds its journal back into the file, so that the file can be encrypted. */
+    private fun settle(ctx: Context, db: File): Boolean {
+        val hasSideFiles = listOf("-journal", "-wal").any { File(db.path + it).exists() }
+        if (!Python.isStarted() && !hasSideFiles) return true        // nothing can have it open
+        PyEngine.ensure(ctx)
+        return mod().callAttr("settle", db.absolutePath).toBoolean()
+    }
+
+    /**
+     * Every access to a database goes through here: it is decrypted first, and encrypted again straight away
+     * when the lab is no longer in front of the user (for example a query that finishes after leaving).
+     */
+    private fun <T> withDb(ctx: Context, path: String, block: () -> T): T =
+        vault(ctx).use(File(path), { !(labOpen && foreground) }) {
+            PyEngine.ensure(ctx)
+            block()
+        }
+
+    fun names(ctx: Context, dir: File): List<String> = vault(ctx).names(dir)
+    fun seal(ctx: Context, path: String) { vault(ctx).seal(File(path)) }
+    fun sealAll(ctx: Context) { vault(ctx).sealAll(DbStore.dir(ctx)) }
+    fun importDatabase(ctx: Context, path: String, bytes: ByteArray) { vault(ctx).importBytes(File(path), bytes) }
+    fun delete(ctx: Context, path: String) { vault(ctx).delete(File(path)) { close(path) } }
+
     private fun strings(a: JSONArray?): List<String> = if (a == null) emptyList() else (0 until a.length())
         .map { a.getString(it) }
 
@@ -50,8 +85,9 @@ object DbEngine {
 
     fun run(ctx: Context, path: String, sql: String, timeoutSec: Int, stopOnError: Boolean,
         lineOffset: Int): DbRun = try {
-        PyEngine.ensure(ctx)
-        val json = mod().callAttr("run", path, sql, timeoutSec, 1000, stopOnError, lineOffset).toString()
+        val json = withDb(ctx, path) {
+            mod().callAttr("run", path, sql, timeoutSec, 1000, stopOnError, lineOffset).toString()
+        }
         val o = JSONObject(json)
         val arr = o.getJSONArray("results")
         val results = (0 until arr.length()).map { i ->
@@ -77,8 +113,7 @@ object DbEngine {
     }
 
     fun schema(ctx: Context, path: String): DbSchema? = try {
-        PyEngine.ensure(ctx)
-        val o = JSONObject(mod().callAttr("schema", path).toString())
+        val o = JSONObject(withDb(ctx, path) { mod().callAttr("schema", path).toString() })
         val arr = o.getJSONArray("tables")
         val tables = (0 until arr.length()).map { i ->
             val t = arr.getJSONObject(i)
@@ -115,8 +150,7 @@ object DbEngine {
     }
 
     fun dump(ctx: Context, path: String): String? = try {
-        PyEngine.ensure(ctx)
-        mod().callAttr("dump", path).toString()
+        withDb(ctx, path) { mod().callAttr("dump", path).toString() }
     } catch (e: Throwable) { null }
 }
 
@@ -143,9 +177,7 @@ object DbStore {
     fun dir(ctx: Context): File = File(ctx.filesDir, "dbms").also { it.mkdirs() }
     fun path(ctx: Context, name: String): String = File(dir(ctx), "$name.db").absolutePath
 
-    fun list(ctx: Context): List<String> =
-        (dir(ctx).listFiles() ?: emptyArray()).filter { it.isFile && it.name.endsWith(".db") }
-            .map { it.name.removeSuffix(".db") }.sortedBy { it.lowercase() }
+    fun list(ctx: Context): List<String> = DbEngine.names(ctx, dir(ctx))
 
     fun validName(n: String): Boolean = Regex("^[A-Za-z0-9_][A-Za-z0-9_ \\-]{0,29}$").matches(n)
 
@@ -164,9 +196,7 @@ object DbStore {
     }
 
     fun deleteFiles(ctx: Context, name: String) {
-        val p = path(ctx, name)
-        DbEngine.close(p)
-        for (suffix in listOf("", "-journal", "-wal", "-shm")) File(p + suffix).delete()
+        DbEngine.delete(ctx, path(ctx, name))
     }
 
     fun readAsset(ctx: Context, asset: String): String =
@@ -175,7 +205,7 @@ object DbStore {
     // ------------------------------------------------------------- history (saved in SharedPreferences)
 
     fun history(ctx: Context): List<String> = try {
-        val a = JSONArray(ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE)
+        val a = JSONArray(SecureStore.of(ctx, PREF)
             .getString("history", "[]") ?: "[]")
         (0 until a.length()).map { a.getString(it) }
     } catch (e: Exception) { emptyList() }
@@ -183,7 +213,7 @@ object DbStore {
     fun saveHistory(ctx: Context, list: List<String>) {
         val a = JSONArray()
         list.take(MAX_HISTORY).forEach { a.put(it) }
-        ctx.getSharedPreferences(PREF, Context.MODE_PRIVATE).edit().putString("history", a.toString()).apply()
+        SecureStore.of(ctx, PREF).edit().putString("history", a.toString()).apply()
     }
 
     /** Puts a query on top of the history (an identical earlier entry moves up instead of repeating). */

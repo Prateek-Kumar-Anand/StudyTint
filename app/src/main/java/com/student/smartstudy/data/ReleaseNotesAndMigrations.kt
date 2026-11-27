@@ -13,7 +13,7 @@ import android.content.Context
  */
 object Updates {
     /** Bump when the format of saved data changes, then add a step in [migrate]. */
-    const val DATA_VERSION = 2
+    const val DATA_VERSION = 3
 
     data class Release(val name: String, val notes: List<String>)
 
@@ -104,11 +104,13 @@ object Updates {
         while (v < DATA_VERSION) {
             when (v) {
                 1 -> { /* 1 -> 2: nothing to convert; Python Lab keeps its own preferences. */ }
-                // 2 -> { migrate from version 2 to 3 here }
+                2 -> { /* 2 -> 3: saved data is encrypted, see encryptExistingData below. */ }
             }
             v++
         }
         meta.edit().putInt("data_version", DATA_VERSION).apply()
+        // Not tied to the version number: it also finishes work that an earlier start could not.
+        encryptExistingData(ctx)
     }
 
     /** The release notes to show once after an update, or null. */
@@ -117,7 +119,7 @@ object Updates {
         val current = versionName(ctx)
         val seen = meta.getString("seen_version", null)
         if (seen == current) return null
-        val existingUser = ctx.getSharedPreferences("progress", Context.MODE_PRIVATE).contains("p_name")
+        val existingUser = SecureStore.of(ctx, "progress").contains("p_name")
         if (seen == null && !existingUser) {
             meta.edit().putString("seen_version", current).apply()
             return null

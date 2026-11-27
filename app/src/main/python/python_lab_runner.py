@@ -7,6 +7,7 @@ import io
 import linecache
 import os
 import platform
+import re
 import sys
 import threading
 import time
@@ -232,6 +233,33 @@ def _print_error(exc_type, exc, tb):
     traceback.print_exception(exc_type, exc, tb)
 
 
+def _compile_before(code, error):
+    """For a program with a syntax error: compiles the complete statements above the broken one, so that they can run
+    first (as when the lines are typed at the >>> prompt). Returns None when there is nothing that can run.
+
+    A cut is only made where a new top-level statement starts, so a block that contains the error is never run in part."""
+    lines = io.StringIO(code, newline=None).readlines()
+    bad = min(error.lineno or 0, len(lines)) - 1
+    above = [x for x in lines[:max(bad, 0)] if x.strip() and not x.lstrip().startswith("#")]
+    # a line indented for no reason, straight after a top-level line, leaves everything above it complete
+    stray_indent = error.msg == "unexpected indent" and bool(above) and not above[-1][:1].isspace()
+    for cut in range(bad, 0, -1):
+        line = lines[cut]
+        if not (cut == bad and stray_indent):
+            if line[:1].isspace() or line.startswith("#"):
+                continue
+            if re.match(r"(else|elif|except|finally)\b", line):   # belongs to the statement above
+                continue
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                compile("".join(lines[:cut]), FILENAME, "exec")
+        except (SyntaxError, ValueError):
+            continue
+        return compile("".join(lines[:cut]), FILENAME, "exec")
+    return None
+
+
 def run(code, work_dir, lib_paths, timeout):
     out = _Out()
     _state.update({"out": out, "waiting": False, "waited": 0.0, "wait_start": None, "eof": False, "reason": None})
@@ -266,8 +294,17 @@ def run(code, work_dir, lib_paths, timeout):
         watch.start()
         g = {"__name__": "__main__", "__file__": FILENAME, "__builtins__": builtins, "__doc__": None}
         try:
-            compiled = compile(code, FILENAME, "exec")
+            syntax_error = None
+            try:
+                compiled = compile(code, FILENAME, "exec")
+            except SyntaxError as e:
+                compiled = _compile_before(code, e)
+                if compiled is None:
+                    raise
+                syntax_error = e
             exec(compiled, g)
+            if syntax_error is not None:
+                raise syntax_error      # reported after the output of the lines above it
         except _Stop:
             pass
         except SystemExit as e:

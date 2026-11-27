@@ -33,7 +33,7 @@ No new high-risk hole was found. These smaller ones were fixed:
 | 15 | Compiled `.pyc` files and key files could be committed by accident | `.gitignore` now excludes `__pycache__`, `*.pyc`, `*.keystore`, `release.jks`, `.env`; stray `.pyc` files removed |
 
 Checked and found sound: manifest (one exported screen, the launcher; no extra permissions beyond INTERNET), HTTPS-only network policy,
-PyPI host allow-list with manual redirect checks, SHA-256 verification, wheel file-name validation, library and script name cleaning
+PyPI host allow-list with manual redirect checks (tightened since), SHA-256 verification, wheel file-name validation, library and script name cleaning
 (no `/`, `\` or `..`), size limits on every import, database names restricted to letters, digits, space, `_` and `-`, SQL identifiers quoted,
 no WebView, no custom permissions, no content providers or broadcast receivers, no secrets or tokens in the source, and no sensitive data in logs.
 
@@ -43,6 +43,42 @@ If an older copy of the project is updated by copying files over it, the old fil
 
 Every source file now has a full descriptive name (for example `NotesRenderer.kt`, `dbms_query_engine.py`, `sample_databases/`,
 `studytint_signing_key.jks`), and no text file is stored on a single line.
+
+## Encryption of saved data
+
+Keys: a master AES-256 key is generated in the Android Keystore (not exportable). It wraps a random data key kept in
+`files/vault/data.key`. Data is encrypted with AES-256-GCM, so changed or damaged data is rejected.
+
+| Data | Saved as |
+|---|---|
+| Profile (name, father's name, LURN, roll number, course), reading progress, quiz results, activity | encrypted values in preferences |
+| Profile photo | `profile_photo.enc` |
+| Code in the three lab editors, DBMS query history, lab settings | encrypted values in preferences |
+| Saved Python scripts (all storage locations) | `name.py.enc` |
+| DBMS Lab databases | `name.db.enc`; readable only while the DBMS Lab is on screen |
+
+**Not encrypted:** files that programs create while running (Python Lab `work` folder, C Lab cache), imported libraries
+(Python has to read them), the app version bookkeeping, and the study material shipped in the APK. Names of settings,
+databases and scripts are visible.
+
+A database stays readable while it has an open transaction or temporary tables, or if the app is killed while the lab is
+open; it is encrypted the next time the app starts or the lab is left.
+
+If the keys cannot be used, nothing is overwritten or deleted and the app says that saved data is locked. The keys are
+destroyed when the app is uninstalled or its storage is cleared, and there is no recovery.
+
+**What encryption does not protect against:** code run inside the app (Python Lab scripts and libraries run with the app's
+permissions and can ask for the data to be decrypted), an attacker who controls the running phone (root), and an update
+signed with the app's signing key (see open item 1).
+
+## Network and hidden internals
+
+- The only addresses the app itself contacts are `https://pypi.org` and `https://files.pythonhosted.org`. The call to
+  PyPI's search web page, the wider `*.pypi.org` rule and two settings that could redirect downloads or allow plain http
+  were removed.
+- CI no longer publishes a Gradle Build Scan.
+- Release builds are processed by R8 (unused code removed, names obfuscated). This hides names in the APK; it does not
+  hide anything that is in a public source repository.
 
 ## Stability and speed changes
 
@@ -64,4 +100,4 @@ Every source file now has a full descriptive name (for example `NotesRenderer.kt
    and closing them safely after `fork` on Android is not reliable, so this is documented rather than changed.
 5. **C programs have no memory cap of their own.** A program that allocates without limit is stopped by Android, which may also close the app.
    A hard cap (`RLIMIT_AS`) is not applied because the child process starts as a copy of the app and a low cap would stop it at once.
-6. Code shrinking (R8) is off on purpose: the C engine is looked up by name through JNI, and an untested rules file could break it.
+6. The R8 rules (`app/proguard-rules.pro`) and the encryption on real hardware still need a test on a phone.
